@@ -1,0 +1,336 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ── USERS & AUTH ─────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  phone         String?
+  role          UserRole  @default(CUSTOMER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  orders        Order[]
+  subscriptions Subscription[]
+  applications  JobApplication[]
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+  PARTNER_FARMER
+  INVESTOR
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ── LIVESTOCK & BREEDS ───────────────────────────────────
+
+model Species {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  breeds Breed[]
+}
+
+model Breed {
+  id           String   @id @default(cuid())
+  name         String
+  speciesId    String
+  purpose      String
+  description  String
+  origin       String
+  maleWeight   String?
+  femaleWeight String?
+  image        String?
+  pricePerHead Float
+  inStock      Int      @default(0)
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  species    Species     @relation(fields: [speciesId], references: [id])
+  livestock  Livestock[]
+  orderItems OrderItem[]
+}
+
+model Livestock {
+  id        String          @id @default(cuid())
+  tagNumber String          @unique
+  breedId   String
+  gender    Gender
+  birthDate DateTime?
+  weight    Float?
+  status    LivestockStatus @default(AVAILABLE)
+  notes     String?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  breed Breed @relation(fields: [breedId], references: [id])
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum LivestockStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  BREEDING_STOCK
+}
+
+// ── BARN STORE PRODUCTS ──────────────────────────────────
+
+model ProductCategory {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  image     String?
+  createdAt DateTime @default(now())
+
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  categoryId  String
+  description String
+  price       Float
+  unit        String
+  image       String?
+  inStock     Boolean  @default(true)
+  stockQty    Int      @default(0)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category      ProductCategory @relation(fields: [categoryId], references: [id])
+  orderItems    OrderItem[]
+  subscriptions Subscription[]
+}
+
+// ── ORDERS ───────────────────────────────────────────────
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String?
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  type            OrderType
+  status          OrderStatus @default(PENDING)
+  totalAmount     Float
+  depositAmount   Float?
+  paymentMethod   String?
+  paymentRef      String?
+  deliveryAddress String?
+  deliveryDate    DateTime?
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  user  User?       @relation(fields: [userId], references: [id])
+  items OrderItem[]
+}
+
+enum OrderType {
+  LIVESTOCK
+  PRODUCT
+  MIXED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  DEPOSIT_PAID
+  PAID
+  PROCESSING
+  READY
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  breedId    String?
+  productId  String?
+  quantity   Int
+  unitPrice  Float
+  totalPrice Float
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  breed   Breed?   @relation(fields: [breedId], references: [id])
+  product Product? @relation(fields: [productId], references: [id])
+}
+
+// ── SUBSCRIPTIONS ────────────────────────────────────────
+
+model Subscription {
+  id           String             @id @default(cuid())
+  userId       String
+  productId    String
+  frequency    SubscriptionFreq
+  status       SubscriptionStatus @default(ACTIVE)
+  startDate    DateTime           @default(now())
+  nextDelivery DateTime?
+  createdAt    DateTime           @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+enum SubscriptionFreq {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+}
+
+// ── CAREERS ──────────────────────────────────────────────
+
+model Job {
+  id           String   @id @default(cuid())
+  title        String
+  department   String
+  type         String
+  location     String
+  description  String
+  requirements String
+  isOpen       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  applications JobApplication[]
+}
+
+model JobApplication {
+  id          String            @id @default(cuid())
+  jobId       String
+  userId      String?
+  fullName    String
+  email       String
+  phone       String
+  cvUrl       String?
+  coverLetter String?
+  status      ApplicationStatus @default(RECEIVED)
+  createdAt   DateTime          @default(now())
+
+  job  Job   @relation(fields: [jobId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
+}
+
+enum ApplicationStatus {
+  RECEIVED
+  REVIEWING
+  SHORTLISTED
+  INTERVIEWED
+  OFFERED
+  REJECTED
+}
+
+// ── BLOG ─────────────────────────────────────────────────
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String
+  content     String
+  coverImage  String?
+  category    String
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ── FARM VISITS ──────────────────────────────────────────
+
+model FarmVisit {
+  id        String      @id @default(cuid())
+  fullName  String
+  email     String
+  phone     String
+  groupSize Int         @default(1)
+  visitDate DateTime
+  purpose   String?
+  status    VisitStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+}
+
+enum VisitStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+// ── PARTNER FARMERS ──────────────────────────────────────
+
+model PartnerFarmer {
+  id         String        @id @default(cuid())
+  fullName   String
+  email      String
+  phone      String
+  location   String
+  supplyType String
+  status     PartnerStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+}
+
+enum PartnerStatus {
+  PENDING
+  APPROVED
+  ACTIVE
+  SUSPENDED
+}
