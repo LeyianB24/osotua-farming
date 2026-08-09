@@ -12,7 +12,7 @@ export default function InvestPage() {
             Investment
           </div>
           <h1 className="font-serif text-5xl font-light text-[#F5EFE4] mb-4">
-            Invest in <em className="text-[#C4882A]">Africa's future</em>
+            Invest in <em className="text-[#C4882A]">Africa&apos;s future</em>
           </h1>
           <p className="text-[#F5EFE4]/50 max-w-xl leading-relaxed">
             Osotua Farming offers a rare combination of agricultural heritage, modern technology, and strong market demand. Partner with us and grow together.

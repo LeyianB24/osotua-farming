@@ -5,10 +5,11 @@ import Link from "next/link"
 export default async function BreedDetailPage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
+  const { slug } = await params
   const breed = await prisma.breed.findUnique({
-    where: { id: params.slug },
+    where: { id: slug },
     include: { species: true },
   })
 

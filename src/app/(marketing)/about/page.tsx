@@ -25,7 +25,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
           <div className="bg-[#3D6B3E] rounded p-10 flex flex-col justify-end min-h-64">
             <p className="font-serif text-3xl italic text-white font-light leading-tight mb-3">
-              "From Our Land, To Your Table"
+              &quot;From Our Land, To Your Table&quot;
             </p>
             <span className="font-mono text-[10px] text-white/50 tracking-widest uppercase">
               Maa · Kajiado, Kenya
@@ -38,7 +38,7 @@ export default function AboutPage() {
               Osotua Farming is a modern, smart agribusiness enterprise based in Kajiado County, Kenya. We raise premium indigenous livestock, grow wholesome food, and connect producers directly to consumers through our Barn Store.
             </p>
             <p className="text-[#1C1208]/60 leading-relaxed">
-              We champion Africa's finest livestock genetics combined with smart farming technology and sustainable land management — proving that indigenous breeds and modern methods can coexist beautifully.
+              We champion Africa&apos;s finest livestock genetics combined with smart farming technology and sustainable land management - proving that indigenous breeds and modern methods can coexist beautifully.
             </p>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function AboutPage() {
         <div className="bg-[#1C1208] rounded p-10 text-center">
           <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase mb-3">Find Us</div>
           <h3 className="font-serif text-3xl text-[#F5EFE4] font-light mb-3">Kajiado County, Kenya</h3>
-          <p className="text-[#F5EFE4]/50 text-sm mb-6">Located in the heart of Kenya's livestock country, with the climate and heritage to produce the finest animals and food.</p>
+          <p className="text-[#F5EFE4]/50 text-sm mb-6">Located in the heart of Kenya&apos;s livestock country, with the climate and heritage to produce the finest animals and food.</p>
           <a
             href="/visit"
             className="bg-[#C4882A] text-[#1C1208] px-6 py-3 text-sm font-medium rounded-sm hover:bg-[#d99a30] transition-colors inline-block"

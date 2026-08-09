@@ -53,7 +53,7 @@ export default async function BlogPage() {
           <div className="text-center py-24 text-[#1C1208]/40">
             <div className="text-5xl mb-4">📝</div>
             <p className="font-serif text-xl">Stories coming soon.</p>
-            <p className="text-sm mt-2">We're writing up our first farm updates. Check back shortly.</p>
+            <p className="text-sm mt-2">We&apos;re writing up our first farm updates. Check back shortly.</p>
           </div>
         )}
       </div>

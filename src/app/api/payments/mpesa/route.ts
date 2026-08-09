@@ -15,6 +15,16 @@ export async function POST(req: Request) {
       orderId,
     })
 
+    if (result?.CheckoutRequestID) {
+      await prisma.order.update({
+        where: { id: orderId },
+        data: {
+          paymentMethod: "mpesa",
+          paymentRef: result.CheckoutRequestID,
+        },
+      })
+    }
+
     return NextResponse.json(result)
   } catch (err) {
     console.error(err)

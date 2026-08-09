@@ -23,7 +23,7 @@ export default function ContactPage() {
             Get in Touch
           </div>
           <h1 className="font-serif text-5xl font-light text-[#F5EFE4] mb-4">
-            Let's talk <em className="text-[#C4882A]">farming</em>
+            Let&apos;s talk <em className="text-[#C4882A]">farming</em>
           </h1>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function ContactPage() {
               <div className="bg-[#3D6B3E]/10 border border-[#3D6B3E]/30 rounded p-8 text-center">
                 <div className="text-4xl mb-4">✅</div>
                 <h3 className="font-serif text-xl text-[#1C1208] mb-2">Message Sent!</h3>
-                <p className="text-[#1C1208]/60 text-sm">We'll get back to you within 24 hours.</p>
+                <p className="text-[#1C1208]/60 text-sm">We&apos;ll get back to you within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">

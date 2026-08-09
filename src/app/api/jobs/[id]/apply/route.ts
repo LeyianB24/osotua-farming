@@ -2,16 +2,19 @@ import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { sendApplicationReceived } from "@/lib/email"
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+type IdRouteContext = { params: Promise<{ id: string }> }
+
+export async function POST(req: Request, { params }: IdRouteContext) {
   try {
+    const { id } = await params
     const body = await req.json()
 
-    const job = await prisma.job.findUnique({ where: { id: params.id } })
+    const job = await prisma.job.findUnique({ where: { id } })
     if (!job) return NextResponse.json({ error: "Job not found" }, { status: 404 })
 
     const application = await prisma.jobApplication.create({
       data: {
-        jobId: params.id,
+        jobId: id,
         fullName: body.fullName,
         email: body.email,
         phone: body.phone,
@@ -33,10 +36,11 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   }
 }
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, { params }: IdRouteContext) {
   try {
+    const { id } = await params
     const applications = await prisma.jobApplication.findMany({
-      where: { jobId: params.id },
+      where: { jobId: id },
       orderBy: { createdAt: "desc" },
     })
     return NextResponse.json(applications)

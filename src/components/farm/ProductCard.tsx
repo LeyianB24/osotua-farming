@@ -34,9 +34,21 @@ export default function ProductCard({ product, dark }: Props) {
   return (
     <Link
       href={`/barn/${product.slug}`}
-      className={`border rounded p-5 transition-all duration-300 block ${cardBg}`}
+      className={`group block border rounded p-5 transition-all duration-300 ${cardBg}`}
     >
-      <div className="text-3xl mb-4">{icon}</div>
+      {product.image ? (
+        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm bg-[#1C1208]/05">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+      ) : (
+        <div className="text-3xl mb-4">{icon}</div>
+      )}
       <div className={`font-serif text-lg font-semibold mb-1 ${textColor}`}>{product.name}</div>
       <div className={`text-xs mb-4 ${subColor}`}>{product.category.name}</div>
       <div className="flex items-center justify-between">

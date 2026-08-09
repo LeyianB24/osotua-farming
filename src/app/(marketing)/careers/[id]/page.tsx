@@ -99,7 +99,7 @@ export default function JobDetailPage() {
               <div className="bg-[#3D6B3E]/10 border border-[#3D6B3E]/30 rounded p-8 text-center">
                 <div className="text-5xl mb-4">✅</div>
                 <h3 className="font-serif text-xl text-[#1C1208] mb-2">Application Submitted!</h3>
-                <p className="text-[#1C1208]/60 text-sm">We'll review your application and be in touch soon.</p>
+                <p className="text-[#1C1208]/60 text-sm">We&apos;ll review your application and be in touch soon.</p>
                 <Link href="/careers" className="text-[#C4882A] text-sm mt-4 inline-block font-mono tracking-widest uppercase text-[10px]">
                   ← View all jobs
                 </Link>
@@ -129,7 +129,7 @@ export default function JobDetailPage() {
                   <textarea
                     name="coverLetter"
                     rows={4}
-                    placeholder="Tell us why you'd be a great fit for Osotua Farming..."
+                    placeholder="Tell us why you&apos;d be a great fit for Osotua Farming..."
                     className="w-full border border-[#1C1208]/15 rounded-sm px-4 py-3 text-sm text-[#1C1208] outline-none focus:border-[#C4882A] transition-colors resize-none"
                   />
                 </div>

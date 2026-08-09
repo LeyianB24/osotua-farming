@@ -30,7 +30,7 @@ export default async function AdminPage() {
   return (
     <div className="p-8">
       <h1 className="font-serif text-3xl text-[#1C1208] mb-2">Admin Dashboard</h1>
-      <p className="text-[#1C1208]/50 text-sm mb-10">Welcome back. Here's what's happening at Osotua Farming.</p>
+      <p className="text-[#1C1208]/50 text-sm mb-10">Welcome back. Here&apos;s what&apos;s happening at Osotua Farming.</p>
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-12">

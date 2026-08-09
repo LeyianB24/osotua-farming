@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+type IdRouteContext = { params: Promise<{ id: string }> }
+
+export async function GET(_: Request, { params }: IdRouteContext) {
   try {
-    const job = await prisma.job.findUnique({ where: { id: params.id } })
+    const { id } = await params
+    const job = await prisma.job.findUnique({ where: { id } })
     if (!job) return NextResponse.json({ error: "Not found" }, { status: 404 })
     return NextResponse.json(job)
   } catch {
@@ -11,19 +14,21 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: IdRouteContext) {
   try {
+    const { id } = await params
     const body = await req.json()
-    const job = await prisma.job.update({ where: { id: params.id }, data: body })
+    const job = await prisma.job.update({ where: { id }, data: body })
     return NextResponse.json(job)
   } catch {
     return NextResponse.json({ error: "Failed" }, { status: 500 })
   }
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_: Request, { params }: IdRouteContext) {
   try {
-    await prisma.job.delete({ where: { id: params.id } })
+    const { id } = await params
+    await prisma.job.delete({ where: { id } })
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: "Failed" }, { status: 500 })

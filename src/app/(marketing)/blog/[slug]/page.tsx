@@ -1,14 +1,16 @@
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 
 export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
+  const { slug } = await params
   const post = await prisma.post.findUnique({
-    where: { slug: params.slug, published: true },
+    where: { slug, published: true },
   })
 
   if (!post) notFound()
@@ -41,7 +43,15 @@ export default async function BlogPostPage({
 
         {/* Cover image placeholder */}
         {post.coverImage ? (
-          <img src={post.coverImage} alt={post.title} className="w-full h-64 object-cover rounded mb-10" />
+          <div className="relative mb-10 h-64 w-full overflow-hidden rounded">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="object-cover"
+            />
+          </div>
         ) : (
           <div className="w-full h-56 bg-gradient-to-br from-[#3D6B3E] to-[#2a4a2b] rounded mb-10 flex items-center justify-center text-6xl">
             🌿

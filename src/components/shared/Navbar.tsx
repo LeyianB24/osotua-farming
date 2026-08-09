@@ -19,11 +19,6 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // Close mobile drawer on route change or Escape key
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -59,7 +54,7 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
               </span>
               <span className="font-mono text-[#C4882A] text-[10px] tracking-widest uppercase flex items-center gap-1">
                 <span>Kajiado</span>
-                <span>•</span>
+                <span>&bull;</span>
                 <span>Kenya</span>
               </span>
             </div>

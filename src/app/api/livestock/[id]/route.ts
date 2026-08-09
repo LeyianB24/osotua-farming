@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+type IdRouteContext = { params: Promise<{ id: string }> }
+
+export async function GET(_: Request, { params }: IdRouteContext) {
   try {
+    const { id } = await params
     const animal = await prisma.livestock.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: { breed: true },
     })
     if (!animal) return NextResponse.json({ error: "Not found" }, { status: 404 })
@@ -14,19 +17,21 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: IdRouteContext) {
   try {
+    const { id } = await params
     const body = await req.json()
-    const animal = await prisma.livestock.update({ where: { id: params.id }, data: body })
+    const animal = await prisma.livestock.update({ where: { id }, data: body })
     return NextResponse.json(animal)
   } catch {
     return NextResponse.json({ error: "Failed" }, { status: 500 })
   }
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_: Request, { params }: IdRouteContext) {
   try {
-    await prisma.livestock.delete({ where: { id: params.id } })
+    const { id } = await params
+    await prisma.livestock.delete({ where: { id } })
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: "Failed" }, { status: 500 })

@@ -3,15 +3,21 @@ import { notFound } from "next/navigation"
 import Navbar from "@/components/shared/Navbar"
 import Footer from "@/components/shared/Footer"
 import Link from "next/link"
+import Image from "next/image"
 
 const categoryIcons: Record<string, string> = {
   "Beef Cuts": "🥩", "Dairy Products": "🥛", "Vegetables": "🥬",
   "Fruits": "🍋", "Ranch Box": "📦", "Goat Meat": "🐐", "Sheep Meat": "🐑",
 }
 
-export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
   const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
     include: { category: true },
   })
 
@@ -31,9 +37,21 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="bg-white border border-[#1C1208]/08 rounded h-72 flex items-center justify-center text-8xl">
-              {icon}
-            </div>
+            {product.image ? (
+              <div className="relative h-72 overflow-hidden rounded border border-[#1C1208]/08 bg-white">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  sizes="(min-width: 1024px) 480px, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="bg-white border border-[#1C1208]/08 rounded h-72 flex items-center justify-center text-8xl">
+                {icon}
+              </div>
+            )}
 
             <div>
               <span className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase">{product.category.name}</span>

@@ -1,19 +1,36 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
+type MpesaMetadataItem = {
+  Name: string
+  Value?: string | number
+}
+
+type MpesaCallbackPayload = {
+  Body?: {
+    stkCallback?: {
+      ResultCode?: number
+      CheckoutRequestID?: string
+      CallbackMetadata?: {
+        Item?: MpesaMetadataItem[]
+      }
+    }
+  }
+}
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json()
-    const { Body } = body
+    const body = (await req.json()) as MpesaCallbackPayload
+    const callback = body.Body?.stkCallback
 
-    if (Body.stkCallback.ResultCode === 0) {
-      const metadata = Body.stkCallback.CallbackMetadata.Item
-      const mpesaRef = metadata.find((i: any) => i.Name === "MpesaReceiptNumber")?.Value
-      const accountRef = Body.stkCallback.CallbackMetadata?.Item?.find(
-        (i: any) => i.Name === "AccountReference"
-      )?.Value
+    if (callback?.ResultCode === 0) {
+      const metadata = callback.CallbackMetadata?.Item ?? []
+      const mpesaRef = metadata.find((item) => item.Name === "MpesaReceiptNumber")?.Value
+      const accountRef = metadata.find((item) => item.Name === "AccountReference")?.Value
+      const checkoutRequestId = callback.CheckoutRequestID
 
-      const orderId = accountRef?.replace("OSOTUA-", "")
+      const orderId =
+        typeof accountRef === "string" ? accountRef.replace("OSOTUA-", "") : undefined
 
       if (orderId) {
         await prisma.order.update({
@@ -21,6 +38,15 @@ export async function POST(req: Request) {
           data: {
             status: "PAID",
             paymentRef: mpesaRef,
+            paymentMethod: "mpesa",
+          },
+        })
+      } else if (checkoutRequestId) {
+        await prisma.order.updateMany({
+          where: { paymentRef: checkoutRequestId },
+          data: {
+            status: "PAID",
+            paymentRef: String(mpesaRef ?? checkoutRequestId),
             paymentMethod: "mpesa",
           },
         })
