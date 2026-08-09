@@ -1,0 +1,70 @@
+import { prisma } from "@/lib/prisma"
+import BreedCard from "@/components/farm/BreedCard"
+
+export const metadata = { title: "Our Breeds — Osotua Farming" }
+
+async function getBreeds() {
+  return prisma.breed.findMany({
+    include: { species: true },
+    orderBy: { species: { name: "asc" } },
+  })
+}
+
+async function getSpecies() {
+  return prisma.species.findMany({ orderBy: { name: "asc" } })
+}
+
+export default async function BreedsPage() {
+  const [breeds, species] = await Promise.all([getBreeds(), getSpecies()])
+
+  const grouped = species.map((s) => ({
+    ...s,
+    breeds: breeds.filter((b) => b.speciesId === s.id),
+  }))
+
+  return (
+    <div className="bg-[#FBF7F0] pt-24">
+      {/* Header */}
+      <div className="bg-[#1C1208] py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-4">
+            <span className="w-6 h-px bg-[#C4882A]" />
+            Our Livestock
+          </div>
+          <h1 className="font-serif text-5xl font-light text-[#F5EFE4] mb-4">
+            Premium breeds,{" "}
+            <em className="text-[#C4882A]">bred for Africa</em>
+          </h1>
+          <p className="text-[#F5EFE4]/50 max-w-xl leading-relaxed">
+            Every animal is selected for genetic superiority, climate resilience, and commercial value. Browse our catalogue and place an order or reservation.
+          </p>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {grouped.map((group) => (
+          group.breeds.length > 0 && (
+            <div key={group.id} className="mb-16">
+              <h2 className="font-serif text-2xl text-[#1C1208] mb-2">{group.name}</h2>
+              <p className="text-[#1C1208]/50 text-sm mb-8">{group.description}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {group.breeds.map((breed) => (
+                  <BreedCard key={breed.id} breed={breed} />
+                ))}
+              </div>
+            </div>
+          )
+        ))}
+
+        {breeds.length === 0 && (
+          <div className="text-center py-24 text-[#1C1208]/40">
+            <div className="text-5xl mb-4">🐄</div>
+            <p className="font-serif text-xl">Breeds coming soon.</p>
+            <p className="text-sm mt-2">Check back shortly or contact us for current availability.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
