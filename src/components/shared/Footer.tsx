@@ -71,6 +71,9 @@ const socialLinks = [
   { label: "LinkedIn", icon: LinkedinIcon, href: "https://linkedin.com" },
 ];
 
+import Image from "next/image";
+import { RANCH_WIDE } from "@/lib/images";
+
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -83,16 +86,31 @@ export default function Footer() {
   }
 
   return (
-    <footer className="border-t border-[#C4882A]/20 bg-[#1C1208] text-[#F5EFE4]">
+    <footer className="relative border-t border-[#C4882A]/25 bg-[#1C1208] text-[#F5EFE4] overflow-hidden">
+      {/* Background Image Overlay */}
+      <div className="absolute inset-0 pointer-events-none opacity-15">
+        <Image
+          src={RANCH_WIDE}
+          alt="Osotua Rangeland"
+          fill
+          sizes="100vw"
+          className="object-cover object-bottom"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-[#1C1208]/90 to-[#1C1208]" />
+      </div>
+
       {/* Top Banner / Newsletter Bar */}
-      <div className="border-b border-[#F5EFE4]/10 bg-[#251A0E]">
+      <div className="relative z-10 border-b border-[#F5EFE4]/10 bg-[#251A0E]/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-8 sm:px-6 md:flex-row lg:px-8">
           <div>
-            <h3 className="font-serif text-lg font-medium text-[#F5EFE4]">
+            <div className="font-mono text-[10px] text-[#C4882A] uppercase tracking-widest mb-1">
+              Ranch Digest & Harvest Alerts
+            </div>
+            <h3 className="font-serif text-2xl font-light text-[#F5EFE4]">
               Join the Osotua Ranch Journal
             </h3>
-            <p className="mt-1 text-xs text-[#F5EFE4]/60">
-              Get first access to seasonal harvest drops, breeding stock availability, and ranch updates.
+            <p className="mt-1 text-xs text-[#F5EFE4]/65">
+              Get first access to seasonal harvest drops, breeding stock availability, and farm news.
             </p>
           </div>
 
@@ -126,7 +144,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Links & Info */}
-      <div className="mx-auto max-w-7xl px-4 pt-16 pb-12 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-16 pb-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 border-b border-[#F5EFE4]/10 pb-12 md:grid-cols-5">
           {/* Brand Info (2 columns wide) */}
           <div className="md:col-span-2">

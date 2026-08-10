@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Cormorant_Garamond, DM_Sans, Space_Grotesk } from "next/font/google"
+import { Cormorant_Garamond, DM_Sans, Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google"
 import "./globals.css"
 
 /* ── FONTS ──────────────────────────────────────────────── */
@@ -18,6 +18,13 @@ const dmSans = DM_Sans({
   weight: ["300", "400", "500", "600"],
   display: "swap",
   preload: true,
+})
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 })
 
 const spaceGrotesk = Space_Grotesk({
@@ -113,6 +120,7 @@ export default function RootLayout({
       className={`
         ${cormorant.variable}
         ${dmSans.variable}
+        ${jakarta.variable}
         ${spaceGrotesk.variable}
       `}
     >

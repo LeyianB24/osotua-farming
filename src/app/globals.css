@@ -29,7 +29,8 @@
 
 @theme inline {
   /* Fonts */
-  --font-sans:    var(--font-dm-sans);
+  --font-sans:    var(--font-jakarta), var(--font-dm-sans), system-ui, sans-serif;
+  --font-[#font-jakarta]: var(--font-jakarta);
   --font-serif:   var(--font-cormorant);
   --font-mono:    var(--font-space-grotesk);
 
@@ -425,15 +426,15 @@ h1, h2, h3, h4, h5, h6 {
 /* ── GLASSMORPHISM & MODERN UTILITIES ────────────────────── */
 .glass-dark {
   background: rgba(28, 18, 8, 0.75);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(196, 136, 42, 0.2);
 }
 
 .glass-light {
   background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(28, 18, 8, 0.08);
 }
 
@@ -452,6 +453,113 @@ h1, h2, h3, h4, h5, h6 {
 .interactive-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 40px -15px rgba(28, 18, 8, 0.15);
+}
+
+/* ── PREMIUM BACKGROUND & GLASS OVERLAYS ─────────────────── */
+.bg-overlay-dark {
+  background: linear-gradient(180deg, rgba(28, 18, 8, 0.85) 0%, rgba(28, 18, 8, 0.70) 50%, rgba(28, 18, 8, 0.92) 100%);
+}
+
+.bg-overlay-gold {
+  background: linear-gradient(135deg, rgba(196, 136, 42, 0.15) 0%, rgba(28, 18, 8, 0.85) 100%);
+}
+
+.glass-card-dark {
+  background: rgba(28, 18, 8, 0.75);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(196, 136, 42, 0.25);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.glass-card-dark:hover {
+  border-color: rgba(196, 136, 42, 0.5);
+  box-shadow: 0 20px 45px rgba(196, 136, 42, 0.15);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(28, 18, 8, 0.08);
+  box-shadow: 0 8px 24px rgba(28, 18, 8, 0.04);
+}
+
+.glass-card-light:hover {
+  border-color: rgba(196, 136, 42, 0.4);
+  box-shadow: 0 16px 36px rgba(28, 18, 8, 0.1);
+}
+
+.store-card-shadow {
+  box-shadow: 0 4px 20px rgba(28, 18, 8, 0.06);
+}
+
+.store-card-shadow:hover {
+  box-shadow: 0 20px 40px rgba(28, 18, 8, 0.12);
+}
+
+.badge-glow {
+  box-shadow: 0 0 12px rgba(196, 136, 42, 0.4);
+}
+
+/* ── TEMPLATE DESIGN UTILITIES (DonalFarm / Ecoland / Milätte Inspired) ── */
+.card-template {
+  background: #FFFFFF;
+  border: 1px solid rgba(28, 18, 8, 0.08);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+}
+
+.card-template:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px -12px rgba(28, 18, 8, 0.12);
+  border-color: rgba(196, 136, 42, 0.4);
+}
+
+.btn-circle-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.85rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.btn-circle-arrow .icon-circle {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 9999px;
+  background: rgba(28, 18, 8, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn-circle-arrow:hover .icon-circle {
+  transform: translateX(3px);
+  background: rgba(28, 18, 8, 0.3);
+}
+
+.icon-badge-gold {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #C4882A, #D99A30);
+  color: #1C1208;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(196, 136, 42, 0.3);
+}
+
+.feature-bar-green {
+  background: #3D6B3E;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 45px rgba(61, 107, 62, 0.2);
 }
 
 /* ── SCROLLBAR ──────────────────────────────────────────── */

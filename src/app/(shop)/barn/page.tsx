@@ -22,8 +22,8 @@ export default async function BarnPage() {
 
   return (
     <div className="bg-[#FBF7F0] pt-20 min-h-screen">
-      {/* Header */}
-      <div className="relative bg-[#1C1208] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Header with Background Photo Overlay */}
+      <div className="relative bg-[#1C1208] py-28 px-4 sm:px-6 lg:px-8 overflow-hidden shadow-2xl">
         <div className="absolute inset-0">
           <Image
             src={RANCH_PANO}
@@ -31,42 +31,61 @@ export default async function BarnPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-25"
+            className="object-cover opacity-35 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1208]/85 via-[#1C1208]/70 to-[#1C1208]/95" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1208] via-[#1C1208]/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-[#1C1208]/60" />
         </div>
-        <div className="relative max-w-7xl mx-auto">
-          <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-4">
-            <span className="w-6 h-px bg-[#C4882A]" />
-            The Barn Store
+
+        <div className="relative max-w-7xl mx-auto z-10">
+          <div className="eyebrow text-[#C4882A] mb-4">
+            Direct Farm Store & Kitchen Supply
           </div>
-          <h1 className="font-serif text-5xl font-light text-[#F5EFE4] mb-4">
-            Everything fresh,{" "}
-            <em className="text-[#C4882A]">everything ours</em>
+          <h1 className="font-serif text-5xl sm:text-6xl font-light text-[#F5EFE4] mb-4 tracking-tight leading-tight">
+            Everything fresh,<br />
+            <em className="text-[#C4882A] not-italic font-normal">everything ours</em>
           </h1>
-          <p className="text-[#F5EFE4]/70 max-w-xl leading-relaxed">
-            Walk into our Barn or order online. Every product carries the Osotua promise — raised here, handled with care, delivered to you.
+          <p className="text-[#F5EFE4]/80 max-w-xl leading-relaxed text-base">
+            Walk into our Barn or order directly online. Every product carries the Osotua promise — raised here in Kajiado, handled with artisanal care, and delivered fresh to your doorstep.
           </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-6 text-xs font-mono text-[#F5EFE4]/70 border-t border-[#C4882A]/20 pt-6">
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              Daily Harvest Active
+            </span>
+            <span className="w-1 h-1 rounded-full bg-[#C4882A]" />
+            <span>Pesticide-Free Produce</span>
+            <span className="w-1 h-1 rounded-full bg-[#C4882A]" />
+            <span>Traceable Farm-to-Fork</span>
+          </div>
         </div>
       </div>
 
-      {/* Fresh from the ranch — produce slideshow */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 mb-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2">
-            <Slideshow slides={PRODUCE_SLIDESHOW} heightClass="h-72 sm:h-80" />
+      {/* Fresh from the ranch — produce slideshow & feature spotlight */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 mb-8 relative z-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-2 shadow-2xl rounded-md overflow-hidden">
+            <Slideshow slides={PRODUCE_SLIDESHOW} heightClass="h-72 sm:h-84" />
           </div>
-          <div className="bg-[#1C1208] p-6 rounded flex flex-col justify-center border border-[#C4882A]/20">
-            <div className="font-mono text-[10px] text-[#C4882A] tracking-[0.22em] uppercase mb-3">
-              Fresh from the ranch
+          <div className="glass-card-dark p-8 rounded-md flex flex-col justify-between border border-[#C4882A]/30 relative overflow-hidden shadow-2xl">
+            <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-[#C4882A]/10 blur-2xl pointer-events-none" />
+            <div>
+              <div className="eyebrow text-[#C4882A] mb-3">
+                Fresh From The Ranch
+              </div>
+              <h2 className="font-serif text-3xl text-[#F5EFE4] font-light mb-4">
+                Garden, orchard & pasture
+              </h2>
+              <p className="text-[#F5EFE4]/70 text-xs sm:text-sm leading-relaxed mb-6">
+                Every Barn item originates right here — pesticide-free leafy greens, vine-ripened crops, free-range eggs, and dry-aged grass-fed beef raised on the Osotua rangelands.
+              </p>
             </div>
-            <h2 className="font-serif text-2xl text-[#F5EFE4] font-light mb-3">
-              Garden, orchard, pasture
-            </h2>
-            <p className="text-[#F5EFE4]/55 text-sm leading-relaxed">
-              Every Barn product starts here — pesticide-free vegetables, vine-ripe fruit,
-              free-range eggs, and grass-fed meat raised on the Osotua rangelands.
-            </p>
+            
+            <div className="pt-4 border-t border-[#F5EFE4]/10 flex items-center justify-between text-xs font-mono text-[#C4882A]">
+              <span>Next Harvest Delivery:</span>
+              <span className="font-bold text-[#F5EFE4]">Same-Day Express</span>
+            </div>
           </div>
         </div>
       </div>

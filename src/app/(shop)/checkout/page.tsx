@@ -8,9 +8,7 @@ import {
   Phone,
   CreditCard,
   Building2,
-  ShieldCheck,
   ArrowLeft,
-  Truck,
   Loader2,
 } from "lucide-react";
 
