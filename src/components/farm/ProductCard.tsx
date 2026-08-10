@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { imageForCategory } from "@/lib/images"
 
 interface Props {
   product: {
@@ -27,6 +28,7 @@ const categoryIcons: Record<string, string> = {
 
 export default function ProductCard({ product, dark }: Props) {
   const icon = categoryIcons[product.category.name] || "🌿"
+  const src = product.image ?? imageForCategory(product.category.name)
   const textColor = dark ? "text-[#F5EFE4]" : "text-[#1C1208]"
   const subColor = dark ? "text-[#F5EFE4]/45" : "text-[#1C1208]/50"
   const cardBg = dark ? "bg-[#F5EFE4]/05 border-[#C4882A]/15 hover:bg-[#C4882A]/08 hover:border-[#C4882A]/40" : "bg-white border-[#1C1208]/08 hover:shadow-lg"
@@ -36,10 +38,10 @@ export default function ProductCard({ product, dark }: Props) {
       href={`/barn/${product.slug}`}
       className={`group block border rounded p-5 transition-all duration-300 ${cardBg}`}
     >
-      {product.image ? (
+      {src ? (
         <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm bg-[#1C1208]/05">
           <Image
-            src={product.image}
+            src={src}
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"

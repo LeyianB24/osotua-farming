@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Logo from "@/components/shared/Logo"
 
 const sidebarLinks = [
   { label: "Overview", href: "/admin", icon: "📊" },
@@ -19,15 +20,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Sidebar */}
       <aside className="w-60 bg-[#1C1208] flex flex-col fixed h-full">
         <div className="p-6 border-b border-[#F5EFE4]/10">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#C4882A] flex items-center justify-center font-serif text-[#1C1208] font-semibold text-xs">
-              OF
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="font-serif text-[#F5EFE4] text-sm font-semibold">Osotua Farming</span>
-              <span className="font-mono text-[#C4882A] text-[9px] tracking-widest uppercase">Admin</span>
-            </div>
-          </Link>
+          <Logo size="sm" />
         </div>
 
         <nav className="flex-1 p-4 overflow-y-auto">

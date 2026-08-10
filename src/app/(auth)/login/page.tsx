@@ -4,6 +4,7 @@ import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import Logo from "@/components/shared/Logo"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -35,10 +36,8 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-10">
-          <div className="w-12 h-12 rounded-full bg-[#C4882A] flex items-center justify-center font-serif text-[#1C1208] font-semibold text-base mb-3">
-            OF
-          </div>
-          <span className="font-serif text-[#F5EFE4] text-lg">Osotua Farming</span>
+          <Logo size="lg" stacked wordmark={false} asLink={false} />
+          <span className="font-serif text-[#F5EFE4] text-lg mt-3">Osotua Farming</span>
           <span className="font-mono text-[#C4882A] text-[10px] tracking-widest uppercase mt-1">Sign In</span>
         </div>
 

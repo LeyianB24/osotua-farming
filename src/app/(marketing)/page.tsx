@@ -1,7 +1,9 @@
 import Link from "next/link"
+import Image from "next/image"
 import { prisma } from "@/lib/prisma"
 import BreedCard from "@/components/farm/BreedCard"
 import ProductCard from "@/components/farm/ProductCard"
+import { HERO_IMAGE, RANCH_GALLERY } from "@/lib/images"
 
 async function getFeaturedBreeds() {
   return prisma.breed.findMany({
@@ -30,11 +32,24 @@ export default async function HomePage() {
 
       {/* HERO */}
       <section className="relative min-h-screen bg-[#1C1208] flex items-center overflow-hidden">
-        <div className="absolute inset-0"
-          style={{
-            background: "radial-gradient(ellipse 80% 60% at 70% 60%, rgba(61,107,62,0.18) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 20% 80%, rgba(196,136,42,0.12) 0%, transparent 50%), linear-gradient(160deg, #1C1208 0%, #2a1a0a 40%, #1a2010 100%)"
-          }}
-        />
+        {/* Backdrop image */}
+        <div className="absolute inset-0">
+          <Image
+            src={HERO_IMAGE}
+            alt="Osotua ranch at dawn"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-30"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 60% at 70% 60%, rgba(61,107,62,0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 20% 80%, rgba(196,136,42,0.16) 0%, transparent 50%), linear-gradient(160deg, #1C1208 0%, #2a1a0a 40%, #1a2010 100%)",
+            }}
+          />
+        </div>
 
         {/* Floating breed tags */}
         <div className="absolute top-0 right-0 bottom-0 w-1/3 hidden lg:flex flex-col justify-center gap-3 pr-16 pt-24 opacity-50">
@@ -160,6 +175,35 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* RANCH GALLERY */}
+      <section className="bg-[#FBF7F0] py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-3">
+            <span className="w-6 h-px bg-[#C4882A]" />
+            Life on the Ranch
+          </div>
+          <h2 className="font-serif text-4xl font-light text-[#1C1208] mb-12">
+            A glimpse of <em className="text-[#3D6B3E]">Osotua</em>
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {RANCH_GALLERY.map((src, i) => (
+              <div
+                key={i}
+                className="relative aspect-square overflow-hidden rounded group"
+              >
+                <Image
+                  src={src}
+                  alt={`Ranch life at Osotua ${i + 1}`}
+                  fill
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* GET INVOLVED */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#3B2506]">

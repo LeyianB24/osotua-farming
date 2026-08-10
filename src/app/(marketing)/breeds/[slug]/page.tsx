@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
+import { imageForBreed } from "@/lib/images"
 
 export default async function BreedDetailPage({
   params,
@@ -15,6 +17,8 @@ export default async function BreedDetailPage({
 
   if (!breed) notFound()
 
+  const src = breed.image ?? imageForBreed(breed.name, breed.species.name)
+
   return (
     <div className="bg-[#FBF7F0] pt-24 min-h-screen">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -28,8 +32,21 @@ export default async function BreedDetailPage({
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image */}
-          <div className="bg-gradient-to-br from-[#3B2506] to-[#6b4010] rounded h-80 lg:h-full flex items-center justify-center text-8xl">
-            {breed.species.name === "Cattle" ? "🐄" : breed.species.name === "Goats" ? "🐐" : "🐑"}
+          <div className="relative bg-gradient-to-br from-[#3B2506] to-[#6b4010] rounded h-80 lg:h-[28rem] flex items-center justify-center overflow-hidden">
+            {src ? (
+              <Image
+                src={src}
+                alt={breed.name}
+                fill
+                priority
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            ) : (
+              <span className="text-8xl">
+                {breed.species.name === "Cattle" ? "🐄" : breed.species.name === "Goats" ? "🐐" : "🐑"}
+              </span>
+            )}
           </div>
 
           {/* Details */}

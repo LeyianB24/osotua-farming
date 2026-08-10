@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { imageForBreed } from "@/lib/images"
 
 interface Props {
   breed: {
@@ -15,14 +16,21 @@ interface Props {
 }
 
 export default function BreedCard({ breed }: Props) {
+  const src = breed.image ?? imageForBreed(breed.name, breed.species.name)
   return (
     <Link
       href={`/breeds/${breed.id}`}
       className="bg-white border border-[#1C1208]/08 rounded group hover:-translate-y-1 hover:shadow-xl transition-all duration-300 overflow-hidden block"
     >
-      <div className="h-44 bg-gradient-to-br from-[#3B2506] to-[#6b4010] flex items-center justify-center relative">
-        {breed.image ? (
-          <Image src={breed.image} alt={breed.name} fill className="object-cover" />
+      <div className="h-44 bg-gradient-to-br from-[#3B2506] to-[#6b4010] flex items-center justify-center relative overflow-hidden">
+        {src ? (
+          <Image
+            src={src}
+            alt={breed.name}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
         ) : (
           <span className="text-5xl">
             {breed.species.name === "Cattle" ? "🐄" : breed.species.name === "Goats" ? "🐐" : "🐑"}

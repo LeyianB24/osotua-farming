@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   MessageCircle,
 } from "lucide-react";
+import Logo from "./Logo";
 
 // Inline SVG components for brand icons
 function FacebookIcon({ size = 14 }: { size?: number }) {
@@ -129,17 +130,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 border-b border-[#F5EFE4]/10 pb-12 md:grid-cols-5">
           {/* Brand Info (2 columns wide) */}
           <div className="md:col-span-2">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-3 transition-opacity hover:opacity-90"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#C4882A] font-serif text-xs font-semibold text-[#1C1208]">
-                OF
-              </div>
-              <span className="font-serif text-lg font-semibold tracking-tight text-[#F5EFE4]">
-                Osotua Farming
-              </span>
-            </Link>
+            <Logo size="md" />
 
             <p className="mt-4 max-w-sm font-serif text-sm italic leading-relaxed text-[#F5EFE4]/60">
               &ldquo;From Our Land, To Your Table.&rdquo;

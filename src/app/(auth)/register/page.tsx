@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import Logo from "@/components/shared/Logo"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -40,10 +41,8 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-[#1C1208] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-10">
-          <div className="w-12 h-12 rounded-full bg-[#C4882A] flex items-center justify-center font-serif text-[#1C1208] font-semibold text-base mb-3">
-            OF
-          </div>
-          <span className="font-serif text-[#F5EFE4] text-lg">Osotua Farming</span>
+          <Logo size="lg" stacked wordmark={false} asLink={false} />
+          <span className="font-serif text-[#F5EFE4] text-lg mt-3">Osotua Farming</span>
           <span className="font-mono text-[#C4882A] text-[10px] tracking-widest uppercase mt-1">Create Account</span>
         </div>
 

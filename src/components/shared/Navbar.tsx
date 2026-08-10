@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ShoppingBag, MapPin } from "lucide-react";
+import Logo from "./Logo";
 
 const navLinks = [
   { label: "Our Breeds", href: "/breeds" },
@@ -41,24 +42,7 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
         <div className="flex items-center justify-between h-16 md:h-20">
           
           {/* Brand Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4882A] rounded-sm p-1"
-          >
-            <div className="w-9 h-9 rounded-full bg-[#C4882A] flex items-center justify-center font-serif text-[#1C1208] font-bold text-sm shadow-xs">
-              OF
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="font-serif text-[#F5EFE4] text-base md:text-lg font-semibold tracking-wide">
-                Osotua Farming
-              </span>
-              <span className="font-mono text-[#C4882A] text-[10px] tracking-widest uppercase flex items-center gap-1">
-                <span>Kajiado</span>
-                <span>&bull;</span>
-                <span>Kenya</span>
-              </span>
-            </div>
-          </Link>
+          <Logo size="md" />
 
           {/* Desktop Navigation Links */}
           <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-8">
