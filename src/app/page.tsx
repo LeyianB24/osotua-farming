@@ -2,6 +2,7 @@ import Link from "next/link"
 import { prisma } from "@/lib/prisma"
 import BreedCard from "@/components/farm/BreedCard"
 import ProductCard from "@/components/farm/ProductCard"
+import NewsletterForm from "@/components/shared/NewsletterForm"
 
 async function getFeaturedBreeds() {
   try {
@@ -45,15 +46,15 @@ export default async function HomePage() {
           <div className="absolute bottom-1/3 left-1/6 w-80 h-80 rounded-full bg-[#3D6B3E]/10 blur-3xl" />
         </div>
 
-        {/* Floating breed tags — right side decoration */}
+        {/* Floating breed tags */}
         <div className="absolute top-0 right-0 bottom-0 w-2/5 hidden lg:flex flex-col justify-center gap-3 pr-16 pt-24 pointer-events-none select-none">
           {[
-            { label: "Boran Beef Cattle",   delay: "0s",    indent: "0px" },
-            { label: "Sahiwal Dairy",        delay: "1.2s",  indent: "28px" },
-            { label: "Boer × Galla Goats",  delay: "2.4s",  indent: "10px" },
-            { label: "Dorper Sheep",         delay: "3.6s",  indent: "40px" },
-            { label: "Bonsmara Bulls",       delay: "4.8s",  indent: "16px" },
-            { label: "Simmental Cross",      delay: "6.0s",  indent: "32px" },
+            { label: "Boran Beef Cattle",  delay: "0s",   indent: "0px" },
+            { label: "Sahiwal Dairy",       delay: "1.2s", indent: "28px" },
+            { label: "Boer × Galla Goats", delay: "2.4s", indent: "10px" },
+            { label: "Dorper Sheep",        delay: "3.6s", indent: "40px" },
+            { label: "Bonsmara Bulls",      delay: "4.8s", indent: "16px" },
+            { label: "Simmental Cross",     delay: "6.0s", indent: "32px" },
           ].map((tag) => (
             <span
               key={tag.label}
@@ -75,14 +76,17 @@ export default async function HomePage() {
               Kajiado County, Kenya
             </div>
 
-            <h1 className="font-serif text-[#F5EFE4] mb-6"
-                style={{ fontSize: "clamp(3.2rem, 6vw, 5.8rem)", fontWeight: 300, lineHeight: 1.05 }}>
+            <h1
+              className="font-serif text-[#F5EFE4] mb-6"
+              style={{ fontSize: "clamp(3.2rem, 6vw, 5.8rem)", fontWeight: 300, lineHeight: 1.05 }}
+            >
               Where the land<br />
               <em className="text-[#C4882A]">feeds</em> the future
             </h1>
 
             <p className="text-[#F5EFE4]/60 text-lg leading-relaxed max-w-lg mb-12">
-              A modern smart farm raising premium indigenous livestock, growing wholesome food, and bringing it all to your table. Authentic breeds. Sustainable methods. African excellence.
+              A modern smart farm raising premium indigenous livestock, growing wholesome food,
+              and bringing it all to your table. Authentic breeds. Sustainable methods. African excellence.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -104,8 +108,10 @@ export default async function HomePage() {
               { num: "2026", label: "Est. Kajiado" },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="font-serif text-[#C4882A] font-semibold"
-                     style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", lineHeight: 1 }}>
+                <div
+                  className="font-serif text-[#C4882A] font-semibold"
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", lineHeight: 1 }}
+                >
                   {stat.num}
                 </div>
                 <div className="eyebrow-plain text-[#F5EFE4]/35 text-[9px] tracking-[0.18em] mt-1.5">
@@ -116,22 +122,12 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Terrain wave — signature element */}
+        {/* Terrain wave */}
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
-          <svg viewBox="0 0 1440 100" preserveAspectRatio="none"
-               className="w-full h-16 sm:h-24" fill="none">
-            <path
-              d="M0,70 C180,30 360,90 540,60 C720,30 900,80 1080,50 C1260,20 1380,65 1440,55 L1440,100 L0,100 Z"
-              fill="rgba(61,107,62,0.12)"
-            />
-            <path
-              d="M0,82 C240,55 480,88 720,70 C960,52 1200,82 1440,68 L1440,100 L0,100 Z"
-              fill="rgba(196,136,42,0.08)"
-            />
-            <path
-              d="M0,92 C360,78 720,95 1440,85 L1440,100 L0,100 Z"
-              fill="rgba(28,18,8,0.6)"
-            />
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-16 sm:h-24" fill="none">
+            <path d="M0,70 C180,30 360,90 540,60 C720,30 900,80 1080,50 C1260,20 1380,65 1440,55 L1440,100 L0,100 Z" fill="rgba(61,107,62,0.12)" />
+            <path d="M0,82 C240,55 480,88 720,70 C960,52 1200,82 1440,68 L1440,100 L0,100 Z" fill="rgba(196,136,42,0.08)" />
+            <path d="M0,92 C360,78 720,95 1440,85 L1440,100 L0,100 Z" fill="rgba(28,18,8,0.6)" />
           </svg>
         </div>
       </section>
@@ -149,41 +145,18 @@ export default async function HomePage() {
               </h2>
             </div>
             <p className="text-[#1C1208]/55 max-w-sm leading-relaxed text-sm">
-              Every animal is selected for genetic superiority, climate resilience, and commercial value — ready for East Africa's conditions.
+              Every animal is selected for genetic superiority, climate resilience,
+              and commercial value — ready for East Africa's conditions.
             </p>
           </div>
 
-          {/* Livestock enterprise cards */}
+          {/* Livestock enterprise tiles */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 mb-12">
             {[
-              {
-                icon: "🐂",
-                label: "Beef Cattle",
-                desc: "Boran · Bonsmara · Brahman · Simmental",
-                bg: "gradient-hide",
-                count: "4 breeds",
-              },
-              {
-                icon: "🐄",
-                label: "Dairy Cattle",
-                desc: "Sahiwal · Friesian × Sahiwal crosses",
-                bg: "gradient-grass",
-                count: "2 breeds",
-              },
-              {
-                icon: "🐐",
-                label: "Goats",
-                desc: "Boer · Galla · Boer × Galla",
-                bg: "gradient-hide",
-                count: "3 breeds",
-              },
-              {
-                icon: "🐑",
-                label: "Sheep",
-                desc: "Dorper · Red Maasai × Dorper",
-                bg: "gradient-grass",
-                count: "2 breeds",
-              },
+              { icon: "🐂", label: "Beef Cattle",  desc: "Boran · Bonsmara · Brahman · Simmental",  bg: "gradient-hide",  count: "4 breeds" },
+              { icon: "🐄", label: "Dairy Cattle", desc: "Sahiwal · Friesian × Sahiwal crosses",     bg: "gradient-grass", count: "2 breeds" },
+              { icon: "🐐", label: "Goats",        desc: "Boer · Galla · Boer × Galla",             bg: "gradient-hide",  count: "3 breeds" },
+              { icon: "🐑", label: "Sheep",        desc: "Dorper · Red Maasai × Dorper",            bg: "gradient-grass", count: "2 breeds" },
             ].map((item, i) => (
               <Link
                 key={item.label}
@@ -223,10 +196,8 @@ export default async function HomePage() {
 
       {/* ── TERRAIN BREAK ─────────────────────────────────────── */}
       <div className="terrain-divider bg-[#FBF7F0]">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none"
-             className="w-full h-10" fill="none">
-          <path d="M0,30 C360,10 720,50 1440,25 L1440,60 L0,60 Z"
-                fill="#1C1208" opacity="0.04"/>
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="w-full h-10" fill="none">
+          <path d="M0,30 C360,10 720,50 1440,25 L1440,60 L0,60 Z" fill="#1C1208" opacity="0.04" />
         </svg>
       </div>
 
@@ -250,19 +221,20 @@ export default async function HomePage() {
               </h2>
             </div>
             <p className="text-[#F5EFE4]/45 max-w-sm leading-relaxed text-sm">
-              Walk in or order online. Every product carries the Osotua promise — raised here, handled with care, delivered to you.
+              Walk in or order online. Every product carries the Osotua promise —
+              raised here, handled with care, delivered to you.
             </p>
           </div>
 
           {/* Product category tiles */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-12">
             {[
-              { icon: "🥩", name: "Beef Cuts",      note: "Aged & portioned" },
-              { icon: "🥛", name: "Dairy",          note: "Milk, yoghurt, ghee" },
-              { icon: "🐐", name: "Goat Meat",      note: "Whole or portioned" },
-              { icon: "🥬", name: "Vegetables",     note: "Pesticide-free" },
-              { icon: "🍋", name: "Fresh Fruits",   note: "Seasonal orchards" },
-              { icon: "📦", name: "Ranch Box",      note: "Weekly subscription" },
+              { icon: "🥩", name: "Beef Cuts",    note: "Aged & portioned" },
+              { icon: "🥛", name: "Dairy",        note: "Milk, yoghurt, ghee" },
+              { icon: "🐐", name: "Goat Meat",    note: "Whole or portioned" },
+              { icon: "🥬", name: "Vegetables",   note: "Pesticide-free" },
+              { icon: "🍋", name: "Fresh Fruits", note: "Seasonal orchards" },
+              { icon: "📦", name: "Ranch Box",    note: "Weekly subscription" },
             ].map((item, i) => (
               <Link
                 key={item.name}
@@ -359,7 +331,8 @@ export default async function HomePage() {
                 <em className="text-[#C4882A]">trust and land</em>
               </h2>
               <p className="text-[#1C1208]/55 leading-relaxed mb-10">
-                Our name says it all. Osotua means a bond of friendship in the Maa language — a covenant between the land, the farmer, and the community it feeds.
+                Our name says it all. Osotua means a bond of friendship in the Maa language —
+                a covenant between the land, the farmer, and the community it feeds.
               </p>
 
               <div className="flex flex-col gap-6">
@@ -401,12 +374,12 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { icon: "💼", title: "Careers",         desc: "Join our world-class team of farmers, veterinarians, technologists, and agribusiness professionals.", href: "/careers",  cta: "View open roles" },
-              { icon: "📈", title: "Invest",           desc: "Partner with us as an investor or sponsor and participate in Kenya's most exciting farm venture.", href: "/invest",   cta: "See investment brief" },
-              { icon: "🌾", title: "Partner Farmers",  desc: "Supply vegetables, fodder, or eggs under our outgrower scheme with guaranteed offtake prices.", href: "/partners",  cta: "Join the network" },
-              { icon: "🎓", title: "Internships",      desc: "Students in agriculture, IT, and business are welcome for structured 3–6 month attachments.", href: "/careers#internships", cta: "Apply now" },
-              { icon: "🏨", title: "B2B Supply",       desc: "Hotels, restaurants, and supermarkets — consistent quality supply direct from our ranch.", href: "/contact#b2b", cta: "Request a quote" },
-              { icon: "🗓️", title: "Farm Visits",     desc: "Book a guided tour of the ranch. See the herds, the fields, the Barn Store, and more.", href: "/visit",    cta: "Book a tour" },
+              { icon: "💼", title: "Careers",        desc: "Join our world-class team of farmers, veterinarians, technologists, and agribusiness professionals.", href: "/careers",             cta: "View open roles" },
+              { icon: "📈", title: "Invest",          desc: "Partner with us as an investor or sponsor and participate in Kenya's most exciting farm venture.",    href: "/invest",             cta: "See investment brief" },
+              { icon: "🌾", title: "Partner Farmers", desc: "Supply vegetables, fodder, or eggs under our outgrower scheme with guaranteed offtake prices.",        href: "/partners",           cta: "Join the network" },
+              { icon: "🎓", title: "Internships",     desc: "Students in agriculture, IT, and business are welcome for structured 3–6 month attachments.",         href: "/careers#internships", cta: "Apply now" },
+              { icon: "🏨", title: "B2B Supply",      desc: "Hotels, restaurants, and supermarkets — consistent quality supply direct from our ranch.",             href: "/contact#b2b",        cta: "Request a quote" },
+              { icon: "🗓️", title: "Farm Visits",    desc: "Book a guided tour of the ranch. See the herds, the fields, the Barn Store, and more.",               href: "/visit",              cta: "Book a tour" },
             ].map((item, i) => (
               <Link
                 key={item.title}
@@ -426,13 +399,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── TESTIMONIAL / BRAND STATEMENT ─────────────────────── */}
+      {/* ── BRAND STATEMENT ───────────────────────────────────── */}
       <section className="section-sm bg-[#FBF7F0] border-y border-[#EDE5D8]">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <div className="font-serif text-[#1C1208]/20 text-8xl leading-none mb-4">"</div>
             <blockquote className="font-serif text-[#1C1208] text-display-sm font-light italic leading-snug mb-6">
-              We don't just raise animals and grow food. We build relationships that nourish Kenya — one farm, one family, one table at a time.
+              We don't just raise animals and grow food. We build relationships that nourish Kenya —
+              one farm, one family, one table at a time.
             </blockquote>
             <div className="eyebrow-plain text-[#C4882A] text-[10px]">
               Osotua Farming · Kajiado, Kenya
@@ -453,18 +427,7 @@ export default async function HomePage() {
                 Monthly updates — new breeds, seasonal harvests, farm stories, exclusive offers.
               </p>
             </div>
-            <form className="flex gap-3 flex-wrap" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="input input-dark min-w-[220px] sm:min-w-[260px]"
-                style={{ background: "rgba(28,18,8,0.12)", borderColor: "rgba(28,18,8,0.2)", color: "#1C1208" }}
-              />
-              <button type="submit" className="btn"
-                style={{ background: "#1C1208", color: "#C4882A", padding: "0.8rem 1.75rem", borderRadius: "2px", fontSize: "0.875rem", fontWeight: 500 }}>
-                Join the Ranch
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
       </section>
