@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { TrendingUp, ShieldCheck, PieChart, Download, CheckCircle2 } from "lucide-react"
 
 export default function InvestPage() {
   const [amount, setAmount] = useState(500000)
@@ -17,16 +16,15 @@ export default function InvestPage() {
   return (
     <div className="bg-[#FBF7F0] pt-20 min-h-screen">
       {/* Header */}
-      <div className="bg-[#1C1208] py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="bg-[#1C1208] py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-5xl mx-auto relative z-10">
-          <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-4">
-            <span className="w-6 h-px bg-[#C4882A]" />
+          <div className="eyebrow text-[#C4882A] mb-4">
             Investor Relations
           </div>
-          <h1 className="font-serif text-5xl font-light text-[#F5EFE4] mb-4">
-            Invest in <em className="text-[#C4882A]">Africa&apos;s future</em>
+          <h1 className="font-serif text-5xl sm:text-6xl font-light text-[#F5EFE4] mb-4 leading-tight tracking-tight">
+            Invest in <em className="text-[#C4882A] not-italic">Africa&apos;s future</em>
           </h1>
-          <p className="text-[#F5EFE4]/60 max-w-xl leading-relaxed">
+          <p className="text-[#F5EFE4]/70 max-w-xl leading-relaxed text-base">
             Osotua Farming offers a high-yield opportunity uniting climate-resilient livestock genetics, organic produce supply, and modern agribusiness tech.
           </p>
         </div>
@@ -35,20 +33,20 @@ export default function InvestPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
         {/* Interactive ROI Calculator */}
-        <div className="bg-white border border-[#1C1208]/10 rounded-md p-6 sm:p-10 shadow-lg mb-16">
+        <div className="os-card p-6 sm:p-10 mb-16 shadow-xl">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8 border-b border-[#1C1208]/08 pb-6">
             <div>
-              <span className="eyebrow text-[#C4882A] mb-1">Interactive Calculator</span>
+              <div className="eyebrow text-[#C4882A] mb-1">Interactive Calculator</div>
               <h2 className="font-serif text-3xl text-[#1C1208] font-light">
-                Projected <em className="text-[#3D6B3E]">Return on Investment</em>
+                Projected <em className="text-[#3D6B3E] not-italic">Return on Investment</em>
               </h2>
             </div>
-            <div className="flex bg-[#F5EFE4] p-1 rounded-xs border border-[#EDE5D8]">
+            <div className="flex bg-[#F5EFE4] p-1 rounded border border-[#EDE5D8]">
               <button
                 onClick={() => setInvestmentType("breeding")}
-                className={`px-4 py-1.5 rounded-xs text-xs font-mono transition-all ${
+                className={`px-4 py-2 rounded text-xs font-mono transition-all ${
                   investmentType === "breeding"
-                    ? "bg-[#C4882A] text-[#1C1208] font-bold"
+                    ? "bg-[#C4882A] text-[#1C1208] font-bold shadow-sm"
                     : "text-[#1C1208]/60 hover:text-[#1C1208]"
                 }`}
               >
@@ -56,9 +54,9 @@ export default function InvestPage() {
               </button>
               <button
                 onClick={() => setInvestmentType("barn")}
-                className={`px-4 py-1.5 rounded-xs text-xs font-mono transition-all ${
+                className={`px-4 py-2 rounded text-xs font-mono transition-all ${
                   investmentType === "barn"
-                    ? "bg-[#C4882A] text-[#1C1208] font-bold"
+                    ? "bg-[#C4882A] text-[#1C1208] font-bold shadow-sm"
                     : "text-[#1C1208]/60 hover:text-[#1C1208]"
                 }`}
               >
@@ -116,7 +114,7 @@ export default function InvestPage() {
             </div>
 
             {/* Projected Outputs */}
-            <div className="bg-[#1C1208] text-[#F5EFE4] rounded-md p-6 flex flex-col justify-between space-y-4">
+            <div className="bg-[#1C1208] text-[#F5EFE4] rounded p-6 flex flex-col justify-between space-y-4 shadow-xl">
               <div className="space-y-3">
                 <div className="eyebrow text-[#C4882A]">Estimated Outcome</div>
                 <div className="flex justify-between items-baseline border-b border-[#F5EFE4]/10 pb-2">
@@ -130,7 +128,7 @@ export default function InvestPage() {
                   </span>
                 </div>
                 <div className="flex justify-between items-baseline pt-1">
-                  <span className="font-serif text-sm">Total Projected Value:</span>
+                  <span className="font-serif text-base">Total Projected Value:</span>
                   <span className="font-mono text-2xl font-bold text-[#C4882A]">
                     KES {Math.round(estimatedReturn).toLocaleString()}
                   </span>
@@ -147,42 +145,39 @@ export default function InvestPage() {
         {/* Core Pillars */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
           {[
-            { icon: TrendingUp, label: "Livestock Enterprise", desc: "Breeding, importing, and distributing climate-resilient bulls, heifers, Boer goats, and Dorper sheep." },
-            { icon: PieChart, label: "Barn Store Network", desc: "Direct-to-consumer and B2B supply of aged beef, fresh dairy, organic produce, and weekly subscription boxes." },
-            { icon: ShieldCheck, label: "Asset Backed Growth", desc: "Every investment unit is backed by physical herd inventory and titled rangeland assets in Kajiado." },
-          ].map((item) => {
-            const Icon = item.icon
-            return (
-              <div key={item.label} className="bg-white border border-[#1C1208]/08 rounded-md p-6 shadow-sm">
-                <div className="w-10 h-10 rounded-full bg-[#C4882A]/10 text-[#C4882A] flex items-center justify-center mb-4">
-                  <Icon size={20} />
-                </div>
-                <div className="font-serif text-xl text-[#1C1208] mb-2">{item.label}</div>
-                <div className="text-[#1C1208]/55 text-xs leading-relaxed">{item.desc}</div>
+            { icon: "bi-graph-up-arrow", label: "Livestock Enterprise", desc: "Breeding, importing, and distributing climate-resilient bulls, heifers, Boer goats, and Dorper sheep." },
+            { icon: "bi-pie-chart", label: "Barn Store Network", desc: "Direct-to-consumer and B2B supply of aged beef, fresh dairy, organic produce, and weekly subscription boxes." },
+            { icon: "bi-shield-check", label: "Asset Backed Growth", desc: "Every investment unit is backed by physical herd inventory and titled rangeland assets in Kajiado." },
+          ].map((item) => (
+            <div key={item.label} className="os-card p-6">
+              <div className="w-12 h-12 rounded bg-[#C4882A]/10 border border-[#C4882A]/25 flex items-center justify-center mb-4">
+                <i className={`bi ${item.icon} text-xl text-[#C4882A]`} />
               </div>
-            )
-          })}
+              <div className="font-serif text-2xl text-[#1C1208] mb-2">{item.label}</div>
+              <div className="text-[#1C1208]/60 text-sm leading-relaxed">{item.desc}</div>
+            </div>
+          ))}
         </div>
 
         {/* Prospectus Request Box */}
-        <div className="bg-[#1C1208] rounded-md p-10 text-center text-[#F5EFE4] shadow-xl relative overflow-hidden">
-          <span className="eyebrow justify-center text-[#C4882A] mb-3">Official Prospectus</span>
-          <h2 className="font-serif text-3xl font-light mb-4">Request the Full Investment Brief</h2>
-          <p className="text-[#F5EFE4]/60 text-xs mb-8 max-w-md mx-auto leading-relaxed">
+        <div className="bg-[#1C1208] rounded p-12 text-center text-[#F5EFE4] shadow-2xl relative overflow-hidden">
+          <div className="eyebrow justify-center text-[#C4882A] mb-3">Official Prospectus</div>
+          <h2 className="font-serif text-4xl font-light mb-4">Request the Full Investment Brief</h2>
+          <p className="text-[#F5EFE4]/60 text-sm mb-8 max-w-md mx-auto leading-relaxed">
             Our 2026 investment brief covers audited financial projections, rangeland expansion blueprints, legal framework, and partner equity structures.
           </p>
 
           {requested ? (
-            <div className="inline-flex items-center gap-2 text-sm text-[#3D6B3E] font-mono bg-[#3D6B3E]/15 border border-[#3D6B3E]/30 px-6 py-3 rounded-xs">
-              <CheckCircle2 size={18} />
+            <div className="inline-flex items-center gap-2 text-sm text-[#3D6B3E] font-mono bg-[#3D6B3E]/15 border border-[#3D6B3E]/30 px-6 py-3 rounded">
+              <i className="bi bi-check-circle" />
               <span>Investment Brief sent to your email!</span>
             </div>
           ) : (
             <button
               onClick={() => setRequested(true)}
-              className="btn btn-primary btn-lg inline-flex items-center gap-2"
+              className="btn-primary"
             >
-              <Download size={16} />
+              <i className="bi bi-download" />
               <span>Download 2026 Investment Brief</span>
             </button>
           )}
@@ -192,4 +187,3 @@ export default function InvestPage() {
     </div>
   )
 }
-

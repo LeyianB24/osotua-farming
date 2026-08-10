@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import ProductCard from "./ProductCard";
-import { Search, ShoppingBag } from "lucide-react";
 import Link from "next/link";
+import ProductCard from "./ProductCard";
 import { useCart } from "@/components/shared/CartContext";
 
 interface ProductItem {
@@ -24,6 +23,16 @@ interface CategoryItem {
   slug: string;
 }
 
+const categoryIcons: Record<string, string> = {
+  "Beef Cuts":      "bi-basket",
+  "Dairy Products": "bi-droplet",
+  "Vegetables":     "bi-tree",
+  "Fruits":         "bi-flower1",
+  "Ranch Box":      "bi-box-seam",
+  "Goat Meat":      "bi-scissors",
+  "Sheep Meat":     "bi-scissors",
+};
+
 interface Props {
   initialProducts: ProductItem[];
   categories: CategoryItem[];
@@ -31,118 +40,196 @@ interface Props {
 
 export default function BarnClient({ initialProducts, categories }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const { cartCount, cartTotal } = useCart();
+  const [searchQuery, setSearchQuery]           = useState<string>("");
+  const { cartCount, cartTotal }                = useCart();
 
-  const filteredProducts = initialProducts.filter((product) => {
-    const matchesCat =
+  const filtered = initialProducts.filter((p) => {
+    const matchCat =
       selectedCategory === "all" ||
-      product.category.name.toLowerCase() === selectedCategory.toLowerCase() ||
-      product.category.id === selectedCategory;
-    const matchesSearch =
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCat && matchesSearch;
+      p.category.name.toLowerCase() === selectedCategory.toLowerCase() ||
+      p.category.id === selectedCategory;
+    const matchQ =
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.category.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchCat && matchQ;
   });
 
+  const hasFilters = selectedCategory !== "all" || searchQuery !== "";
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Control Panel: Search & Category Filter Bar */}
-      <div className="bg-white border border-[#1C1208]/08 rounded-md p-4 sm:p-6 mb-10 store-card-shadow">
-        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5">
-          
-          {/* Category Pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-xs text-xs font-mono font-semibold uppercase tracking-wider transition-all duration-200 ${
-                selectedCategory === "all"
-                  ? "bg-[#C4882A] text-[#1C1208] shadow-[0_4px_14px_rgba(196,136,42,0.4)] scale-102"
-                  : "bg-[#F5EFE4]/80 text-[#1C1208]/75 hover:bg-[#F5EFE4] hover:text-[#1C1208]"
-              }`}
-            >
-              All Items ({initialProducts.length})
-            </button>
-            {categories.map((cat) => {
-              const count = initialProducts.filter((p) => p.category.id === cat.id).length;
-              const isSelected = selectedCategory.toLowerCase() === cat.name.toLowerCase();
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.name)}
-                  className={`px-4 py-2 rounded-xs text-xs font-mono font-semibold uppercase tracking-wider transition-all duration-200 ${
-                    isSelected
-                      ? "bg-[#C4882A] text-[#1C1208] shadow-[0_4px_14px_rgba(196,136,42,0.4)] scale-102"
-                      : "bg-[#F5EFE4]/80 text-[#1C1208]/75 hover:bg-[#F5EFE4] hover:text-[#1C1208]"
-                  }`}
-                >
-                  {cat.name} ({count})
-                </button>
-              );
-            })}
-          </div>
+    <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "2.5rem 1.5rem 4rem" }}>
 
-          {/* Search Box */}
-          <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#1C1208]/40" size={16} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search beef, dairy, fruits, vegetables..."
-              className="w-full pl-10 pr-4 py-2.5 bg-[#FBF7F0] border border-[#1C1208]/15 rounded-xs text-xs text-[#1C1208] placeholder:text-[#1C1208]/40 focus:outline-none focus:border-[#C4882A] focus:ring-2 focus:ring-[#C4882A]/20 transition-all"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Sticky Cart Summary Banner */}
+      {/* ── CART BANNER ── */}
       {cartCount > 0 && (
-        <div className="mb-10 p-4 sm:p-5 bg-gradient-to-r from-[#1C1208] via-[#251A0E] to-[#1C1208] text-[#F5EFE4] rounded-md border border-[#C4882A]/40 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
-          <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-full bg-[#C4882A] text-[#1C1208] flex items-center justify-center font-bold shadow-[0_0_15px_rgba(196,136,42,0.5)]">
-              <ShoppingBag size={20} />
+        <div
+          className="reveal"
+          style={{
+            background: "#1C1208",
+            border: "1px solid rgba(196,136,42,0.25)",
+            borderRadius: "4px",
+            padding: "1.25rem 1.5rem",
+            marginBottom: "2rem",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1rem",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <div style={{
+              width: "44px", height: "44px", borderRadius: "2px",
+              background: "#C4882A", color: "#1C1208",
+              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+            }}>
+              <i className="bi bi-bag-check" style={{ fontSize: "1.25rem" }} />
             </div>
             <div>
-              <div className="font-mono text-xs font-bold text-[#C4882A] uppercase tracking-wider">
-                {cartCount} {cartCount === 1 ? "Item" : "Items"} ready in your basket
+              <div style={{ color: "#C4882A", fontWeight: 600, fontSize: "0.85rem" }}>
+                {cartCount} {cartCount === 1 ? "item" : "items"} in your basket
               </div>
-              <div className="text-xs text-[#F5EFE4]/80 mt-0.5">
-                Subtotal: <span className="font-bold text-white text-sm">KES {cartTotal.toLocaleString()}</span>
+              <div style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.8rem" }}>
+                Subtotal: <strong style={{ color: "#F5EFE4" }}>KES {cartTotal.toLocaleString()}</strong>
               </div>
             </div>
           </div>
-          <Link
-            href="/cart"
-            className="btn btn-primary btn-sm px-5 py-2.5 font-bold uppercase tracking-wider shadow-md hover:scale-105 transition-transform"
-          >
-            Review Cart & Checkout →
+          <Link href="/cart" className="btn-primary" style={{ fontSize: "0.72rem", padding: "0.625rem 1.25rem" }}>
+            <i className="bi bi-bag-check" />
+            Proceed to Checkout
           </Link>
         </div>
       )}
 
-      {/* Grid */}
-      {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProducts.map((product) => (
+      {/* ── CONTROLS ── */}
+      <div style={{ marginBottom: "2.5rem" }}>
+        {/* Search */}
+        <div style={{ position: "relative", marginBottom: "1.25rem" }}>
+          <i className="bi bi-search" style={{
+            position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)",
+            color: "rgba(28,18,8,0.35)", fontSize: "0.95rem", pointerEvents: "none",
+          }} />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search beef, dairy, vegetables..."
+            className="os-input"
+            style={{ paddingLeft: "2.75rem", paddingRight: searchQuery ? "2.5rem" : "1rem" }}
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              style={{
+                position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)",
+                background: "none", border: "none", cursor: "pointer",
+                color: "rgba(28,18,8,0.4)", fontSize: "0.9rem",
+              }}
+            >
+              <i className="bi bi-x-lg" />
+            </button>
+          )}
+        </div>
+
+        {/* Category filters */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+          <button
+            onClick={() => setSelectedCategory("all")}
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "0.4rem",
+              padding: "0.5rem 1rem",
+              background: selectedCategory === "all" ? "#1C1208" : "#FFFFFF",
+              color: selectedCategory === "all" ? "#C4882A" : "rgba(28,18,8,0.65)",
+              border: selectedCategory === "all" ? "1px solid #1C1208" : "1px solid rgba(28,18,8,0.15)",
+              borderRadius: "2px",
+              fontSize: "0.72rem", fontWeight: 600,
+              letterSpacing: "0.08em", textTransform: "uppercase",
+              cursor: "pointer", transition: "all 0.2s ease",
+            }}
+          >
+            <i className="bi bi-grid" style={{ fontSize: "0.85rem" }} />
+            All Products
+            <span style={{ opacity: 0.5, fontWeight: 400 }}>({initialProducts.length})</span>
+          </button>
+
+          {categories.map((cat) => {
+            const count  = initialProducts.filter((p) => p.category.id === cat.id).length;
+            const active = selectedCategory.toLowerCase() === cat.name.toLowerCase();
+            const icon   = categoryIcons[cat.name] || "bi-bag";
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.name)}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                  padding: "0.5rem 1rem",
+                  background: active ? "#C4882A" : "#FFFFFF",
+                  color: active ? "#1C1208" : "rgba(28,18,8,0.65)",
+                  border: active ? "1px solid #C4882A" : "1px solid rgba(28,18,8,0.15)",
+                  borderRadius: "2px",
+                  fontSize: "0.72rem", fontWeight: 600,
+                  letterSpacing: "0.08em", textTransform: "uppercase",
+                  cursor: "pointer", transition: "all 0.2s ease",
+                }}
+              >
+                <i className={`bi ${icon}`} style={{ fontSize: "0.85rem" }} />
+                {cat.name}
+                <span style={{ opacity: active ? 0.5 : 0.4, fontWeight: 400 }}>({count})</span>
+              </button>
+            );
+          })}
+
+          {hasFilters && (
+            <button
+              onClick={() => { setSelectedCategory("all"); setSearchQuery(""); }}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                padding: "0.5rem 0.875rem",
+                background: "rgba(160,67,30,0.06)",
+                color: "#A0431E",
+                border: "1px solid rgba(160,67,30,0.2)",
+                borderRadius: "2px",
+                fontSize: "0.68rem", fontWeight: 600,
+                letterSpacing: "0.08em", textTransform: "uppercase",
+                cursor: "pointer",
+              }}
+            >
+              <i className="bi bi-x-lg" style={{ fontSize: "0.7rem" }} />
+              Clear
+            </button>
+          )}
+        </div>
+
+        {/* Results count */}
+        <p style={{ color: "rgba(28,18,8,0.5)", fontSize: "0.82rem", marginTop: "1rem" }}>
+          Showing <strong style={{ color: "#1C1208" }}>{filtered.length}</strong> of {initialProducts.length} products
+          {selectedCategory !== "all" && (
+            <span> · <span style={{ color: "#C4882A", fontWeight: 600 }}>{selectedCategory}</span></span>
+          )}
+        </p>
+      </div>
+
+      {/* ── PRODUCT GRID ── */}
+      {filtered.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {filtered.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       ) : (
-        <div className="text-center py-24 bg-white border border-dashed border-[#1C1208]/15 rounded-md p-8 store-card-shadow">
-          <div className="text-5xl mb-4">🌿</div>
-          <h3 className="font-serif text-3xl text-[#1C1208] font-light mb-2">No produce found</h3>
-          <p className="text-sm text-[#1C1208]/50 max-w-sm mx-auto mb-6">
-            We couldn&apos;t find any farm items matching your current filters.
+        <div style={{ textAlign: "center", padding: "5rem 0" }}>
+          <i className="bi bi-bag-x" style={{ fontSize: "3rem", color: "rgba(28,18,8,0.2)", display: "block", marginBottom: "1rem" }} />
+          <h3 className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 300, color: "#1C1208", marginBottom: "0.75rem" }}>
+            No products found
+          </h3>
+          <p style={{ color: "rgba(28,18,8,0.5)", fontSize: "0.9rem", marginBottom: "2rem" }}>
+            Try a different search or category filter.
           </p>
           <button
-            onClick={() => {
-              setSelectedCategory("all");
-              setSearchQuery("");
-            }}
-            className="btn btn-primary btn-sm font-bold uppercase tracking-wider"
+            onClick={() => { setSelectedCategory("all"); setSearchQuery(""); }}
+            className="btn-primary"
           >
             Show All Items
+            <i className="bi bi-arrow-counterclockwise" />
           </button>
         </div>
       )}

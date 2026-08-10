@@ -2,10 +2,9 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ShoppingBag, Check, Heart, Star, Zap } from "lucide-react"
+import { useState } from "react"
 import { imageForCategory } from "@/lib/images"
 import { useCart } from "@/components/shared/CartContext"
-import { useState } from "react"
 
 interface Props {
   product: {
@@ -22,32 +21,21 @@ interface Props {
 }
 
 const categoryIcons: Record<string, string> = {
-  "Beef Cuts": "🥩",
-  "Dairy Products": "🥛",
-  "Vegetables": "🥬",
-  "Fruits": "🍋",
-  "Ranch Box": "📦",
-  "Goat Meat": "🐐",
-  "Sheep Meat": "🐑",
-}
-
-const categoryColors: Record<string, string> = {
-  "Beef Cuts": "from-red-900 to-amber-900",
-  "Dairy Products": "from-blue-900 to-cyan-900",
-  "Vegetables": "from-green-900 to-emerald-900",
-  "Fruits": "from-yellow-900 to-orange-900",
-  "Ranch Box": "from-purple-900 to-indigo-900",
-  "Goat Meat": "from-amber-900 to-stone-900",
-  "Sheep Meat": "from-stone-900 to-zinc-900",
+  "Beef Cuts":      "bi-basket",
+  "Dairy Products": "bi-droplet",
+  "Vegetables":     "bi-tree",
+  "Fruits":         "bi-flower1",
+  "Ranch Box":      "bi-box-seam",
+  "Goat Meat":      "bi-scissors",
+  "Sheep Meat":     "bi-scissors",
 }
 
 export default function ProductCard({ product, dark }: Props) {
   const { addToCart } = useCart()
   const [added, setAdded] = useState(false)
   const [wishlist, setWishlist] = useState(false)
-  const icon = categoryIcons[product.category.name] || "🌿"
-  const gradientFallback = categoryColors[product.category.name] || "from-stone-900 to-amber-900"
   const src = product.image ?? imageForCategory(product.category.name)
+  const icon = categoryIcons[product.category.name] || "bi-bag"
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -73,133 +61,190 @@ export default function ProductCard({ product, dark }: Props) {
   }
 
   return (
-    <div className={`group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-500 ease-out
-      ${dark
-        ? "bg-white/5 backdrop-blur-xl border border-white/10 hover:border-[#C4882A]/50 hover:shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
-        : "bg-white border border-black/5 shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
-      }
-      hover:-translate-y-2`}
+    <div
+      className="group relative flex flex-col"
+      style={{
+        background: dark ? "rgba(245,239,228,0.05)" : "#FFFFFF",
+        border: dark
+          ? "1px solid rgba(245,239,228,0.1)"
+          : "1px solid rgba(28,18,8,0.08)",
+        borderRadius: "4px",
+        overflow: "hidden",
+        transition: "transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease",
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.transform = "translateY(-6px)"
+        el.style.boxShadow = dark
+          ? "0 24px 64px rgba(0,0,0,0.4)"
+          : "0 24px 64px rgba(28,18,8,0.12)"
+        el.style.borderColor = "rgba(196,136,42,0.3)"
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.transform = ""
+        el.style.boxShadow = ""
+        el.style.borderColor = dark ? "rgba(245,239,228,0.1)" : "rgba(28,18,8,0.08)"
+      }}
     >
-      {/* Image container */}
-      <Link href={`/barn/${product.slug}`} className="block relative aspect-[4/3] overflow-hidden">
+      {/* Image area */}
+      <Link href={`/barn/${product.slug}`} className="block relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
         {src ? (
           <Image
             src={src}
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            className="object-cover"
+            style={{ transition: "transform 0.6s ease" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.06)" }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "" }}
           />
         ) : (
-          <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br ${gradientFallback} text-6xl`}>
-            {icon}
+          <div className="w-full h-full flex items-center justify-center" style={{ background: dark ? "#2D1F0E" : "#F5EFE4" }}>
+            <i className={`bi ${icon}`} style={{ fontSize: "3rem", color: "#C4882A", opacity: 0.6 }} />
           </div>
         )}
 
-        {/* Gradient overlay for legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        {/* Top left: category chip */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-md text-white text-[10px] font-semibold px-2.5 py-1 rounded-full border border-white/10 shadow-lg">
-          <span>{icon}</span>
-          <span className="tracking-wide">{product.category.name}</span>
+        {/* Category badge — top left */}
+        <div
+          className="absolute top-3 left-3 flex items-center gap-1.5"
+          style={{
+            background: "rgba(28,18,8,0.75)",
+            backdropFilter: "blur(8px)",
+            color: "#F5EFE4",
+            fontSize: "0.58rem",
+            fontWeight: 600,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            padding: "0.3rem 0.7rem",
+            borderRadius: "2px",
+          }}
+        >
+          <i className={`bi ${icon}`} style={{ fontSize: "0.75rem" }} />
+          {product.category.name}
         </div>
 
-        {/* Top right: wishlist + stock */}
-        <div className="absolute top-3 right-3 flex flex-col items-end gap-2">
-          <button
-            onClick={handleWishlist}
-            className={`w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-300 shadow-lg ${
-              wishlist
-                ? "bg-rose-500 border-rose-400 text-white scale-110"
-                : "bg-black/50 border-white/20 text-white/80 hover:bg-rose-500/80 hover:border-rose-400 hover:scale-110"
-            }`}
-          >
-            <Heart size={14} fill={wishlist ? "white" : "none"} />
-          </button>
+        {/* Wishlist — top right */}
+        <button
+          onClick={handleWishlist}
+          className="absolute top-3 right-3"
+          style={{
+            width: "32px", height: "32px",
+            borderRadius: "2px",
+            background: wishlist ? "#C4882A" : "rgba(28,18,8,0.65)",
+            backdropFilter: "blur(8px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: wishlist ? "#1C1208" : "rgba(255,255,255,0.8)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+          }}
+        >
+          <i className={`bi ${wishlist ? "bi-heart-fill" : "bi-heart"}`} style={{ fontSize: "0.85rem" }} />
+        </button>
 
-          {!product.inStock && (
-            <span className="bg-red-500/90 backdrop-blur-md text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-lg tracking-widest uppercase">
-              Sold Out
-            </span>
-          )}
-
-          {product.inStock && (
-            <span className="bg-emerald-500/90 backdrop-blur-md text-white text-[9px] font-semibold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1">
-              <Zap size={9} />
-              In Stock
-            </span>
-          )}
-        </div>
-
-        {/* Bottom: quick-add button on hover */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
-          {product.inStock && (
-            <button
-              onClick={handleAdd}
-              className={`w-full py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2 shadow-xl
-                ${added
-                  ? "bg-emerald-500 text-white"
-                  : "bg-[#C4882A] text-[#1C1208] hover:bg-[#D99A30]"
-                }`}
-            >
-              {added ? (
-                <>
-                  <Check size={14} />
-                  Added to Basket!
-                </>
-              ) : (
-                <>
-                  <ShoppingBag size={14} />
-                  Quick Add
-                </>
-              )}
-            </button>
+        {/* Stock badge */}
+        <div
+          className="absolute bottom-3 left-3"
+          style={{
+            background: product.inStock ? "rgba(61,107,62,0.9)" : "rgba(160,67,30,0.9)",
+            color: "#F5EFE4",
+            fontSize: "0.56rem",
+            fontWeight: 600,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            padding: "0.2rem 0.6rem",
+            borderRadius: "2px",
+          }}
+        >
+          {product.inStock ? (
+            <><i className="bi bi-check-circle mr-1" />In Stock</>
+          ) : (
+            <><i className="bi bi-x-circle mr-1" />Sold Out</>
           )}
         </div>
       </Link>
 
       {/* Card body */}
-      <Link href={`/barn/${product.slug}`} className="flex flex-col flex-1 p-4">
-        {/* Rating row */}
-        <div className="flex items-center gap-1 mb-2">
-          {[1,2,3,4,5].map((s) => (
-            <Star key={s} size={10} className={s <= 4 ? "text-[#C4882A] fill-[#C4882A]" : "text-gray-300 fill-gray-300"} />
-          ))}
-          <span className="text-[10px] text-gray-400 ml-1">Farm fresh</span>
+      <Link href={`/barn/${product.slug}`} className="flex flex-col flex-1 no-underline" style={{ padding: "1.25rem 1.25rem 1.25rem" }}>
+        {/* Category label */}
+        <div className="eyebrow-plain mb-2" style={{ color: "#C4882A", fontSize: "0.57rem" }}>
+          {product.category.name}
         </div>
 
-        <h3 className={`font-bold text-base leading-snug group-hover:text-[#C4882A] transition-colors duration-200 mb-1 line-clamp-2 ${dark ? "text-white" : "text-[#1C1208]"}`}>
+        {/* Product name */}
+        <div
+          className="font-serif"
+          style={{
+            fontSize: "1.2rem",
+            fontWeight: 400,
+            color: dark ? "#F5EFE4" : "#1C1208",
+            lineHeight: 1.3,
+            marginBottom: "0.4rem",
+          }}
+        >
           {product.name}
-        </h3>
+        </div>
 
-        <p className={`text-[11px] leading-relaxed mb-3 line-clamp-1 ${dark ? "text-white/50" : "text-[#1C1208]/50"}`}>
+        <div style={{ color: "rgba(28,18,8,0.4)", fontSize: "0.78rem", marginBottom: "1rem" }}>
           Ranch-direct · Osotua Farming, Kajiado
-        </p>
+        </div>
 
-        {/* Price + add button */}
-        <div className="flex items-center justify-between mt-auto">
+        {/* Price + Add button */}
+        <div className="flex items-center justify-between mt-auto" style={{ paddingTop: "1rem", borderTop: "1px solid rgba(28,18,8,0.06)" }}>
           <div>
-            <div className="text-[9px] font-semibold text-[#C4882A] uppercase tracking-widest mb-0.5">Price</div>
-            <div className={`font-black text-lg leading-none ${dark ? "text-[#C4882A]" : "text-[#1C1208]"}`}>
+            <div className="eyebrow-plain mb-0.5" style={{ color: "rgba(28,18,8,0.4)", fontSize: "0.54rem" }}>
+              Price
+            </div>
+            <div
+              className="font-serif"
+              style={{ fontSize: "1.4rem", fontWeight: 500, color: dark ? "#C4882A" : "#1C1208", lineHeight: 1 }}
+            >
               KES {product.price.toLocaleString()}
-              <span className={`font-normal text-[11px] ml-1 ${dark ? "text-white/40" : "text-[#1C1208]/40"}`}>/{product.unit}</span>
+              <span style={{ fontSize: "0.75rem", fontWeight: 300, opacity: 0.5, marginLeft: "4px" }}>
+                /{product.unit}
+              </span>
             </div>
           </div>
 
           {product.inStock ? (
             <button
               onClick={handleAdd}
-              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md flex-shrink-0 ${
-                added
-                  ? "bg-emerald-500 text-white scale-110"
-                  : "bg-[#C4882A] text-[#1C1208] hover:bg-[#D99A30] hover:scale-110 active:scale-95"
-              }`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                background: added ? "#3D6B3E" : "#C4882A",
+                color: added ? "#F5EFE4" : "#1C1208",
+                border: "none",
+                borderRadius: "2px",
+                padding: "0.6rem 1rem",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
             >
-              {added ? <Check size={16} /> : <ShoppingBag size={16} />}
+              <i className={`bi ${added ? "bi-check-lg" : "bi-bag-plus"}`} style={{ fontSize: "0.9rem" }} />
+              {added ? "Added" : "Add"}
             </button>
           ) : (
-            <span className="text-[9px] font-semibold text-red-400 bg-red-50 border border-red-200 px-2.5 py-1.5 rounded-lg">
+            <span
+              style={{
+                fontSize: "0.65rem",
+                color: "#A0431E",
+                background: "rgba(160,67,30,0.08)",
+                border: "1px solid rgba(160,67,30,0.25)",
+                borderRadius: "2px",
+                padding: "0.4rem 0.8rem",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+              }}
+            >
               Unavailable
             </span>
           )}

@@ -15,85 +15,200 @@ interface Props {
   }
 }
 
+const speciesIcons: Record<string, string> = {
+  Cattle: "bi-bullseye",
+  Goats:  "bi-scissors",
+  Sheep:  "bi-flower1",
+}
+
+const speciesBgColors: Record<string, string> = {
+  Cattle: "#2D1508",
+  Goats:  "#0F2810",
+  Sheep:  "#1A1510",
+}
+
 export default function BreedCard({ breed }: Props) {
   const src = breed.image ?? imageForBreed(breed.name, breed.species.name)
   const isAvailable = breed.inStock > 0
+  const bgColor = speciesBgColors[breed.species.name] || "#1C1208"
+  const icon = speciesIcons[breed.species.name] || "bi-geo-alt"
 
   return (
     <Link
       href={`/breeds/${breed.id}`}
-      className="group bg-white border border-[#1C1208]/08 hover:border-[#C4882A]/50 rounded-md overflow-hidden block store-card-shadow hover:-translate-y-1.5 transition-all duration-300"
+      className="group block"
+      style={{
+        background: "#FFFFFF",
+        border: "1px solid rgba(28,18,8,0.08)",
+        borderRadius: "4px",
+        overflow: "hidden",
+        textDecoration: "none",
+        transition: "transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease",
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.transform = "translateY(-6px)"
+        el.style.boxShadow = "0 24px 64px rgba(28,18,8,0.12)"
+        el.style.borderColor = "rgba(196,136,42,0.3)"
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement
+        el.style.transform = ""
+        el.style.boxShadow = ""
+        el.style.borderColor = "rgba(28,18,8,0.08)"
+      }}
     >
-      <div className="h-52 bg-gradient-to-br from-[#1C1208] via-[#3B2506] to-[#6b4010] flex items-center justify-center relative overflow-hidden">
+      {/* Image hero */}
+      <div className="relative overflow-hidden" style={{ height: "220px", background: bgColor }}>
         {src ? (
           <Image
             src={src}
             alt={breed.name}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-108"
+            className="object-cover"
+            style={{ opacity: 0.85, transition: "transform 0.6s ease, opacity 0.3s ease" }}
           />
         ) : (
-          <span className="text-6xl">
-            {breed.species.name === "Cattle" ? "🐄" : breed.species.name === "Goats" ? "🐐" : "🐑"}
-          </span>
+          <div className="w-full h-full flex items-center justify-center">
+            <i className={`bi ${icon}`} style={{ fontSize: "4rem", color: "rgba(196,136,42,0.4)" }} />
+          </div>
         )}
 
-        {/* Gradient shadow overlay for legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/85 via-transparent to-[#1C1208]/40" />
+        {/* Gradient for legibility */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(28,18,8,0.85) 0%, rgba(28,18,8,0.1) 60%, transparent 100%)" }} />
 
-        {/* Species badge */}
-        <span className="absolute top-3 right-3 font-mono text-[9px] font-bold text-[#F5EFE4] bg-[#1C1208]/75 backdrop-blur-xs px-2.5 py-1 rounded-xs border border-white/10 tracking-widest uppercase">
+        {/* Species tag — top left */}
+        <div
+          className="absolute top-3 left-3 flex items-center gap-1.5"
+          style={{
+            background: "rgba(28,18,8,0.7)",
+            backdropFilter: "blur(8px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: "#F5EFE4",
+            fontSize: "0.58rem",
+            fontWeight: 600,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            padding: "0.3rem 0.7rem",
+            borderRadius: "2px",
+          }}
+        >
+          <i className={`bi ${icon}`} />
           {breed.species.name}
-        </span>
+        </div>
 
-        {/* Status badge */}
-        {!isAvailable ? (
-          <span className="absolute top-3 left-3 font-mono text-[9px] font-bold text-white bg-[#A0431E] px-2.5 py-1 rounded-xs tracking-widest uppercase shadow-md">
-            Sold Out
-          </span>
-        ) : (
-          <span className="absolute top-3 left-3 font-mono text-[9px] font-semibold text-[#F5EFE4] bg-[#3D6B3E]/85 backdrop-blur-xs px-2.5 py-1 rounded-xs border border-emerald-400/30 tracking-widest uppercase">
-            Purebred Stock
-          </span>
-        )}
+        {/* Stock tag — top right */}
+        <div
+          className="absolute top-3 right-3"
+          style={{
+            background: isAvailable ? "rgba(61,107,62,0.85)" : "rgba(160,67,30,0.85)",
+            backdropFilter: "blur(8px)",
+            color: "#F5EFE4",
+            fontSize: "0.56rem",
+            fontWeight: 600,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            padding: "0.3rem 0.65rem",
+            borderRadius: "2px",
+          }}
+        >
+          {isAvailable ? "Available" : "Waitlist"}
+        </div>
 
-        {/* Bottom title on image overlay */}
-        <div className="absolute bottom-3 left-3 right-3">
-          <h3 className="font-serif text-2xl font-light text-[#F5EFE4] group-hover:text-[#C4882A] transition-colors leading-tight">
+        {/* Breed name overlaid on image */}
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <div
+            className="font-serif"
+            style={{ fontSize: "1.5rem", fontWeight: 400, color: "#F5EFE4", lineHeight: 1.15 }}
+          >
             {breed.name}
-          </h3>
+          </div>
         </div>
       </div>
 
-      <div className="p-5">
-        <div className="flex items-center justify-between text-xs text-[#1C1208]/60 mb-4 pb-3 border-b border-[#1C1208]/06">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#C4882A] font-semibold">
+      {/* Card body */}
+      <div style={{ padding: "1.25rem" }}>
+        {/* Tags row */}
+        <div className="flex items-center gap-2 flex-wrap mb-3">
+          <span
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "0.35rem",
+              background: "rgba(196,136,42,0.08)",
+              border: "1px solid rgba(196,136,42,0.2)",
+              color: "#C4882A",
+              fontSize: "0.6rem", fontWeight: 600,
+              letterSpacing: "0.1em", textTransform: "uppercase",
+              padding: "0.25rem 0.65rem", borderRadius: "2px",
+            }}
+          >
+            <i className="bi bi-bullseye" style={{ fontSize: "0.7rem" }} />
             {breed.purpose}
           </span>
-          <span className="text-[11px]">
-            Origin: <strong className="text-[#1C1208]/80 font-medium">{breed.origin}</strong>
+          <span
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "0.35rem",
+              color: "rgba(28,18,8,0.45)",
+              fontSize: "0.6rem", fontWeight: 500,
+              letterSpacing: "0.08em",
+            }}
+          >
+            <i className="bi bi-geo-alt" style={{ fontSize: "0.7rem" }} />
+            {breed.origin}
           </span>
         </div>
 
-        <div className="flex items-center justify-between">
+        {/* Availability bar */}
+        <div className="flex items-center gap-3 mb-4">
+          <div style={{ flex: 1, height: "3px", background: "rgba(28,18,8,0.06)", borderRadius: "2px", overflow: "hidden" }}>
+            <div
+              style={{
+                height: "100%",
+                borderRadius: "2px",
+                background: isAvailable ? "#3D6B3E" : "#A0431E",
+                width: isAvailable ? `${Math.min((breed.inStock / 20) * 100, 100)}%` : "15%",
+                transition: "width 0.6s ease",
+              }}
+            />
+          </div>
+          <span style={{ fontSize: "0.68rem", fontWeight: 600, color: isAvailable ? "#3D6B3E" : "#A0431E", whiteSpace: "nowrap" }}>
+            {isAvailable ? `${breed.inStock} head` : "Waitlist"}
+          </span>
+        </div>
+
+        {/* Price + CTA */}
+        <div
+          className="flex items-center justify-between"
+          style={{ paddingTop: "1rem", borderTop: "1px solid rgba(28,18,8,0.06)" }}
+        >
           <div>
-            <span className="font-mono text-[9px] uppercase tracking-wider text-[#1C1208]/40 block -mb-0.5">Price</span>
-            <span className="font-bold text-[#C4882A] text-base">
+            <div className="eyebrow-plain mb-0.5" style={{ color: "rgba(28,18,8,0.38)", fontSize: "0.54rem" }}>
+              Price / Head
+            </div>
+            <div className="font-serif" style={{ fontSize: "1.4rem", fontWeight: 500, color: "#C4882A", lineHeight: 1 }}>
               KES {breed.pricePerHead.toLocaleString()}
-              <span className="text-[#1C1208]/40 font-normal text-xs"> /head</span>
-            </span>
+            </div>
           </div>
 
-          <span
-            className={`font-mono text-[9px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-xs border ${
-              isAvailable
-                ? "text-[#3D6B3E] bg-[#3D6B3E]/08 border-[#3D6B3E]/20"
-                : "text-[#A0431E] bg-[#A0431E]/08 border-[#A0431E]/20"
-            }`}
+          <div
+            style={{
+              background: "#1C1208",
+              color: "#C4882A",
+              fontSize: "0.65rem",
+              fontWeight: 600,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              padding: "0.55rem 1.1rem",
+              borderRadius: "2px",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              transition: "background 0.2s ease, color 0.2s ease",
+            }}
           >
-            {isAvailable ? `${breed.inStock} Available` : "Waitlist Only"}
-          </span>
+            View Breed
+            <i className="bi bi-arrow-right" style={{ fontSize: "0.8rem" }} />
+          </div>
         </div>
       </div>
     </Link>

@@ -6,227 +6,250 @@ import ProductCard from "@/components/farm/ProductCard"
 import NewsletterForm from "@/components/shared/NewsletterForm"
 import Navbar from "@/components/shared/Navbar"
 import Footer from "@/components/shared/Footer"
-import { Sun, Droplets, CheckCircle2, ArrowRight } from "lucide-react"
 import { HERD_FIELD, RANCH_WIDE, FIELD_DAY, RANCH_PANO } from "@/lib/images"
 
 async function getFeaturedBreeds() {
   try {
-    return await prisma.breed.findMany({
-      where: { featured: true },
-      include: { species: true },
-      take: 4,
-    })
-  } catch {
-    return []
-  }
+    return await prisma.breed.findMany({ where: { featured: true }, include: { species: true }, take: 4 })
+  } catch { return [] }
 }
 
 async function getFeaturedProducts() {
   try {
-    return await prisma.product.findMany({
-      where: { featured: true, inStock: true },
-      include: { category: true },
-      take: 6,
-    })
-  } catch {
-    return []
-  }
+    return await prisma.product.findMany({ where: { featured: true, inStock: true }, include: { category: true }, take: 6 })
+  } catch { return [] }
 }
 
 export default async function HomePage() {
-  const [breeds, products] = await Promise.all([
-    getFeaturedBreeds(),
-    getFeaturedProducts(),
-  ])
+  const [breeds, products] = await Promise.all([getFeaturedBreeds(), getFeaturedProducts()])
 
   return (
     <>
       <Navbar />
-      <div className="bg-[#FBF7F0] pt-16">
+      <main>
 
-        {/* ── HERO SECTION WITH BACKGROUND IMAGE ─────────────────── */}
-        <section className="relative min-h-screen flex items-center overflow-hidden bg-[#1C1208]">
-          {/* Background Image Layer */}
-          <div className="absolute inset-0 z-0">
+        {/* ══════════════════════════════════════════════════
+            1. FULL-VIEWPORT HERO
+        ══════════════════════════════════════════════════ */}
+        <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: "#1C1208" }}>
+          {/* Background image */}
+          <div className="absolute inset-0">
             <Image
               src={HERD_FIELD}
-              alt="Osotua Rangeland Herd"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover opacity-40 scale-105"
+              alt="Osotua Farming — Kajiado Rangeland Herd"
+              fill priority sizes="100vw"
+              className="object-cover object-center"
+              style={{ opacity: 0.55 }}
             />
-            {/* Multi-stage dark gradient overlays for luxury contrast */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1C1208] via-[#1C1208]/80 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-[#1C1208]/70" />
+            {/* Warm layered overlay — exactly like the template */}
+            <div className="absolute inset-0" style={{
+              background: "linear-gradient(135deg, rgba(28,18,8,0.85) 0%, rgba(28,18,8,0.55) 50%, rgba(28,18,8,0.3) 100%)"
+            }} />
+            <div className="absolute inset-0" style={{
+              background: "linear-gradient(0deg, rgba(28,18,8,0.95) 0%, transparent 50%)"
+            }} />
           </div>
 
-          {/* Ambient glow lights */}
-          <div className="absolute inset-0 pointer-events-none z-0">
-            <div className="absolute top-1/4 left-1/3 w-96 h-96 rounded-full bg-[#C4882A]/15 blur-3xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-[#3D6B3E]/20 blur-3xl" />
-          </div>
+          {/* Ambient warm glow */}
+          <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(196,136,42,0.08) 0%, transparent 70%)" }}
+          />
 
-          {/* Live Rangeland Weather Widget */}
-          <div className="absolute top-24 right-8 z-20 hidden xl:flex items-center gap-4 bg-[#1C1208]/85 backdrop-blur-xl border border-[#C4882A]/35 p-4 rounded-md text-[#F5EFE4] text-xs shadow-2xl">
-            <div className="flex items-center gap-2 text-[#C4882A]">
-              <Sun size={18} className="animate-spin-slow" />
-              <span className="font-mono font-bold">28°C Kajiado</span>
-            </div>
-            <div className="h-4 w-px bg-white/15" />
-            <div className="flex items-center gap-1.5 text-white/80 font-mono">
-              <Droplets size={14} className="text-sky-400" />
-              <span>Humidity: 48%</span>
-            </div>
-            <div className="h-4 w-px bg-white/15" />
-            <div className="flex items-center gap-1.5 text-emerald-400 font-mono">
-              <CheckCircle2 size={14} />
-              <span>Pasture: Optimal</span>
-            </div>
-          </div>
+          {/* Content */}
+          <div className="os-container relative z-10 pt-28 pb-24">
+            <div className="max-w-3xl">
+              {/* Eyebrow */}
+              <div className="eyebrow text-[#C4882A] mb-8 anim-fade-up" style={{ animationDelay: "0ms" }}>
+                Kajiado County, Kenya
+              </div>
 
-          {/* Floating breed tags */}
-          <div className="absolute top-0 right-0 bottom-0 w-2/5 hidden lg:flex flex-col justify-center gap-3.5 pr-16 pt-24 pointer-events-none select-none z-10">
-            {[
-              { label: "Boran Beef Cattle",  delay: "0s",   indent: "0px" },
-              { label: "Sahiwal Dairy",       delay: "1.2s", indent: "28px" },
-              { label: "Boer × Galla Goats", delay: "2.4s", indent: "10px" },
-              { label: "Dorper Sheep",        delay: "3.6s", indent: "40px" },
-              { label: "Bonsmara Bulls",      delay: "4.8s", indent: "16px" },
-              { label: "Simmental Cross",     delay: "6.0s", indent: "32px" },
-            ].map((tag) => (
-              <span
-                key={tag.label}
-                className="eyebrow-plain text-[#C4882A] border border-[#C4882A]/40 bg-[#1C1208]/80 backdrop-blur-md px-3.5 py-2 w-fit rounded-xs text-[10px] shadow-lg tracking-widest font-mono"
+              {/* Headline — Cormorant, large, italic accent */}
+              <h1
+                className="font-serif text-[#F5EFE4] mb-6 anim-fade-up"
                 style={{
-                  marginLeft: tag.indent,
-                  animation: `tagFloat 7s ease-in-out ${tag.delay} infinite`,
+                  fontSize: "clamp(3.2rem, 6vw, 5.5rem)",
+                  fontWeight: 300,
+                  lineHeight: 1.05,
+                  letterSpacing: "-0.01em",
+                  animationDelay: "80ms",
                 }}
               >
-                {tag.label}
-              </span>
-            ))}
-          </div>
-
-          {/* Hero Content */}
-          <div className="container relative z-10 py-32 sm:py-40">
-            <div className="max-w-2xl">
-              <div className="eyebrow text-[#C4882A] mb-8 font-mono">
-                Kajiado County, Kenya · Smart Agriculture
-              </div>
-
-              <h1
-                className="font-serif text-[#F5EFE4] mb-6 tracking-tight"
-                style={{ fontSize: "clamp(3.5rem, 6.5vw, 6rem)", fontWeight: 300, lineHeight: 1.02 }}
-              >
                 Where the land<br />
-                <em className="text-[#C4882A] not-italic font-normal">feeds</em> the future
+                <em style={{ color: "#C4882A", fontStyle: "italic" }}>feeds the future</em>
               </h1>
 
-              <p className="text-[#F5EFE4]/85 text-lg leading-relaxed max-w-lg mb-10 font-sans font-light">
+              {/* Subtext */}
+              <p
+                className="text-[#F5EFE4] mb-10 max-w-xl anim-fade-up"
+                style={{
+                  fontSize: "1rem",
+                  lineHeight: 1.8,
+                  opacity: 0.75,
+                  animationDelay: "160ms",
+                }}
+              >
                 A modern smart farm raising premium indigenous livestock, growing organic produce,
-                and delivering directly from our rangelands to your table. Authentic genetics, sustainable stewardship.
+                and delivering directly from our rangelands to your table. Authentic genetics,
+                sustainable stewardship — from Kajiado to Kenya.
               </p>
 
-              <div className="flex flex-wrap gap-4">
-                <Link href="/breeds" className="btn btn-primary btn-lg font-bold tracking-wider uppercase shadow-[0_0_25px_rgba(196,136,42,0.4)]">
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4 anim-fade-up" style={{ animationDelay: "240ms" }}>
+                <Link href="/breeds" className="btn-primary">
                   Explore Our Breeds
+                  <i className="bi bi-arrow-right" />
                 </Link>
-                <Link href="/barn" className="btn btn-ghost btn-lg font-semibold tracking-wider uppercase backdrop-blur-md">
-                  Visit Barn Store
+                <Link href="/barn" className="btn-ghost">
+                  <i className="bi bi-bag-check" />
+                  Shop the Barn
                 </Link>
               </div>
             </div>
-
-            {/* Stats bar */}
-            <div className="mt-20 pt-8 border-t border-[#C4882A]/25 flex flex-wrap gap-10 sm:gap-16">
-              {[
-                { num: "6+",   label: "Purebred Species" },
-                { num: "4",    label: "Farm Enterprises" },
-                { num: "100%", label: "Traceable Supply" },
-                { num: "2026", label: "Est. Kajiado" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div
-                    className="font-serif text-[#C4882A] font-medium"
-                    style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", lineHeight: 1 }}
-                  >
-                    {stat.num}
-                  </div>
-                  <div className="eyebrow-plain text-[#F5EFE4]/60 text-[10px] tracking-[0.2em] mt-1.5 font-mono">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
-          {/* Terrain wave divider */}
-          <div className="absolute bottom-0 left-0 right-0 pointer-events-none z-10">
-            <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-16 sm:h-24" fill="none">
-              <path d="M0,70 C180,30 360,90 540,60 C720,30 900,80 1080,50 C1260,20 1380,65 1440,55 L1440,100 L0,100 Z" fill="rgba(61,107,62,0.18)" />
-              <path d="M0,82 C240,55 480,88 720,70 C960,52 1200,82 1440,68 L1440,100 L0,100 Z" fill="rgba(196,136,42,0.12)" />
-              <path d="M0,92 C360,78 720,95 1440,85 L1440,100 L0,100 Z" fill="#FBF7F0" />
-            </svg>
+          {/* Scroll chevron */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[#C4882A]/60 anim-chevron">
+            <i className="bi bi-chevron-down text-2xl" />
           </div>
         </section>
 
-        {/* ── WHAT WE RAISE ─────────────────────────────────────── */}
-        <section className="section bg-[#FBF7F0] relative z-10">
-          <div className="container">
 
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
+        {/* ══════════════════════════════════════════════════
+            2. LIVESTOCK COUNTER STRIP
+        ══════════════════════════════════════════════════ */}
+        <section style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(28,18,8,0.08)" }}>
+          <div className="os-container">
+            <div className="grid grid-cols-2 lg:grid-cols-4">
+              {[
+                { num: "150+", label: "Boran Cattle",   sub: "Beef enterprise",  icon: "bi-shield-check" },
+                { num: "80+",  label: "Dorper Sheep",   sub: "Wool & meat breed", icon: "bi-arrow-up-circle" },
+                { num: "60+",  label: "Boer Goats",     sub: "Premium meat breed", icon: "bi-geo-alt" },
+                { num: "40+",  label: "Sahiwal Dairy",  sub: "Heritage dairy breed", icon: "bi-droplet" },
+              ].map((item, i) => (
+                <div
+                  key={item.label}
+                  className="reveal flex flex-col items-center text-center py-10 px-6"
+                  style={{
+                    borderRight: i < 3 ? "1px solid rgba(28,18,8,0.07)" : "none",
+                    borderBottom: "1px solid rgba(28,18,8,0.07)",
+                    transitionDelay: `${i * 80}ms`,
+                  }}
+                >
+                  <i className={`bi ${item.icon} mb-4`} style={{ fontSize: "2rem", color: "#C4882A" }} />
+                  <div
+                    className="font-serif"
+                    style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 300, color: "#C4882A", lineHeight: 1 }}
+                  >
+                    {item.num}
+                  </div>
+                  <div className="font-serif mt-1" style={{ fontSize: "1.15rem", fontWeight: 400, color: "#1C1208" }}>
+                    {item.label}
+                  </div>
+                  <div className="eyebrow-plain mt-2" style={{ color: "rgba(28,18,8,0.45)", fontSize: "0.6rem" }}>
+                    {item.sub}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* ══════════════════════════════════════════════════
+            3. WHAT WE RAISE
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section-lg" style={{ background: "#F5EFE4" }}>
+          <div className="os-container">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end mb-16">
               <div>
-                <div className="eyebrow mb-4">What We Raise</div>
-                <h2 className="font-serif text-[#1C1208] text-display-lg">
+                <div className="eyebrow mb-6">What We Raise</div>
+                <h2
+                  className="font-serif"
+                  style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 300, lineHeight: 1.08, color: "#1C1208" }}
+                >
                   Premium livestock,<br />
-                  <em className="text-[#3D6B3E] not-italic font-normal">bred for Africa</em>
+                  <em style={{ color: "#3D6B3E", fontStyle: "italic" }}>bred for Africa</em>
                 </h2>
               </div>
-              <p className="text-[#1C1208]/65 max-w-sm leading-relaxed text-sm">
-                Every animal is selected for genetic superiority, climate resilience,
-                and commercial value — tailored for East Africa&apos;s conditions.
+              <p style={{ color: "rgba(28,18,8,0.65)", lineHeight: 1.8, fontSize: "0.95rem" }}>
+                Every animal at Osotua Farming is selected for genetic superiority, climate resilience,
+                and commercial value. Our breeding programme champions indigenous East African genetics
+                combined with proven exotic lines — producing livestock tailored for profitability
+                in Kenya&apos;s diverse agro-climatic zones.
               </p>
             </div>
 
-            {/* Livestock Enterprise Tiles */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+            {/* 4 breed category cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger">
               {[
-                { icon: "🐂", label: "Beef Cattle",  desc: "Boran · Bonsmara · Brahman · Simmental",  bg: "gradient-hide",  count: "4 breeds" },
-                { icon: "🐄", label: "Dairy Cattle", desc: "Sahiwal · Friesian × Sahiwal crosses",     bg: "gradient-grass", count: "2 breeds" },
-                { icon: "🐐", label: "Goats",        desc: "Boer · Galla · Boer × Galla",             bg: "gradient-hide",  count: "3 breeds" },
-                { icon: "🐑", label: "Sheep",        desc: "Dorper · Red Maasai × Dorper",            bg: "gradient-grass", count: "2 breeds" },
-              ].map((item, i) => (
+                { icon: "bi-bullseye",   label: "Beef Cattle",  desc: "Boran · Bonsmara · Brahman · Simmental",  count: "4 breeds",  bg: "#1C1208" },
+                { icon: "bi-droplet",    label: "Dairy Cattle", desc: "Sahiwal · Friesian × Sahiwal crosses",    count: "2 breeds",  bg: "#3D6B3E" },
+                { icon: "bi-scissors",   label: "Goats",        desc: "Boer · Galla · Boer × Galla crosses",     count: "3 breeds",  bg: "#3B2506" },
+                { icon: "bi-flower1",    label: "Sheep",        desc: "Dorper · Red Maasai × Dorper cross",      count: "2 breeds",  bg: "#1C1208" },
+              ].map((item) => (
                 <Link
                   key={item.label}
                   href="/breeds"
-                  className={`reveal ${item.bg} p-8 relative overflow-hidden group block rounded-md shadow-xl hover:-translate-y-2 transition-all duration-300 border border-white/10`}
-                  style={{ transitionDelay: `${i * 80}ms` }}
+                  className="reveal group block relative overflow-hidden"
+                  style={{
+                    background: item.bg,
+                    borderRadius: "4px",
+                    padding: "2.25rem 2rem",
+                    minHeight: "260px",
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                    textDecoration: "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)"
+                    ;(e.currentTarget as HTMLElement).style.boxShadow = "0 24px 64px rgba(28,18,8,0.25)"
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = ""
+                    ;(e.currentTarget as HTMLElement).style.boxShadow = ""
+                  }}
                 >
-                  <div className="absolute top-4 right-4 font-mono text-[9px] text-white/60 bg-black/30 backdrop-blur-xs px-2.5 py-1 rounded-xs uppercase tracking-widest">
+                  {/* Count badge */}
+                  <div className="eyebrow-plain absolute top-5 right-5"
+                    style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.58rem" }}>
                     {item.count}
                   </div>
-                  <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform">{item.icon}</div>
-                  <div className="font-serif text-white text-2xl font-medium mb-2">{item.label}</div>
-                  <div className="text-white/70 text-xs leading-relaxed mb-4">{item.desc}</div>
-                  <div className="eyebrow-plain text-[#C4882A] text-[10px] font-mono group-hover:translate-x-1 transition-transform flex items-center gap-1 font-bold">
-                    <span>Browse Catalogue</span>
-                    <ArrowRight size={13} />
+
+                  <i className={`bi ${item.icon}`}
+                    style={{ fontSize: "2.5rem", color: "#C4882A", display: "block", marginBottom: "1.5rem" }}
+                  />
+
+                  <div className="font-serif" style={{ fontSize: "1.6rem", fontWeight: 400, color: "#F5EFE4", marginBottom: "0.5rem" }}>
+                    {item.label}
+                  </div>
+                  <div style={{ color: "rgba(245,239,228,0.6)", fontSize: "0.82rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+                    {item.desc}
+                  </div>
+                  <div className="btn-outline-dark" style={{ color: "#C4882A", borderColor: "rgba(196,136,42,0.4)", fontSize: "0.68rem" }}>
+                    Browse Catalogue
+                    <i className="bi bi-arrow-right" />
                   </div>
                 </Link>
               ))}
             </div>
 
-            {/* Featured Breeds Grid from DB */}
+            {/* Featured breeds from DB */}
             {breeds.length > 0 && (
               <>
-                <div className="flex items-center justify-between mb-8 pb-3 border-b border-[#1C1208]/08">
-                  <h3 className="font-serif text-3xl text-[#1C1208] font-light">Featured Genetics</h3>
-                  <Link href="/breeds" className="btn btn-outline btn-sm font-mono text-xs uppercase">View All Breeds</Link>
+                <div className="flex items-center justify-between mt-20 mb-10 pb-4"
+                  style={{ borderBottom: "1px solid rgba(28,18,8,0.08)" }}>
+                  <h3 className="font-serif" style={{ fontSize: "1.8rem", fontWeight: 300, color: "#1C1208" }}>
+                    Featured Genetics
+                  </h3>
+                  <Link href="/breeds" className="btn-outline-dark">
+                    View All Breeds
+                    <i className="bi bi-arrow-right" />
+                  </Link>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger">
                   {breeds.map((breed) => (
-                    <BreedCard key={breed.id} breed={breed} />
+                    <div key={breed.id} className="reveal">
+                      <BreedCard breed={breed} />
+                    </div>
                   ))}
                 </div>
               </>
@@ -234,181 +257,412 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── TERRAIN DIVIDER ────────────────────────────────────── */}
-        <div className="terrain-divider bg-[#FBF7F0]">
-          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="w-full h-10" fill="none">
-            <path d="M0,30 C360,10 720,50 1440,25 L1440,60 L0,60 Z" fill="#1C1208" />
-          </svg>
-        </div>
 
-        {/* ── THE BARN STORE WITH BACKGROUND IMAGE ───────────────── */}
-        <section className="section bg-[#1C1208] relative overflow-hidden text-[#F5EFE4]">
-          {/* Background Image Overlay */}
-          <div className="absolute inset-0 pointer-events-none opacity-20 z-0">
+        {/* ══════════════════════════════════════════════════
+            4. FULL-WIDTH CATTLE IMAGE SECTION
+        ══════════════════════════════════════════════════ */}
+        <section className="relative overflow-hidden" style={{ minHeight: "520px", display: "flex", alignItems: "center" }}>
+          <div className="absolute inset-0">
             <Image
               src={RANCH_WIDE}
-              alt="Osotua Ranch Store Background"
-              fill
-              sizes="100vw"
-              className="object-cover"
+              alt="Osotua Cattle Herd — Kajiado Rangeland"
+              fill sizes="100vw"
+              className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#1C1208] via-[#1C1208]/90 to-[#1C1208]" />
+            <div className="absolute inset-0" style={{ background: "rgba(28,18,8,0.58)" }} />
+            <div className="absolute inset-0" style={{
+              background: "linear-gradient(90deg, rgba(28,18,8,0.8) 0%, rgba(28,18,8,0.2) 60%, transparent 100%)"
+            }} />
           </div>
 
-          {/* Background Watermark */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none z-0">
-            <span className="font-serif text-[18rem] font-bold text-[#C4882A]/05 leading-none">
-              BARN
-            </span>
-          </div>
-
-          <div className="container relative z-10">
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
-              <div>
-                <div className="eyebrow mb-4 text-[#C4882A]">The Barn Store</div>
-                <h2 className="font-serif text-[#F5EFE4] text-display-lg">
-                  Everything fresh,<br />
-                  <em className="text-[#C4882A] not-italic font-normal">everything ours</em>
-                </h2>
-              </div>
-              <p className="text-[#F5EFE4]/65 max-w-sm leading-relaxed text-sm">
-                Walk in or order online. Every product carries the Osotua promise —
-                raised here, handled with artisanal care, delivered to you.
+          <div className="os-container relative z-10 py-20">
+            <div className="max-w-xl">
+              <div className="eyebrow text-[#C4882A] mb-6">Our Herds</div>
+              <h2
+                className="font-serif text-[#F5EFE4] mb-6"
+                style={{
+                  fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)",
+                  fontWeight: 300,
+                  lineHeight: 1.08,
+                  fontStyle: "italic",
+                }}
+              >
+                High-quality genetics<br />
+                for your family to enjoy
+              </h2>
+              <p className="text-[#F5EFE4] mb-8" style={{ opacity: 0.7, lineHeight: 1.8, maxWidth: "38rem" }}>
+                Our breeding programme is built on decades of East African pastoral knowledge, combined with
+                modern veterinary science. Every animal carries a verified genetic profile and full health
+                certification before leaving our ranch.
               </p>
-            </div>
-
-            {/* Product Category Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-14">
-              {[
-                { icon: "🥩", name: "Beef Cuts",    note: "Aged & portioned" },
-                { icon: "🥛", name: "Dairy",        note: "Milk, yoghurt, ghee" },
-                { icon: "🐐", name: "Goat Meat",    note: "Whole or portioned" },
-                { icon: "🥬", name: "Vegetables",   note: "Pesticide-free" },
-                { icon: "🍋", name: "Fresh Fruits", note: "Seasonal orchards" },
-                { icon: "📦", name: "Ranch Box",    note: "Weekly subscription" },
-              ].map((item, i) => (
-                <Link
-                  key={item.name}
-                  href="/barn"
-                  className="reveal glass-card-dark p-5 rounded-md hover:border-[#C4882A]/60 hover:bg-[#C4882A]/10 transition-all duration-300 group block"
-                  style={{ transitionDelay: `${i * 60}ms` }}
-                >
-                  <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
-                  <div className="font-serif text-[#F5EFE4] text-lg font-medium mb-1">{item.name}</div>
-                  <div className="text-[#F5EFE4]/50 text-xs font-sans">{item.note}</div>
-                </Link>
-              ))}
-            </div>
-
-            {/* Featured Products from DB */}
-            {products.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {products.map((product) => (
-                  <ProductCard key={product.id} product={product} dark />
-                ))}
-              </div>
-            )}
-
-            <div className="flex justify-center">
-              <Link href="/barn" className="btn btn-primary btn-lg font-bold uppercase tracking-wider shadow-xl">
-                Shop the Barn Store
+              <Link href="/breeds" className="btn-primary">
+                View All Breeds
+                <i className="bi bi-arrow-right" />
               </Link>
             </div>
           </div>
         </section>
 
-        {/* ── HOW IT WORKS ──────────────────────────────────────── */}
-        <section className="section bg-[#F5EFE4] relative z-10">
-          <div className="container">
+
+        {/* ══════════════════════════════════════════════════
+            5. THE BARN STORE
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section-lg" style={{ background: "#1C1208", position: "relative", overflow: "hidden" }}>
+          {/* Subtle bg image */}
+          <div className="absolute inset-0 opacity-10">
+            <Image src={FIELD_DAY} alt="" fill className="object-cover" sizes="100vw" />
+            <div className="absolute inset-0" style={{ background: "#1C1208" }} />
+          </div>
+
+          {/* Watermark */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none">
+            <span className="font-serif" style={{ fontSize: "18rem", fontWeight: 700, color: "rgba(196,136,42,0.04)", lineHeight: 1 }}>
+              BARN
+            </span>
+          </div>
+
+          <div className="os-container relative z-10">
+            {/* Header */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16">
+              <div>
+                <div className="eyebrow mb-6">The Barn Store</div>
+                <h2
+                  className="font-serif text-[#F5EFE4]"
+                  style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 300, lineHeight: 1.08 }}
+                >
+                  Everything fresh,<br />
+                  <em style={{ color: "#C4882A", fontStyle: "italic" }}>everything ours</em>
+                </h2>
+              </div>
+              <p style={{ color: "rgba(245,239,228,0.6)", lineHeight: 1.8, fontSize: "0.95rem" }}>
+                Walk in or order online. Every product on our shelves carries the Osotua promise —
+                raised on this land, handled with artisanal care, and delivered directly to you.
+                No middlemen. No compromises.
+              </p>
+            </div>
+
+            {/* Category tiles */}
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-12 stagger">
+              {[
+                { icon: "bi-basket",   name: "Beef Cuts",    note: "Aged & portioned" },
+                { icon: "bi-droplet",  name: "Dairy",        note: "Milk, yoghurt, ghee" },
+                { icon: "bi-scissors", name: "Goat Meat",    note: "Whole or portioned" },
+                { icon: "bi-tree",     name: "Vegetables",   note: "Pesticide-free" },
+                { icon: "bi-flower1",  name: "Fresh Fruits", note: "Seasonal orchards" },
+                { icon: "bi-box-seam", name: "Ranch Box",    note: "Weekly subscription" },
+              ].map((item, i) => (
+                <Link
+                  key={item.name}
+                  href="/barn"
+                  className="reveal group block text-center"
+                  style={{
+                    background: "rgba(245,239,228,0.05)",
+                    border: "1px solid rgba(245,239,228,0.1)",
+                    borderRadius: "4px",
+                    padding: "1.5rem 1rem",
+                    transition: "all 0.28s ease",
+                    textDecoration: "none",
+                    transitionDelay: `${i * 50}ms`,
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.background = "rgba(196,136,42,0.12)"
+                    el.style.borderColor = "rgba(196,136,42,0.45)"
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.background = "rgba(245,239,228,0.05)"
+                    el.style.borderColor = "rgba(245,239,228,0.1)"
+                  }}
+                >
+                  <i className={`bi ${item.icon}`}
+                    style={{ fontSize: "1.75rem", color: "#C4882A", display: "block", marginBottom: "0.75rem" }}
+                  />
+                  <div className="font-serif" style={{ fontSize: "0.95rem", color: "#F5EFE4", marginBottom: "0.25rem" }}>
+                    {item.name}
+                  </div>
+                  <div style={{ color: "rgba(245,239,228,0.4)", fontSize: "0.72rem" }}>{item.note}</div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Horizontal photo strip */}
+            {products.length > 0 && (
+              <>
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="font-serif text-[#F5EFE4]" style={{ fontSize: "1.6rem", fontWeight: 300 }}>
+                    Fresh Today
+                  </h3>
+                  <Link href="/barn" className="btn-outline-dark" style={{ color: "#C4882A", borderColor: "rgba(196,136,42,0.4)" }}>
+                    Shop All Items
+                    <i className="bi bi-arrow-right" />
+                  </Link>
+                </div>
+
+                {/* Horizontal photo strip (5-column landscape thumbnails) */}
+                <div className="flex gap-0 overflow-hidden mb-12" style={{ borderRadius: "4px", height: "200px" }}>
+                  {products.slice(0, 5).map((product) => (
+                    <Link
+                      key={product.id}
+                      href={`/barn/${product.slug}`}
+                      className="relative flex-1 min-w-0 overflow-hidden group block"
+                    >
+                      {product.image ? (
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          sizes="20vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"
+                          style={{ background: "#2D1F0E" }}>
+                          <i className="bi bi-basket text-4xl" style={{ color: "#C4882A" }} />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{ background: "rgba(28,18,8,0.6)" }}
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <div style={{ color: "#F5EFE4", fontSize: "0.75rem", fontWeight: 600 }}>{product.name}</div>
+                        <div style={{ color: "#C4882A", fontSize: "0.7rem" }}>KES {product.price.toLocaleString()}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Full product grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
+                  {products.map((product) => (
+                    <div key={product.id} className="reveal">
+                      <ProductCard product={product} dark />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            <div className="flex justify-center mt-14">
+              <Link href="/barn" className="btn-primary">
+                <i className="bi bi-cart3" />
+                Shop the Full Barn Store
+              </Link>
+            </div>
+          </div>
+        </section>
+
+
+        {/* ══════════════════════════════════════════════════
+            6. THREE TRUST COLUMNS
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section" style={{ background: "#FBF7F0" }}>
+          <div className="os-container">
             <div className="text-center mb-14">
-              <div className="eyebrow justify-center mb-4">Ordering Workflow</div>
-              <h2 className="font-serif text-[#1C1208] text-display-md">
-                Ordering livestock & produce{" "}
-                <em className="text-[#3D6B3E] not-italic font-normal">the right way</em>
+              <div className="eyebrow justify-center mb-4">Our Standards</div>
+              <h2
+                className="font-serif"
+                style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 300, color: "#1C1208" }}
+              >
+                Built on three pillars of excellence
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 stagger"
+              style={{ border: "1px solid rgba(28,18,8,0.08)", borderRadius: "4px", overflow: "hidden" }}>
               {[
-                { step: "01", title: "Browse the Catalogue", desc: "Explore our full livestock and fresh product catalogue with detailed genetic profiles, availability, and transparent pricing." },
-                { step: "02", title: "Place Your Reservation", desc: "Submit your order online and lock in your reservation via M-Pesa or Card deposit." },
-                { step: "03", title: "Veterinary Prep",      desc: "Animals receive comprehensive health checks, vaccinations, and official movement permits." },
-                { step: "04", title: "Ranch Pickup or Transit", desc: "Collect directly from the ranch or let us coordinate licensed livestock transport." },
+                {
+                  icon: "bi-heart-pulse",
+                  title: "Animal Health",
+                  color: "#C4882A",
+                  desc: "Every animal at Osotua undergoes routine veterinary inspections, vaccinations, parasite control, and nutritional monitoring. Our resident vet team maintains individual health records for every head of livestock on the farm.",
+                },
+                {
+                  icon: "bi-tree",
+                  title: "Land Health",
+                  color: "#3D6B3E",
+                  desc: "We practice regenerative rangeland management — rotational grazing, water harvesting, indigenous grass restoration, and soil carbon programmes. Our land improves every season, not degrades.",
+                },
+                {
+                  icon: "bi-award",
+                  title: "Food Quality",
+                  color: "#1C1208",
+                  desc: "From the ranch to your table, every Osotua product carries a QR code linking to its source batch, processing records, and nutritional data. Full transparency, zero compromise on quality or freshness.",
+                },
               ].map((item, i) => (
                 <div
-                  key={item.step}
-                  className="reveal bg-white p-7 rounded-md border border-[#1C1208]/08 store-card-shadow border-l-4 border-l-[#C4882A] hover:border-l-[#3D6B3E] transition-all"
-                  style={{ transitionDelay: `${i * 100}ms` }}
+                  key={item.title}
+                  className="reveal p-10"
+                  style={{
+                    borderRight: i < 2 ? "1px solid rgba(28,18,8,0.08)" : "none",
+                    transitionDelay: `${i * 100}ms`,
+                  }}
                 >
-                  <div className="eyebrow-plain text-[#C4882A] text-[11px] font-mono font-bold mb-3">Step {item.step}</div>
-                  <div className="font-serif text-[#1C1208] text-xl font-medium mb-3">{item.title}</div>
-                  <div className="text-[#1C1208]/65 text-xs sm:text-sm leading-relaxed">{item.desc}</div>
+                  <i className={`bi ${item.icon}`}
+                    style={{ fontSize: "2.5rem", color: item.color, display: "block", marginBottom: "1.5rem" }}
+                  />
+                  <h3
+                    className="font-serif"
+                    style={{ fontSize: "1.6rem", fontWeight: 400, color: "#1C1208", marginBottom: "1rem" }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p style={{ color: "rgba(28,18,8,0.62)", fontSize: "0.9rem", lineHeight: 1.85, marginBottom: "1.5rem" }}>
+                    {item.desc}
+                  </p>
+                  <Link href="/about" className="btn-outline-dark" style={{ fontSize: "0.68rem" }}>
+                    READ MORE
+                    <i className="bi bi-arrow-right" />
+                  </Link>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── WHY OSOTUA WITH RANCH PHOTO ────────────────────────── */}
-        <section className="section bg-[#FBF7F0] relative z-10">
-          <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
-              {/* Visual Panel with Background Image */}
-              <div className="relative rounded-md overflow-hidden min-h-[460px] flex flex-col justify-between p-10 reveal shadow-2xl border border-[#C4882A]/30">
+        {/* ══════════════════════════════════════════════════
+            7. HOW IT WORKS — 4-step ordering process
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section" style={{ background: "#F5EFE4" }}>
+          <div className="os-container">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-14">
+              <div>
+                <div className="eyebrow mb-6">How It Works</div>
+                <h2
+                  className="font-serif"
+                  style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 300, color: "#1C1208", lineHeight: 1.1 }}
+                >
+                  Ordering livestock &amp; produce<br />
+                  <em style={{ color: "#C4882A", fontStyle: "italic" }}>the right way</em>
+                </h2>
+              </div>
+              <p style={{ color: "rgba(28,18,8,0.65)", lineHeight: 1.8 }}>
+                Our ordering process is designed to be transparent, secure, and stress-free.
+                From browsing our catalogue to receiving your animals or produce, every step
+                is handled with professional care and full documentation.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger">
+              {[
+                { num: "01", icon: "bi-search",          title: "Browse the Catalogue",   desc: "Explore our full livestock and fresh product catalogue with genetic profiles, availability, and transparent pricing." },
+                { num: "02", icon: "bi-credit-card",      title: "Place Your Reservation", desc: "Submit your order online and secure your reservation via M-Pesa or card deposit." },
+                { num: "03", icon: "bi-clipboard2-pulse", title: "Veterinary Prep",        desc: "Animals receive comprehensive health checks, vaccinations, and official movement permits." },
+                { num: "04", icon: "bi-truck",            title: "Pickup or Transit",      desc: "Collect directly from the ranch or let us coordinate licensed livestock transport to you." },
+              ].map((item, i) => (
+                <div
+                  key={item.num}
+                  className="reveal os-card p-8"
+                  style={{ transitionDelay: `${i * 80}ms`, borderLeftWidth: "3px", borderLeftColor: "#C4882A" }}
+                >
+                  <div className="eyebrow-plain mb-4" style={{ color: "#C4882A", fontSize: "0.6rem" }}>
+                    Step {item.num}
+                  </div>
+                  <i className={`bi ${item.icon}`}
+                    style={{ fontSize: "1.8rem", color: "#1C1208", display: "block", marginBottom: "1rem", opacity: 0.5 }}
+                  />
+                  <div className="font-serif" style={{ fontSize: "1.2rem", fontWeight: 400, color: "#1C1208", marginBottom: "0.75rem" }}>
+                    {item.title}
+                  </div>
+                  <p style={{ color: "rgba(28,18,8,0.62)", fontSize: "0.85rem", lineHeight: 1.8 }}>
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* ══════════════════════════════════════════════════
+            8. WHY OSOTUA — Split image + content
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section-lg" style={{ background: "#FBF7F0" }}>
+          <div className="os-container">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+              {/* Image panel */}
+              <div className="reveal relative overflow-hidden" style={{ borderRadius: "4px", minHeight: "520px", boxShadow: "0 32px 80px rgba(28,18,8,0.15)" }}>
                 <Image
                   src={FIELD_DAY}
-                  alt="Osotua Pastoral Field"
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  alt="Osotua Farming — Pastoral Field"
+                  fill sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-[#1C1208]/75 to-[#1C1208]/40" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(28,18,8,0.85) 0%, rgba(28,18,8,0.2) 60%, transparent 100%)" }} />
 
-                <div className="relative z-10">
-                  <div className="eyebrow-plain text-[#C4882A] text-[10px] mb-2 font-mono uppercase tracking-widest">
-                    Heritage & Culture
+                {/* Floating quote card */}
+                <div
+                  className="absolute bottom-8 left-8 right-8"
+                  style={{
+                    background: "rgba(28,18,8,0.7)",
+                    backdropFilter: "blur(16px)",
+                    border: "1px solid rgba(196,136,42,0.25)",
+                    borderRadius: "4px",
+                    padding: "1.5rem",
+                  }}
+                >
+                  <div className="eyebrow-plain mb-2" style={{ color: "#C4882A", fontSize: "0.58rem" }}>
+                    Maa Language · Kajiado County, Kenya
                   </div>
-                  <div className="font-serif text-white/30 text-7xl font-light leading-none mb-4">
-                    Osotua
-                  </div>
-                </div>
-
-                <div className="relative z-10">
-                  <p className="font-serif text-3xl text-[#F5EFE4] font-light italic leading-tight mb-3">
+                  <p className="font-serif" style={{ fontSize: "1.3rem", fontWeight: 300, color: "#F5EFE4", fontStyle: "italic", lineHeight: 1.4 }}>
                     &ldquo;A bond of friendship that endures&rdquo;
                   </p>
-                  <span className="eyebrow-plain text-[#C4882A] text-[10px] font-mono">
-                    Maa Language · Kajiado County, Kenya
-                  </span>
                 </div>
               </div>
 
-              {/* Content Column */}
+              {/* Content */}
               <div className="reveal">
-                <div className="eyebrow mb-5">Why Osotua</div>
-                <h2 className="font-serif text-display-md text-[#1C1208] mb-5">
+                <div className="eyebrow mb-6">Why Osotua</div>
+                <h2
+                  className="font-serif"
+                  style={{ fontSize: "clamp(2rem, 4vw, 3.4rem)", fontWeight: 300, color: "#1C1208", lineHeight: 1.1, marginBottom: "1.5rem" }}
+                >
                   A farm built on<br />
-                  <em className="text-[#C4882A] not-italic font-normal">trust and stewardship</em>
+                  <em style={{ color: "#C4882A", fontStyle: "italic" }}>trust and stewardship</em>
                 </h2>
-                <p className="text-[#1C1208]/70 leading-relaxed mb-8 text-base">
-                  Our name says it all. Osotua means a covenant of peace and enduring friendship in the Maa language — between the land, the farmer, and the families we feed.
+                <p style={{ color: "rgba(28,18,8,0.65)", lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "2.5rem" }}>
+                  Osotua means a covenant of peace and enduring friendship in the Maa language —
+                  between the land, the farmer, and the families we feed. Our name is our promise.
                 </p>
 
                 <div className="flex flex-col gap-5">
                   {[
-                    { icon: "🌱", title: "Indigenous breeds, modern methods",  desc: "We champion Africa's finest livestock genetics combined with smart farming technology and sustainable land management." },
-                    { icon: "🔗", title: "Full farm-to-fork traceability",     desc: "Every product carries a QR code linking back to its source animal, field, or batch — full transparency guaranteed." },
-                    { icon: "🤝", title: "Community-first enterprise",         desc: "We partner with smallholder outgrowers, support youth internships, and invest in sustainable community projects." },
-                    { icon: "📍", title: "Rooted in Kajiado County",          desc: "Our land possesses the ideal rangeland climate, heritage, and genetics to raise Kenya's premium livestock." },
+                    { icon: "bi-tree",       title: "Indigenous breeds, modern methods",  desc: "We champion Africa's finest livestock genetics combined with smart farming technology and sustainable land management." },
+                    { icon: "bi-qr-code",    title: "Full farm-to-fork traceability",     desc: "Every product carries a QR code linking back to its source animal or batch — full transparency guaranteed." },
+                    { icon: "bi-people",     title: "Community-first enterprise",         desc: "We partner with smallholder outgrowers, support youth internships, and invest in community projects." },
+                    { icon: "bi-geo-alt",    title: "Rooted in Kajiado County",           desc: "Ideal rangeland climate, heritage, and genetics to raise Kenya's most premium livestock." },
                   ].map((item) => (
-                    <div key={item.title} className="flex gap-4 p-3 rounded-md hover:bg-[#F5EFE4] transition-colors">
-                      <div className="w-10 h-10 rounded-full bg-[#C4882A]/15 border border-[#C4882A]/30 flex items-center justify-center text-lg flex-shrink-0 mt-0.5">
-                        {item.icon}
+                    <div
+                      key={item.title}
+                      className="flex gap-4"
+                      style={{
+                        padding: "1rem 1.25rem",
+                        borderRadius: "4px",
+                        transition: "background 0.2s ease",
+                      }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#F5EFE4" }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "" }}
+                    >
+                      <div
+                        style={{
+                          width: "44px", height: "44px", borderRadius: "2px",
+                          background: "rgba(196,136,42,0.1)",
+                          border: "1px solid rgba(196,136,42,0.2)",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <i className={`bi ${item.icon}`} style={{ fontSize: "1.2rem", color: "#C4882A" }} />
                       </div>
                       <div>
-                        <div className="font-semibold text-[#1C1208] text-sm mb-1">{item.title}</div>
-                        <div className="text-[#1C1208]/60 text-xs sm:text-sm leading-relaxed">{item.desc}</div>
+                        <div style={{ fontWeight: 600, color: "#1C1208", fontSize: "0.9rem", marginBottom: "0.25rem" }}>
+                          {item.title}
+                        </div>
+                        <div style={{ color: "rgba(28,18,8,0.58)", fontSize: "0.85rem", lineHeight: 1.75 }}>
+                          {item.desc}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -418,95 +672,171 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── GET INVOLVED WITH DARK BACKGROUND IMAGE ───────────── */}
-        <section className="section bg-[#3B2506] relative overflow-hidden text-[#F5EFE4]">
-          {/* Background Image Layer */}
-          <div className="absolute inset-0 pointer-events-none opacity-20">
-            <Image
-              src={RANCH_PANO}
-              alt="Get Involved Background"
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#3B2506] via-[#3B2506]/90 to-[#1C1208]" />
-          </div>
 
-          <div className="container relative z-10">
+        {/* ══════════════════════════════════════════════════
+            9. GET INVOLVED
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section-lg relative overflow-hidden" style={{ background: "#3B2506" }}>
+          <div className="absolute inset-0 opacity-15">
+            <Image src={RANCH_PANO} alt="" fill className="object-cover" sizes="100vw" />
+            <div className="absolute inset-0" style={{ background: "#3B2506" }} />
+          </div>
+          {/* Ambient */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,136,42,0.07) 0%, transparent 60%)" }}
+          />
+
+          <div className="os-container relative z-10">
             <div className="text-center mb-14">
-              <div className="eyebrow justify-center mb-4 text-[#C4882A]">Get Involved</div>
-              <h2 className="font-serif text-[#F5EFE4] text-display-md">
+              <div className="eyebrow justify-center mb-4">Get Involved</div>
+              <h2
+                className="font-serif text-[#F5EFE4]"
+                style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 300, lineHeight: 1.1 }}
+              >
                 This farm belongs<br />
-                <em className="text-[#C4882A] not-italic font-normal">to all of us</em>
+                <em style={{ color: "#C4882A", fontStyle: "italic" }}>to all of us</em>
               </h2>
-              <p className="text-[#F5EFE4]/65 text-sm max-w-md mx-auto mt-4 leading-relaxed">
-                Whether you want to work with us, invest, partner, or learn — there is a place for you at Osotua Farming.
+              <p style={{ color: "rgba(245,239,228,0.55)", maxWidth: "38rem", margin: "1rem auto 0", lineHeight: 1.8, fontSize: "0.9rem" }}>
+                Whether you want to work with us, invest in the venture, partner as a supplier,
+                or simply visit — there is a place for you at Osotua Farming.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
               {[
-                { icon: "💼", title: "Careers",        desc: "Join our world-class team of farmers, veterinarians, technologists, and agribusiness professionals.", href: "/careers",             cta: "View open roles" },
-                { icon: "📈", title: "Invest",          desc: "Partner with us as an investor or sponsor and participate in Kenya's most exciting farm venture.",    href: "/invest",             cta: "See investment brief" },
-                { icon: "🌾", title: "Partner Farmers", desc: "Supply vegetables, fodder, or eggs under our outgrower scheme with guaranteed offtake prices.",        href: "/partners",           cta: "Join the network" },
-                { icon: "🎓", title: "Internships",     desc: "Students in agriculture, IT, and business are welcome for structured 3–6 month attachments.",         href: "/careers#internships", cta: "Apply now" },
-                { icon: "🏨", title: "B2B Supply",      desc: "Hotels, restaurants, and supermarkets — consistent quality supply direct from our ranch.",             href: "/contact#b2b",        cta: "Request a quote" },
-                { icon: "🗓️", title: "Farm Visits",    desc: "Book a guided tour of the ranch. See the herds, the fields, the Barn Store, and more.",               href: "/visit",              cta: "Book a tour" },
+                { icon: "bi-briefcase",       title: "Careers",        desc: "Join our team of farmers, veterinarians, technologists, and agribusiness professionals.",       href: "/careers",             cta: "View Open Roles" },
+                { icon: "bi-graph-up-arrow",  title: "Invest",         desc: "Partner with us as an investor and participate in Kenya's most exciting farm venture.",          href: "/invest",             cta: "See Investment Brief" },
+                { icon: "bi-people",          title: "Partner Farmers",desc: "Supply vegetables, fodder, or eggs under our outgrower scheme with guaranteed offtake prices.", href: "/partners",           cta: "Join the Network" },
+                { icon: "bi-mortarboard",     title: "Internships",    desc: "Students in agriculture, IT, and business are welcome for structured 3–6 month attachments.",    href: "/careers#internships", cta: "Apply Now" },
+                { icon: "bi-building",        title: "B2B Supply",     desc: "Hotels, restaurants, and supermarkets — consistent quality supply direct from our ranch.",        href: "/contact#b2b",        cta: "Request a Quote" },
+                { icon: "bi-calendar-check",  title: "Farm Visits",    desc: "Book a guided tour of the ranch. See the herds, the fields, the Barn Store, and more.",          href: "/visit",              cta: "Book a Tour" },
               ].map((item, i) => (
                 <Link
                   key={item.title}
                   href={item.href}
-                  className="reveal glass-card-dark rounded-md p-7 hover:border-[#C4882A] hover:bg-[#C4882A]/10 transition-all duration-300 group block border border-white/10"
-                  style={{ transitionDelay: `${i * 80}ms` }}
+                  className="reveal group block"
+                  style={{
+                    background: "rgba(245,239,228,0.05)",
+                    border: "1px solid rgba(245,239,228,0.1)",
+                    borderRadius: "4px",
+                    padding: "2rem",
+                    textDecoration: "none",
+                    transition: "all 0.3s ease",
+                    transitionDelay: `${i * 60}ms`,
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.background = "rgba(196,136,42,0.1)"
+                    el.style.borderColor = "rgba(196,136,42,0.4)"
+                    el.style.transform = "translateY(-4px)"
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.background = "rgba(245,239,228,0.05)"
+                    el.style.borderColor = "rgba(245,239,228,0.1)"
+                    el.style.transform = ""
+                  }}
                 >
-                  <div className="text-4xl mb-5 group-hover:scale-110 transition-transform">{item.icon}</div>
-                  <div className="font-serif text-[#F5EFE4] text-2xl mb-2 font-medium">{item.title}</div>
-                  <div className="text-[#F5EFE4]/65 text-xs sm:text-sm leading-relaxed mb-6">{item.desc}</div>
-                  <span className="eyebrow-plain text-[#C4882A] text-[10px] font-mono group-hover:translate-x-1 transition-transform flex items-center gap-1.5 font-bold uppercase">
-                    <span>{item.cta}</span>
-                    <ArrowRight size={13} />
-                  </span>
+                  <i className={`bi ${item.icon}`}
+                    style={{ fontSize: "2rem", color: "#C4882A", display: "block", marginBottom: "1.25rem" }}
+                  />
+                  <div className="font-serif" style={{ fontSize: "1.4rem", fontWeight: 400, color: "#F5EFE4", marginBottom: "0.75rem" }}>
+                    {item.title}
+                  </div>
+                  <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.85rem", lineHeight: 1.8, marginBottom: "1.5rem" }}>
+                    {item.desc}
+                  </p>
+                  <div className="btn-outline-dark" style={{ color: "#C4882A", borderColor: "rgba(196,136,42,0.4)", fontSize: "0.65rem" }}>
+                    {item.cta}
+                    <i className="bi bi-arrow-right" />
+                  </div>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── BRAND STATEMENT ───────────────────────────────────── */}
-        <section className="section-sm bg-[#FBF7F0] border-y border-[#EDE5D8]">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="font-serif text-[#C4882A]/30 text-8xl leading-none mb-2">&ldquo;</div>
-              <blockquote className="font-serif text-[#1C1208] text-display-sm font-light italic leading-snug mb-6">
-                We don&apos;t just raise animals and grow food. We build relationships that nourish Kenya —
-                one farm, one family, one table at a time.
+
+        {/* ══════════════════════════════════════════════════
+            10. BRAND QUOTE
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section-sm" style={{ background: "#FBF7F0", borderTop: "1px solid rgba(28,18,8,0.08)", borderBottom: "1px solid rgba(28,18,8,0.08)" }}>
+          <div className="os-container">
+            <div className="max-w-4xl mx-auto text-center py-8">
+              {/* Gold rule lines */}
+              <div className="flex items-center gap-6 justify-center mb-8">
+                <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(196,136,42,0.4))" }} />
+                <i className="bi bi-flower2" style={{ color: "#C4882A", fontSize: "1.2rem" }} />
+                <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(196,136,42,0.4), transparent)" }} />
+              </div>
+
+              <div className="font-serif" style={{ fontSize: "clamp(0.7rem, 2vw, 1rem)", color: "rgba(196,136,42,0.3)", lineHeight: 1, marginBottom: "0.5rem" }}>
+                &ldquo;
+              </div>
+              <blockquote
+                className="font-serif"
+                style={{
+                  fontSize: "clamp(1.5rem, 3.5vw, 2.8rem)",
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  color: "#1C1208",
+                  lineHeight: 1.3,
+                  marginBottom: "2rem",
+                }}
+              >
+                We don&apos;t just raise animals and grow food. We build relationships that
+                nourish Kenya — one farm, one family, one table at a time.
               </blockquote>
-              <div className="eyebrow-plain text-[#C4882A] text-[11px] font-mono uppercase tracking-widest font-bold">
+
+              <div className="eyebrow-plain justify-center" style={{ color: "#C4882A", display: "flex", justifyContent: "center" }}>
                 Osotua Farming · Kajiado County, Kenya
+              </div>
+
+              {/* Gold rule lines */}
+              <div className="flex items-center gap-6 justify-center mt-8">
+                <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(196,136,42,0.4))" }} />
+                <i className="bi bi-flower2" style={{ color: "#C4882A", fontSize: "1.2rem" }} />
+                <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(196,136,42,0.4), transparent)" }} />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── NEWSLETTER ────────────────────────────────────────── */}
-        <section className="bg-gradient-to-r from-[#C4882A] via-[#D99A30] to-[#C4882A] py-16 shadow-2xl">
-          <div className="container">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-10">
+
+        {/* ══════════════════════════════════════════════════
+            11. NEWSLETTER
+        ══════════════════════════════════════════════════ */}
+        <section className="os-section" style={{ background: "#C4882A", position: "relative", overflow: "hidden" }}>
+          {/* Dot pattern */}
+          <div className="absolute inset-0 pointer-events-none opacity-10"
+            style={{ backgroundImage: "radial-gradient(circle, rgba(28,18,8,0.6) 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+          />
+
+          <div className="os-container relative z-10">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
               <div>
-                <h3 className="font-serif text-[#1C1208] text-display-sm font-light mb-2">
+                <div className="eyebrow-plain mb-3" style={{ color: "rgba(28,18,8,0.6)", letterSpacing: "0.2em" }}>
+                  Stay Connected
+                </div>
+                <h3
+                  className="font-serif"
+                  style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#1C1208", lineHeight: 1.1, marginBottom: "0.75rem" }}
+                >
                   Stay close to the land
                 </h3>
-                <p className="text-[#1C1208]/75 text-sm font-sans">
+                <p style={{ color: "rgba(28,18,8,0.65)", fontSize: "0.9rem", maxWidth: "38rem", lineHeight: 1.8 }}>
                   Monthly updates — new breeds, seasonal harvest drops, farm stories, and exclusive ranch offers.
                 </p>
               </div>
-              <NewsletterForm />
+              <div className="w-full lg:w-auto flex-shrink-0 min-w-[320px]">
+                <NewsletterForm />
+              </div>
             </div>
           </div>
         </section>
 
-      </div>
+      </main>
       <Footer />
     </>
   )
-}
+}
