@@ -1,11 +1,33 @@
+import Image from "next/image"
+import { RANCH_WIDE, RANCH_GALLERY, LOGO } from "@/lib/images"
+
 export const metadata = { title: "About — Osotua Farming" }
 
 export default function AboutPage() {
   return (
     <div className="bg-[#FBF7F0] pt-24 min-h-screen">
-      {/* Header */}
-      <div className="bg-[#1C1208] py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+      {/* Header with backdrop */}
+      <div className="relative bg-[#1C1208] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src={RANCH_WIDE}
+            alt="The Osotua ranch"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1208]/85 via-[#1C1208]/70 to-[#1C1208]/95" />
+        </div>
+        <div className="relative max-w-5xl mx-auto">
+          <Image
+            src={LOGO}
+            alt="Osotua Farming"
+            width={64}
+            height={64}
+            priority
+            className="rounded-full ring-1 ring-[#C4882A]/30 mb-6"
+          />
           <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-4">
             <span className="w-6 h-px bg-[#C4882A]" />
             Our Story
@@ -14,7 +36,7 @@ export default function AboutPage() {
             A farm built on{" "}
             <em className="text-[#C4882A]">trust and land</em>
           </h1>
-          <p className="text-[#F5EFE4]/50 max-w-xl leading-relaxed">
+          <p className="text-[#F5EFE4]/70 max-w-xl leading-relaxed">
             Osotua means a bond of friendship in the Maa language — a relationship between the land, the farmer, and the community.
           </p>
         </div>
@@ -23,13 +45,23 @@ export default function AboutPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Mission */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
-          <div className="bg-[#3D6B3E] rounded p-10 flex flex-col justify-end min-h-64">
-            <p className="font-serif text-3xl italic text-white font-light leading-tight mb-3">
-              &quot;From Our Land, To Your Table&quot;
-            </p>
-            <span className="font-mono text-[10px] text-white/50 tracking-widest uppercase">
-              Maa · Kajiado, Kenya
-            </span>
+          <div className="relative rounded overflow-hidden min-h-80 flex flex-col justify-end p-10 group">
+            <Image
+              src={RANCH_GALLERY[5]}
+              alt="Life on the ranch"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/90 via-[#1C1208]/40 to-transparent" />
+            <div className="relative">
+              <p className="font-serif text-3xl italic text-white font-light leading-tight mb-3">
+                &ldquo;From Our Land, To Your Table&rdquo;
+              </p>
+              <span className="font-mono text-[10px] text-white/70 tracking-widest uppercase">
+                Maa · Kajiado, Kenya
+              </span>
+            </div>
           </div>
 
           <div>
@@ -62,6 +94,24 @@ export default function AboutPage() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Ranch gallery */}
+        <div className="mb-20">
+          <h2 className="font-serif text-3xl text-[#1C1208] font-light mb-8">Life on the Ranch</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {RANCH_GALLERY.map((src, i) => (
+              <div key={i} className="relative aspect-square overflow-hidden rounded group">
+                <Image
+                  src={src}
+                  alt={`Ranch life ${i + 1}`}
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Location */}

@@ -62,7 +62,7 @@ export const metadata: Metadata = {
       "Premium indigenous livestock, fresh dairy, beef, vegetables, and fruits from Kajiado County, Kenya.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/logos/Rooted in Tradition, Growing with Nature (1).png",
         width: 1200,
         height: 630,
         alt: "Osotua Farming — Kajiado, Kenya",
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Osotua Farming",
     description: "Premium livestock & farm produce from Kajiado, Kenya.",
-    images: ["/og-image.jpg"],
+    images: ["/logos/Rooted in Tradition, Growing with Nature (1).png"],
     creator: "@OsotuaFarming",
   },
   robots: {
@@ -82,8 +82,13 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/logos/Rooted in Tradition, Growing with Nature (1).png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/logos/Rooted in Tradition, Growing with Nature (1).png" },
+    ],
   },
 }
 

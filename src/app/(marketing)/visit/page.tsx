@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
+import { FIELD_DAY, RANCH_GALLERY } from "@/lib/images"
 
 export default function VisitPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -17,8 +19,19 @@ export default function VisitPage() {
 
   return (
     <div className="bg-[#FBF7F0] pt-24 min-h-screen">
-      <div className="bg-[#1C1208] py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+      <div className="relative bg-[#1C1208] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src={FIELD_DAY}
+            alt="A day at the Osotua ranch"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1208]/85 via-[#1C1208]/70 to-[#1C1208]/95" />
+        </div>
+        <div className="relative max-w-5xl mx-auto">
           <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-4">
             <span className="w-6 h-px bg-[#C4882A]" />
             Farm Visits
@@ -26,9 +39,26 @@ export default function VisitPage() {
           <h1 className="font-serif text-5xl font-light text-[#F5EFE4] mb-4">
             Come see the <em className="text-[#C4882A]">ranch</em>
           </h1>
-          <p className="text-[#F5EFE4]/50 max-w-xl">
+          <p className="text-[#F5EFE4]/70 max-w-xl">
             Book a guided tour of Osotua Farming. See the herds, the fields, the Barn Store, and experience it all for yourself.
           </p>
+        </div>
+      </div>
+
+      {/* Ranch gallery preview */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 mb-12 relative z-10">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {RANCH_GALLERY.slice(0, 4).map((src, i) => (
+            <div key={i} className="relative aspect-[4/3] overflow-hidden rounded">
+              <Image
+                src={src}
+                alt={`Ranch life ${i + 1}`}
+                fill
+                sizes="(min-width: 640px) 25vw, 50vw"
+                className="object-cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
 
