@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import Image from "next/image"
 import BreedCard from "@/components/farm/BreedCard"
-import { HERD_FIELD } from "@/lib/images"
+import Slideshow from "@/components/shared/Slideshow"
+import { HERD_FIELD, LIVESTOCK_SLIDESHOW } from "@/lib/images"
 
 export const metadata = { title: "Our Breeds — Osotua Farming" }
 
