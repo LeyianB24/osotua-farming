@@ -55,6 +55,11 @@ export default async function BreedsPage() {
         </div>
       </div>
 
+      {/* Livestock showcase slideshow */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 mb-12 relative z-10">
+        <Slideshow slides={LIVESTOCK_SLIDESHOW} heightClass="h-64 sm:h-72" interval={3000} />
+      </div>
+
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {grouped.map((group) => (
