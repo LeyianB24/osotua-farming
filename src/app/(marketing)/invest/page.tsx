@@ -1,54 +1,195 @@
-import Link from "next/link"
+"use client"
 
-export const metadata = { title: "Invest — Osotua Farming" }
+import { useState } from "react"
+import { TrendingUp, ShieldCheck, PieChart, Download, CheckCircle2 } from "lucide-react"
 
 export default function InvestPage() {
+  const [amount, setAmount] = useState(500000)
+  const [duration, setDuration] = useState(3)
+  const [investmentType, setInvestmentType] = useState<"breeding" | "barn">("breeding")
+  const [requested, setRequested] = useState(false)
+
+  // Estimated ROI calculations
+  const roiRate = investmentType === "breeding" ? 0.16 : 0.14
+  const estimatedReturn = amount * Math.pow(1 + roiRate, duration)
+  const profit = estimatedReturn - amount
+
   return (
-    <div className="bg-[#FBF7F0] pt-24 min-h-screen">
-      <div className="bg-[#1C1208] py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+    <div className="bg-[#FBF7F0] pt-20 min-h-screen">
+      {/* Header */}
+      <div className="bg-[#1C1208] py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto relative z-10">
           <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-4">
             <span className="w-6 h-px bg-[#C4882A]" />
-            Investment
+            Investor Relations
           </div>
           <h1 className="font-serif text-5xl font-light text-[#F5EFE4] mb-4">
             Invest in <em className="text-[#C4882A]">Africa&apos;s future</em>
           </h1>
-          <p className="text-[#F5EFE4]/50 max-w-xl leading-relaxed">
-            Osotua Farming offers a rare combination of agricultural heritage, modern technology, and strong market demand. Partner with us and grow together.
+          <p className="text-[#F5EFE4]/60 max-w-xl leading-relaxed">
+            Osotua Farming offers a high-yield opportunity uniting climate-resilient livestock genetics, organic produce supply, and modern agribusiness tech.
           </p>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-20">
-          {[
-            { label: "Livestock Enterprise", desc: "Breeding, importing, and selling premium livestock breeds to farmers across East Africa." },
-            { label: "Barn Store", desc: "Direct-to-consumer and B2B sales of dairy, beef, vegetables, and seasonal produce." },
-            { label: "Digital Platform", desc: "A modern web platform handling orders, subscriptions, and farmer partnerships." },
-          ].map((item) => (
-            <div key={item.label} className="bg-white border border-[#1C1208]/08 rounded p-6">
-              <div className="font-mono text-[9px] text-[#C4882A] tracking-widest uppercase mb-3">Enterprise</div>
-              <div className="font-serif text-lg text-[#1C1208] mb-3">{item.label}</div>
-              <div className="text-[#1C1208]/55 text-sm leading-relaxed">{item.desc}</div>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        {/* Interactive ROI Calculator */}
+        <div className="bg-white border border-[#1C1208]/10 rounded-md p-6 sm:p-10 shadow-lg mb-16">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8 border-b border-[#1C1208]/08 pb-6">
+            <div>
+              <span className="eyebrow text-[#C4882A] mb-1">Interactive Calculator</span>
+              <h2 className="font-serif text-3xl text-[#1C1208] font-light">
+                Projected <em className="text-[#3D6B3E]">Return on Investment</em>
+              </h2>
             </div>
-          ))}
+            <div className="flex bg-[#F5EFE4] p-1 rounded-xs border border-[#EDE5D8]">
+              <button
+                onClick={() => setInvestmentType("breeding")}
+                className={`px-4 py-1.5 rounded-xs text-xs font-mono transition-all ${
+                  investmentType === "breeding"
+                    ? "bg-[#C4882A] text-[#1C1208] font-bold"
+                    : "text-[#1C1208]/60 hover:text-[#1C1208]"
+                }`}
+              >
+                Livestock Equity (16% p.a)
+              </button>
+              <button
+                onClick={() => setInvestmentType("barn")}
+                className={`px-4 py-1.5 rounded-xs text-xs font-mono transition-all ${
+                  investmentType === "barn"
+                    ? "bg-[#C4882A] text-[#1C1208] font-bold"
+                    : "text-[#1C1208]/60 hover:text-[#1C1208]"
+                }`}
+              >
+                Barn Retail Expansion (14% p.a)
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* Sliders */}
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-center mb-2 font-mono text-xs">
+                  <span className="text-[#1C1208]/60 uppercase tracking-wider">Investment Amount:</span>
+                  <span className="font-bold text-[#C4882A] text-base">
+                    KES {amount.toLocaleString()}
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={100000}
+                  max={5000000}
+                  step={50000}
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  className="w-full accent-[#C4882A] cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] font-mono text-[#1C1208]/40 mt-1">
+                  <span>KES 100,000</span>
+                  <span>KES 5,000,000</span>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-2 font-mono text-xs">
+                  <span className="text-[#1C1208]/60 uppercase tracking-wider">Tenure / Duration:</span>
+                  <span className="font-bold text-[#1C1208] text-base">
+                    {duration} {duration === 1 ? "Year" : "Years"}
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={1}
+                  max={5}
+                  step={1}
+                  value={duration}
+                  onChange={(e) => setDuration(Number(e.target.value))}
+                  className="w-full accent-[#3D6B3E] cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] font-mono text-[#1C1208]/40 mt-1">
+                  <span>1 Year</span>
+                  <span>5 Years</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Projected Outputs */}
+            <div className="bg-[#1C1208] text-[#F5EFE4] rounded-md p-6 flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="eyebrow text-[#C4882A]">Estimated Outcome</div>
+                <div className="flex justify-between items-baseline border-b border-[#F5EFE4]/10 pb-2">
+                  <span className="text-xs text-[#F5EFE4]/60">Initial Capital:</span>
+                  <span className="font-mono text-sm font-semibold">KES {amount.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between items-baseline border-b border-[#F5EFE4]/10 pb-2">
+                  <span className="text-xs text-[#F5EFE4]/60">Est. Profit Yield:</span>
+                  <span className="font-mono text-sm font-semibold text-[#3D6B3E]">
+                    + KES {Math.round(profit).toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between items-baseline pt-1">
+                  <span className="font-serif text-sm">Total Projected Value:</span>
+                  <span className="font-mono text-2xl font-bold text-[#C4882A]">
+                    KES {Math.round(estimatedReturn).toLocaleString()}
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-[10px] text-[#F5EFE4]/40 font-mono italic">
+                *Projections based on historical yield rates and rangeland expansion modeling.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="bg-[#1C1208] rounded p-12 text-center">
-          <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase mb-3">Get the Full Picture</div>
-          <h2 className="font-serif text-3xl text-[#F5EFE4] font-light mb-4">Request Our Investment Brief</h2>
-          <p className="text-[#F5EFE4]/50 text-sm mb-8 max-w-md mx-auto">
-            Our detailed investment brief covers financials, projections, farm plans, and partnership tiers. Request it below.
-          </p>
-          <Link
-            href="/contact"
-            className="bg-[#C4882A] text-[#1C1208] px-8 py-3 text-sm font-medium rounded-sm hover:bg-[#d99a30] transition-colors inline-block"
-          >
-            Request Investment Brief
-          </Link>
+        {/* Core Pillars */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
+          {[
+            { icon: TrendingUp, label: "Livestock Enterprise", desc: "Breeding, importing, and distributing climate-resilient bulls, heifers, Boer goats, and Dorper sheep." },
+            { icon: PieChart, label: "Barn Store Network", desc: "Direct-to-consumer and B2B supply of aged beef, fresh dairy, organic produce, and weekly subscription boxes." },
+            { icon: ShieldCheck, label: "Asset Backed Growth", desc: "Every investment unit is backed by physical herd inventory and titled rangeland assets in Kajiado." },
+          ].map((item) => {
+            const Icon = item.icon
+            return (
+              <div key={item.label} className="bg-white border border-[#1C1208]/08 rounded-md p-6 shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#C4882A]/10 text-[#C4882A] flex items-center justify-center mb-4">
+                  <Icon size={20} />
+                </div>
+                <div className="font-serif text-xl text-[#1C1208] mb-2">{item.label}</div>
+                <div className="text-[#1C1208]/55 text-xs leading-relaxed">{item.desc}</div>
+              </div>
+            )
+          })}
         </div>
+
+        {/* Prospectus Request Box */}
+        <div className="bg-[#1C1208] rounded-md p-10 text-center text-[#F5EFE4] shadow-xl relative overflow-hidden">
+          <span className="eyebrow justify-center text-[#C4882A] mb-3">Official Prospectus</span>
+          <h2 className="font-serif text-3xl font-light mb-4">Request the Full Investment Brief</h2>
+          <p className="text-[#F5EFE4]/60 text-xs mb-8 max-w-md mx-auto leading-relaxed">
+            Our 2026 investment brief covers audited financial projections, rangeland expansion blueprints, legal framework, and partner equity structures.
+          </p>
+
+          {requested ? (
+            <div className="inline-flex items-center gap-2 text-sm text-[#3D6B3E] font-mono bg-[#3D6B3E]/15 border border-[#3D6B3E]/30 px-6 py-3 rounded-xs">
+              <CheckCircle2 size={18} />
+              <span>Investment Brief sent to your email!</span>
+            </div>
+          ) : (
+            <button
+              onClick={() => setRequested(true)}
+              className="btn btn-primary btn-lg inline-flex items-center gap-2"
+            >
+              <Download size={16} />
+              <span>Download 2026 Investment Brief</span>
+            </button>
+          )}
+        </div>
+
       </div>
     </div>
   )
 }
+

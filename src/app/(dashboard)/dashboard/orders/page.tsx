@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 
 export default async function CustomerOrdersPage() {
   const session = await auth()
-  if (!session) redirect("/login")
+  if (!session?.user?.id) redirect("/login")
 
   const orders = await prisma.order.findMany({
     where: { userId: session.user.id },

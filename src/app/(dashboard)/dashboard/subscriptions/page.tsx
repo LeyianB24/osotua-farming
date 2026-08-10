@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default async function SubscriptionsPage() {
   const session = await auth()
-  if (!session) redirect("/login")
+  if (!session?.user?.id) redirect("/login")
 
   const subscriptions = await prisma.subscription.findMany({
     where: { userId: session.user.id },

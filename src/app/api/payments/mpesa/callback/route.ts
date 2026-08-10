@@ -37,7 +37,7 @@ export async function POST(req: Request) {
           where: { id: orderId },
           data: {
             status: "PAID",
-            paymentRef: mpesaRef,
+            paymentRef: String(mpesaRef ?? ""),
             paymentMethod: "mpesa",
           },
         })

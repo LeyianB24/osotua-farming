@@ -5,20 +5,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingBag, MapPin } from "lucide-react";
+import { Menu, X, ShoppingBag, MapPin, User } from "lucide-react";
 import Logo from "./Logo";
+import { useCart } from "./CartContext";
 
 const navLinks = [
   { label: "Our Breeds", href: "/breeds" },
   { label: "The Barn", href: "/barn" },
+  { label: "Invest", href: "/invest" },
+  { label: "Partners", href: "/partners" },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
-  { label: "Get Involved", href: "/careers" },
 ];
 
-export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
+export default function Navbar({ cartCount: initialCartCount }: { cartCount?: number }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { cartCount: ctxCartCount } = useCart();
+  const cartCount = ctxCartCount ?? initialCartCount ?? 0;
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -45,7 +49,7 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
           <Logo size="md" />
 
           {/* Desktop Navigation Links */}
-          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-8">
+          <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
               return (
@@ -53,7 +57,7 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
                   key={link.href}
                   href={link.href}
                   className={`relative py-1 text-xs font-mono tracking-widest uppercase transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C4882A] ${
-                    isActive ? "text-[#C4882A] font-semibold" : "text-[#F5EFE4]/70 hover:text-[#C4882A]"
+                    isActive ? "text-[#C4882A] font-semibold" : "text-[#F5EFE4]/75 hover:text-[#C4882A]"
                   }`}
                 >
                   {link.label}
@@ -70,15 +74,24 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-5">
+          <div className="hidden md:flex items-center gap-4">
             <Link
-              href="/barn"
+              href="/dashboard"
+              className="text-[#F5EFE4]/70 hover:text-[#C4882A] p-2 transition-colors flex items-center gap-1.5 text-xs font-mono"
+              title="User Dashboard"
+            >
+              <User size={18} />
+              <span>Portal</span>
+            </Link>
+
+            <Link
+              href="/cart"
               aria-label={`Shopping cart with ${cartCount} items`}
               className="relative text-[#F5EFE4]/80 hover:text-[#C4882A] transition-colors p-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C4882A] rounded-xs"
             >
               <ShoppingBag size={20} />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#C4882A] text-[10px] font-bold text-[#1C1208]">
+                <span className="absolute -top-1 -right-1 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-[#C4882A] text-[10px] font-bold text-[#1C1208] shadow-md animate-pulse">
                   {cartCount}
                 </span>
               )}
@@ -96,7 +109,7 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
           {/* Mobile Right Controls */}
           <div className="flex items-center gap-3 md:hidden">
             <Link
-              href="/barn"
+              href="/cart"
               aria-label={`Shopping cart with ${cartCount} items`}
               className="relative text-[#F5EFE4]/80 hover:text-[#C4882A] p-2"
             >
@@ -150,6 +163,14 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
                     </Link>
                   );
                 })}
+                <Link
+                  href="/dashboard"
+                  onClick={() => setOpen(false)}
+                  className="text-sm font-mono tracking-widest uppercase py-2 text-[#F5EFE4]/80 hover:text-[#C4882A] border-b border-[#F5EFE4]/5 flex items-center justify-between"
+                >
+                  <span>Customer Dashboard</span>
+                  <User size={16} />
+                </Link>
               </nav>
 
               <Link
@@ -167,3 +188,4 @@ export default function Navbar({ cartCount = 0 }: { cartCount?: number }) {
     </header>
   );
 }
+

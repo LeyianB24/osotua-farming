@@ -98,6 +98,9 @@ export const viewport: Viewport = {
   themeColor: "#1C1208",
 }
 
+import { CartProvider } from "@/components/shared/CartContext"
+import ToastContainer from "@/components/shared/Toast"
+
 /* ── ROOT LAYOUT ────────────────────────────────────────── */
 export default function RootLayout({
   children,
@@ -131,7 +134,10 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <div id="main-content">{children}</div>
+        <CartProvider>
+          <div id="main-content">{children}</div>
+          <ToastContainer />
+        </CartProvider>
 
         {/* Scroll reveal script */}
         <script
