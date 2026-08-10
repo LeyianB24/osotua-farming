@@ -41,7 +41,7 @@ export default async function HomePage() {
               className="object-cover object-center"
               style={{ opacity: 0.55 }}
             />
-            {/* Warm layered overlay — exactly like the template */}
+            {/* Warm layered overlay */}
             <div className="absolute inset-0" style={{
               background: "linear-gradient(135deg, rgba(28,18,8,0.85) 0%, rgba(28,18,8,0.55) 50%, rgba(28,18,8,0.3) 100%)"
             }} />
@@ -63,7 +63,7 @@ export default async function HomePage() {
                 Kajiado County, Kenya
               </div>
 
-              {/* Headline — Cormorant, large, italic accent */}
+              {/* Headline */}
               <h1
                 className="font-serif text-[#F5EFE4] mb-6 anim-fade-up"
                 style={{
@@ -190,22 +190,12 @@ export default async function HomePage() {
                 <Link
                   key={item.label}
                   href="/breeds"
-                  className="reveal group block relative overflow-hidden"
+                  className="reveal group block relative overflow-hidden rounded transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_64px_rgba(28,18,8,0.25)]"
                   style={{
                     background: item.bg,
-                    borderRadius: "4px",
                     padding: "2.25rem 2rem",
                     minHeight: "260px",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
                     textDecoration: "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)"
-                    ;(e.currentTarget as HTMLElement).style.boxShadow = "0 24px 64px rgba(28,18,8,0.25)"
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = ""
-                    ;(e.currentTarget as HTMLElement).style.boxShadow = ""
                   }}
                 >
                   {/* Count badge */}
@@ -354,25 +344,10 @@ export default async function HomePage() {
                 <Link
                   key={item.name}
                   href="/barn"
-                  className="reveal group block text-center"
+                  className="reveal group block text-center rounded p-6 transition-all duration-300 bg-white/5 border border-white/10 hover:bg-[#C4882A]/12 hover:border-[#C4882A]/45"
                   style={{
-                    background: "rgba(245,239,228,0.05)",
-                    border: "1px solid rgba(245,239,228,0.1)",
-                    borderRadius: "4px",
-                    padding: "1.5rem 1rem",
-                    transition: "all 0.28s ease",
                     textDecoration: "none",
                     transitionDelay: `${i * 50}ms`,
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.background = "rgba(196,136,42,0.12)"
-                    el.style.borderColor = "rgba(196,136,42,0.45)"
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.background = "rgba(245,239,228,0.05)"
-                    el.style.borderColor = "rgba(245,239,228,0.1)"
                   }}
                 >
                   <i className={`bi ${item.icon}`}
@@ -400,7 +375,7 @@ export default async function HomePage() {
                 </div>
 
                 {/* Horizontal photo strip (5-column landscape thumbnails) */}
-                <div className="flex gap-0 overflow-hidden mb-12" style={{ borderRadius: "4px", height: "200px" }}>
+                <div className="flex gap-0 overflow-hidden mb-12 rounded" style={{ height: "200px" }}>
                   {products.slice(0, 5).map((product) => (
                     <Link
                       key={product.id}
@@ -468,8 +443,8 @@ export default async function HomePage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 stagger"
-              style={{ border: "1px solid rgba(28,18,8,0.08)", borderRadius: "4px", overflow: "hidden" }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 stagger rounded overflow-hidden"
+              style={{ border: "1px solid rgba(28,18,8,0.08)" }}>
               {[
                 {
                   icon: "bi-heart-pulse",
@@ -522,7 +497,7 @@ export default async function HomePage() {
 
 
         {/* ══════════════════════════════════════════════════
-            7. HOW IT WORKS — 4-step ordering process
+            7. HOW IT WORKS
         ══════════════════════════════════════════════════ */}
         <section className="os-section" style={{ background: "#F5EFE4" }}>
           <div className="os-container">
@@ -576,14 +551,14 @@ export default async function HomePage() {
 
 
         {/* ══════════════════════════════════════════════════
-            8. WHY OSOTUA — Split image + content
+            8. WHY OSOTUA
         ══════════════════════════════════════════════════ */}
         <section className="os-section-lg" style={{ background: "#FBF7F0" }}>
           <div className="os-container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
               {/* Image panel */}
-              <div className="reveal relative overflow-hidden" style={{ borderRadius: "4px", minHeight: "520px", boxShadow: "0 32px 80px rgba(28,18,8,0.15)" }}>
+              <div className="reveal relative overflow-hidden rounded shadow-2xl" style={{ minHeight: "520px" }}>
                 <Image
                   src={FIELD_DAY}
                   alt="Osotua Farming — Pastoral Field"
@@ -594,13 +569,11 @@ export default async function HomePage() {
 
                 {/* Floating quote card */}
                 <div
-                  className="absolute bottom-8 left-8 right-8"
+                  className="absolute bottom-8 left-8 right-8 rounded p-6"
                   style={{
                     background: "rgba(28,18,8,0.7)",
                     backdropFilter: "blur(16px)",
                     border: "1px solid rgba(196,136,42,0.25)",
-                    borderRadius: "4px",
-                    padding: "1.5rem",
                   }}
                 >
                   <div className="eyebrow-plain mb-2" style={{ color: "#C4882A", fontSize: "0.58rem" }}>
@@ -636,14 +609,7 @@ export default async function HomePage() {
                   ].map((item) => (
                     <div
                       key={item.title}
-                      className="flex gap-4"
-                      style={{
-                        padding: "1rem 1.25rem",
-                        borderRadius: "4px",
-                        transition: "background 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#F5EFE4" }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "" }}
+                      className="flex gap-4 p-4 rounded transition-colors duration-200 hover:bg-[#F5EFE4]"
                     >
                       <div
                         style={{
@@ -714,27 +680,10 @@ export default async function HomePage() {
                 <Link
                   key={item.title}
                   href={item.href}
-                  className="reveal group block"
+                  className="reveal group block p-8 rounded border transition-all duration-300 bg-white/5 border-white/10 hover:bg-[#C4882A]/10 hover:border-[#C4882A]/40 hover:-translate-y-1"
                   style={{
-                    background: "rgba(245,239,228,0.05)",
-                    border: "1px solid rgba(245,239,228,0.1)",
-                    borderRadius: "4px",
-                    padding: "2rem",
                     textDecoration: "none",
-                    transition: "all 0.3s ease",
                     transitionDelay: `${i * 60}ms`,
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.background = "rgba(196,136,42,0.1)"
-                    el.style.borderColor = "rgba(196,136,42,0.4)"
-                    el.style.transform = "translateY(-4px)"
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.background = "rgba(245,239,228,0.05)"
-                    el.style.borderColor = "rgba(245,239,228,0.1)"
-                    el.style.transform = ""
                   }}
                 >
                   <i className={`bi ${item.icon}`}

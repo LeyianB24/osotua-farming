@@ -62,43 +62,21 @@ export default function ProductCard({ product, dark }: Props) {
 
   return (
     <div
-      className="group relative flex flex-col"
-      style={{
-        background: dark ? "rgba(245,239,228,0.05)" : "#FFFFFF",
-        border: dark
-          ? "1px solid rgba(245,239,228,0.1)"
-          : "1px solid rgba(28,18,8,0.08)",
-        borderRadius: "4px",
-        overflow: "hidden",
-        transition: "transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease",
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.transform = "translateY(-6px)"
-        el.style.boxShadow = dark
-          ? "0 24px 64px rgba(0,0,0,0.4)"
-          : "0 24px 64px rgba(28,18,8,0.12)"
-        el.style.borderColor = "rgba(196,136,42,0.3)"
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.transform = ""
-        el.style.boxShadow = ""
-        el.style.borderColor = dark ? "rgba(245,239,228,0.1)" : "rgba(28,18,8,0.08)"
-      }}
+      className={`group relative flex flex-col rounded overflow-hidden transition-all duration-300 hover:-translate-y-1.5 border ${
+        dark
+          ? "bg-[#F5EFE4]/05 border-[#F5EFE4]/10 hover:border-[#C4882A]/40 hover:shadow-[0_24px_64px_rgba(0,0,0,0.4)]"
+          : "bg-white border-black/8 hover:border-[#C4882A]/40 hover:shadow-[0_24px_64px_rgba(28,18,8,0.12)]"
+      }`}
     >
       {/* Image area */}
-      <Link href={`/barn/${product.slug}`} className="block relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+      <Link href={`/barn/${product.slug}`} className="block relative overflow-hidden aspect-[4/3]">
         {src ? (
           <Image
             src={src}
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover"
-            style={{ transition: "transform 0.6s ease" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.06)" }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "" }}
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center" style={{ background: dark ? "#2D1F0E" : "#F5EFE4" }}>
@@ -167,7 +145,7 @@ export default function ProductCard({ product, dark }: Props) {
       </Link>
 
       {/* Card body */}
-      <Link href={`/barn/${product.slug}`} className="flex flex-col flex-1 no-underline" style={{ padding: "1.25rem 1.25rem 1.25rem" }}>
+      <Link href={`/barn/${product.slug}`} className="flex flex-col flex-1 no-underline p-5">
         {/* Category label */}
         <div className="eyebrow-plain mb-2" style={{ color: "#C4882A", fontSize: "0.57rem" }}>
           {product.category.name}
@@ -192,7 +170,7 @@ export default function ProductCard({ product, dark }: Props) {
         </div>
 
         {/* Price + Add button */}
-        <div className="flex items-center justify-between mt-auto" style={{ paddingTop: "1rem", borderTop: "1px solid rgba(28,18,8,0.06)" }}>
+        <div className="flex items-center justify-between mt-auto pt-4 border-t border-black/6">
           <div>
             <div className="eyebrow-plain mb-0.5" style={{ color: "rgba(28,18,8,0.4)", fontSize: "0.54rem" }}>
               Price

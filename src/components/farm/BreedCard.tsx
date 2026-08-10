@@ -36,38 +36,17 @@ export default function BreedCard({ breed }: Props) {
   return (
     <Link
       href={`/breeds/${breed.id}`}
-      className="group block"
-      style={{
-        background: "#FFFFFF",
-        border: "1px solid rgba(28,18,8,0.08)",
-        borderRadius: "4px",
-        overflow: "hidden",
-        textDecoration: "none",
-        transition: "transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease",
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.transform = "translateY(-6px)"
-        el.style.boxShadow = "0 24px 64px rgba(28,18,8,0.12)"
-        el.style.borderColor = "rgba(196,136,42,0.3)"
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement
-        el.style.transform = ""
-        el.style.boxShadow = ""
-        el.style.borderColor = "rgba(28,18,8,0.08)"
-      }}
+      className="group block bg-white border border-black/8 rounded overflow-hidden no-underline transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_64px_rgba(28,18,8,0.12)] hover:border-[#C4882A]/40"
     >
       {/* Image hero */}
-      <div className="relative overflow-hidden" style={{ height: "220px", background: bgColor }}>
+      <div className="relative overflow-hidden h-[220px]" style={{ background: bgColor }}>
         {src ? (
           <Image
             src={src}
             alt={breed.name}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover"
-            style={{ opacity: 0.85, transition: "transform 0.6s ease, opacity 0.3s ease" }}
+            className="object-cover opacity-85 transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
@@ -119,8 +98,7 @@ export default function BreedCard({ breed }: Props) {
         {/* Breed name overlaid on image */}
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <div
-            className="font-serif"
-            style={{ fontSize: "1.5rem", fontWeight: 400, color: "#F5EFE4", lineHeight: 1.15 }}
+            className="font-serif text-2xl font-light text-[#F5EFE4] leading-tight"
           >
             {breed.name}
           </div>
@@ -128,7 +106,7 @@ export default function BreedCard({ breed }: Props) {
       </div>
 
       {/* Card body */}
-      <div style={{ padding: "1.25rem" }}>
+      <div className="p-5">
         {/* Tags row */}
         <div className="flex items-center gap-2 flex-wrap mb-3">
           <span
@@ -142,7 +120,7 @@ export default function BreedCard({ breed }: Props) {
               padding: "0.25rem 0.65rem", borderRadius: "2px",
             }}
           >
-            <i className="bi bi-bullseye" style={{ fontSize: "0.7rem" }} />
+            <i className="bi bi-bullseye text-[0.7rem]" />
             {breed.purpose}
           </span>
           <span
@@ -153,7 +131,7 @@ export default function BreedCard({ breed }: Props) {
               letterSpacing: "0.08em",
             }}
           >
-            <i className="bi bi-geo-alt" style={{ fontSize: "0.7rem" }} />
+            <i className="bi bi-geo-alt text-[0.7rem]" />
             {breed.origin}
           </span>
         </div>
@@ -178,36 +156,22 @@ export default function BreedCard({ breed }: Props) {
 
         {/* Price + CTA */}
         <div
-          className="flex items-center justify-between"
-          style={{ paddingTop: "1rem", borderTop: "1px solid rgba(28,18,8,0.06)" }}
+          className="flex items-center justify-between pt-4 border-t border-black/6"
         >
           <div>
-            <div className="eyebrow-plain mb-0.5" style={{ color: "rgba(28,18,8,0.38)", fontSize: "0.54rem" }}>
+            <div className="eyebrow-plain mb-0.5 text-[#1C1208]/40" style={{ fontSize: "0.54rem" }}>
               Price / Head
             </div>
-            <div className="font-serif" style={{ fontSize: "1.4rem", fontWeight: 500, color: "#C4882A", lineHeight: 1 }}>
+            <div className="font-serif text-2xl font-medium text-[#C4882A] leading-none">
               KES {breed.pricePerHead.toLocaleString()}
             </div>
           </div>
 
           <div
-            style={{
-              background: "#1C1208",
-              color: "#C4882A",
-              fontSize: "0.65rem",
-              fontWeight: 600,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              padding: "0.55rem 1.1rem",
-              borderRadius: "2px",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              transition: "background 0.2s ease, color 0.2s ease",
-            }}
+            className="bg-[#1C1208] text-[#C4882A] text-[0.65rem] font-bold uppercase tracking-wider px-3.5 py-2 rounded flex items-center gap-1.5 transition-colors group-hover:bg-[#C4882A] group-hover:text-[#1C1208]"
           >
             View Breed
-            <i className="bi bi-arrow-right" style={{ fontSize: "0.8rem" }} />
+            <i className="bi bi-arrow-right text-[0.8rem]" />
           </div>
         </div>
       </div>

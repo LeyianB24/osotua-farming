@@ -18,7 +18,7 @@ export default function Footer() {
               from Kajiado County, Kenya.
             </p>
             {/* Social icons */}
-            <div style={{ display: "flex", gap: "0.75rem", marginTop: "1.5rem" }}>
+            <div className="flex gap-3 mt-6">
               {[
                 { icon: "bi-instagram", href: "https://instagram.com", label: "Instagram" },
                 { icon: "bi-facebook",  href: "https://facebook.com",  label: "Facebook" },
@@ -30,26 +30,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  style={{
-                    width: "36px", height: "36px",
-                    border: "1px solid rgba(196,136,42,0.25)",
-                    borderRadius: "2px",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "rgba(245,239,228,0.55)",
-                    transition: "all 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.borderColor = "#C4882A"
-                    el.style.color = "#C4882A"
-                    el.style.background = "rgba(196,136,42,0.1)"
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement
-                    el.style.borderColor = "rgba(196,136,42,0.25)"
-                    el.style.color = "rgba(245,239,228,0.55)"
-                    el.style.background = ""
-                  }}
+                  className="w-9 h-9 border border-[#C4882A]/25 rounded flex items-center justify-center text-[#F5EFE4]/55 hover:border-[#C4882A] hover:text-[#C4882A] hover:bg-[#C4882A]/10 transition-all duration-200"
                 >
                   <i className={`bi ${s.icon}`} style={{ fontSize: "0.95rem" }} />
                 </a>
@@ -59,10 +40,10 @@ export default function Footer() {
 
           {/* Col 2 — Quick Links */}
           <div>
-            <div className="eyebrow-plain" style={{ color: "#C4882A", marginBottom: "1.25rem" }}>
+            <div className="eyebrow-plain mb-5 text-[#C4882A]">
               Quick Links
             </div>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+            <nav className="flex flex-col gap-2.5">
               {[
                 { label: "Our Breeds",     href: "/breeds"  },
                 { label: "The Barn Store", href: "/barn"    },
@@ -75,17 +56,9 @@ export default function Footer() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  style={{
-                    color: "rgba(245,239,228,0.55)",
-                    fontSize: "0.86rem",
-                    textDecoration: "none",
-                    transition: "color 0.2s ease",
-                    display: "flex", alignItems: "center", gap: "0.4rem",
-                  }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#C4882A" }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(245,239,228,0.55)" }}
+                  className="text-[#F5EFE4]/55 hover:text-[#C4882A] text-sm flex items-center gap-1.5 transition-colors duration-200"
                 >
-                  <i className="bi bi-arrow-right" style={{ fontSize: "0.65rem", opacity: 0.5 }} />
+                  <i className="bi bi-arrow-right text-[0.65rem] opacity-50" />
                   {l.label}
                 </Link>
               ))}
@@ -94,10 +67,10 @@ export default function Footer() {
 
           {/* Col 3 — Livestock */}
           <div>
-            <div className="eyebrow-plain" style={{ color: "#C4882A", marginBottom: "1.25rem" }}>
+            <div className="eyebrow-plain mb-5 text-[#C4882A]">
               Livestock Catalogue
             </div>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+            <nav className="flex flex-col gap-2.5">
               {[
                 { label: "Boran Beef Cattle",    icon: "bi-bullseye"  },
                 { label: "Bonsmara Bulls",        icon: "bi-bullseye"  },
@@ -110,17 +83,9 @@ export default function Footer() {
                 <Link
                   key={l.label}
                   href="/breeds"
-                  style={{
-                    color: "rgba(245,239,228,0.55)",
-                    fontSize: "0.86rem",
-                    textDecoration: "none",
-                    transition: "color 0.2s ease",
-                    display: "flex", alignItems: "center", gap: "0.5rem",
-                  }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#C4882A" }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(245,239,228,0.55)" }}
+                  className="text-[#F5EFE4]/55 hover:text-[#C4882A] text-sm flex items-center gap-2 transition-colors duration-200"
                 >
-                  <i className={`bi ${l.icon}`} style={{ fontSize: "0.7rem", color: "rgba(196,136,42,0.5)" }} />
+                  <i className={`bi ${l.icon} text-[0.7rem] text-[#C4882A]/50`} />
                   {l.label}
                 </Link>
               ))}
@@ -129,36 +94,29 @@ export default function Footer() {
 
           {/* Col 4 — Contact */}
           <div>
-            <div className="eyebrow-plain" style={{ color: "#C4882A", marginBottom: "1.25rem" }}>
+            <div className="eyebrow-plain mb-5 text-[#C4882A]">
               Contact Us
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div className="flex flex-col gap-4">
               {[
                 { icon: "bi-geo-alt",  value: "Kajiado County, Kenya" },
                 { icon: "bi-telephone",value: "+254 700 000 000",      href: "tel:+254700000000" },
                 { icon: "bi-envelope", value: "info@osotuafarming.co.ke", href: "mailto:info@osotuafarming.co.ke" },
                 { icon: "bi-clock",    value: "Mon – Sat: 8:00am – 5:00pm" },
               ].map((c) => (
-                <div key={c.icon} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                  <div style={{
-                    width: "32px", height: "32px", flexShrink: 0,
-                    border: "1px solid rgba(196,136,42,0.2)",
-                    borderRadius: "2px",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}>
-                    <i className={`bi ${c.icon}`} style={{ fontSize: "0.85rem", color: "#C4882A" }} />
+                <div key={c.icon} className="flex gap-3 items-start">
+                  <div className="w-8 h-8 flex-shrink-0 border border-[#C4882A]/20 rounded flex items-center justify-center">
+                    <i className={`bi ${c.icon} text-[0.85rem] text-[#C4882A]`} />
                   </div>
                   {c.href ? (
                     <a
                       href={c.href}
-                      style={{ color: "rgba(245,239,228,0.6)", fontSize: "0.86rem", lineHeight: 1.5, textDecoration: "none", transition: "color 0.2s ease" }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#C4882A" }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(245,239,228,0.6)" }}
+                      className="text-[#F5EFE4]/60 hover:text-[#C4882A] text-sm leading-snug transition-colors duration-200"
                     >
                       {c.value}
                     </a>
                   ) : (
-                    <span style={{ color: "rgba(245,239,228,0.6)", fontSize: "0.86rem", lineHeight: 1.5 }}>
+                    <span className="text-[#F5EFE4]/60 text-sm leading-snug">
                       {c.value}
                     </span>
                   )}
@@ -191,9 +149,7 @@ export default function Footer() {
               href="https://bezaleltech.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "rgba(196,136,42,0.55)", textDecoration: "none", transition: "color 0.2s ease" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#C4882A" }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(196,136,42,0.55)" }}
+              className="text-[#C4882A]/60 hover:text-[#C4882A] transition-colors duration-200"
             >
               Bezalel Technologies LTD
             </a>
