@@ -173,3 +173,93 @@ export const uploadSchema = z.object({
   image: z.string().min(1, "Image data is required"),
   folder: z.string().max(60).optional(),
 })
+
+// ── STOCK ──────────────────────────────────────────────────
+
+export const stockSchema = z.object({
+  productId: z.string().min(1).nullish(),
+  breedId: z.string().min(1).nullish(),
+  name: z.string().min(1, "Name is required").max(160),
+  unit: z.string().min(1, "Unit is required").max(40),
+  quantity: z.number().int().min(0).max(1_000_000).default(0),
+  reorderAt: z.number().int().min(0).max(1_000_000).default(0),
+  note: z.string().max(2000).nullish(),
+}).refine((v) => !!v.productId || !!v.breedId || (!v.productId && !v.breedId), {
+  message: "Stock can be standalone or linked to a product/breed",
+})
+
+export const stockPatchSchema = stockSchema.partial()
+
+// ── MENU ───────────────────────────────────────────────────
+
+export const menuItemSchema = z.object({
+  id: z.string().nullish(),
+  name: z.string().min(1).max(160),
+  quantity: z.string().min(1).max(80),
+  note: z.string().max(500).nullish(),
+})
+
+export const menuSchema = z.object({
+  name: z.string().min(1, "Name is required").max(160),
+  slug: z.string().min(1).max(160).regex(/^[a-z0-9-]+$/, "Slug must be lowercase, hyphens or digits only"),
+  description: z.string().min(1, "Description is required").max(4000),
+  price: z.number().min(0).max(100_000),
+  servings: z.number().int().min(1).max(1000).default(1),
+  image: z.string().url().max(500).nullish().or(z.literal("").transform(() => null)),
+  available: z.boolean().default(true),
+  weekOf: z.coerce.date().nullish(),
+  items: z.array(menuItemSchema).default([]),
+})
+
+export const menuPatchSchema = menuSchema.partial()
+
+// ── NEW CATCH ──────────────────────────────────────────────
+
+export const newCatchSchema = z.object({
+  breedId: z.string().min(1).nullish(),
+  name: z.string().min(1, "Name is required").max(160),
+  quantity: z.number().int().min(1).max(10000).default(1),
+  unit: z.string().min(1).max(40).default("kg"),
+  price: z.number().min(0).max(1_000_000),
+  status: z.enum(["FRESH", "AGING", "SOLD_OUT", "RESERVED"]).default("FRESH"),
+  caughtAt: z.coerce.date().default(() => new Date()),
+  note: z.string().max(2000).nullish(),
+})
+
+export const newCatchPatchSchema = newCatchSchema.partial()
+
+// ── IMPORT ─────────────────────────────────────────────────
+
+export const importSchema = z.object({
+  reference: z.string().min(1, "Reference is required").max(80),
+  supplierName: z.string().min(1, "Supplier name is required").max(160),
+  breedId: z.string().min(1).nullish(),
+  productName: z.string().max(160).nullish(),
+  quantity: z.number().int().min(1).max(10000).default(1),
+  unitPrice: z.number().min(0).max(10_000_000),
+  totalValue: z.number().min(0).max(100_000_000),
+  status: z.enum(["PENDING", "IN_TRANSIT", "RECEIVED", "CANCELLED"]).default("PENDING"),
+  arrivedAt: z.coerce.date().nullish(),
+  notes: z.string().max(2000).nullish(),
+})
+
+export const importPatchSchema = importSchema.partial()
+
+// ── SALE ───────────────────────────────────────────────────
+
+export const saleSchema = z.object({
+  reference: z.string().min(1, "Reference is required").max(80),
+  breedId: z.string().min(1).nullish(),
+  productId: z.string().min(1).nullish(),
+  customerName: z.string().min(1, "Customer name is required").max(160),
+  customerPhone: z.string().max(40).nullish(),
+  quantity: z.number().int().min(1).max(10000).default(1),
+  unitPrice: z.number().min(0).max(10_000_000),
+  totalAmount: z.number().min(0).max(100_000_000),
+  channel: z.enum(["DIRECT", "ONLINE", "WHOLESALE", "RESTAURANT", "PARTNER"]).default("DIRECT"),
+  status: z.enum(["PENDING", "COMPLETED", "REFUNDED", "CANCELLED"]).default("COMPLETED"),
+  paidAt: z.coerce.date().default(() => new Date()),
+  note: z.string().max(2000).nullish(),
+})
+
+export const salePatchSchema = saleSchema.partial()

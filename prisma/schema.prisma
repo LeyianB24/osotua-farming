@@ -94,6 +94,10 @@ model Breed {
   species    Species     @relation(fields: [speciesId], references: [id])
   livestock  Livestock[]
   orderItems OrderItem[]
+  stocks     Stock[]
+  catches    NewCatch[]
+  imports    Import[]
+  sales      Sale[]
 }
 
 model Livestock {
@@ -153,6 +157,8 @@ model Product {
   category      ProductCategory @relation(fields: [categoryId], references: [id])
   orderItems    OrderItem[]
   subscriptions Subscription[]
+  stocks        Stock[]
+  sales         Sale[]
 }
 
 // ── ORDERS ───────────────────────────────────────────────
@@ -334,4 +340,140 @@ enum PartnerStatus {
   APPROVED
   ACTIVE
   SUSPENDED
+}
+
+// ── STOCK (inventory movements / on-hand records) ────────
+
+model Stock {
+  id        String   @id @default(cuid())
+  productId String?
+  breedId   String?
+  name      String
+  unit      String
+  quantity  Int      @default(0)
+  reorderAt Int      @default(0)
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  breed   Breed?   @relation(fields: [breedId], references: [id], onDelete: SetNull)
+}
+
+// ── BARN MENU (prepared meals / weekly menu) ─────────────
+
+model Menu {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  price       Float
+  servings    Int      @default(1)
+  image       String?
+  available   Boolean  @default(true)
+  weekOf      DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items MenuItem[]
+}
+
+model MenuItem {
+  id       String @id @default(cuid())
+  menuId   String
+  name     String
+  quantity String
+  note     String?
+
+  menu Menu @relation(fields: [menuId], references: [id], onDelete: Cascade)
+}
+
+// ── NEW CATCH (fresh slaughter/harvest batches) ──────────
+
+model NewCatch {
+  id        String         @id @default(cuid())
+  breedId   String?
+  name      String
+  quantity  Int            @default(1)
+  unit      String         @default("kg")
+  price     Float
+  status    NewCatchStatus @default(FRESH)
+  caughtAt  DateTime       @default(now())
+  note      String?
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  breed Breed? @relation(fields: [breedId], references: [id], onDelete: SetNull)
+}
+
+enum NewCatchStatus {
+  FRESH
+  AGING
+  SOLD_OUT
+  RESERVED
+}
+
+// ── IMPORTS (inbound livestock / goods from suppliers) ───
+
+model Import {
+  id           String         @id @default(cuid())
+  reference    String         @unique
+  supplierName String
+  breedId      String?
+  productName  String?
+  quantity     Int            @default(1)
+  unitPrice    Float
+  totalValue   Float
+  status       ImportStatus   @default(PENDING)
+  arrivedAt    DateTime?
+  notes        String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  breed Breed? @relation(fields: [breedId], references: [id], onDelete: SetNull)
+}
+
+enum ImportStatus {
+  PENDING
+  IN_TRANSIT
+  RECEIVED
+  CANCELLED
+}
+
+// ── SALES (point-of-sale / livestock sales ledger) ───────
+
+model Sale {
+  id           String        @id @default(cuid())
+  reference    String        @unique
+  breedId      String?
+  productId    String?
+  customerName String
+  customerPhone String?
+  quantity     Int           @default(1)
+  unitPrice    Float
+  totalAmount  Float
+  channel      SaleChannel   @default(DIRECT)
+  status       SaleStatus    @default(COMPLETED)
+  paidAt       DateTime      @default(now())
+  note         String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  breed   Breed?   @relation(fields: [breedId], references: [id], onDelete: SetNull)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
+
+enum SaleChannel {
+  DIRECT
+  ONLINE
+  WHOLESALE
+  RESTAURANT
+  PARTNER
+}
+
+enum SaleStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  CANCELLED
 }

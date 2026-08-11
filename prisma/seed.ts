@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, UserRole } from "@prisma/client"
+import { hashPassword } from "../src/lib/password"
 
 const prisma = new PrismaClient()
 
@@ -360,6 +361,33 @@ const PRODUCTS: Record<string, Array<{
 
 async function main() {
   console.log("→ Seeding Osotua Farming database…")
+
+  // Pass 0: Users (admin + several demo users)
+  const USERS: Array<{
+    name: string
+    email: string
+    phone: string
+    password: string
+    role: UserRole
+  }> = [
+    { name: "Farm Administrator",  email: "admin@osotua.co.ke",   phone: "+254700000000", password: "Admin1234!",   role: "ADMIN" },
+    { name: "Joyce Wambui",       email: "operator@osotua.co.ke", phone: "+254711000111", password: "Operator12!", role: "ADMIN" },
+    { name: "Daniel Otieno",       email: "customer@osotua.co.ke", phone: "+254722000222", password: "Customer1!", role: "CUSTOMER" },
+    { name: "Mary Chebet",         email: "user2@osotua.co.ke",   phone: "+254733000333", password: "Customer1!", role: "CUSTOMER" },
+    { name: "Samuel Njoroge",      email: "partner@osotua.co.ke", phone: "+254744000444", password: "Partner123!", role: "PARTNER_FARMER" },
+    { name: "Grace Mutua",         email: "investor@osotua.co.ke",phone: "+254755000555", password: "Investor1!", role: "INVESTOR" },
+  ]
+
+  for (const u of USERS) {
+    const existing = await prisma.user.findUnique({ where: { email: u.email } })
+    const password = await hashPassword(u.password)
+    if (existing) {
+      await prisma.user.update({ where: { id: existing.id }, data: { name: u.name, phone: u.phone, role: u.role, password } })
+    } else {
+      await prisma.user.create({ data: { name: u.name, email: u.email, phone: u.phone, role: u.role, password } })
+    }
+  }
+  console.log(`  Users upserted: ${USERS.length}`)
 
   // Pass 1: Species
   for (const s of SPECIES) {
