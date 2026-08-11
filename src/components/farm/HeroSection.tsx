@@ -1,10 +1,12 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import TerrainWave from "@/components/shared/TerrainWave"
 import CountUp from "@/components/shared/CountUp"
+import { LOGO, HERD_FIELD } from "@/lib/images"
 
 const WORD_STAGGER = 0.09
 
@@ -51,25 +53,67 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20"
-      style={{
-        background: `
-          radial-gradient(ellipse 80% 80% at 20% 20%, rgba(196,136,42,0.25) 0%, transparent 60%),
-          radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.2) 0%, transparent 50%),
-          radial-gradient(ellipse 100% 100% at 50% 0%, rgba(59,37,6,0.6) 0%, transparent 70%),
-          linear-gradient(135deg, #1C1208 0%, #2a1a0a 50%, #1a2010 100%)
-        `,
-      }}
+      style={{ background: "#1C1208" }}
     >
-      {/* Noise texture */}
+      {/* ── 1. RANCH PHOTO BACKGROUND LAYER ── */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <Image
+          src={HERD_FIELD}
+          alt="Osotua Pastoral Herd at Pasture"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-35 scale-105"
+        />
+        {/* Dark luxury gradient overlays for legibility */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 80% at 20% 20%, rgba(196,136,42,0.3) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.25) 0%, transparent 50%),
+              linear-gradient(180deg, rgba(28,18,8,0.75) 0%, rgba(28,18,8,0.85) 60%, #1C1208 100%)
+            `,
+          }}
+        />
+      </div>
+
+      {/* ── 2. WATERMARK LOGO BACKGROUND LAYER ── */}
+      <div
+        className="absolute inset-0 pointer-events-none flex items-center justify-center z-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.12, scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          style={{
+            position: "relative",
+            width: "min(700px, 85vw)",
+            height: "min(700px, 85vw)",
+            filter: "drop-shadow(0 0 40px rgba(196,136,42,0.3))",
+          }}
+        >
+          <Image
+            src={LOGO}
+            alt="Osotua Farming Crest"
+            fill
+            className="object-contain"
+            priority
+          />
+        </motion.div>
+      </div>
+
+      {/* Noise texture overlay */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
-          opacity: 0.55,
+          opacity: 0.45,
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: 1,
         }}
       />
 
@@ -83,12 +127,12 @@ export default function HeroSection() {
           backgroundSize: "36px 36px",
           opacity: 1,
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: 1,
         }}
       />
 
       {/* Gold particles */}
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1 }}>
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2 }}>
         {PARTICLES.map((p) => (
           <div
             key={p.id}
@@ -120,8 +164,8 @@ export default function HeroSection() {
             gap: "0.6rem",
             padding: "0.45rem 1.25rem",
             borderRadius: "100px",
-            background: "rgba(196,136,42,0.1)",
-            border: "1px solid rgba(196,136,42,0.3)",
+            background: "rgba(196,136,42,0.15)",
+            border: "1px solid rgba(196,136,42,0.35)",
             color: "#C4882A",
             fontSize: "0.6rem",
             fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
@@ -129,8 +173,9 @@ export default function HeroSection() {
             letterSpacing: "0.22em",
             textTransform: "uppercase",
             marginBottom: "2rem",
-            WebkitBackdropFilter: "blur(12px)",
-            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(16px)",
+            backdropFilter: "blur(16px)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
           }}
         >
           <i className="bi bi-stars" style={{ fontSize: "0.85rem" }} />
@@ -141,7 +186,7 @@ export default function HeroSection() {
         {/* Hero headline */}
         <h1
           className="text-hero"
-          style={{ color: "#FBF7F0", maxWidth: "900px", marginBottom: "0.5rem" }}
+          style={{ color: "#FBF7F0", maxWidth: "900px", marginBottom: "0.5rem", textShadow: "0 4px 24px rgba(0,0,0,0.4)" }}
         >
           <WordReveal text="Pristine Livestock" />
           <br />
@@ -170,9 +215,10 @@ export default function HeroSection() {
             fontSize: "1rem",
             lineHeight: 1.8,
             fontWeight: 300,
-            color: "rgba(245,239,228,0.65)",
+            color: "rgba(245,239,228,0.75)",
             marginTop: "1.5rem",
             marginBottom: "2.5rem",
+            textShadow: "0 2px 12px rgba(0,0,0,0.6)",
           }}
         >
           Directly from Kenya&apos;s sun-drenched pastures to your table. Ethical breeding,
@@ -203,7 +249,7 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.6 }}
           className="anim-chevron"
-          style={{ marginTop: "3.5rem", color: "rgba(196,136,42,0.5)" }}
+          style={{ marginTop: "3.5rem", color: "rgba(196,136,42,0.6)" }}
           aria-hidden="true"
         >
           <i className="bi bi-chevron-down" style={{ fontSize: "1.4rem" }} />
@@ -225,14 +271,16 @@ export default function HeroSection() {
       >
         <div className="os-container">
           <div
-            className="glass"
+            className="glass-dark"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(2, 1fr)",
               gap: "1px",
               borderRadius: "20px",
               overflow: "hidden",
-              background: "rgba(255,255,255,0.04)",
+              background: "rgba(28,18,8,0.7)",
+              border: "1px solid rgba(196,136,42,0.25)",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)",
             }}
           >
             {floatingStats.map((stat, i) => (
@@ -246,7 +294,7 @@ export default function HeroSection() {
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.35rem",
-                  background: "rgba(255,255,255,0.03)",
+                  background: "rgba(255,255,255,0.02)",
                   borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none",
                   borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
                 }}
@@ -270,7 +318,7 @@ export default function HeroSection() {
                     fontWeight: 600,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
-                    color: "rgba(245,239,228,0.45)",
+                    color: "rgba(245,239,228,0.5)",
                   }}
                 >
                   {stat.label}
