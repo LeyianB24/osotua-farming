@@ -3,6 +3,8 @@ import { Cormorant_Garamond, DM_Sans, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
+import WhatsAppFAB from "@/components/shared/WhatsAppFAB"
+import PageLoader from "@/components/shared/PageLoader"
 
 /* ── FONTS ──────────────────────────────────────────────── */
 const cormorant = Cormorant_Garamond({
@@ -98,8 +100,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
 
         <CartProvider>
+          <PageLoader />
           <div id="main-content">{children}</div>
           <ToastContainer />
+          <WhatsAppFAB />
         </CartProvider>
 
         {/* Scroll reveal */}

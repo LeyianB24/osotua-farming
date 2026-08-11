@@ -2,129 +2,288 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight, ShieldCheck, Award, Sparkles, Sprout, HeartPulse } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import TerrainWave from "@/components/shared/TerrainWave"
+import CountUp from "@/components/shared/CountUp"
+
+const WORD_STAGGER = 0.09
+
+function WordReveal({ text, className }: { text: string; className?: string }) {
+  return (
+    <span className={className} aria-label={text}>
+      {text.split(" ").map((word, i) => (
+        <motion.span
+          key={i}
+          style={{ display: "inline-block", marginRight: "0.25em" }}
+          initial={{ opacity: 0, y: 32, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{
+            duration: 0.7,
+            delay: 0.35 + i * WORD_STAGGER,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  )
+}
+
+const floatingStats = [
+  { icon: "bi-geo-alt-fill",     value: 12500, suffix: "+",    label: "Acres Rangelands",   color: "#C4882A" },
+  { icon: "bi-people-fill",      value: 4800,  suffix: "+",    label: "Head of Livestock",  color: "#3D6B3E" },
+  { icon: "bi-graph-up",         value: 180,   suffix: "+",    label: "Partner Families",   color: "#C4882A" },
+  { icon: "bi-patch-check-fill", value: 450,   suffix: "t+",   label: "Organic Yield / yr", color: "#3D6B3E" },
+]
+
+// Gold floating particles
+const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
+  id: i,
+  left: `${5 + (i * 5.2) % 90}%`,
+  top: `${10 + (i * 7.3) % 80}%`,
+  size: 2 + (i % 4),
+  delay: (i * 0.41) % 4,
+  duration: 4 + (i % 5),
+}))
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center bg-[#1C1208] text-[#FBF7F0] overflow-hidden pt-24 pb-16">
-      {/* Dynamic Background Glows & Gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#C4882A]/20 via-[#1C1208]/80 to-[#1C1208] pointer-events-none" />
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#C4882A]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#3D6B3E]/15 rounded-full blur-3xl pointer-events-none" />
-      
-      {/* Decorative Grid Lines Overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-        style={{ backgroundImage: `radial-gradient(#C4882A 1px, transparent 1px)`, backgroundSize: '32px 32px' }}
+    <section
+      className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20"
+      style={{
+        background: `
+          radial-gradient(ellipse 80% 80% at 20% 20%, rgba(196,136,42,0.25) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.2) 0%, transparent 50%),
+          radial-gradient(ellipse 100% 100% at 50% 0%, rgba(59,37,6,0.6) 0%, transparent 70%),
+          linear-gradient(135deg, #1C1208 0%, #2a1a0a 50%, #1a2010 100%)
+        `,
+      }}
+    >
+      {/* Noise texture */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
+          opacity: 0.55,
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
       />
 
-      <div className="os-container relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Eyebrow Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C4882A]/10 border border-[#C4882A]/30 text-[#C4882A] text-xs font-mono tracking-widest uppercase mb-8 backdrop-blur-md"
-          >
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            <span>Sustainable Pastoral Excellence & Artisanal Harvest</span>
-          </motion.div>
+      {/* Dot grid overlay */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "radial-gradient(rgba(196,136,42,0.18) 1px, transparent 1px)",
+          backgroundSize: "36px 36px",
+          opacity: 1,
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
 
-          {/* Main Headline */}
-          <motion.h1
+      {/* Gold particles */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1 }}>
+        {PARTICLES.map((p) => (
+          <div
+            key={p.id}
+            style={{
+              position: "absolute",
+              left: p.left,
+              top: p.top,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              borderRadius: "50%",
+              background: p.id % 2 === 0 ? "#C4882A" : "#3D6B3E",
+              animation: `particleDrift ${p.duration}s ease-in-out ${p.delay}s infinite`,
+              opacity: 0,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* ── MAIN CONTENT ── */}
+      <div className="os-container relative z-10 text-center flex flex-col items-center">
+        {/* Eyebrow badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: -12 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.6rem",
+            padding: "0.45rem 1.25rem",
+            borderRadius: "100px",
+            background: "rgba(196,136,42,0.1)",
+            border: "1px solid rgba(196,136,42,0.3)",
+            color: "#C4882A",
+            fontSize: "0.6rem",
+            fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
+            fontWeight: 600,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            marginBottom: "2rem",
+            WebkitBackdropFilter: "blur(12px)",
+            backdropFilter: "blur(12px)",
+          }}
+        >
+          <i className="bi bi-stars" style={{ fontSize: "0.85rem" }} />
+          Sustainable Pastoral Excellence — Kajiado, Kenya
+          <i className="bi bi-stars" style={{ fontSize: "0.85rem" }} />
+        </motion.div>
+
+        {/* Hero headline */}
+        <h1
+          className="text-hero"
+          style={{ color: "#FBF7F0", maxWidth: "900px", marginBottom: "0.5rem" }}
+        >
+          <WordReveal text="Pristine Livestock" />
+          <br />
+          <WordReveal
+            text="& Artisanal Farm"
+            className="italic"
+          />
+          {" "}
+          <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.08] tracking-tight font-light text-[#FBF7F0]"
+            transition={{ duration: 0.7, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            style={{ color: "#C4882A", fontStyle: "normal" }}
           >
-            Pristine Livestock & <br className="hidden sm:inline" />
-            <span className="italic font-normal text-[#C4882A]">Artisanal Farm</span> Produce
-          </motion.h1>
+            Produce
+          </motion.span>
+        </h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-            className="mt-6 text-base sm:text-lg md:text-xl text-[#F5EFE4]/80 max-w-2xl mx-auto font-sans font-light leading-relaxed"
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.1, ease: "easeOut" }}
+          style={{
+            maxWidth: "560px",
+            fontSize: "1rem",
+            lineHeight: 1.8,
+            fontWeight: 300,
+            color: "rgba(245,239,228,0.65)",
+            marginTop: "1.5rem",
+            marginBottom: "2.5rem",
+          }}
+        >
+          Directly from Kenya&apos;s sun-drenched pastures to your table. Ethical breeding,
+          100% grass-fed livestock, organic dairy, and raw honey harvested with centuries of pastoral heritage.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.3, ease: "easeOut" }}
+          style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}
+        >
+          <Link href="/barn" className="btn-primary">
+            <i className="bi bi-bag-check-fill" />
+            Explore Farm Barn
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link href="/breeds" className="btn-ghost">
+            <i className="bi bi-heart-pulse-fill" />
+            View Pedigree Breeds
+          </Link>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.6 }}
+          className="anim-chevron"
+          style={{ marginTop: "3.5rem", color: "rgba(196,136,42,0.5)" }}
+          aria-hidden="true"
+        >
+          <i className="bi bi-chevron-down" style={{ fontSize: "1.4rem" }} />
+        </motion.div>
+      </div>
+
+      {/* ── FLOATING STAT CARDS ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          position: "relative",
+          zIndex: 10,
+          width: "100%",
+          paddingBottom: "0",
+          marginTop: "3rem",
+        }}
+      >
+        <div className="os-container">
+          <div
+            className="glass"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1px",
+              borderRadius: "20px",
+              overflow: "hidden",
+              background: "rgba(255,255,255,0.04)",
+            }}
           >
-            Directly from Kenya’s sun-drenched pastures to your table. Ethical breeding, 
-            100% grass-fed livestock, organic dairy, and unpasteurized raw honey harvested with centuries of pastoral heritage.
-          </motion.p>
-
-          {/* CTA Group */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Link
-              href="/barn"
-              className="w-full sm:w-auto btn-primary px-8 py-4 text-sm font-semibold tracking-wider flex items-center justify-center gap-3 shadow-lg shadow-[#C4882A]/20 hover:shadow-[#C4882A]/40 transition-all"
-            >
-              <span>Explore Farm Barn</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
-            <Link
-              href="/breeds"
-              className="w-full sm:w-auto btn-ghost px-8 py-4 text-sm font-semibold tracking-wider flex items-center justify-center gap-3 hover:bg-[#C4882A]/10 transition-all"
-            >
-              <span>View Pedigree Breeds</span>
-            </Link>
-          </motion.div>
-
-          {/* Trust Highlights Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md text-left"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-[#3D6B3E]/20 border border-[#3D6B3E]/30 text-[#3D6B3E]">
-                <Sprout className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#FBF7F0]/90 font-semibold">100% Grass-Fed</p>
-                <p className="text-[11px] text-[#FBF7F0]/50">Pasture grazing only</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-[#C4882A]/20 border border-[#C4882A]/30 text-[#C4882A]">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#FBF7F0]/90 font-semibold">Vet Verified</p>
-                <p className="text-[11px] text-[#FBF7F0]/50">Health & genetic tracking</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-[#C4882A]/20 border border-[#C4882A]/30 text-[#C4882A]">
-                <Award className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#FBF7F0]/90 font-semibold">Organic Certified</p>
-                <p className="text-[11px] text-[#FBF7F0]/50">Zero hormones & antibiotics</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-[#3D6B3E]/20 border border-[#3D6B3E]/30 text-[#3D6B3E]">
-                <HeartPulse className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-mono uppercase tracking-wider text-[#FBF7F0]/90 font-semibold">Farm-to-Door</p>
-                <p className="text-[11px] text-[#FBF7F0]/50">Cold-chain delivery</p>
-              </div>
-            </div>
-          </motion.div>
-
+            {floatingStats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.7 + i * 0.1, duration: 0.5 }}
+                style={{
+                  padding: "1.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                  background: "rgba(255,255,255,0.03)",
+                  borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                  borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                }}
+              >
+                <i className={`bi ${stat.icon}`} style={{ fontSize: "1.4rem", color: stat.color, marginBottom: "0.25rem" }} />
+                <div
+                  style={{
+                    fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                    fontSize: "2rem",
+                    fontWeight: 300,
+                    color: "#F5EFE4",
+                    lineHeight: 1,
+                  }}
+                >
+                  <CountUp target={stat.value} suffix={stat.suffix} />
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
+                    fontSize: "0.58rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "rgba(245,239,228,0.45)",
+                  }}
+                >
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
+      </motion.div>
+
+      {/* Terrain wave */}
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 5 }}>
+        <TerrainWave fillColor="#FBF7F0" />
       </div>
     </section>
   )
