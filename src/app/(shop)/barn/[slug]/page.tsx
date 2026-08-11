@@ -1,13 +1,34 @@
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
-import Navbar from "@/components/shared/Navbar"
-import Footer from "@/components/shared/Footer"
+import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 
 const categoryIcons: Record<string, string> = {
   "Beef Cuts": "🥩", "Dairy Products": "🥛", "Vegetables": "🥬",
   "Fruits": "🍋", "Ranch Box": "📦", "Goat Meat": "🐐", "Sheep Meat": "🐑",
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const product = await prisma.product.findUnique({
+    where: { slug },
+    select: { name: true, description: true, image: true },
+  })
+  if (!product) return { title: "Product not found — Osotua Farming" }
+  return {
+    title: `${product.name} — Osotua Barn Store`,
+    description: product.description.slice(0, 160),
+    openGraph: {
+      title: `${product.name} — Osotua Barn Store`,
+      description: product.description.slice(0, 160),
+      images: product.image ? [{ url: product.image }] : undefined,
+    },
+  }
 }
 
 export default async function ProductDetailPage({
@@ -27,7 +48,6 @@ export default async function ProductDetailPage({
 
   return (
     <>
-      <Navbar />
       <div className="bg-[#FBF7F0] pt-24 min-h-screen">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="font-mono text-[10px] text-[#1C1208]/40 tracking-wide mb-8 flex items-center gap-2">
@@ -82,7 +102,6 @@ export default async function ProductDetailPage({
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

@@ -4,21 +4,22 @@ import { useState, useEffect } from "react"
 import Logo from "./Logo"
 
 export default function PageLoader() {
-  const [visible, setVisible] = useState(true)
+  // Skip the loader entirely if we've already shown it this session.
+  // Initializing state from sessionStorage avoids the synchronous
+  // setState-in-effect that triggers cascading renders.
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return true
+    return sessionStorage.getItem("os-loaded") !== "1"
+  })
 
   useEffect(() => {
-    // Only show loader on fresh page loads, not client navigations
-    const hasLoaded = sessionStorage.getItem("os-loaded")
-    if (hasLoaded) {
-      setVisible(false)
-      return
-    }
+    if (!visible) return
     const timer = setTimeout(() => {
       setVisible(false)
       sessionStorage.setItem("os-loaded", "1")
     }, 1800)
     return () => clearTimeout(timer)
-  }, [])
+  }, [visible])
 
   if (!visible) return null
 
