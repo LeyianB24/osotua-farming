@@ -40,6 +40,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -299,6 +300,7 @@ body {
 
 .os-navbar.scrolled {
   background: rgba(28, 18, 8, 0.97);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
 }

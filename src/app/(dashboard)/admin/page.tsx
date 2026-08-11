@@ -4,13 +4,18 @@ import Link from "next/link"
 export const metadata = { title: "Admin Dashboard — Osotua Farming" }
 
 export default async function AdminPage() {
-  const [breeds, products, orders, visits, partners, jobs] = await Promise.all([
+  const [breeds, products, orders, visits, partners, jobs, stocks, menus, catches, imports, sales] = await Promise.all([
     prisma.breed.count(),
     prisma.product.count(),
     prisma.order.count(),
     prisma.farmVisit.count(),
     prisma.partnerFarmer.count(),
     prisma.job.count({ where: { isOpen: true } }),
+    prisma.stock.count(),
+    prisma.menu.count(),
+    prisma.newCatch.count(),
+    prisma.import.count(),
+    prisma.sale.count({ where: { status: "COMPLETED" } }),
   ])
 
   const recentOrders = await prisma.order.findMany({
@@ -19,9 +24,14 @@ export default async function AdminPage() {
   })
 
   const stats = [
-    { label: "Total Breeds", value: breeds, href: "/admin/breeds", icon: "🐄" },
-    { label: "Products", value: products, href: "/admin/products", icon: "🥩" },
-    { label: "Orders", value: orders, href: "/admin/orders", icon: "📦" },
+    { label: "Breeds", value: breeds, href: "/admin/breeds", icon: "🐄" },
+    { label: "Stocks", value: stocks, href: "/admin/stocks", icon: "📦" },
+    { label: "Barn Menus", value: menus, href: "/admin/menus", icon: "🍽️" },
+    { label: "New Catches", value: catches, href: "/admin/catches", icon: "🥩" },
+    { label: "Imports", value: imports, href: "/admin/imports", icon: "🚚" },
+    { label: "Sales (Paid)", value: sales, href: "/admin/sales", icon: "💰" },
+    { label: "Products", value: products, href: "/admin/products", icon: "🥛" },
+    { label: "Orders", value: orders, href: "/admin/orders", icon: "🧾" },
     { label: "Farm Visits", value: visits, href: "/admin/visits", icon: "🗓️" },
     { label: "Partner Farmers", value: partners, href: "/admin/partners", icon: "🌾" },
     { label: "Open Jobs", value: jobs, href: "/admin/jobs", icon: "💼" },

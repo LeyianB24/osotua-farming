@@ -3,7 +3,9 @@ import Image from "next/image"
 import { prisma } from "@/lib/prisma"
 import BreedCard from "@/components/farm/BreedCard"
 import ProductCard from "@/components/farm/ProductCard"
-import { HERO_IMAGE, RANCH_GALLERY } from "@/lib/images"
+import HeroSection from "@/components/farm/HeroSection"
+import FarmStats from "@/components/farm/FarmStats"
+import { RANCH_GALLERY } from "@/lib/images"
 
 async function getFeaturedBreeds() {
   return prisma.breed.findMany({
@@ -29,87 +31,11 @@ export default async function HomePage() {
 
   return (
     <div className="bg-[#FBF7F0]">
+      {/* 1. ELEGANT HERO SECTION */}
+      <HeroSection />
 
-      {/* HERO */}
-      <section className="relative min-h-screen bg-[#1C1208] flex items-center overflow-hidden">
-        {/* Backdrop image */}
-        <div className="absolute inset-0">
-          <Image
-            src={HERO_IMAGE}
-            alt="Osotua ranch at dawn"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-30"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 80% 60% at 70% 60%, rgba(61,107,62,0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 20% 80%, rgba(196,136,42,0.16) 0%, transparent 50%), linear-gradient(160deg, #1C1208 0%, #2a1a0a 40%, #1a2010 100%)",
-            }}
-          />
-        </div>
-
-        {/* Floating breed tags */}
-        <div className="absolute top-0 right-0 bottom-0 w-1/3 hidden lg:flex flex-col justify-center gap-3 pr-16 pt-24 opacity-50">
-          {["Boran Beef Cattle", "Sahiwal Dairy", "Boer Goats", "Dorper Sheep", "Bonsmara Bulls", "Galla Goats"].map((tag, i) => (
-            <span
-              key={tag}
-              className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase border border-[#C4882A]/25 px-3 py-1.5 w-fit rounded-sm"
-              style={{ marginLeft: `${[0, 24, 8, 32, 12, 20][i]}px` }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-          <div className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase flex items-center gap-3 mb-6">
-            <span className="w-8 h-px bg-[#C4882A]" />
-            Kajiado County, Kenya
-          </div>
-
-          <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-light text-[#F5EFE4] leading-tight mb-6">
-            Where the land<br />
-            <em className="text-[#C4882A]">feeds</em> the future
-          </h1>
-
-          <p className="text-[#F5EFE4]/60 text-lg max-w-xl leading-relaxed mb-10">
-            A modern smart farm raising premium livestock, growing wholesome food, and bringing it all to your table. Indigenous breeds. Sustainable methods. African excellence.
-          </p>
-
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="/breeds"
-              className="bg-[#C4882A] text-[#1C1208] px-7 py-3 text-sm font-medium hover:bg-[#d99a30] transition-colors rounded-sm"
-            >
-              Explore Our Breeds
-            </Link>
-            <Link
-              href="/barn"
-              className="border border-[#F5EFE4]/30 text-[#F5EFE4] px-7 py-3 text-sm hover:border-[#C4882A] hover:text-[#C4882A] transition-colors rounded-sm"
-            >
-              Visit the Barn Store
-            </Link>
-          </div>
-
-          {/* Stats */}
-          <div className="mt-20 pt-8 border-t border-[#C4882A]/20 flex flex-wrap gap-12">
-            {[
-              { num: "6+", label: "Livestock Breeds" },
-              { num: "4", label: "Farm Enterprises" },
-              { num: "100%", label: "Farm-to-Fork" },
-              { num: "2026", label: "Est. Kajiado" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="font-serif text-3xl text-[#C4882A] font-semibold">{stat.num}</div>
-                <div className="font-mono text-[10px] text-[#F5EFE4]/40 tracking-widest uppercase mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* 2. REGENERATIVE FARM STATS & IMPACT CALCULATOR */}
+      <FarmStats />
 
       {/* FEATURED BREEDS */}
       {breeds.length > 0 && (

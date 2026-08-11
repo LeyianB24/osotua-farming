@@ -83,24 +83,25 @@ export default function AdminTerminal() {
           push({
             type: "output",
             text: (
-              <div className="space-y-1 font-mono text-xs text-[#F5EFE4]/80">
-                <div className="text-[#C4882A] font-bold mb-2">READ COMMANDS</div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">list <entity></span> - List breeds|stocks|menus|catches|imports|sales</div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">stats</span> - Aggregate DB counts (live)</div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">help</span> - This help</div>
-                <div className="text-[#C4882A] font-bold mt-3 mb-2">MUTATION COMMANDS (admin session)</div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">add-breed <name>|<speciesName>|<price></span></div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">add-catch <name>|<qty>|<price></span></div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">add-stock <name>|<unit>|<qty></span></div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">add-menu <name>|<slug>|<price></span></div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">add-import <ref>|<supplier>|<qty>|<total></span></div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">add-sale <ref>|<customer>|<qty>|<total></span></div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">del <entity> <id></span> - Delete by id</div>
-                <div className="text-[#C4882A] font-bold mt-3 mb-2">SESSION / MISC</div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">whoami</span> - Session identity (from /api/auth)</div>
-                <div><span className="text-[#C4882A] inline-block w-44 font-bold">clear</span> - Clear output</div>
-                <div className="text-white/40 text-[10px] mt-2">Pipe args with single space; use | as field separator.</div>
-              </div>
+              <pre className="font-mono text-xs text-[#F5EFE4]/80 whitespace-pre-wrap leading-relaxed">{`READ COMMANDS
+  list <entity>          List breeds|stocks|menus|catches|imports|sales|products|orders|visits|partners
+  stats                  Aggregate DB counts (live)
+  whoami                 Session identity (from /api/auth)
+  help                   This help
+
+MUTATION COMMANDS (admin session required)
+  add-breed   <name>|<speciesName>|<price>
+  add-catch   <name>|<qty>|<price>
+  add-stock   <name>|<unit>|<qty>
+  add-menu    <name>|<slug>|<price>
+  add-import  <ref>|<supplier>|<qty>|<total>
+  add-sale    <ref>|<customer>|<qty>|<total>
+  del <entity> <id>       Delete by id (breeds|stocks|menus|catches|imports|sales|products|livestock|blog)
+
+MISC
+  clear                  Clear output
+
+Notes: args separated by spaces; pipe | separates fields within an argument.`}</pre>
             ),
           })
           break
@@ -353,7 +354,7 @@ export default function AdminTerminal() {
         </div>
 
         <div className="bg-black/40 px-5 py-3 border-t border-white/10 flex items-center gap-2">
-          <span className="text-[#C4882A] font-bold select-none">$ osotua-cli ></span>
+          <span className="text-[#C4882A] font-bold select-none">$ osotua-cli &gt;</span>
           <input
             ref={inputRef}
             type="text"

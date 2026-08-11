@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { visitSchema } from "@/lib/schemas"
-import { badRequest, serverError, parseError } from "@/lib/api-utils"
+import { badRequest, serverError, parseError, getSessionUser } from "@/lib/api-utils"
 import { sendVisitConfirmation } from "@/lib/email"
 import { ZodError } from "zod"
 

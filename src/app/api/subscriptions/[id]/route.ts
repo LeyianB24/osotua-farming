@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { subscriptionPatchSchema } from "@/lib/schemas"
-import { getSessionUser, isAdmin, unauthorized, forbidden, badRequest, notFound, serverError, parseError } from "@/lib/api-utils"
+import { getSessionUser, unauthorized, forbidden, badRequest, notFound, serverError, parseError } from "@/lib/api-utils"
 import { ZodError } from "zod"
 
 type IdRouteContext = { params: Promise<{ id: string }> }

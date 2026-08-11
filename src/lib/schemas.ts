@@ -176,7 +176,7 @@ export const uploadSchema = z.object({
 
 // ── STOCK ──────────────────────────────────────────────────
 
-export const stockSchema = z.object({
+const stockBaseSchema = z.object({
   productId: z.string().min(1).nullish(),
   breedId: z.string().min(1).nullish(),
   name: z.string().min(1, "Name is required").max(160),
@@ -184,11 +184,13 @@ export const stockSchema = z.object({
   quantity: z.number().int().min(0).max(1_000_000).default(0),
   reorderAt: z.number().int().min(0).max(1_000_000).default(0),
   note: z.string().max(2000).nullish(),
-}).refine((v) => !!v.productId || !!v.breedId || (!v.productId && !v.breedId), {
+})
+
+export const stockSchema = stockBaseSchema.refine((v) => !!v.productId || !!v.breedId || (!v.productId && !v.breedId), {
   message: "Stock can be standalone or linked to a product/breed",
 })
 
-export const stockPatchSchema = stockSchema.partial()
+export const stockPatchSchema = stockBaseSchema.partial()
 
 // ── MENU ───────────────────────────────────────────────────
 

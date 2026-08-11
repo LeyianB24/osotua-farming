@@ -4,14 +4,10 @@ import Link from "next/link"
 export const metadata = { title: "Stocks — Admin" }
 
 export default async function AdminStocksPage() {
-  const [stocks, products, breeds] = await Promise.all([
-    prisma.stock.findMany({
-      include: { product: true, breed: { include: { species: true } } },
-      orderBy: { name: "asc" },
-    }),
-    prisma.product.findMany({ select: { id: true, name: true } }),
-    prisma.breed.findMany({ select: { id: true, name: true, species: true } }),
-  ])
+  const stocks = await prisma.stock.findMany({
+    include: { product: true, breed: { include: { species: true } } },
+    orderBy: { name: "asc" },
+  })
 
   return (
     <div className="p-8">

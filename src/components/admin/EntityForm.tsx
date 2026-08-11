@@ -24,13 +24,11 @@ export default function EntityForm({
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    setFieldErrors({})
 
     const form = new FormData(e.currentTarget)
     const body: Record<string, unknown> = {}

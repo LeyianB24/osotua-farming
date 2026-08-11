@@ -18,12 +18,6 @@ export async function GET() {
   }
 }
 
-import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { partnerSchema } from "@/lib/schemas"
-import { badRequest, serverError, parseError } from "@/lib/api-utils"
-import { ZodError } from "zod"
-
 export async function POST(req: Request) {
   try {
     const body = await req.json()
