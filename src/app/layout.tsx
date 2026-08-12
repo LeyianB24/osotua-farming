@@ -4,6 +4,7 @@ import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
 import WhatsAppFAB from "@/components/shared/WhatsAppFAB"
 import PageLoader from "@/components/shared/PageLoader"
+import Providers from "@/components/shared/Providers"
 
 /* ── METADATA ───────────────────────────────────────────── */
 export const metadata: Metadata = {
@@ -75,12 +76,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
 
-        <CartProvider>
-          <PageLoader />
-          <div id="main-content">{children}</div>
-          <ToastContainer />
-          <WhatsAppFAB />
-        </CartProvider>
+        <Providers>
+          <CartProvider>
+            <PageLoader />
+            <div id="main-content">{children}</div>
+            <ToastContainer />
+            <WhatsAppFAB />
+          </CartProvider>
+        </Providers>
 
         {/* Scroll reveal */}
         <script
