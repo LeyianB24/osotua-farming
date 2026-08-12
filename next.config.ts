@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path((?!auth|v1).*)",
+        destination: "/api/v1/:path*",
+      },
+    ];
+  },
   async headers() {
     return [
       {

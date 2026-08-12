@@ -132,28 +132,26 @@ Notes: args separated by spaces; pipe | separates fields within an argument.`}</
         }
 
         case "stats": {
-          const [breeds, products, orders, visits, partners, jobs, stocks, menus, catches, imports, sales] = await Promise.all([
-            api<{ length: number }[]>(`/api/breeds`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/products`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/orders`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/visits`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/partners`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/jobs`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/stocks`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/menus`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/catches`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/imports`).then((r) => r ?? []),
-            api<{ length: number }[]>(`/api/sales`).then((r) => r ?? []),
-          ])
+          const stats = await api<{
+            breeds: number; products: number; orders: number; visits: number;
+            partners: number; jobs: number; stocks: number; menus: number;
+            catches: number; imports: number; sales: number;
+          }>(`/api/v1/dashboard/stats`)
+          
+          if (!stats) {
+            push({ type: "error", text: "Failed to fetch dashboard stats" })
+            break
+          }
+
           push({
             type: "output",
             text: (
               <div className="font-mono text-xs grid grid-cols-3 gap-2 text-[#F5EFE4]/90">
                 {[
-                  ["Breeds", breeds.length], ["Products", products.length], ["Orders", orders.length],
-                  ["Stocks", stocks.length], ["Menus", menus.length], ["Catches", catches.length],
-                  ["Imports", imports.length], ["Sales", sales.length], ["Visits", visits.length],
-                  ["Partners", partners.length], ["Jobs", jobs.length],
+                  ["Breeds", stats.breeds], ["Products", stats.products], ["Orders", stats.orders],
+                  ["Stocks", stats.stocks], ["Menus", stats.menus], ["Catches", stats.catches],
+                  ["Imports", stats.imports], ["Sales", stats.sales], ["Visits", stats.visits],
+                  ["Partners", stats.partners], ["Jobs", stats.jobs],
                 ].map(([label, value]) => (
                   <div key={label as string}>
                     <span className="text-white/40">{label}: </span>
@@ -170,16 +168,16 @@ Notes: args separated by spaces; pipe | separates fields within an argument.`}</
         case "ls": {
           const entity = sub
           const endpoints: Record<string, { path: string; cols: string[] }> = {
-            breeds: { path: "/api/breeds", cols: ["name", "purpose", "pricePerHead", "inStock"] },
-            products: { path: "/api/products", cols: ["name", "price", "unit", "stockQty"] },
-            stocks: { path: "/api/stocks", cols: ["name", "unit", "quantity", "reorderAt"] },
-            menus: { path: "/api/menus", cols: ["name", "price", "servings", "available"] },
-            catches: { path: "/api/catches", cols: ["name", "quantity", "unit", "price", "status"] },
-            imports: { path: "/api/imports", cols: ["reference", "supplierName", "quantity", "totalValue", "status"] },
-            sales: { path: "/api/sales", cols: ["reference", "customerName", "quantity", "totalAmount", "channel", "status"] },
-            orders: { path: "/api/orders", cols: ["customerName", "totalAmount", "status", "createdAt"] },
-            visits: { path: "/api/visits", cols: ["fullName", "visitDate", "groupSize", "status"] },
-            partners: { path: "/api/partners", cols: ["fullName", "location", "supplyType", "status"] },
+            breeds: { path: "/api/v1/breeds", cols: ["name", "purpose", "pricePerHead", "inStock"] },
+            products: { path: "/api/v1/products", cols: ["name", "price", "unit", "stockQty"] },
+            stocks: { path: "/api/v1/stocks", cols: ["name", "unit", "quantity", "reorderAt"] },
+            menus: { path: "/api/v1/menus", cols: ["name", "price", "servings", "available"] },
+            catches: { path: "/api/v1/catches", cols: ["name", "quantity", "unit", "price", "status"] },
+            imports: { path: "/api/v1/imports", cols: ["reference", "supplierName", "quantity", "totalValue", "status"] },
+            sales: { path: "/api/v1/sales", cols: ["reference", "customerName", "quantity", "totalAmount", "channel", "status"] },
+            orders: { path: "/api/v1/orders", cols: ["customerName", "totalAmount", "status", "createdAt"] },
+            visits: { path: "/api/v1/visits", cols: ["fullName", "visitDate", "groupSize", "status"] },
+            partners: { path: "/api/v1/partners", cols: ["fullName", "location", "supplyType", "status"] },
           }
           const cfg = endpoints[entity]
           if (!cfg) {
