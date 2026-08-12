@@ -4,7 +4,7 @@ export const metadata = { title: "Admin Terminal Console — Osotua Farming" }
 
 export default function AdminTerminalPage() {
   return (
-    <div className="bg-[#FBF7F0] min-h-screen py-6">
+    <div className="bg-mesh-earth noise min-h-screen" style={{ padding: "2.5rem 2rem 5rem" }}>
       <AdminTerminal />
     </div>
   )

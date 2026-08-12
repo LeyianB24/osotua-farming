@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
+import { AdminSection, StatusBadge } from "@/components/shared/AdminSection"
 
-export const metadata = { title: "Menus — Admin" }
+export const metadata = { title: "Barn Menus — Osotua Admin" }
 
 export default async function AdminMenusPage() {
   const menus = await prisma.menu.findMany({
@@ -10,39 +11,95 @@ export default async function AdminMenusPage() {
   })
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-serif text-3xl text-[#1C1208]">Barn Menus</h1>
-          <p className="text-[#1C1208]/50 text-sm mt-1">{menus.length} menus published</p>
-        </div>
-        <Link href="/admin/menus/new" className="bg-[#C4882A] text-[#1C1208] px-5 py-2.5 text-sm font-medium rounded-sm hover:bg-[#d99a30] transition-colors">
-          + Create Menu
+    <AdminSection
+      eyebrow="The Barn Restaurant"
+      title="Menu Management"
+      count={menus.length}
+      countLabel="menus published"
+      icon="bi-menu-button-wide-fill"
+      action={
+        <Link
+          href="/admin/menus/new"
+          className="btn-primary"
+          style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem" }}
+        >
+          <i className="bi bi-plus-lg" /> Create Menu
         </Link>
-      </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {menus.map((m) => (
-          <Link
-            key={m.id}
-            href={`/admin/menus/${m.id}`}
-            className="os-card p-5 block"
-          >
-            <div className="flex items-start justify-between mb-2">
-              <h3 className="font-serif text-xl text-[#1C1208]">{m.name}</h3>
-              <span className={`font-mono text-[9px] px-2 py-1 rounded-sm border ${m.available ? "bg-[#3D6B3E]/10 text-[#3D6B3E] border-[#3D6B3E]/20" : "bg-[#1C1208]/05 text-[#1C1208]/40 border-[#1C1208]/10"}`}>
-                {m.available ? "AVAILABLE" : "OFF"}
-              </span>
-            </div>
-            <p className="text-[#1C1208]/60 text-xs line-clamp-2 mb-3">{m.description}</p>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-[#C4882A] font-medium">KES {m.price.toLocaleString()}</span>
-              <span className="font-mono text-[10px] text-[#1C1208]/40">{m.servings} servings · {m.items.length} items</span>
-            </div>
-          </Link>
-        ))}
-      </div>
-      {menus.length === 0 && <div className="text-center py-10 text-[#1C1208]/40 text-sm">No menus yet.</div>}
-    </div>
+      }
+    >
+      {menus.length === 0 ? (
+        <div
+          className="glass-dark"
+          style={{
+            borderRadius: "20px",
+            border: "1px solid rgba(196,136,42,0.2)",
+            padding: "4rem 2rem",
+            textAlign: "center",
+          }}
+        >
+          <i
+            className="bi bi-menu-button-wide"
+            style={{ fontSize: "2.5rem", color: "rgba(196,136,42,0.25)", display: "block", marginBottom: "1rem" }}
+          />
+          <p style={{ color: "rgba(245,239,228,0.35)", fontSize: "0.9rem" }}>No menus created yet.</p>
+        </div>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem" }}>
+          {menus.map((m) => (
+            <Link
+              key={m.id}
+              href={`/admin/menus/${m.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div
+                className="glass-dark hover:-translate-y-1 transition-all duration-300"
+                style={{
+                  borderRadius: "16px",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  padding: "1.5rem",
+                  cursor: "pointer",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                      fontSize: "1.25rem", fontWeight: 300,
+                      color: "#F5EFE4", lineHeight: 1.2,
+                    }}
+                  >
+                    {m.name}
+                  </h3>
+                  <StatusBadge status={m.available ? "ACTIVE" : "PENDING"} />
+                </div>
+                <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.82rem", marginBottom: "1.25rem", lineHeight: 1.5 }}>
+                  {m.description}
+                </p>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-space-grotesk), monospace",
+                      fontSize: "0.9rem", fontWeight: 700,
+                      color: "#C4882A",
+                    }}
+                  >
+                    KES {m.price.toLocaleString()}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-space-grotesk), monospace",
+                      fontSize: "0.62rem", letterSpacing: "0.12em",
+                      textTransform: "uppercase", color: "rgba(245,239,228,0.35)",
+                    }}
+                  >
+                    {m.servings} servings · {m.items.length} items
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </AdminSection>
   )
 }
