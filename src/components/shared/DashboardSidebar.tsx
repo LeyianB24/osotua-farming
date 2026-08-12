@@ -45,7 +45,8 @@ const customerLinks = [
 
 export default function DashboardSidebar() {
   const pathname = usePathname()
-  const { data: session } = useSession()
+  const sessionRes = useSession?.()
+  const session = sessionRes?.data
   const isAdmin = pathname?.startsWith("/admin")
   const links = isAdmin ? adminLinks : customerLinks
 
