@@ -38,15 +38,48 @@ export default function CheckoutPage() {
     setStep("payment");
   };
 
-  const handleCompleteOrder = () => {
+  const handleCompleteOrder = async () => {
     setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
+    try {
       const generatedRef = "OST-" + Math.floor(100000 + Math.random() * 900000);
+      
+      const payload = {
+        customerName: name,
+        customerEmail: email,
+        customerPhone: phone,
+        type: "STORE",
+        totalAmount: grandTotal,
+        paymentMethod: paymentMethod.toUpperCase(),
+        paymentRef: generatedRef,
+        deliveryAddress: address,
+        items: cart.map((item) => ({
+          productId: item.type === 'product' ? item.id : undefined,
+          breedId: item.type === 'breed' ? item.id : undefined,
+          quantity: item.quantity,
+          unitPrice: item.price,
+          totalPrice: item.price * item.quantity,
+        })),
+      };
+
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to complete order");
+      }
+
       setOrderRef(generatedRef);
       setStep("confirmed");
       clearCart();
-    }, 2500);
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong processing your order.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   if (cart.length === 0 && step !== "confirmed") {

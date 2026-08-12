@@ -98,6 +98,9 @@ model Breed {
   catches    NewCatch[]
   imports    Import[]
   sales      Sale[]
+
+  @@index([speciesId])
+  @@index([featured])
 }
 
 model Livestock {
@@ -476,4 +479,47 @@ enum SaleStatus {
   COMPLETED
   REFUNDED
   CANCELLED
+}
+
+// ── MARKETING INQUIRIES (contact form, newsletter, invest) ──
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  handledAt DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([email])
+}
+
+model NewsletterSub {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  active     Boolean  @default(true)
+  source    String?  // "footer", "invest", "home", etc.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active])
+}
+
+model InvestInquiry {
+  id             String   @id @default(cuid())
+  fullName       String
+  email          String
+  phone          String?
+  amount         Float
+  durationYears  Int
+  investmentType  String   // "breeding" | "barn"
+  prospectusSent  Boolean  @default(false)
+  note           String?
+  createdAt      DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([email])
 }
