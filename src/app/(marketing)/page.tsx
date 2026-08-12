@@ -6,6 +6,7 @@ import ProductCard from "@/components/farm/ProductCard"
 import HeroSection from "@/components/farm/HeroSection"
 import FarmStats from "@/components/farm/FarmStats"
 import TerrainWave from "@/components/shared/TerrainWave"
+import NewsletterForm from "@/components/shared/NewsletterForm"
 import { RANCH_GALLERY } from "@/lib/images"
 
 async function getFeaturedBreeds() {
@@ -317,36 +318,19 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { icon: "bi-briefcase-fill",     title: "Careers",         desc: "Join our world-class team of farmers, technologists, and agribusiness professionals.", href: "/careers" },
-              { icon: "bi-graph-up-arrow",     title: "Invest",          desc: "Partner with us and participate in Kenya's most exciting farm venture.", href: "/invest" },
-              { icon: "bi-people-fill",        title: "Partner Farmers", desc: "Supply vegetables, fodder, or eggs under our outgrower scheme.", href: "/partners" },
-              { icon: "bi-mortarboard-fill",   title: "Internships",     desc: "Students in agriculture, IT, and business are welcome for attachments.", href: "/careers#internships" },
-              { icon: "bi-building-fill",      title: "B2B Supply",      desc: "Hotels, restaurants, and supermarkets — get consistent quality supply.", href: "/contact#b2b" },
-              { icon: "bi-calendar-check-fill",title: "Farm Visits",     desc: "Book a guided tour and experience Osotua Farming for yourself.", href: "/visit" },
-            ].map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                className="glass-gold group"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  padding: "1.75rem",
-                  textDecoration: "none",
-                  transition: "transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement
-                  el.style.transform = "translateY(-8px)"
-                  el.style.boxShadow = "0 32px 80px rgba(196,136,42,0.25), 0 0 0 1px rgba(196,136,42,0.4)"
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement
-                  el.style.transform = ""
-                  el.style.boxShadow = ""
-                }}
-              >
+              {[
+                { icon: "bi-briefcase-fill",     title: "Careers",         desc: "Join our world-class team of farmers, technologists, and agribusiness professionals.", href: "/careers" },
+                { icon: "bi-graph-up-arrow",     title: "Invest",          desc: "Partner with us and participate in Kenya's most exciting farm venture.", href: "/invest" },
+                { icon: "bi-people-fill",        title: "Partner Farmers", desc: "Supply vegetables, fodder, or eggs under our outgrower scheme.", href: "/partners" },
+                { icon: "bi-mortarboard-fill",   title: "Internships",     desc: "Students in agriculture, IT, and business are welcome for attachments.", href: "/careers#internships" },
+                { icon: "bi-building-fill",      title: "B2B Supply",      desc: "Hotels, restaurants, and supermarkets — get consistent quality supply.", href: "/contact#b2b" },
+                { icon: "bi-calendar-check-fill",title: "Farm Visits",     desc: "Book a guided tour and experience Osotua Farming for yourself.", href: "/visit" },
+              ].map((item) => (
+                <Link
+                  key={item.title}
+                  href={item.href}
+                  className="glass-gold group hover:-translate-y-2 hover:shadow-[0_32px_80px_rgba(196,136,42,0.25)] hover:border-[#C4882A]/50 transition-all duration-300 block no-underline flex flex-col p-7"
+                >
                 <div style={{
                   width: "52px",
                   height: "52px",
@@ -476,31 +460,7 @@ export default async function HomePage() {
                 Monthly updates — new breeds, seasonal harvests, farm stories, and exclusive offers.
               </p>
             </div>
-            <form
-              style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center", width: "100%", maxWidth: "480px" }}
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                type="email"
-                placeholder="your@email.com"
-                style={{
-                  flex: 1,
-                  minWidth: "220px",
-                  padding: "0.875rem 1.25rem",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(196,136,42,0.25)",
-                  borderRadius: "100px",
-                  color: "#F5EFE4",
-                  fontFamily: "var(--font-dm-sans, 'DM Sans'), sans-serif",
-                  fontSize: "0.9rem",
-                  outline: "none",
-                }}
-              />
-              <button type="submit" className="btn-primary" style={{ borderRadius: "100px" }}>
-                <i className="bi bi-envelope-fill" />
-                Join the Farm
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
       </section>

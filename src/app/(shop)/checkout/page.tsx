@@ -3,14 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/shared/CartContext";
-import {
-  CheckCircle2,
-  Phone,
-  CreditCard,
-  Building2,
-  ArrowLeft,
-  Loader2,
-} from "lucide-react";
 
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart } = useCart();
@@ -84,358 +76,309 @@ export default function CheckoutPage() {
 
   if (cart.length === 0 && step !== "confirmed") {
     return (
-      <div className="bg-[#FBF7F0] pt-28 pb-20 min-h-screen text-center">
-        <div className="max-w-md mx-auto bg-white p-8 rounded-md border border-[#1C1208]/10 shadow-md">
-          <h2 className="font-serif text-2xl text-[#1C1208] mb-4">Your Basket is Empty</h2>
-          <p className="text-xs text-[#1C1208]/60 mb-6">
-            Please add items to your cart before proceeding to checkout.
-          </p>
-          <Link href="/barn" className="btn btn-primary btn-sm">
-            Go to Barn Store
-          </Link>
+      <div style={{ background: "#FBF7F0" }} className="pt-32 pb-20 min-h-screen">
+        <div className="os-container">
+          <div
+            className="glass-dark"
+            style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "24px", maxWidth: "520px", margin: "0 auto", border: "1px solid rgba(196,136,42,0.25)" }}
+          >
+            <i className="bi bi-basket3-fill" style={{ fontSize: "3rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1.25rem" }} />
+            <h2
+              style={{
+                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                fontSize: "2.4rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.75rem",
+              }}
+            >
+              Your Basket is Empty
+            </h2>
+            <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.9rem", marginBottom: "2.5rem" }}>
+              Please add items to your cart before proceeding to checkout.
+            </p>
+            <Link href="/barn" className="btn-primary">
+              <i className="bi bi-shop" />
+              Go to Barn Store
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#FBF7F0] pt-28 pb-20 min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Step Indicator */}
-        <div className="flex items-center justify-between mb-10 max-w-xl mx-auto border-b border-[#1C1208]/10 pb-6">
-          <div className="flex items-center gap-2">
-            <span
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono font-bold ${
-                step === "details"
-                  ? "bg-[#C4882A] text-[#1C1208]"
-                  : "bg-[#3D6B3E] text-white"
-              }`}
-            >
-              1
-            </span>
-            <span className="font-mono text-xs uppercase tracking-wider text-[#1C1208]">
-              Delivery Details
-            </span>
+    <div style={{ background: "#FBF7F0" }}>
+
+      {/* ── HERO ── */}
+      <div
+        className="bg-mesh-earth noise"
+        style={{ paddingTop: "10rem", paddingBottom: "4rem", position: "relative", overflow: "hidden" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+            Secure Checkout
           </div>
-
-          <div className="h-px bg-[#1C1208]/20 w-12" />
-
-          <div className="flex items-center gap-2">
-            <span
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono font-bold ${
-                step === "payment"
-                  ? "bg-[#C4882A] text-[#1C1208]"
-                  : step === "confirmed"
-                  ? "bg-[#3D6B3E] text-white"
-                  : "bg-[#1C1208]/10 text-[#1C1208]/40"
-              }`}
-            >
-              2
-            </span>
-            <span
-              className={`font-mono text-xs uppercase tracking-wider ${
-                step === "payment" || step === "confirmed"
-                  ? "text-[#1C1208]"
-                  : "text-[#1C1208]/40"
-              }`}
-            >
-              Payment
-            </span>
-          </div>
-
-          <div className="h-px bg-[#1C1208]/20 w-12" />
-
-          <div className="flex items-center gap-2">
-            <span
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono font-bold ${
-                step === "confirmed"
-                  ? "bg-[#3D6B3E] text-white"
-                  : "bg-[#1C1208]/10 text-[#1C1208]/40"
-              }`}
-            >
-              3
-            </span>
-            <span
-              className={`font-mono text-xs uppercase tracking-wider ${
-                step === "confirmed" ? "text-[#1C1208]" : "text-[#1C1208]/40"
-              }`}
-            >
-              Confirmation
-            </span>
-          </div>
+          <h1
+            style={{
+              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+              fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
+              fontWeight: 300,
+              color: "#F5EFE4",
+              lineHeight: 1,
+            }}
+          >
+            Complete Your <em style={{ color: "#C4882A", fontStyle: "italic" }}>Order</em>
+          </h1>
         </div>
+      </div>
 
-        {/* STEP 1: DELIVERY DETAILS */}
-        {step === "details" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <form onSubmit={handleNextToPayment} className="lg:col-span-2 bg-white border border-[#1C1208]/10 rounded-md p-6 sm:p-8 shadow-md space-y-6">
-              <h2 className="font-serif text-2xl text-[#1C1208] border-b border-[#1C1208]/08 pb-3">
-                Customer & Shipping Information
-              </h2>
+      {/* ── MAIN CONTENT ── */}
+      <section
+        className="bg-mesh-green noise"
+        style={{ padding: "4rem 0 8rem" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1, maxWidth: "1000px" }}>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="label">Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. John Kiptoo"
-                    className="input"
-                  />
+          {/* Step Indicator */}
+          <div
+            className="glass-dark"
+            style={{
+              padding: "1.25rem 2rem", borderRadius: "100px", marginBottom: "3rem",
+              display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem",
+              border: "1px solid rgba(196,136,42,0.2)",
+            }}
+          >
+            {[
+              { num: 1, label: "Delivery Details", active: step === "details" },
+              { num: 2, label: "Payment", active: step === "payment" },
+              { num: 3, label: "Confirmation", active: step === "confirmed" },
+            ].map((s, idx) => (
+              <div key={s.num} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <div
+                  style={{
+                    width: "28px", height: "28px", borderRadius: "50%",
+                    background: s.active ? "#C4882A" : "rgba(255,255,255,0.08)",
+                    color: s.active ? "#1C1208" : "rgba(245,239,228,0.4)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.75rem", fontWeight: 700,
+                  }}
+                >
+                  {s.num}
                 </div>
-                <div>
-                  <label className="label">Email Address *</label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="john@example.com"
-                    className="input"
-                  />
+                <span
+                  style={{
+                    fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.65rem", fontWeight: 600,
+                    letterSpacing: "0.14em", textTransform: "uppercase",
+                    color: s.active ? "#C4882A" : "rgba(245,239,228,0.4)",
+                  }}
+                >
+                  {s.label}
+                </span>
+                {idx < 2 && <span style={{ color: "rgba(255,255,255,0.15)", marginLeft: "1rem" }}>—</span>}
+              </div>
+            ))}
+          </div>
+
+          {/* STEP 1: DETAILS */}
+          {step === "details" && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <form
+                onSubmit={handleNextToPayment}
+                className="lg:col-span-7 glass-dark"
+                style={{ padding: "2.5rem", borderRadius: "24px", border: "1px solid rgba(196,136,42,0.25)", display: "flex", flexDirection: "column", gap: "1.25rem" }}
+              >
+                <h2 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.5rem" }}>
+                  Delivery Information
+                </h2>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                      Full Name *
+                    </label>
+                    <input
+                      type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. John Kiptoo"
+                      style={{ width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem" }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                      Email Address *
+                    </label>
+                    <input
+                      type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@example.com"
+                      style={{ width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem" }}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="label">Phone Number (M-Pesa) *</label>
-                  <input
-                    type="tel"
-                    required
-                    value={phone}
-                    onChange={(e) => {
-                      setPhone(e.target.value);
-                      if (!mpesaPhone) setMpesaPhone(e.target.value);
-                    }}
-                    placeholder="0712345678"
-                    className="input"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                      Phone (M-Pesa) *
+                    </label>
+                    <input
+                      type="tel" required value={phone} onChange={(e) => { setPhone(e.target.value); if (!mpesaPhone) setMpesaPhone(e.target.value); }} placeholder="0712345678"
+                      style={{ width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem" }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                      Delivery Location *
+                    </label>
+                    <input
+                      type="text" required value={address} onChange={(e) => setAddress(e.target.value)} placeholder="e.g. Karen / Nairobi / Kajiado"
+                      style={{ width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem" }}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="label">Delivery County / Town *</label>
-                  <input
-                    type="text"
-                    required
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="e.g. Nairobi / Karen / Kajiado"
-                    className="input"
-                  />
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem", paddingTop: "1.25rem", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                  <Link href="/cart" className="btn-ghost" style={{ padding: "0.75rem 1.25rem", fontSize: "0.72rem" }}>
+                    <i className="bi bi-arrow-left" />
+                    Cart
+                  </Link>
+                  <button type="submit" className="btn-primary">
+                    Continue to Payment
+                    <i className="bi bi-arrow-right" />
+                  </button>
                 </div>
-              </div>
+              </form>
 
-              <div>
-                <label className="label">Delivery Instructions (Optional)</label>
-                <textarea
-                  rows={3}
-                  placeholder="Gate code, specific landmarks, preferred delivery time..."
-                  className="input"
-                />
-              </div>
+              {/* Sidebar */}
+              <div className="lg:col-span-5">
+                <div className="glass-dark" style={{ padding: "2rem", borderRadius: "24px", border: "1px solid rgba(196,136,42,0.25)" }}>
+                  <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+                    Basket Summary ({cart.length})
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxHeight: "240px", overflowY: "auto", marginBottom: "1.5rem", paddingRight: "0.5rem" }}>
+                    {cart.map((item) => (
+                      <div key={item.id} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", color: "rgba(245,239,228,0.7)" }}>
+                        <span>{item.quantity}× {item.name}</span>
+                        <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 600, color: "#F5EFE4" }}>
+                          KES {(item.price * item.quantity).toLocaleString()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
 
-              <div className="flex justify-between items-center pt-4 border-t border-[#1C1208]/08">
-                <Link href="/cart" className="text-xs font-mono text-[#1C1208]/60 hover:text-[#C4882A] flex items-center gap-1">
-                  <ArrowLeft size={14} />
-                  Return to Cart
-                </Link>
-                <button type="submit" className="btn btn-primary btn-lg">
-                  Proceed to Payment →
-                </button>
-              </div>
-            </form>
-
-            {/* Sidebar Summary */}
-            <div className="bg-white border border-[#1C1208]/10 rounded-md p-6 h-fit shadow-md space-y-4">
-              <h3 className="font-serif text-lg font-semibold text-[#1C1208] border-b border-[#1C1208]/10 pb-3">
-                Items ({cart.length})
-              </h3>
-              <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex justify-between text-xs text-[#1C1208]/80">
-                    <span className="truncate pr-2">{item.quantity}× {item.name}</span>
-                    <span className="font-mono font-semibold shrink-0">
-                      KES {(item.price * item.quantity).toLocaleString()}
+                  <div style={{ paddingTop: "1.25rem", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                    <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.4)" }}>
+                      Total Due
+                    </span>
+                    <span style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#C4882A" }}>
+                      KES {grandTotal.toLocaleString()}
                     </span>
                   </div>
-                ))}
-              </div>
-              <div className="pt-3 border-t border-[#1C1208]/10 flex justify-between font-mono text-sm">
-                <span>Total Due:</span>
-                <span className="font-bold text-[#C4882A]">KES {grandTotal.toLocaleString()}</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* STEP 2: PAYMENT METHOD */}
-        {step === "payment" && (
-          <div className="bg-white border border-[#1C1208]/10 rounded-md p-6 sm:p-8 shadow-md max-w-2xl mx-auto space-y-6">
-            <h2 className="font-serif text-2xl text-[#1C1208] border-b border-[#1C1208]/08 pb-3">
-              Select Payment Method
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("mpesa")}
-                className={`p-4 border rounded-md flex flex-col items-center gap-2 text-center transition-all ${
-                  paymentMethod === "mpesa"
-                    ? "border-[#C4882A] bg-[#C4882A]/08 ring-2 ring-[#C4882A]"
-                    : "border-[#1C1208]/15 hover:border-[#C4882A]/50"
-                }`}
-              >
-                <div className="w-10 h-10 rounded-full bg-[#3D6B3E]/10 text-[#3D6B3E] flex items-center justify-center font-bold">
-                  <Phone size={20} />
-                </div>
-                <span className="font-serif text-sm font-semibold text-[#1C1208]">M-Pesa Express</span>
-                <span className="text-[10px] text-[#1C1208]/50">Instant STK Push</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("card")}
-                className={`p-4 border rounded-md flex flex-col items-center gap-2 text-center transition-all ${
-                  paymentMethod === "card"
-                    ? "border-[#C4882A] bg-[#C4882A]/08 ring-2 ring-[#C4882A]"
-                    : "border-[#1C1208]/15 hover:border-[#C4882A]/50"
-                }`}
-              >
-                <div className="w-10 h-10 rounded-full bg-[#C4882A]/10 text-[#C4882A] flex items-center justify-center font-bold">
-                  <CreditCard size={20} />
-                </div>
-                <span className="font-serif text-sm font-semibold text-[#1C1208]">Credit / Debit Card</span>
-                <span className="text-[10px] text-[#1C1208]/50">Visa, Mastercard</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("bank")}
-                className={`p-4 border rounded-md flex flex-col items-center gap-2 text-center transition-all ${
-                  paymentMethod === "bank"
-                    ? "border-[#C4882A] bg-[#C4882A]/08 ring-2 ring-[#C4882A]"
-                    : "border-[#1C1208]/15 hover:border-[#C4882A]/50"
-                }`}
-              >
-                <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center font-bold">
-                  <Building2 size={20} />
-                </div>
-                <span className="font-serif text-sm font-semibold text-[#1C1208]">Bank Wire</span>
-                <span className="text-[10px] text-[#1C1208]/50">KCB / NCBA Bank</span>
-              </button>
-            </div>
-
-            {/* M-Pesa Panel */}
-            {paymentMethod === "mpesa" && (
-              <div className="p-5 bg-[#F5EFE4] rounded-md border border-[#EDE5D8] space-y-3">
-                <div className="eyebrow text-[#3D6B3E]">M-Pesa Instant Payment</div>
-                <p className="text-xs text-[#1C1208]/70 leading-relaxed">
-                  Enter your Safaricom M-Pesa registered mobile number below. You will receive an instant PIN prompt (STK Push) on your phone.
-                </p>
-                <div>
-                  <label className="label">M-Pesa Mobile Number</label>
-                  <input
-                    type="tel"
-                    value={mpesaPhone || phone}
-                    onChange={(e) => setMpesaPhone(e.target.value)}
-                    placeholder="0712345678"
-                    className="input font-mono"
-                  />
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Total Display */}
-            <div className="p-4 bg-[#1C1208] text-[#F5EFE4] rounded-md flex justify-between items-center">
-              <div>
-                <span className="text-xs text-[#F5EFE4]/60">Total Payable Now:</span>
-                <div className="font-mono text-xl font-bold text-[#C4882A]">
-                  KES {grandTotal.toLocaleString()}
-                </div>
+          {/* STEP 2: PAYMENT */}
+          {step === "payment" && (
+            <div className="glass-dark" style={{ padding: "3rem", borderRadius: "24px", border: "1px solid rgba(196,136,42,0.25)", maxWidth: "680px", margin: "0 auto" }}>
+              <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "0.75rem" }}>
+                Step 2 of 3
               </div>
-              <div className="text-right text-[10px] font-mono text-[#F5EFE4]/40">
-                Delivery to: {address || "Kajiado / Nairobi"}
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center pt-4 border-t border-[#1C1208]/08">
-              <button
-                type="button"
-                onClick={() => setStep("details")}
-                className="text-xs font-mono text-[#1C1208]/60 hover:text-[#C4882A]"
-              >
-                ← Back to Details
-              </button>
-
-              <button
-                type="button"
-                disabled={isProcessing}
-                onClick={handleCompleteOrder}
-                className="btn btn-primary btn-lg min-w-48"
-              >
-                {isProcessing ? (
-                  <span className="flex items-center gap-2">
-                    <Loader2 className="animate-spin" size={16} />
-                    <span>Processing Payment...</span>
-                  </span>
-                ) : (
-                  <span>Pay KES {grandTotal.toLocaleString()}</span>
-                )}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* STEP 3: CONFIRMED */}
-        {step === "confirmed" && (
-          <div className="bg-white border border-[#1C1208]/10 rounded-md p-8 sm:p-12 text-center max-w-2xl mx-auto shadow-xl space-y-6">
-            <div className="w-20 h-20 rounded-full bg-[#3D6B3E]/10 text-[#3D6B3E] flex items-center justify-center mx-auto">
-              <CheckCircle2 size={48} />
-            </div>
-
-            <div>
-              <span className="eyebrow justify-center text-[#3D6B3E] mb-2">Order Confirmed</span>
-              <h2 className="font-serif text-4xl text-[#1C1208] font-light">
-                Thank You for your Order!
+              <h2 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2.4rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "2rem" }}>
+                Select Payment Method
               </h2>
-              <p className="text-sm text-[#1C1208]/60 mt-2 max-w-md mx-auto">
-                We have received your payment and our Kajiado ranch logistics team is preparing your dispatch.
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+                {[
+                  { key: "mpesa" as const, title: "M-Pesa Express", icon: "bi-phone-fill", sub: "Instant STK Push" },
+                  { key: "card" as const, title: "Credit / Debit", icon: "bi-credit-card-fill", sub: "Visa / Mastercard" },
+                  { key: "bank" as const, title: "Bank Transfer", icon: "bi-bank2", sub: "EFT / RTGS" },
+                ].map((m) => {
+                  const active = paymentMethod === m.key
+                  return (
+                    <button
+                      key={m.key}
+                      type="button"
+                      onClick={() => setPaymentMethod(m.key)}
+                      style={{
+                        padding: "1.25rem", borderRadius: "14px", textAlign: "center",
+                        background: active ? "rgba(196,136,42,0.18)" : "rgba(255,255,255,0.04)",
+                        border: active ? "1px solid #C4882A" : "1px solid rgba(255,255,255,0.08)",
+                        cursor: "pointer", transition: "all 0.25s ease",
+                      }}
+                    >
+                      <i className={`bi ${m.icon}`} style={{ fontSize: "1.5rem", color: active ? "#C4882A" : "rgba(245,239,228,0.5)", display: "block", marginBottom: "0.5rem" }} />
+                      <div style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "1.2rem", fontWeight: 400, color: "#F5EFE4" }}>{m.title}</div>
+                      <div style={{ fontSize: "0.7rem", color: "rgba(245,239,228,0.4)", marginTop: "0.2rem" }}>{m.sub}</div>
+                    </button>
+                  )
+                })}
+              </div>
+
+              {paymentMethod === "mpesa" && (
+                <div style={{ background: "rgba(61,107,62,0.15)", border: "1px solid rgba(61,107,62,0.35)", borderRadius: "14px", padding: "1.5rem", marginBottom: "2rem" }}>
+                  <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "#5a9e5c", marginBottom: "0.5rem" }}>
+                    M-Pesa Phone Number for STK Push
+                  </label>
+                  <input
+                    type="tel" value={mpesaPhone} onChange={(e) => setMpesaPhone(e.target.value)} placeholder="0712345678"
+                    style={{ width: "100%", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(61,107,62,0.4)", borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem" }}
+                  />
+                  <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.78rem", marginTop: "0.75rem" }}>
+                    You will receive a prompt on your phone to authorize payment of KES {grandTotal.toLocaleString()}.
+                  </p>
+                </div>
+              )}
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <button type="button" onClick={() => setStep("details")} className="btn-ghost">
+                  <i className="bi bi-arrow-left" />
+                  Back
+                </button>
+                <button type="button" onClick={handleCompleteOrder} disabled={isProcessing} className="btn-primary">
+                  {isProcessing ? "Processing..." : `Pay KES ${grandTotal.toLocaleString()}`}
+                  <i className="bi bi-check-lg" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3: CONFIRMED */}
+          {step === "confirmed" && (
+            <div
+              className="glass-dark"
+              style={{ textAlign: "center", padding: "5rem 2.5rem", borderRadius: "24px", maxWidth: "600px", margin: "0 auto", border: "1px solid rgba(61,107,62,0.4)" }}
+            >
+              <div
+                style={{
+                  width: "64px", height: "64px", borderRadius: "50%",
+                  background: "rgba(61,107,62,0.2)", border: "1px solid rgba(61,107,62,0.4)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  margin: "0 auto 1.5rem", color: "#5a9e5c",
+                }}
+              >
+                <i className="bi bi-check-circle-fill" style={{ fontSize: "2rem" }} />
+              </div>
+              <div className="eyebrow justify-center" style={{ color: "#5a9e5c", marginBottom: "0.75rem" }}>
+                Order Confirmed
+              </div>
+              <h2 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2.8rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.5rem" }}>
+                Thank You for Your Order!
+              </h2>
+              <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.9rem", marginBottom: "2rem" }}>
+                Order Reference: <strong style={{ color: "#C4882A", fontFamily: "var(--font-space-grotesk), monospace" }}>{orderRef}</strong>
               </p>
-            </div>
 
-            <div className="p-5 bg-[#F5EFE4] rounded-md border border-[#EDE5D8] text-left max-w-md mx-auto space-y-2 font-mono text-xs">
-              <div className="flex justify-between">
-                <span className="text-[#1C1208]/50">Order Reference:</span>
-                <span className="font-bold text-[#C4882A]">{orderRef}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#1C1208]/50">Customer Name:</span>
-                <span className="font-semibold">{name || "Valued Client"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#1C1208]/50">Delivery Location:</span>
-                <span>{address}</span>
-              </div>
-              <div className="flex justify-between border-t border-[#1C1208]/10 pt-2 font-bold text-sm">
-                <span>Paid Total:</span>
-                <span className="text-[#3D6B3E]">KES {grandTotal.toLocaleString()}</span>
+              <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+                <Link href="/dashboard" className="btn-primary">
+                  <i className="bi bi-speedometer2" />
+                  View Dashboard Order History
+                </Link>
+                <Link href="/barn" className="btn-ghost">
+                  Return to Barn
+                </Link>
               </div>
             </div>
+          )}
 
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
-              <Link href="/dashboard" className="btn btn-primary btn-lg">
-                Go to My Orders Dashboard
-              </Link>
-              <Link href="/barn" className="btn btn-outline btn-lg">
-                Continue Shopping
-              </Link>
-            </div>
-          </div>
-        )}
+        </div>
+      </section>
 
-      </div>
     </div>
   );
 }

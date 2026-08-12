@@ -3,10 +3,10 @@
 import { useState } from "react"
 
 const CONTACT_ITEMS = [
-  { icon: "bi-geo-alt", label: "Location", value: "Kajiado County, Kenya", sub: "Off Namanga Road, 2 km from Kajiado town" },
-  { icon: "bi-envelope", label: "Email", value: "info@osotuafarming.co.ke", href: "mailto:info@osotuafarming.co.ke" },
-  { icon: "bi-telephone", label: "Phone", value: "+254 700 000 000", href: "tel:+254700000000" },
-  { icon: "bi-clock", label: "Hours", value: "Mon–Sat, 8am–5pm EAT", sub: "Closed Sundays & public holidays" },
+  { icon: "bi-geo-alt-fill", label: "Location", value: "Kajiado County, Kenya", sub: "Off Namanga Highway, 2 km from Kajiado Town" },
+  { icon: "bi-envelope-fill", label: "Email", value: "info@osotuafarming.co.ke", href: "mailto:info@osotuafarming.co.ke" },
+  { icon: "bi-telephone-fill", label: "Phone", value: "+254 700 000 000", href: "tel:+254700000000" },
+  { icon: "bi-clock-fill", label: "Hours", value: "Mon–Sat, 8:00 AM – 5:00 PM EAT", sub: "Closed Sundays & Public Holidays" },
 ]
 
 const SUBJECT_OPTIONS = [
@@ -52,159 +52,250 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FBF7F0] pt-20">
-      {/* Hero */}
-      <div className="relative bg-[#1C1208] py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="relative max-w-5xl mx-auto z-10">
-          <div className="eyebrow text-[#C4882A] mb-4">
+    <div style={{ background: "#FBF7F0" }}>
+
+      {/* ── HERO ── */}
+      <div
+        className="bg-mesh-earth noise"
+        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
             Get in Touch
           </div>
-          <h1 className="font-serif text-5xl sm:text-6xl font-light text-[#F5EFE4] mb-4 leading-tight">
-            Let&apos;s talk <em className="text-[#C4882A] not-italic">farming</em>
+          <h1
+            style={{
+              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+              fontSize: "clamp(3.2rem, 7vw, 7rem)",
+              fontWeight: 300,
+              color: "#F5EFE4",
+              lineHeight: 0.95,
+              letterSpacing: "-0.02em",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Let&apos;s talk
+            <br />
+            <em style={{ color: "#C4882A", fontStyle: "italic" }}>farming</em>
           </h1>
-          <p className="text-[#F5EFE4]/70 max-w-lg leading-relaxed text-base">
-            Whether you&apos;re looking to buy livestock, source fresh produce, invest in agribusiness, or simply visit the ranch — we&apos;re here.
+          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem" }}>
+            Whether you&apos;re looking to purchase purebred livestock, source fresh produce, explore investment opportunities, or schedule a ranch visit — our team is at your service.
           </p>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+      {/* ── CONTENT SECTION ── */}
+      <section
+        className="bg-mesh-green noise"
+        style={{ padding: "7rem 0" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
-          {/* Left: Contact info */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="eyebrow mb-2">Reach Us Directly</div>
-            <h2 className="font-serif text-3xl text-[#1C1208] font-light mb-4">Contact Details</h2>
-            <div className="space-y-4">
-              {CONTACT_ITEMS.map((item) => (
-                <div key={item.label} className="os-card p-5 flex gap-4">
-                  <div className="w-10 h-10 bg-[#C4882A]/10 border border-[#C4882A]/25 rounded flex items-center justify-center flex-shrink-0">
-                    <i className={`bi ${item.icon} text-lg text-[#C4882A]`} />
-                  </div>
-                  <div>
-                    <div className="eyebrow-plain mb-1 text-[#1C1208]/40" style={{ fontSize: "0.55rem" }}>{item.label}</div>
-                    {item.href ? (
-                      <a href={item.href} className="text-sm text-[#1C1208] hover:text-[#C4882A] transition-colors font-medium">{item.value}</a>
-                    ) : (
-                      <div className="text-sm text-[#1C1208] font-medium">{item.value}</div>
-                    )}
-                    {item.sub && <div className="text-xs text-[#1C1208]/40 mt-0.5">{item.sub}</div>}
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* Left: Contact Info */}
+            <div className="lg:col-span-5 space-y-5">
+              <div className="eyebrow" style={{ color: "#C4882A" }}>Direct Communication</div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                  fontSize: "clamp(2.2rem, 3.5vw, 3.5rem)",
+                  fontWeight: 300,
+                  color: "#F5EFE4",
+                  lineHeight: 1.1,
+                  marginBottom: "2rem",
+                }}
+              >
+                Ranch &amp; Office Details
+              </h2>
 
-            {/* Map placeholder */}
-            <div className="relative rounded overflow-hidden border border-[#1C1208]/08 bg-[#EDE5D8] h-48 flex items-center justify-center shadow-sm">
-              <div className="text-center">
-                <i className="bi bi-geo-alt text-3xl text-[#C4882A] mb-2 block" />
-                <p className="text-[#1C1208]/60 text-xs font-mono tracking-wide font-semibold">Kajiado County, Kenya</p>
-                <p className="text-[#1C1208]/40 text-[10px] mt-0.5 font-mono">-1.8500, 36.7833</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {CONTACT_ITEMS.map((item) => (
+                  <div
+                    key={item.label}
+                    className="glass-dark"
+                    style={{ padding: "1.5rem", display: "flex", gap: "1rem", borderRadius: "16px" }}
+                  >
+                    <div
+                      style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "12px",
+                        background: "rgba(196,136,42,0.12)",
+                        border: "1px solid rgba(196,136,42,0.3)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <i className={`bi ${item.icon}`} style={{ fontSize: "1.2rem", color: "#C4882A" }} />
+                    </div>
+                    <div>
+                      <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,239,228,0.4)", marginBottom: "0.25rem" }}>
+                        {item.label}
+                      </div>
+                      {item.href ? (
+                        <a href={item.href} style={{ color: "#F5EFE4", fontSize: "0.92rem", textDecoration: "none", fontWeight: 500 }} className="hover:text-[#C4882A] transition-colors">
+                          {item.value}
+                        </a>
+                      ) : (
+                        <div style={{ color: "#F5EFE4", fontSize: "0.92rem", fontWeight: 500 }}>
+                          {item.value}
+                        </div>
+                      )}
+                      {item.sub && (
+                        <div style={{ color: "rgba(245,239,228,0.45)", fontSize: "0.78rem", marginTop: "0.25rem" }}>
+                          {item.sub}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Right: Form */}
-          <div className="lg:col-span-3">
-            {submitted ? (
-              <div className="os-card p-12 text-center shadow-xl">
-                <div className="w-16 h-16 bg-[#3D6B3E]/10 border border-[#3D6B3E]/30 rounded-full flex items-center justify-center mx-auto mb-5 text-[#3D6B3E]">
-                  <i className="bi bi-check-circle text-3xl" />
-                </div>
-                <div className="eyebrow justify-center text-[#3D6B3E] mb-2">Message Sent</div>
-                <h3 className="font-serif text-3xl text-[#1C1208] font-light mb-3">Message Received!</h3>
-                <p className="text-[#1C1208]/60 text-sm mb-6 leading-relaxed max-w-xs mx-auto">
-                  Thank you for reaching out. Our team will respond within 24 hours during business hours.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="btn-outline-dark"
+            {/* Right: Contact Form */}
+            <div className="lg:col-span-7">
+              {submitted ? (
+                <div
+                  className="glass-dark"
+                  style={{ textAlign: "center", padding: "5rem 2.5rem", borderRadius: "24px", border: "1px solid rgba(61,107,62,0.4)" }}
                 >
-                  Send another message
-                </button>
-              </div>
-            ) : (
-              <div className="os-card p-8 sm:p-10 shadow-xl">
-                <div className="eyebrow mb-2">Send an Enquiry</div>
-                <h2 className="font-serif text-3xl text-[#1C1208] font-light mb-6">Send a Message</h2>
+                  <div
+                    style={{
+                      width: "64px", height: "64px", borderRadius: "50%",
+                      background: "rgba(61,107,62,0.2)", border: "1px solid rgba(61,107,62,0.4)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      margin: "0 auto 1.5rem", color: "#5a9e5c",
+                    }}
+                  >
+                    <i className="bi bi-check-circle-fill" style={{ fontSize: "2rem" }} />
+                  </div>
+                  <div className="eyebrow justify-center" style={{ color: "#5a9e5c", marginBottom: "0.75rem" }}>
+                    Enquiry Received
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                      fontSize: "2.5rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "1rem",
+                    }}
+                  >
+                    Message Sent Successfully!
+                  </h3>
+                  <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.9rem", maxWidth: "380px", margin: "0 auto 2rem", lineHeight: 1.7 }}>
+                    Thank you for reaching out. Our team will review your message and respond within 24 hours during business hours.
+                  </p>
+                  <button onClick={() => setSubmitted(false)} className="btn-ghost">
+                    Send Another Message
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className="glass-dark"
+                  style={{ padding: "2.5rem sm:padding-3rem", borderRadius: "24px", border: "1px solid rgba(196,136,42,0.25)" }}
+                >
+                  <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "0.75rem" }}>
+                    Send an Enquiry
+                  </div>
+                  <h2
+                    style={{
+                      fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                      fontSize: "2.2rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "2rem",
+                    }}
+                  >
+                    How can we assist you?
+                  </h2>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                  {/* Row: name + email */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {[
-                      { name: "name", label: "Full Name", type: "text", placeholder: "Jane Wanjiku" },
-                      { name: "email", label: "Email Address", type: "email", placeholder: "jane@example.com" },
-                    ].map((f) => (
-                      <div key={f.name}>
-                        <label className="eyebrow-plain mb-2 block text-[#1C1208]/50">{f.label}</label>
+                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                          Full Name *
+                        </label>
                         <input
-                          name={f.name}
-                          type={f.type}
-                          required
-                          placeholder={f.placeholder}
-                          className="os-input"
+                          name="name" type="text" required placeholder="e.g. Jane Wanjiku"
+                          style={{
+                            width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+                            borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem",
+                          }}
                         />
                       </div>
-                    ))}
-                  </div>
+                      <div>
+                        <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                          Email Address *
+                        </label>
+                        <input
+                          name="email" type="email" required placeholder="jane@example.com"
+                          style={{
+                            width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+                            borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem",
+                          }}
+                        />
+                      </div>
+                    </div>
 
-                  {/* Phone */}
-                  <div>
-                    <label className="eyebrow-plain mb-2 block text-[#1C1208]/50">Phone Number</label>
-                    <input
-                      name="phone"
-                      type="tel"
-                      placeholder="+254 700 000 000"
-                      className="os-input"
-                    />
-                  </div>
+                    <div>
+                      <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                        Phone Number
+                      </label>
+                      <input
+                        name="phone" type="tel" placeholder="+254 700 000 000"
+                        style={{
+                          width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+                          borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem",
+                        }}
+                      />
+                    </div>
 
-                  {/* Subject */}
-                  <div>
-                    <label className="eyebrow-plain mb-2 block text-[#1C1208]/50">Subject</label>
-                    <select
-                      name="subject"
-                      required
-                      className="os-input cursor-pointer"
-                    >
-                      <option value="">Select a topic…</option>
-                      {SUBJECT_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                  </div>
+                    <div>
+                      <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                        Topic / Subject *
+                      </label>
+                      <select
+                        name="subject" required
+                        style={{
+                          width: "100%", background: "#1C1208", border: "1px solid rgba(255,255,255,0.12)",
+                          borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem", cursor: "pointer",
+                        }}
+                      >
+                        <option value="">Select a topic…</option>
+                        {SUBJECT_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                    </div>
 
-                  {/* Message */}
-                  <div>
-                    <label className="eyebrow-plain mb-2 block text-[#1C1208]/50">Message</label>
-                    <textarea
-                      name="message"
-                      required
-                      rows={5}
-                      placeholder="Tell us how we can help…"
-                      className="os-input resize-none"
-                    />
-                  </div>
+                    <div>
+                      <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,239,228,0.45)", marginBottom: "0.5rem" }}>
+                        Message *
+                      </label>
+                      <textarea
+                        name="message" required rows={5} placeholder="Tell us how we can help…"
+                        style={{
+                          width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+                          borderRadius: "10px", padding: "0.875rem 1.125rem", color: "#F5EFE4", outline: "none", fontSize: "0.9rem", resize: "none",
+                        }}
+                      />
+                    </div>
 
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="btn-primary self-start mt-2"
-                  >
-                    {loading ? (
-                      "Sending Message…"
-                    ) : (
-                      <>
-                        Send Message
-                        <i className="bi bi-arrow-right" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              </div>
-            )}
+                    <button type="submit" disabled={loading} className="btn-primary" style={{ marginTop: "0.5rem", alignSelf: "flex-start" }}>
+                      {loading ? (
+                        "Sending Enquiry…"
+                      ) : (
+                        <>
+                          <i className="bi bi-send-fill" />
+                          Send Message
+                          <i className="bi bi-arrow-right" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+
           </div>
         </div>
-      </div>
+      </section>
+
     </div>
   )
 }

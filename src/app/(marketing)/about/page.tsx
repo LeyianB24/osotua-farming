@@ -1,139 +1,291 @@
 import Image from "next/image"
+import Link from "next/link"
 import { RANCH_WIDE, RANCH_GALLERY, LOGO } from "@/lib/images"
 
 export const metadata = { title: "About — Osotua Farming" }
 
+const VALUES = [
+  { icon: "bi-tree-fill", title: "Indigenous Breeds, Modern Methods", desc: "We champion Africa's finest livestock genetics combined with smart farming technology." },
+  { icon: "bi-geo-alt-fill", title: "Rooted in Kajiado", desc: "Our ranch has the ideal climate, rangelands, and pastoral heritage to raise East Africa's finest livestock." },
+  { icon: "bi-qr-code-scan", title: "Full Traceability", desc: "Every animal and harvest carries a QR code linking back to its rangeland origin and health record." },
+  { icon: "bi-people-fill", title: "Community-First Pastoralism", desc: "We partner with smallholder pastoralists, support agricultural internships, and invest in surrounding communities." },
+]
+
 export default function AboutPage() {
   return (
-    <div className="bg-[#FBF7F0] pt-20 min-h-screen">
-      {/* Header with backdrop */}
-      <div className="relative bg-[#1C1208] py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0">
+    <div style={{ background: "#FBF7F0" }}>
+
+      {/* ── HERO BANNER ── */}
+      <div
+        className="bg-mesh-earth noise"
+        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
+      >
+        {/* Full-bleed background photo */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <Image
             src={RANCH_WIDE}
-            alt="The Osotua ranch"
+            alt="The Osotua ranch landscape"
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-25"
+            className="object-cover"
+            style={{ opacity: 0.2, scale: "1.05" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1208]/85 via-[#1C1208]/70 to-[#1C1208]/95" />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(28,18,8,0.95) 0%, rgba(28,18,8,0.75) 60%, transparent 100%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #1C1208 0%, transparent 60%)" }} />
         </div>
-        <div className="relative max-w-5xl mx-auto z-10">
-          <Image
-            src={LOGO}
-            alt="Osotua Farming"
-            width={64}
-            height={64}
-            priority
-            className="rounded-full ring-1 ring-[#C4882A]/30 mb-6"
-          />
-          <div className="eyebrow text-[#C4882A] mb-4">
-            Our Story
+
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
+            <Image
+              src={LOGO}
+              alt="Osotua Farming"
+              width={56}
+              height={56}
+              priority
+              className="rounded-full ring-1 ring-[#C4882A]/40"
+            />
+            <div className="eyebrow" style={{ color: "#C4882A" }}>
+              Our Story &amp; Covenant
+            </div>
           </div>
-          <h1 className="font-serif text-5xl sm:text-6xl font-light text-[#F5EFE4] mb-4 tracking-tight leading-tight">
-            A farm built on{" "}
-            <em className="text-[#C4882A] not-italic">trust and land</em>
+
+          <h1
+            style={{
+              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+              fontSize: "clamp(3.2rem, 7vw, 7rem)",
+              fontWeight: 300,
+              color: "#F5EFE4",
+              lineHeight: 0.95,
+              letterSpacing: "-0.02em",
+              marginBottom: "1.5rem",
+            }}
+          >
+            A farm built on
+            <br />
+            <em style={{ color: "#C4882A", fontStyle: "italic" }}>trust and land</em>
           </h1>
-          <p className="text-[#F5EFE4]/70 max-w-xl leading-relaxed text-base">
-            Osotua means a bond of friendship in the Maa language — an enduring covenant between the land, the farmer, and the community.
+          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem" }}>
+            Osotua means a sacred bond of friendship in the Maa language — an enduring covenant between the rangelands, the pastoralist, and the community we serve.
           </p>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Mission */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20 items-center">
-          <div className="relative rounded overflow-hidden min-h-80 flex flex-col justify-end p-10 group shadow-xl">
-            <Image
-              src={RANCH_GALLERY[5]}
-              alt="Life on the ranch"
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/90 via-[#1C1208]/40 to-transparent" />
-            <div className="relative z-10">
-              <p className="font-serif text-3xl italic text-[#F5EFE4] font-light leading-tight mb-3">
+      {/* ── CORE PURPOSE ── */}
+      <section
+        className="bg-mesh-green noise"
+        style={{ padding: "7rem 0" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left quote card */}
+            <div
+              className="glass-dark"
+              style={{
+                padding: "3rem",
+                borderRadius: "24px",
+                position: "relative",
+                overflow: "hidden",
+                border: "1px solid rgba(196,136,42,0.25)",
+              }}
+            >
+              <div style={{ position: "absolute", top: "-4rem", right: "-4rem", width: "240px", height: "240px", borderRadius: "50%", background: "radial-gradient(circle, rgba(196,136,42,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
+              <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+                Our Motto
+              </div>
+              <blockquote
+                style={{
+                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                  fontSize: "clamp(2rem, 4vw, 3.2rem)",
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  color: "#F5EFE4",
+                  lineHeight: 1.25,
+                  marginBottom: "2rem",
+                  borderLeft: "3px solid #C4882A",
+                  paddingLeft: "1.5rem",
+                }}
+              >
                 &ldquo;From Our Land, To Your Table&rdquo;
+              </blockquote>
+              <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#C4882A" }}>
+                Maa Pastoral Tradition · Kajiado, Kenya
+              </div>
+            </div>
+
+            {/* Right details */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div className="eyebrow" style={{ color: "#C4882A" }}>Our Core Mission</div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                  fontSize: "clamp(2.4rem, 4vw, 4rem)",
+                  fontWeight: 300,
+                  color: "#F5EFE4",
+                  lineHeight: 1.1,
+                }}
+              >
+                Redefining African agribusiness
+              </h2>
+              <p style={{ color: "rgba(245,239,228,0.6)", lineHeight: 1.8, fontSize: "0.95rem" }}>
+                Osotua Farming is a premier smart agribusiness enterprise based in Kajiado County, Kenya. We raise climate-resilient indigenous livestock, cultivate organic produce, and supply consumers and hospitality clients directly through our Barn Store.
               </p>
-              <span className="eyebrow-plain text-[#C4882A] text-xs">
-                Maa · Kajiado, Kenya
-              </span>
+              <p style={{ color: "rgba(245,239,228,0.6)", lineHeight: 1.8, fontSize: "0.95rem" }}>
+                We champion Africa&apos;s finest livestock genetics combined with precision farming technology and regenerative land management — proving that pastoral tradition and modern innovation thrive together.
+              </p>
             </div>
           </div>
-
-          <div>
-            <div className="eyebrow mb-3">Our Core Purpose</div>
-            <h2 className="font-serif text-4xl text-[#1C1208] font-light mb-6">Our Mission</h2>
-            <p className="text-[#1C1208]/65 leading-relaxed mb-4 text-base">
-              Osotua Farming is a modern, smart agribusiness enterprise based in Kajiado County, Kenya. We raise premium indigenous livestock, grow wholesome food, and connect producers directly to consumers through our Barn Store.
-            </p>
-            <p className="text-[#1C1208]/65 leading-relaxed text-base">
-              We champion Africa&apos;s finest livestock genetics combined with smart farming technology and sustainable land management — proving that indigenous breeds and modern methods can coexist beautifully.
-            </p>
-          </div>
         </div>
+      </section>
 
-        {/* Values */}
-        <div className="mb-20">
-          <div className="eyebrow mb-3">Our Guiding Values</div>
-          <h2 className="font-serif text-4xl text-[#1C1208] font-light mb-10">What We Stand For</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {[
-              { icon: "bi-tree", title: "Indigenous breeds, modern methods", desc: "We champion Africa's finest livestock genetics combined with smart farming technology." },
-              { icon: "bi-geo-alt", title: "Rooted in Kajiado", desc: "Our ranch has the climate, land, and heritage to produce the finest animals and food in East Africa." },
-              { icon: "bi-qr-code", title: "Full traceability", desc: "Every product carries a QR code linking back to its source — so you always know exactly what you're eating." },
-              { icon: "bi-people", title: "Community-first", desc: "We partner with smallholder farmers, support youth through internships, and invest in surrounding communities." },
-            ].map((item) => (
-              <div key={item.title} className="os-card p-6 flex gap-4">
-                <div className="w-12 h-12 rounded bg-[#C4882A]/10 border border-[#C4882A]/25 flex items-center justify-center flex-shrink-0">
-                  <i className={`bi ${item.icon} text-xl text-[#C4882A]`} />
+      {/* ── VALUES ── */}
+      <section
+        className="bg-mesh-earth noise"
+        style={{ padding: "7rem 0" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ maxWidth: "560px", marginBottom: "4rem" }}>
+            <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+              Our Guiding Values
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                fontSize: "clamp(2.4rem, 4vw, 4rem)",
+                fontWeight: 300,
+                color: "#F5EFE4",
+                lineHeight: 1.1,
+              }}
+            >
+              What we stand for
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {VALUES.map((item) => (
+              <div
+                key={item.title}
+                className="glass-dark"
+                style={{ padding: "2rem", display: "flex", gap: "1.25rem", borderRadius: "16px" }}
+              >
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "12px",
+                    background: "rgba(196,136,42,0.12)",
+                    border: "1px solid rgba(196,136,42,0.3)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <i className={`bi ${item.icon}`} style={{ fontSize: "1.3rem", color: "#C4882A" }} />
                 </div>
                 <div>
-                  <div className="font-serif text-xl text-[#1C1208] mb-1">{item.title}</div>
-                  <div className="text-[#1C1208]/60 text-sm leading-relaxed">{item.desc}</div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                      fontSize: "1.5rem",
+                      fontWeight: 400,
+                      color: "#F5EFE4",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {item.title}
+                  </div>
+                  <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.88rem", lineHeight: 1.7 }}>
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Ranch gallery */}
-        <div className="mb-20">
-          <div className="eyebrow mb-3">Life at Kajiado</div>
-          <h2 className="font-serif text-4xl text-[#1C1208] font-light mb-8">Life on the Ranch</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      {/* ── GALLERY ── */}
+      <section
+        className="bg-mesh-green noise"
+        style={{ padding: "7rem 0" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ maxWidth: "560px", marginBottom: "3.5rem" }}>
+            <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+              Ranch Life
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                fontSize: "clamp(2.4rem, 4vw, 4rem)",
+                fontWeight: 300,
+                color: "#F5EFE4",
+                lineHeight: 1.1,
+              }}
+            >
+              Life on the Osotua rangelands
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {RANCH_GALLERY.map((src, i) => (
-              <div key={i} className="relative aspect-square overflow-hidden rounded group shadow-sm">
+              <div
+                key={i}
+                style={{
+                  position: "relative",
+                  aspectRatio: "1/1",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
                 <Image
                   src={src}
-                  alt={`Ranch life ${i + 1}`}
+                  alt={`Ranch life at Osotua ${i + 1}`}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="object-cover transition-transform duration-700 hover:scale-110"
+                  loading="lazy"
                 />
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Location */}
-        <div className="bg-[#1C1208] rounded p-12 text-center text-[#F5EFE4] relative overflow-hidden shadow-2xl">
-          <div className="eyebrow justify-center text-[#C4882A] mb-3">Find Us</div>
-          <h3 className="font-serif text-4xl font-light mb-4">Kajiado County, Kenya</h3>
-          <p className="text-[#F5EFE4]/60 text-sm max-w-md mx-auto mb-8 leading-relaxed">
-            Located in the heart of Kenya&apos;s livestock country, with the climate and heritage to produce the finest animals and food.
-          </p>
-          <a
-            href="/visit"
-            className="btn-primary"
+      {/* ── LOCATION CTA ── */}
+      <section
+        className="bg-mesh-gold noise"
+        style={{ padding: "7rem 0" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+          <div className="eyebrow justify-center" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+            Visit Our Ranch
+          </div>
+          <h2
+            style={{
+              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+              fontSize: "clamp(2.8rem, 5vw, 5rem)",
+              fontWeight: 300,
+              color: "#F5EFE4",
+              lineHeight: 1.05,
+              marginBottom: "1.25rem",
+            }}
           >
-            <i className="bi bi-geo-alt" />
+            Kajiado County, Kenya
+          </h2>
+          <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.95rem", lineHeight: 1.8, maxWidth: "520px", margin: "0 auto 3rem" }}>
+            Located in the heart of East Africa&apos;s pastoral country — book a guided rangeland tour and experience Osotua firsthand.
+          </p>
+
+          <Link href="/visit" className="btn-primary">
+            <i className="bi bi-geo-alt-fill" />
             Book a Farm Visit
-          </a>
+          </Link>
         </div>
-      </div>
+      </section>
+
     </div>
   )
 }

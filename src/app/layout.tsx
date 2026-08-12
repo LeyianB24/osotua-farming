@@ -1,35 +1,9 @@
 import type { Metadata, Viewport } from "next"
-import { Cormorant_Garamond, DM_Sans, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
 import WhatsAppFAB from "@/components/shared/WhatsAppFAB"
 import PageLoader from "@/components/shared/PageLoader"
-
-/* ── FONTS ──────────────────────────────────────────────── */
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-  preload: true,
-})
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-  preload: true,
-})
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-})
 
 /* ── METADATA ───────────────────────────────────────────── */
 export const metadata: Metadata = {
@@ -78,18 +52,20 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} ${spaceGrotesk.variable}`}
-    >
+    <html lang="en">
       <head>
+        {/* Google Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300..600;1,9..40,300..600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         {/* Bootstrap Icons */}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="antialiased bg-[#FBF7F0] text-[#1C1208]">
         <a

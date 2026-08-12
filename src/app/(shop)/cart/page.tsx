@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/components/shared/CartContext";
-import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Truck } from "lucide-react";
 import { useState } from "react";
 
 export default function CartPage() {
@@ -29,215 +28,261 @@ export default function CartPage() {
   };
 
   return (
-    <div className="bg-[#FBF7F0] pt-28 pb-20 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="mb-10 pb-6 border-b border-[#1C1208]/10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <div className="eyebrow mb-2">Shopping Basket</div>
-            <h1 className="font-serif text-4xl text-[#1C1208] font-light">
-              Your Farm <em className="text-[#C4882A]">Orders</em>
-            </h1>
+    <div style={{ background: "#FBF7F0" }}>
+
+      {/* ── HERO BANNER ── */}
+      <div
+        className="bg-mesh-earth noise"
+        style={{ paddingTop: "10rem", paddingBottom: "5rem", position: "relative", overflow: "hidden" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+            <div>
+              <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+                Shopping Basket
+              </div>
+              <h1
+                style={{
+                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                  fontSize: "clamp(3rem, 6vw, 5.5rem)",
+                  fontWeight: 300,
+                  color: "#F5EFE4",
+                  lineHeight: 1,
+                }}
+              >
+                Your Farm <em style={{ color: "#C4882A", fontStyle: "italic" }}>Order</em>
+              </h1>
+            </div>
+
+            {cart.length > 0 && (
+              <button
+                onClick={clearCart}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                  background: "rgba(160,67,30,0.12)", border: "1px solid rgba(160,67,30,0.3)",
+                  borderRadius: "100px", padding: "0.5rem 1.1rem", color: "#c55f3a",
+                  fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.62rem",
+                  fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer",
+                }}
+              >
+                <i className="bi bi-trash3-fill" />
+                Clear Basket
+              </button>
+            )}
           </div>
-          {cart.length > 0 && (
-            <button
-              onClick={clearCart}
-              className="text-xs font-mono text-[#A0431E] hover:underline flex items-center gap-1"
-            >
-              <Trash2 size={13} />
-              Clear entire basket
-            </button>
-          )}
         </div>
+      </div>
 
-        {cart.length === 0 ? (
-          <div className="bg-white border border-[#1C1208]/08 rounded-md p-16 text-center max-w-xl mx-auto my-12">
-            <div className="w-16 h-16 rounded-full bg-[#F5EFE4] text-[#C4882A] flex items-center justify-center mx-auto mb-6">
-              <ShoppingBag size={32} />
+      {/* ── MAIN CONTENT ── */}
+      <section
+        className="bg-mesh-green noise"
+        style={{ padding: "5rem 0 8rem" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          {cart.length === 0 ? (
+            <div
+              className="glass-dark"
+              style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "24px", maxWidth: "560px", margin: "0 auto" }}
+            >
+              <div
+                style={{
+                  width: "64px", height: "64px", borderRadius: "50%",
+                  background: "rgba(196,136,42,0.15)", border: "1px solid rgba(196,136,42,0.3)",
+                  display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem",
+                  color: "#C4882A",
+                }}
+              >
+                <i className="bi bi-bag-x-fill" style={{ fontSize: "2rem" }} />
+              </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                  fontSize: "2.5rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.75rem",
+                }}
+              >
+                Your basket is empty
+              </h2>
+              <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.9rem", lineHeight: 1.7, marginBottom: "2.5rem" }}>
+                Explore our purebred livestock catalogue or fresh Barn Store produce to add items to your order.
+              </p>
+              <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+                <Link href="/barn" className="btn-primary">
+                  <i className="bi bi-shop" />
+                  Shop Barn Store
+                </Link>
+                <Link href="/breeds" className="btn-ghost">
+                  <i className="bi bi-bullseye" />
+                  Browse Breeds
+                </Link>
+              </div>
             </div>
-            <h2 className="font-serif text-2xl text-[#1C1208] mb-2">Your basket is empty</h2>
-            <p className="text-xs text-[#1C1208]/50 leading-relaxed mb-8 max-w-md mx-auto">
-              Explore our rangeland livestock catalogue or fresh Barn Store produce to add items to your cart.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/barn" className="btn btn-primary btn-sm">
-                Shop Barn Store
-              </Link>
-              <Link href="/breeds" className="btn btn-outline btn-sm">
-                Browse Breeds
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            
-            {/* Cart Items List (2 Cols) */}
-            <div className="lg:col-span-2 space-y-4">
-              {cart.map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-white border border-[#1C1208]/08 rounded-md p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm hover:border-[#C4882A]/30 transition-all"
-                >
-                  <div className="flex items-center gap-4">
-                    {item.image ? (
-                      <div className="relative w-16 h-16 rounded bg-[#1C1208]/05 overflow-hidden shrink-0">
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-16 h-16 rounded bg-[#F5EFE4] flex items-center justify-center text-2xl shrink-0">
-                        📦
-                      </div>
-                    )}
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
-                    <div>
-                      <span className="eyebrow-plain text-[#C4882A] text-[9px]">
-                        {item.categoryName || item.type.toUpperCase()}
-                      </span>
-                      <h3 className="font-serif text-lg font-semibold text-[#1C1208] leading-snug">
-                        {item.name}
-                      </h3>
-                      <div className="text-xs font-semibold text-[#3D6B3E] mt-0.5">
-                        KES {item.price.toLocaleString()}{" "}
-                        <span className="font-normal text-[#1C1208]/40">/ {item.unit}</span>
+              {/* Items List */}
+              <div className="lg:col-span-7 space-y-4">
+                {cart.map((item) => (
+                  <div
+                    key={item.id}
+                    className="glass-dark"
+                    style={{
+                      padding: "1.5rem",
+                      borderRadius: "16px",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "1.25rem",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+                      {item.image ? (
+                        <div style={{ position: "relative", width: "64px", height: "64px", borderRadius: "12px", overflow: "hidden", background: "rgba(0,0,0,0.3)", flexShrink: 0 }}>
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div style={{ width: "64px", height: "64px", borderRadius: "12px", background: "rgba(196,136,42,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <i className="bi bi-box-seam" style={{ fontSize: "1.5rem", color: "#C4882A" }} />
+                        </div>
+                      )}
+
+                      <div>
+                        <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "#C4882A", marginBottom: "0.25rem" }}>
+                          {item.categoryName || item.type.toUpperCase()}
+                        </div>
+                        <h3 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "1.4rem", fontWeight: 400, color: "#F5EFE4", lineHeight: 1.1 }}>
+                          {item.name}
+                        </h3>
+                        <div style={{ fontSize: "0.8rem", color: "#5a9e5c", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 600, marginTop: "0.25rem" }}>
+                          KES {item.price.toLocaleString()}{" "}
+                          <span style={{ opacity: 0.5, fontWeight: 400, color: "#F5EFE4" }}>/ {item.unit}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-0 border-[#1C1208]/05">
-                    {/* Quantity Controls */}
-                    <div className="flex items-center border border-[#1C1208]/15 rounded-xs bg-[#FBF7F0]">
-                      <button
-                        onClick={() => updateQuantity(item.id, -1)}
-                        className="p-1.5 text-[#1C1208]/60 hover:text-[#1C1208] transition-colors"
-                        aria-label="Decrease quantity"
-                      >
-                        <Minus size={14} />
-                      </button>
-                      <span className="px-3 font-mono text-xs font-semibold text-[#1C1208]">
-                        {item.quantity}
-                      </span>
-                      <button
-                        onClick={() => updateQuantity(item.id, 1)}
-                        className="p-1.5 text-[#1C1208]/60 hover:text-[#1C1208] transition-colors"
-                        aria-label="Increase quantity"
-                      >
-                        <Plus size={14} />
-                      </button>
-                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+                      {/* Quantity Controls */}
+                      <div style={{ display: "flex", alignItems: "center", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "100px" }}>
+                        <button
+                          onClick={() => updateQuantity(item.id, -1)}
+                          style={{ padding: "0.4rem 0.8rem", background: "none", border: "none", color: "#F5EFE4", cursor: "pointer" }}
+                          aria-label="Decrease quantity"
+                        >
+                          <i className="bi bi-dash" />
+                        </button>
+                        <span style={{ padding: "0 0.5rem", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.85rem", fontWeight: 700, color: "#C4882A" }}>
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(item.id, 1)}
+                          style={{ padding: "0.4rem 0.8rem", background: "none", border: "none", color: "#F5EFE4", cursor: "pointer" }}
+                          aria-label="Increase quantity"
+                        >
+                          <i className="bi bi-plus" />
+                        </button>
+                      </div>
 
-                    {/* Item Total */}
-                    <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-[#1C1208]">
+                      {/* Total */}
+                      <div style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "1.5rem", fontWeight: 500, color: "#C4882A" }}>
                         KES {(item.price * item.quantity).toLocaleString()}
                       </div>
+
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        style={{ background: "none", border: "none", color: "rgba(245,239,228,0.35)", cursor: "pointer", padding: "0.5rem" }}
+                        title="Remove item"
+                      >
+                        <i className="bi bi-x-lg" style={{ fontSize: "1rem" }} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Order Summary (Sidebar) */}
+              <div className="lg:col-span-5">
+                <div
+                  className="glass-dark"
+                  style={{ padding: "2.25rem", borderRadius: "20px", border: "1px solid rgba(196,136,42,0.25)", position: "relative", overflow: "hidden" }}
+                >
+                  <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.25rem" }}>
+                    Order Summary
+                  </div>
+
+                  {/* Promo code */}
+                  <form onSubmit={handleApplyPromo} style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem" }}>
+                    <input
+                      type="text"
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value)}
+                      placeholder="Promo code (e.g. OSOTUA10)"
+                      style={{
+                        flex: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+                        borderRadius: "10px", padding: "0.65rem 1rem", color: "#F5EFE4", outline: "none", fontSize: "0.82rem",
+                        fontFamily: "var(--font-space-grotesk), monospace",
+                      }}
+                    />
+                    <button type="submit" className="btn-ghost" style={{ padding: "0.65rem 1.25rem", fontSize: "0.72rem" }}>
+                      Apply
+                    </button>
+                  </form>
+
+                  {/* Calculations */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", paddingBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", color: "rgba(245,239,228,0.6)", fontSize: "0.88rem" }}>
+                      <span>Subtotal</span>
+                      <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#F5EFE4" }}>KES {cartTotal.toLocaleString()}</span>
                     </div>
 
-                    {/* Delete button */}
-                    <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-[#1C1208]/35 hover:text-[#A0431E] p-1 transition-colors"
-                      title="Remove item"
+                    <div style={{ display: "flex", justifyContent: "space-between", color: "rgba(245,239,228,0.6)", fontSize: "0.88rem" }}>
+                      <span>Express Ranch Delivery</span>
+                      <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#F5EFE4" }}>
+                        {deliveryFee > 0 ? `KES ${deliveryFee.toLocaleString()}` : "Free"}
+                      </span>
+                    </div>
+
+                    {promoApplied && (
+                      <div style={{ display: "flex", justifyContent: "space-between", color: "#5a9e5c", fontSize: "0.88rem" }}>
+                        <span>Promo Discount</span>
+                        <span style={{ fontFamily: "var(--font-space-grotesk), monospace" }}>- KES {discount.toLocaleString()}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Final Total */}
+                  <div style={{ paddingTop: "1.5rem", marginBottom: "2rem" }}>
+                    <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,239,228,0.4)", marginBottom: "0.5rem" }}>
+                      Total Amount
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                        fontSize: "3rem", fontWeight: 300, color: "#C4882A", lineHeight: 1,
+                      }}
                     >
-                      <Trash2 size={16} />
-                    </button>
+                      KES {finalTotal.toLocaleString()}
+                    </div>
                   </div>
-                </div>
-              ))}
 
-              <div className="p-4 bg-[#F5EFE4] rounded-md text-xs text-[#1C1208]/60 flex items-center gap-3 border border-[#EDE5D8]">
-                <Truck className="text-[#C4882A] shrink-0" size={18} />
-                <span>
-                  Delivered fresh from our Kajiado Ranch to your doorstep within 24 hours.
-                </span>
+                  <Link href="/checkout" className="btn-primary w-full justify-center py-4">
+                    <i className="bi bi-shield-lock-fill" />
+                    Proceed to Checkout
+                    <i className="bi bi-arrow-right" />
+                  </Link>
+                </div>
               </div>
+
             </div>
+          )}
+        </div>
+      </section>
 
-            {/* Order Summary Side Panel (1 Col) */}
-            <div className="bg-white border border-[#1C1208]/10 rounded-md p-6 h-fit shadow-md space-y-6">
-              <h2 className="font-serif text-xl text-[#1C1208] border-b border-[#1C1208]/10 pb-4">
-                Order Summary
-              </h2>
-
-              <div className="space-y-3 text-xs">
-                <div className="flex justify-between text-[#1C1208]/70">
-                  <span>Subtotal</span>
-                  <span className="font-mono font-semibold text-[#1C1208]">
-                    KES {cartTotal.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between text-[#1C1208]/70">
-                  <span>Estimated Logistics / Shipping</span>
-                  <span className="font-mono font-semibold text-[#1C1208]">
-                    KES {deliveryFee.toLocaleString()}
-                  </span>
-                </div>
-                {discount > 0 && (
-                  <div className="flex justify-between text-[#3D6B3E] font-medium">
-                    <span>Discount (Promo)</span>
-                    <span className="font-mono font-bold">
-                      - KES {discount.toLocaleString()}
-                    </span>
-                  </div>
-                )}
-
-                <div className="pt-3 border-t border-[#1C1208]/10 flex justify-between items-baseline">
-                  <span className="font-serif text-lg font-semibold text-[#1C1208]">Total</span>
-                  <span className="font-mono text-xl font-bold text-[#C4882A]">
-                    KES {finalTotal.toLocaleString()}
-                  </span>
-                </div>
-              </div>
-
-              {/* Promo Form */}
-              <form onSubmit={handleApplyPromo} className="pt-2">
-                <label className="label text-[10px]">Promo Code</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={promoCode}
-                    onChange={(e) => setPromoCode(e.target.value)}
-                    placeholder="e.g. OSOTUA10"
-                    disabled={promoApplied}
-                    className="input text-xs uppercase font-mono"
-                  />
-                  <button
-                    type="submit"
-                    disabled={promoApplied}
-                    className="btn btn-outline btn-sm font-mono text-[10px]"
-                  >
-                    {promoApplied ? "Applied" : "Apply"}
-                  </button>
-                </div>
-                {promoApplied && (
-                  <p className="text-[10px] text-[#3D6B3E] font-mono mt-1">
-                    ✓ Promo applied successfully!
-                  </p>
-                )}
-              </form>
-
-              <Link
-                href="/checkout"
-                className="btn btn-primary w-full py-3.5 flex items-center justify-center gap-2 text-sm font-semibold tracking-wide uppercase"
-              >
-                <span>Proceed to Checkout</span>
-                <ArrowRight size={16} />
-              </Link>
-
-              <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-[#1C1208]/40">
-                <ShieldCheck size={14} className="text-[#3D6B3E]" />
-                <span>Encrypted & Safe Checkout via M-Pesa / Card</span>
-              </div>
-            </div>
-
-          </div>
-        )}
-      </div>
     </div>
   );
 }

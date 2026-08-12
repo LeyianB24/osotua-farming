@@ -1,17 +1,9 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
-import { ArrowRight, BookOpen, Calendar } from "lucide-react"
 
 export const metadata = {
   title: "Blog — Osotua Farming",
   description: "Farming guides, breed profiles, seasonal updates and stories from Osotua Farming, Kajiado.",
-}
-
-const CATEGORY_COLORS: Record<string, string> = {
-  "Livestock": "bg-[#C4882A]/10 text-[#C4882A] border-[#C4882A]/25",
-  "Farming": "bg-[#3D6B3E]/10 text-[#3D6B3E] border-[#3D6B3E]/25",
-  "News": "bg-blue-50 text-blue-700 border-blue-200",
-  "Investment": "bg-purple-50 text-purple-700 border-purple-200",
 }
 
 export default async function BlogPage() {
@@ -20,102 +12,138 @@ export default async function BlogPage() {
     orderBy: { publishedAt: "desc" },
   })
 
-  const BLOG_EMOJIS = ["🐂", "🌿", "🌾", "🐐", "🐑", "🌱", "🏡", "🔬"]
-
   return (
-    <div className="min-h-screen bg-[#FBF7F0]">
-      {/* Hero */}
-      <div className="relative bg-[#0E0A04] pt-32 pb-24 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full opacity-[0.03]" style={{
-            backgroundImage: "linear-gradient(#C4882A 1px, transparent 1px), linear-gradient(90deg, #C4882A 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }} />
-          <div className="absolute -bottom-20 right-0 w-96 h-96 bg-[#3D6B3E]/08 rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="font-mono text-[10px] text-[#C4882A] tracking-[0.25em] uppercase flex items-center gap-3 mb-5">
-            <span className="w-8 h-px bg-[#C4882A]" />
-            Knowledge Hub
+    <div style={{ background: "#FBF7F0" }}>
+
+      {/* ── HERO ── */}
+      <div
+        className="bg-mesh-earth noise"
+        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+            Knowledge Hub &amp; Field Stories
           </div>
-          <h1 className="font-serif text-5xl lg:text-6xl font-light text-[#F5EFE4] mb-4 leading-tight">
-            From the <em className="text-[#C4882A]">ranch</em>
+          <h1
+            style={{
+              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+              fontSize: "clamp(3.2rem, 7vw, 7rem)",
+              fontWeight: 300,
+              color: "#F5EFE4",
+              lineHeight: 0.95,
+              letterSpacing: "-0.02em",
+              marginBottom: "1.5rem",
+            }}
+          >
+            From the
+            <br />
+            <em style={{ color: "#C4882A", fontStyle: "italic" }}>ranch</em>
           </h1>
-          <p className="text-[#F5EFE4]/45 max-w-xl leading-relaxed">
-            Farming guides, breed profiles, seasonal updates, and stories from Kajiado&apos;s most innovative agribusiness.
+          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem" }}>
+            Farming guides, purebred profiles, seasonal harvest updates, and stories from Kajiado&apos;s most innovative agribusiness.
           </p>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {posts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post, i) => {
-              const categoryClass = CATEGORY_COLORS[post.category ?? ""] || "bg-[#1C1208]/06 text-[#1C1208]/50 border-[#1C1208]/10"
-              return (
+      {/* ── BLOG POSTS ── */}
+      <section
+        className="bg-mesh-green noise"
+        style={{ padding: "6rem 0 8rem" }}
+      >
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          {posts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {posts.map((post) => (
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group bg-white border border-[#1C1208]/06 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                  className="glass-dark group hover:-translate-y-2 hover:border-[#C4882A]/50 transition-all duration-300 flex flex-col no-underline"
+                  style={{ borderRadius: "20px", overflow: "hidden" }}
                 >
                   {/* Cover */}
-                  <div className="relative h-44 overflow-hidden bg-gradient-to-br from-[#1C1208] via-[#2e1e0e] to-[#3D6B3E]">
-                    <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-25 group-hover:opacity-40 transition-opacity duration-300 group-hover:scale-110 transform">
-                      {BLOG_EMOJIS[i % BLOG_EMOJIS.length]}
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0E0A04]/70 to-transparent" />
+                  <div
+                    style={{
+                      height: "180px",
+                      position: "relative",
+                      background: "linear-gradient(135deg, rgba(196,136,42,0.2) 0%, rgba(28,18,8,0.9) 100%)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <i className="bi bi-journal-text" style={{ fontSize: "3.5rem", color: "rgba(196,136,42,0.3)" }} />
                     {post.category && (
-                      <div className="absolute bottom-4 left-4">
-                        <span className={`font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 rounded-full border ${categoryClass}`}>
+                      <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-space-grotesk), monospace",
+                            fontSize: "0.58rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.14em",
+                            textTransform: "uppercase",
+                            padding: "0.3rem 0.75rem",
+                            borderRadius: "100px",
+                            background: "rgba(196,136,42,0.2)",
+                            border: "1px solid rgba(196,136,42,0.4)",
+                            color: "#C4882A",
+                          }}
+                        >
                           {post.category}
                         </span>
                       </div>
                     )}
                   </div>
 
-                  <div className="p-5 flex-1 flex flex-col">
-                    <h2 className="font-serif text-lg text-[#1C1208] font-light leading-snug mb-2 group-hover:text-[#C4882A] transition-colors">
+                  <div style={{ padding: "1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
+                    <h2
+                      style={{
+                        fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                        fontSize: "1.5rem",
+                        fontWeight: 400,
+                        color: "#F5EFE4",
+                        lineHeight: 1.25,
+                        marginBottom: "0.75rem",
+                      }}
+                      className="group-hover:text-[#C4882A] transition-colors"
+                    >
                       {post.title}
                     </h2>
+
                     {post.excerpt && (
-                      <p className="text-[#1C1208]/50 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
+                      <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.88rem", lineHeight: 1.7, marginBottom: "1.5rem" }}>
                         {post.excerpt}
                       </p>
                     )}
-                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-[#1C1208]/06">
+
+                    <div style={{ marginTop: "auto", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       {post.publishedAt && (
-                        <div className="flex items-center gap-1.5 text-[#1C1208]/30 text-xs">
-                          <Calendar className="w-3 h-3" />
+                        <span style={{ color: "rgba(245,239,228,0.4)", fontSize: "0.75rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
                           {new Date(post.publishedAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
-                        </div>
+                        </span>
                       )}
-                      <span className="text-[#C4882A] text-xs font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        Read <ArrowRight className="w-3 h-3" />
+                      <span style={{ color: "#C4882A", fontSize: "0.68rem", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                        Read Post
+                        <i className="bi bi-arrow-right" />
                       </span>
                     </div>
                   </div>
                 </Link>
-              )
-            })}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-32 text-center">
-            <div className="w-20 h-20 bg-[#C4882A]/08 rounded-full flex items-center justify-center mb-6">
-              <BookOpen className="w-9 h-9 text-[#C4882A]/50" />
+              ))}
             </div>
-            <h3 className="font-serif text-2xl text-[#1C1208] font-light mb-3">Stories Coming Soon</h3>
-            <p className="text-[#1C1208]/45 text-sm max-w-sm leading-relaxed mb-6">
-              We&apos;re writing up our first farm updates and farming guides. Check back shortly.
-            </p>
-            <Link
-              href="/"
-              className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase hover:underline"
-            >
-              ← Back to Home
-            </Link>
-          </div>
-        )}
-      </div>
+          ) : (
+            <div className="glass-dark" style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "24px" }}>
+              <i className="bi bi-journal-album" style={{ fontSize: "3rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1.25rem" }} />
+              <h3 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.75rem" }}>
+                Stories Coming Soon
+              </h3>
+              <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.9rem" }}>
+                We are preparing upcoming ranch updates and breeding guides. Check back shortly.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
     </div>
   )
 }

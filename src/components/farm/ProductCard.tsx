@@ -118,7 +118,6 @@ export default function ProductCard({ product, dark }: Props) {
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-700 group-hover:scale-110"
-            style={{ opacity: 0.6, mixBlendMode: "luminosity" }}
           />
         ) : (
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>

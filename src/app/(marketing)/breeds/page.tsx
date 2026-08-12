@@ -21,55 +21,94 @@ export default async function BreedsPage() {
   const [breeds, species] = await Promise.all([getBreeds(), getSpecies()])
 
   return (
-    <div className="bg-[#FBF7F0] pt-20">
-      {/* Header Banner with Rich Overlay */}
-      <div className="relative bg-[#1C1208] py-28 px-4 sm:px-6 lg:px-8 overflow-hidden shadow-2xl">
-        <div className="absolute inset-0">
+    <div style={{ background: "#FBF7F0" }}>
+
+      {/* ── HERO BANNER ── */}
+      <div
+        className="bg-mesh-green noise"
+        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
+      >
+        {/* Full-bleed background photo */}
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <Image
             src={HERD_FIELD}
-            alt="Our herd at pasture"
+            alt="Osotua herd at pasture"
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-35 scale-105"
+            className="object-cover"
+            style={{ opacity: 0.2, scale: "1.05" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1208] via-[#1C1208]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-[#1C1208]/70" />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(28,18,8,0.95) 0%, rgba(28,18,8,0.7) 60%, transparent 100%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #1a2010 0%, transparent 60%)" }} />
         </div>
 
-        <div className="relative max-w-7xl mx-auto z-10">
-          <div className="eyebrow text-[#C4882A] mb-4">
-            Certified Purebred Livestock & Superior Genetics
+        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+            Certified Purebred Livestock &amp; Superior Genetics
           </div>
-          <h1 className="font-serif text-5xl sm:text-6xl font-light text-[#F5EFE4] mb-4 tracking-tight leading-tight">
-            Premium breeds,<br />
-            <em className="text-[#C4882A] not-italic font-normal">bred for Africa</em>
+          <h1
+            style={{
+              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+              fontSize: "clamp(3.2rem, 7vw, 7rem)",
+              fontWeight: 300,
+              color: "#F5EFE4",
+              lineHeight: 0.95,
+              letterSpacing: "-0.02em",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Premium breeds,
+            <br />
+            <em style={{ color: "#C4882A", fontStyle: "italic" }}>bred for Africa</em>
           </h1>
-          <p className="text-[#F5EFE4]/80 max-w-xl leading-relaxed text-base">
-            Every bull, cow, ram, and buck in our herd is rigorously selected for genetic superiority, tick & drought tolerance, rapid weight gain, and long-term commercial yield.
+          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem", marginBottom: "2.5rem" }}>
+            Every bull, cow, ram, and buck in our herd is rigorously selected for genetic superiority, tick &amp; drought tolerance, rapid weight gain, and long-term commercial yield.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-6 text-xs font-mono text-[#F5EFE4]/70 border-t border-[#C4882A]/20 pt-6">
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              Veterinary Certified & Vaccinated
-            </span>
-            <span className="w-1 h-1 rounded-full bg-[#C4882A]" />
-            <span>Movement Permits Coordinated</span>
-            <span className="w-1 h-1 rounded-full bg-[#C4882A]" />
-            <span>Kajiado Rangeland Adapted</span>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2rem", paddingTop: "1.75rem", borderTop: "1px solid rgba(196,136,42,0.2)" }}>
+            {[
+              { icon: "bi-patch-check-fill", label: "Veterinary Certified &amp; Vaccinated" },
+              { icon: "bi-clipboard2-check", label: "Movement Permits Coordinated" },
+              { icon: "bi-geo-alt-fill", label: "Kajiado Rangeland Adapted" },
+            ].map((item) => (
+              <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                <i className={`bi ${item.icon}`} style={{ color: "#C4882A", fontSize: "0.95rem" }} />
+                <span
+                  style={{
+                    fontFamily: "var(--font-space-grotesk), monospace",
+                    fontSize: "0.6rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "rgba(245,239,228,0.55)",
+                  }}
+                  dangerouslySetInnerHTML={{ __html: item.label }}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Livestock showcase slideshow */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 mb-8 relative z-20 shadow-2xl rounded-md overflow-hidden">
-        <Slideshow slides={LIVESTOCK_SLIDESHOW} heightClass="h-64 sm:h-80" interval={3500} />
+      {/* ── LIVESTOCK SLIDESHOW ── */}
+      <div
+        style={{
+          background: "#1C1208",
+          paddingBottom: "3rem",
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
+        <div className="os-container" style={{ transform: "translateY(-3rem)" }}>
+          <div style={{ borderRadius: "20px", overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.5)" }}>
+            <Slideshow slides={LIVESTOCK_SLIDESHOW} heightClass="h-72 sm:h-96" interval={3500} />
+          </div>
+        </div>
       </div>
 
-      {/* Interactive Breeds Client */}
+      {/* ── BREEDS CATALOG (client) ── */}
       <BreedsClient initialBreeds={breeds} speciesList={species} />
     </div>
   )
 }
-
