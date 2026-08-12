@@ -110,7 +110,22 @@ export default async function CustomerDashboard() {
           </div>
 
           {/* Quick Action Toolbar */}
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+            {session?.user?.role === "ADMIN" && (
+              <Link
+                href="/admin"
+                className="btn-primary"
+                style={{
+                  fontSize: "0.75rem",
+                  padding: "0.75rem 1.5rem",
+                  background: "linear-gradient(135deg, #A0431E 0%, #C4882A 100%)",
+                  borderColor: "rgba(196,136,42,0.5)",
+                }}
+              >
+                <i className="bi bi-shield-lock-fill" />
+                Admin HQ Command Center
+              </Link>
+            )}
             <Link href="/barn" className="btn-primary" style={{ fontSize: "0.75rem", padding: "0.75rem 1.5rem" }}>
               <i className="bi bi-bag-plus-fill" />
               Shop Barn Store
