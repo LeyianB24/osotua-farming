@@ -11,6 +11,7 @@ import {
   checkPayloadSize,
   checkIdempotency,
   saveIdempotencyResponse,
+  createAuditLog,
 } from "@/lib/api-utils"
 import { sendOrderConfirmation } from "@/lib/email"
 import { ZodError } from "zod"
@@ -45,6 +46,44 @@ export async function POST(req: Request) {
     const body = await req.json()
     const data = orderSchema.parse(body)
 
+    // Security Hardening Rule §1.3: Server-side recalculation of order total & item prices
+    const validatedItems: {
+      breedId?: string | null
+      productId?: string | null
+      quantity: number
+      unitPrice: number
+      totalPrice: number
+    }[] = []
+
+    let computedGrandTotal = 0
+
+    for (const item of data.items) {
+      let actualUnitPrice = 0
+
+      if (item.breedId) {
+        const breed = await prisma.breed.findUnique({ where: { id: item.breedId } })
+        if (!breed) return badRequest(`Breed resource with ID ${item.breedId} not found`)
+        actualUnitPrice = breed.pricePerHead
+      } else if (item.productId) {
+        const product = await prisma.product.findUnique({ where: { id: item.productId } })
+        if (!product) return badRequest(`Product resource with ID ${item.productId} not found`)
+        actualUnitPrice = product.price
+      } else {
+        return badRequest("Order item must reference a valid breedId or productId")
+      }
+
+      const itemTotal = actualUnitPrice * item.quantity
+      computedGrandTotal += itemTotal
+
+      validatedItems.push({
+        breedId: item.breedId ?? null,
+        productId: item.productId ?? null,
+        quantity: item.quantity,
+        unitPrice: actualUnitPrice,
+        totalPrice: itemTotal,
+      })
+    }
+
     const order = await prisma.order.create({
       data: {
         userId: user?.id ?? data.userId ?? null,
@@ -53,16 +92,26 @@ export async function POST(req: Request) {
         customerPhone: data.customerPhone,
         type: data.type,
         status: "PENDING",
-        totalAmount: data.totalAmount,
+        totalAmount: computedGrandTotal,
         depositAmount: data.depositAmount ?? null,
         paymentMethod: data.paymentMethod ?? null,
         paymentRef: data.paymentRef ?? null,
         deliveryAddress: data.deliveryAddress ?? null,
         deliveryDate: data.deliveryDate ?? null,
         notes: data.notes ?? null,
-        items: { create: data.items },
+        items: { create: validatedItems },
       },
       include: { items: true },
+    })
+
+    // Audit log entry
+    await createAuditLog({
+      userId: user?.id ?? null,
+      userEmail: data.customerEmail,
+      action: "CREATE_ORDER",
+      entity: "Order",
+      entityId: order.id,
+      details: `Created order #${order.id} with total KES ${computedGrandTotal}`,
     })
 
     try {
@@ -73,7 +122,7 @@ export async function POST(req: Request) {
         totalAmount: order.totalAmount,
       })
     } catch (emailErr) {
-      console.error("Email send failed:", emailErr)
+      console.error("Email notification failed:", emailErr)
     }
 
     const location = `/api/v1/orders/${order.id}`

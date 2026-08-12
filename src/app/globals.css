@@ -59,6 +59,50 @@
   --glass-border-light: rgba(255,255,255,0.12);
   --glass-border-gold:  rgba(196,136,42,0.25);
   --glass-shadow:       0 8px 32px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.1);
+
+  /* ── Fluid Typography Scale (Section 2.1) ──────────── */
+  --text-display: clamp(2.2rem, 5vw, 4.2rem);
+  --text-h1:      clamp(1.8rem, 3.5vw, 3rem);
+  --text-h2:      clamp(1.4rem, 2.5vw, 2.2rem);
+  --text-h3:      clamp(1.1rem, 1.8vw, 1.5rem);
+  --text-body:    clamp(0.875rem, 1vw, 1rem);
+  --text-label:   clamp(0.65rem, 0.8vw, 0.75rem);
+}
+
+/* ── Motion Accessibility (Section 2.2) ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── Skeleton Shimmer (Section 2.2) ────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.12) 37%,
+    rgba(255, 255, 255, 0.04) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
 
 @theme inline {

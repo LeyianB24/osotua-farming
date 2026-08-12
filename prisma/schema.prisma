@@ -186,6 +186,10 @@ model Order {
 
   user  User?       @relation(fields: [userId], references: [id])
   items OrderItem[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
 }
 
 enum OrderType {
@@ -523,3 +527,22 @@ model InvestInquiry {
   @@index([createdAt])
   @@index([email])
 }
+
+// ── AUDIT LOG ──────────────────────────────────────────────
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  userEmail String?
+  action    String
+  entity    String
+  entityId  String?
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action])
+  @@index([userEmail])
+}
+

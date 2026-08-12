@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
 import crypto from "crypto"
 
 export type SessionUser = {
@@ -232,4 +233,32 @@ export function parseError(err: unknown): string {
   }
   return "Invalid request data. Please check your submission fields."
 }
+
+// ── Audit Logging Helper (Section 1.7) ──────────────────────
+export async function createAuditLog(params: {
+  userId?: string | null
+  userEmail?: string | null
+  action: string
+  entity: string
+  entityId?: string | null
+  details?: string | null
+  ipAddress?: string | null
+}) {
+  try {
+    await prisma.auditLog.create({
+      data: {
+        userId: params.userId ?? null,
+        userEmail: params.userEmail ?? null,
+        action: params.action,
+        entity: params.entity,
+        entityId: params.entityId ?? null,
+        details: params.details ?? null,
+        ipAddress: params.ipAddress ?? null,
+      },
+    })
+  } catch (err) {
+    console.error("Failed to persist audit log entry:", err)
+  }
+}
+
 

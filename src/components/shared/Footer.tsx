@@ -268,9 +268,15 @@ export default function Footer() {
             gap: "0.75rem",
           }}
         >
-          <p style={{ color: "rgba(245,239,228,0.3)", fontSize: "0.78rem" }}>
-            &copy; {year} Osotua Farming Ltd. All rights reserved.
-          </p>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <p style={{ color: "rgba(245,239,228,0.35)", fontSize: "0.78rem" }}>
+              &copy; {year} Osotua Farming Ltd (Reg. No. CPR/2023/10492). All rights reserved.
+            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.25rem 0.65rem", borderRadius: "100px", background: "rgba(196,136,42,0.1)", border: "1px solid rgba(196,136,42,0.25)", color: "#C4882A", fontSize: "0.68rem" }}>
+              <i className="bi bi-shield-lock-fill" />
+              <span>Secured by M-Pesa &amp; Stripe • KDPA 2019 Compliant</span>
+            </div>
+          </div>
           <p style={{ color: "rgba(245,239,228,0.2)", fontSize: "0.72rem" }}>
             Designed &amp; built by{" "}
             <a
