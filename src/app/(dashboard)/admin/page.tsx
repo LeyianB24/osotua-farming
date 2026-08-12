@@ -24,72 +24,91 @@ export default async function AdminPage() {
   })
 
   const stats = [
-    { label: "Breeds", value: breeds, href: "/admin/breeds", icon: "🐄" },
-    { label: "Stocks", value: stocks, href: "/admin/stocks", icon: "📦" },
-    { label: "Barn Menus", value: menus, href: "/admin/menus", icon: "🍽️" },
-    { label: "New Catches", value: catches, href: "/admin/catches", icon: "🥩" },
-    { label: "Imports", value: imports, href: "/admin/imports", icon: "🚚" },
-    { label: "Sales (Paid)", value: sales, href: "/admin/sales", icon: "💰" },
-    { label: "Products", value: products, href: "/admin/products", icon: "🥛" },
-    { label: "Orders", value: orders, href: "/admin/orders", icon: "🧾" },
-    { label: "Farm Visits", value: visits, href: "/admin/visits", icon: "🗓️" },
-    { label: "Partner Farmers", value: partners, href: "/admin/partners", icon: "🌾" },
-    { label: "Open Jobs", value: jobs, href: "/admin/jobs", icon: "💼" },
+    { label: "Breeds", value: breeds, href: "/admin/breeds", icon: "bi-shield-check", color: "#C4882A" },
+    { label: "Stocks", value: stocks, href: "/admin/stocks", icon: "bi-box-seam-fill", color: "#3D6B3E" },
+    { label: "Barn Menus", value: menus, href: "/admin/menus", icon: "bi-menu-button-wide-fill", color: "#C4882A" },
+    { label: "New Catches", value: catches, href: "/admin/catches", icon: "bi-basket3-fill", color: "#A0431E" },
+    { label: "Imports", value: imports, href: "/admin/imports", icon: "bi-truck-front-fill", color: "#3D6B3E" },
+    { label: "Sales (Paid)", value: sales, href: "/admin/sales", icon: "bi-currency-exchange", color: "#C4882A" },
+    { label: "Products", value: products, href: "/admin/products", icon: "bi-droplet-fill", color: "#3D6B3E" },
+    { label: "Orders", value: orders, href: "/admin/orders", icon: "bi-receipt-cutoff", color: "#C4882A" },
+    { label: "Farm Visits", value: visits, href: "/admin/visits", icon: "bi-calendar-event-fill", color: "#3D6B3E" },
+    { label: "Partner Farmers", value: partners, href: "/admin/partners", icon: "bi-people-fill", color: "#C4882A" },
+    { label: "Open Jobs", value: jobs, href: "/admin/jobs", icon: "bi-briefcase-fill", color: "#3D6B3E" },
   ]
 
   return (
-    <div className="p-8">
-      <h1 className="font-serif text-3xl text-[#1C1208] mb-2">Admin Dashboard</h1>
-      <p className="text-[#1C1208]/50 text-sm mb-10">Welcome back. Here&apos;s what&apos;s happening at Osotua Farming.</p>
+    <div className="bg-mesh-earth noise min-h-screen p-6 sm:p-10">
+      {/* Header */}
+      <div className="glass-dark p-8 rounded-2xl mb-10 border border-[#C4882A]/20">
+        <div className="eyebrow text-[#C4882A] mb-2">Platform Administration</div>
+        <h1 className="font-serif text-4xl text-[#F5EFE4] font-light mb-2">Executive Command Center</h1>
+        <p className="text-[#F5EFE4]/60 text-sm max-w-xl">
+          Real-time metrics, order ledgers, and operational oversight for Osotua Farming&apos;s Kajiado operations.
+        </p>
+      </div>
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 mb-12">
         {stats.map((stat) => (
           <Link
             key={stat.label}
             href={stat.href}
-            className="bg-white border border-[#1C1208]/08 rounded p-6 hover:border-[#C4882A] hover:shadow-md transition-all"
+            className="glass-dark p-6 rounded-xl hover:-translate-y-1 transition-all duration-300 border border-white/10 hover:border-[#C4882A]/50 block no-underline group"
           >
-            <div className="text-2xl mb-3">{stat.icon}</div>
-            <div className="font-serif text-3xl text-[#C4882A] font-semibold mb-1">{stat.value}</div>
-            <div className="font-mono text-[10px] text-[#1C1208]/40 tracking-widest uppercase">{stat.label}</div>
+            <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-4 group-hover:bg-[#C4882A]/20 transition-colors">
+              <i className={`bi ${stat.icon} text-lg`} style={{ color: stat.color }} />
+            </div>
+            <div className="font-serif text-3xl text-[#F5EFE4] font-light mb-1">{stat.value}</div>
+            <div className="font-mono text-[10px] text-[#F5EFE4]/50 tracking-widest uppercase">{stat.label}</div>
           </Link>
         ))}
       </div>
 
-      {/* Recent orders */}
-      <h2 className="font-serif text-xl text-[#1C1208] mb-5">Recent Orders</h2>
-      <div className="bg-white border border-[#1C1208]/08 rounded overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-[#FBF7F0] border-b border-[#1C1208]/08">
-            <tr>
-              {["Order ID", "Customer", "Type", "Amount", "Status", "Date"].map((h) => (
-                <th key={h} className="font-mono text-[9px] text-[#1C1208]/40 tracking-widest uppercase text-left px-4 py-3">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {recentOrders.map((order, i) => (
-              <tr key={order.id} className={i % 2 === 0 ? "" : "bg-[#FBF7F0]/50"}>
-                <td className="px-4 py-3 font-mono text-xs text-[#C4882A]">#{order.id.slice(-6).toUpperCase()}</td>
-                <td className="px-4 py-3 text-[#1C1208]">{order.customerName}</td>
-                <td className="px-4 py-3 text-[#1C1208]/60">{order.type}</td>
-                <td className="px-4 py-3 font-medium text-[#1C1208]">KES {order.totalAmount.toLocaleString()}</td>
-                <td className="px-4 py-3">
-                  <span className="font-mono text-[9px] bg-[#3D6B3E]/10 text-[#3D6B3E] border border-[#3D6B3E]/20 px-2 py-1 rounded-sm">
-                    {order.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-[#1C1208]/40 text-xs">
-                  {new Date(order.createdAt).toLocaleDateString()}
-                </td>
+      {/* Recent Orders Ledger */}
+      <div className="glass-dark p-8 rounded-2xl border border-white/10">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+          <div>
+            <div className="eyebrow text-[#C4882A] mb-1">Transaction Ledger</div>
+            <h2 className="font-serif text-2xl text-[#F5EFE4] font-light">Recent Customer Orders</h2>
+          </div>
+          <Link href="/admin/orders" className="btn-ghost text-xs py-2 px-4">
+            View All Orders →
+          </Link>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-white/5 border-b border-white/10">
+                {["Order ID", "Customer", "Type", "Amount", "Status", "Date"].map((h) => (
+                  <th key={h} className="font-mono text-[10px] text-[#F5EFE4]/50 tracking-widest uppercase text-left p-3">{h}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {recentOrders.length === 0 && (
-          <div className="text-center py-10 text-[#1C1208]/40 text-sm">No orders yet.</div>
-        )}
+            </thead>
+            <tbody>
+              {recentOrders.map((order) => (
+                <tr key={order.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                  <td className="p-3 font-mono text-xs text-[#C4882A]">#{order.id.slice(-6).toUpperCase()}</td>
+                  <td className="p-3 text-[#F5EFE4]">{order.customerName}</td>
+                  <td className="p-3 text-[#F5EFE4]/70">{order.type}</td>
+                  <td className="p-3 font-mono text-xs font-semibold text-[#F5EFE4]">KES {order.totalAmount.toLocaleString()}</td>
+                  <td className="p-3">
+                    <span className="font-mono text-[10px] bg-[#3D6B3E]/20 text-[#4E8A4F] border border-[#3D6B3E]/40 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="p-3 text-[#F5EFE4]/50 font-mono text-xs">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {recentOrders.length === 0 && (
+            <div className="text-center py-10 text-[#F5EFE4]/40 text-sm">No orders recorded in the system.</div>
+          )}
+        </div>
       </div>
     </div>
   )

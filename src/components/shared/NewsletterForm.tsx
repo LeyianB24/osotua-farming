@@ -4,12 +4,25 @@ export default function NewsletterForm() {
   return (
     <form
       className="flex gap-3 flex-wrap"
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault()
         const form = e.currentTarget
         const email = new FormData(form).get("email")
-        alert(`Thank you! We'll be in touch at ${email}`)
-        form.reset()
+        try {
+          const res = await fetch("/api/newsletter", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          })
+          if (res.ok) {
+            alert(`Thank you! Subscribed with ${email}`)
+            form.reset()
+          } else {
+            alert("Subscription failed. Please enter a valid email.")
+          }
+        } catch {
+          alert("Error submitting newsletter subscription.")
+        }
       }}
     >
       <input

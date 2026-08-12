@@ -25,9 +25,30 @@ export default function ContactPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 1000))
-    setSubmitted(true)
-    setLoading(false)
+    try {
+      const formData = new FormData(e.currentTarget)
+      const body = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone") || undefined,
+        subject: formData.get("subject"),
+        message: formData.get("message"),
+      }
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        alert("Failed to submit contact enquiry. Please check fields.")
+      }
+    } catch {
+      alert("Error submitting message.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
