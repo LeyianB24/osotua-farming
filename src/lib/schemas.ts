@@ -162,6 +162,16 @@ export const newsletterSchema = z.object({
   email: z.email("A valid email is required"),
 })
 
+export const investSchema = z.object({
+  fullName: z.string().min(1, "Full name is required").max(120),
+  email: z.email("A valid email is required"),
+  phone: z.string().max(40).nullish(),
+  amount: z.number().min(100000, "Minimum investment is KES 100,000").max(500_000_000),
+  durationYears: z.number().int().min(1).max(10),
+  investmentType: z.enum(["breeding", "barn"]),
+  note: z.string().max(2000).nullish(),
+})
+
 export const registerSchema = z.object({
   name: z.string().min(1, "Name is required").max(120),
   email: z.email("A valid email is required"),

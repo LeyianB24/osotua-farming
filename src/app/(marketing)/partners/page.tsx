@@ -23,22 +23,29 @@ const FIELDS = [
 export default function PartnersPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
+    setError(null)
     const data = Object.fromEntries(new FormData(e.currentTarget))
     try {
-      await fetch("/api/partners", {
+      const res = await fetch("/api/partners", {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       })
-    } catch {
-      // Fallback
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}))
+        throw new Error((json as { error?: string }).error || "Failed to submit application")
+      }
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+    } finally {
+      setLoading(false)
     }
-    setSubmitted(true)
-    setLoading(false)
   }
 
   return (
@@ -271,6 +278,19 @@ export default function PartnersPage() {
                     </>
                   )}
                 </button>
+
+                {error && (
+                  <div
+                    style={{
+                      background: "rgba(160,67,30,0.12)", border: "1px solid rgba(160,67,30,0.4)",
+                      borderRadius: "10px", padding: "0.875rem 1.125rem", marginTop: "0.5rem",
+                      color: "#e07050", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem",
+                    }}
+                  >
+                    <i className="bi bi-exclamation-triangle-fill" style={{ flexShrink: 0 }} />
+                    {error}
+                  </div>
+                )}
               </form>
             </div>
           )}

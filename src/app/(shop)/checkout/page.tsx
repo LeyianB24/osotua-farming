@@ -39,7 +39,7 @@ export default function CheckoutPage() {
         customerName: name,
         customerEmail: email,
         customerPhone: phone,
-        type: "STORE",
+        type: "PRODUCT",
         totalAmount: grandTotal,
         paymentMethod: paymentMethod.toUpperCase(),
         paymentRef: generatedRef,

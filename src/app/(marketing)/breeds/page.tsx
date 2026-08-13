@@ -7,14 +7,22 @@ import { HERD_FIELD, LIVESTOCK_SLIDESHOW } from "@/lib/images"
 export const metadata = { title: "Our Breeds — Osotua Farming" }
 
 async function getBreeds() {
-  return prisma.breed.findMany({
-    include: { species: true },
-    orderBy: { species: { name: "asc" } },
-  })
+  try {
+    return await prisma.breed.findMany({
+      include: { species: true },
+      orderBy: { species: { name: "asc" } },
+    })
+  } catch {
+    return []
+  }
 }
 
 async function getSpecies() {
-  return prisma.species.findMany({ orderBy: { name: "asc" } })
+  try {
+    return await prisma.species.findMany({ orderBy: { name: "asc" } })
+  } catch {
+    return []
+  }
 }
 
 export default async function BreedsPage() {
