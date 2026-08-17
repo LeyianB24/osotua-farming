@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import Link from "next/link"
 import { AdminSection, AdminTable, AdminRow, TD, StatusBadge } from "@/components/shared/AdminSection"
 
 export const metadata = { title: "Blog — Osotua Admin" }
@@ -14,7 +15,17 @@ export default async function AdminBlogPage() {
       count={published}
       countLabel={`published · ${posts.length - published} drafts`}
       icon="bi-newspaper"
+      action={
+        <Link
+          href="/admin/blog/new"
+          className="btn-primary"
+          style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem" }}
+        >
+          <i className="bi bi-pencil-square" /> Write Article
+        </Link>
+      }
     >
+
       <AdminTable
         headers={["Title", "Category", "Status", "Published Date"]}
         empty={posts.length === 0}

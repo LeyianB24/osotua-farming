@@ -37,25 +37,32 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const toastIdRef = React.useRef(0);
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const saved = localStorage.getItem("osotua_cart");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  // Save cart to localStorage on change
+  // Hydrate cart from localStorage on client mount only
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem("osotua_cart");
+      if (saved) {
+        setCart(JSON.parse(saved));
+      }
+    } catch {
+      // Ignore
+    }
+    setIsHydrated(true);
+  }, []);
+
+  // Save cart to localStorage on change once hydrated
+  useEffect(() => {
+    if (!isHydrated) return;
     try {
       localStorage.setItem("osotua_cart", JSON.stringify(cart));
     } catch {
       // Ignore
     }
-  }, [cart]);
+  }, [cart, isHydrated]);
 
   const addToast = (title: string, message: string, type: "success" | "info" | "warning" = "success") => {
     toastIdRef.current += 1;

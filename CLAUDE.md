@@ -126,7 +126,7 @@ osotua-farming/
 │   ├── hooks/               ← Custom React hooks
 │   ├── types/
 │   │   └── index.ts         ← All TypeScript types
-│   └── middleware.ts         ← Auth route protection
+│   └── proxy.ts              ← Auth route protection (Next.js proxy)
 ├── .env                     ← Never commit. gitignored.
 ├── .gitignore
 ├── CLAUDE.md                ← This file
@@ -526,7 +526,7 @@ Priority 3 — Hero section (full glassmorphism + parallax)
 Priority 4 — Breeds catalogue redesign (Bootstrap Icons, glass cards)
 Priority 5 — Admin dashboard (shadcn data tables, stat cards)
 Priority 6 — Barn store e-commerce (cart, checkout, M-Pesa)
-Priority 7 — Auth (protected admin routes via middleware.ts)
+Priority 7 — Auth (protected admin routes via proxy.ts)
 Priority 8 — Blog CMS (rich text editor, publish flow)
 Priority 9 — Farm visit booking confirmation flow
 Priority 10 — Vercel deployment + domain osotuafarming.co.ke

@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import Link from "next/link"
 import { AdminSection, AdminTable, AdminRow, TD, StatusBadge } from "@/components/shared/AdminSection"
 
 export const metadata = { title: "Products — Osotua Admin" }
@@ -16,7 +17,17 @@ export default async function AdminProductsPage() {
       count={products.length}
       countLabel="products listed"
       icon="bi-droplet-fill"
+      action={
+        <Link
+          href="/admin/products/new"
+          className="btn-primary"
+          style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem" }}
+        >
+          <i className="bi bi-plus-lg" /> Add Product
+        </Link>
+      }
     >
+
       <AdminTable
         headers={["Name", "Category", "Price (KES)", "Unit", "Qty", "In Stock", "Featured"]}
         empty={products.length === 0}

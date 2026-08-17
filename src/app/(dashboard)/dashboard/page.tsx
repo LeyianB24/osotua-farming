@@ -111,8 +111,9 @@ export default async function CustomerDashboard() {
 
           {/* Quick Action Toolbar */}
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
-            {session?.user?.role === "ADMIN" && (
+            {(session?.user as { role?: string })?.role === "ADMIN" && (
               <Link
+
                 href="/admin"
                 className="btn-primary"
                 style={{
@@ -235,8 +236,9 @@ export default async function CustomerDashboard() {
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "0.25rem" }}>
             <span style={{ fontSize: "0.78rem", color: "rgba(245,239,228,0.5)" }}>Next Kajiado Visit</span>
-            <Link href="/visit" style={{ fontSize: "0.7rem", fontFamily: "var(--font-space-grotesk), monospace", color: "#5a9e5c", textDecoration: "none", fontWeight: 600 }}>
-              Schedule →
+            <Link href="/visit" style={{ fontSize: "0.7rem", fontFamily: "var(--font-space-grotesk), monospace", color: "#5a9e5c", textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
+              <span>Schedule</span>
+              <i className="bi bi-arrow-right" />
             </Link>
           </div>
         </div>
@@ -288,10 +290,12 @@ export default async function CustomerDashboard() {
                   Your Recent Farm Orders
                 </h2>
               </div>
-              <Link href="/barn" className="btn-ghost" style={{ fontSize: "0.7rem", padding: "0.5rem 1rem" }}>
-                Shop Barn →
+              <Link href="/barn" className="btn-ghost" style={{ fontSize: "0.7rem", padding: "0.5rem 1rem", display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
+                <span>Shop Barn</span>
+                <i className="bi bi-arrow-right" />
               </Link>
             </div>
+
 
             {userOrders.length > 0 ? (
               <div style={{ overflowX: "auto" }}>

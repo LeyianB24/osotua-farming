@@ -72,9 +72,11 @@ export default async function AdminPage() {
             <div className="eyebrow text-[#C4882A] mb-1">Transaction Ledger</div>
             <h2 className="font-serif text-2xl text-[#F5EFE4] font-light">Recent Customer Orders</h2>
           </div>
-          <Link href="/admin/orders" className="btn-ghost text-xs py-2 px-4">
-            View All Orders →
+          <Link href="/admin/orders" className="btn-ghost text-xs py-2 px-4 flex items-center gap-1.5">
+            <span>View All Orders</span>
+            <i className="bi bi-arrow-right" />
           </Link>
+
         </div>
 
         <div className="overflow-x-auto">

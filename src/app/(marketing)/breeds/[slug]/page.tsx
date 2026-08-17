@@ -43,10 +43,11 @@ export default async function BreedDetailPage({
                 className="object-cover"
               />
             ) : (
-              <span className="text-8xl">
-                {breed.species.name === "Cattle" ? "🐄" : breed.species.name === "Goats" ? "🐐" : "🐑"}
+              <span className="text-[#C4882A]/40 text-7xl flex items-center justify-center">
+                <i className="bi bi-shield-check" />
               </span>
             )}
+
           </div>
 
           {/* Details */}

@@ -5,6 +5,7 @@ import ToastContainer from "@/components/shared/Toast"
 import WhatsAppFAB from "@/components/shared/WhatsAppFAB"
 import PageLoader from "@/components/shared/PageLoader"
 import Providers from "@/components/shared/Providers"
+import ScrollReveal from "@/components/shared/ScrollReveal"
 
 /* ── METADATA ───────────────────────────────────────────── */
 export const metadata: Metadata = {
@@ -85,12 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </CartProvider>
         </Providers>
 
-        {/* Scroll reveal */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var o=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}})},{threshold:0.08,rootMargin:'0px 0px -30px 0px'});function i(){document.querySelectorAll('.reveal').forEach(function(e){o.observe(e)})}document.readyState==='loading'?document.addEventListener('DOMContentLoaded',i):i();new MutationObserver(i).observe(document.body,{childList:true,subtree:true})})()`,
-          }}
-        />
+        <ScrollReveal />
       </body>
     </html>
   )

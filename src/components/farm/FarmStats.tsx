@@ -207,7 +207,7 @@ export default function FarmStats() {
                     textTransform: "uppercase",
                   }}
                 >
-                  <Calculator className="w-3 h-3" />
+                  <i className="bi bi-calculator" />
                   Interactive Sustainability Calculator
                 </div>
 

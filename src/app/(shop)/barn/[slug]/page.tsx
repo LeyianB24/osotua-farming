@@ -5,8 +5,13 @@ import Link from "next/link"
 import Image from "next/image"
 
 const categoryIcons: Record<string, string> = {
-  "Beef Cuts": "🥩", "Dairy Products": "🥛", "Vegetables": "🥬",
-  "Fruits": "🍋", "Ranch Box": "📦", "Goat Meat": "🐐", "Sheep Meat": "🐑",
+  "Beef Cuts": "bi-shield-check",
+  "Dairy Products": "bi-droplet-fill",
+  "Vegetables": "bi-flower1",
+  "Fruits": "bi-sun-fill",
+  "Ranch Box": "bi-box-seam-fill",
+  "Goat Meat": "bi-shield-check",
+  "Sheep Meat": "bi-shield-check",
 }
 
 export async function generateMetadata({
@@ -44,7 +49,7 @@ export default async function ProductDetailPage({
 
   if (!product) notFound()
 
-  const icon = categoryIcons[product.category.name] || "🌿"
+  const iconClass = categoryIcons[product.category.name] || "bi-flower1"
 
   return (
     <>
@@ -58,7 +63,7 @@ export default async function ProductDetailPage({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {product.image ? (
-              <div className="relative h-72 overflow-hidden rounded border border-[#1C1208]/08 bg-white">
+              <div className="relative h-72 overflow-hidden rounded-2xl border border-[#1C1208]/08 bg-white">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -68,15 +73,15 @@ export default async function ProductDetailPage({
                 />
               </div>
             ) : (
-              <div className="bg-white border border-[#1C1208]/08 rounded h-72 flex items-center justify-center text-8xl">
-                {icon}
+              <div className="bg-white border border-[#1C1208]/08 rounded-2xl h-72 flex items-center justify-center text-[#C4882A]">
+                <i className={`bi ${iconClass} text-7xl`} />
               </div>
             )}
 
             <div>
               <span className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase">{product.category.name}</span>
               <h1 className="font-serif text-4xl font-light text-[#1C1208] mt-2 mb-4">{product.name}</h1>
-              <p className="text-[#1C1208]/60 leading-relaxed mb-8">{product.description}</p>
+              <p className="text-[#1C1208]/60 leading-relaxed mb-8 text-sm">{product.description}</p>
 
               <div className="border-t border-[#1C1208]/10 pt-6 mb-6">
                 <div className="font-mono text-[9px] text-[#1C1208]/40 tracking-widest uppercase mb-1">Price</div>
@@ -89,12 +94,13 @@ export default async function ProductDetailPage({
               {product.inStock ? (
                 <Link
                   href={`/checkout?product=${product.id}`}
-                  className="bg-[#C4882A] text-[#1C1208] px-6 py-3 text-sm font-medium rounded-sm hover:bg-[#d99a30] transition-colors inline-block w-full text-center"
+                  className="btn-primary w-full justify-center py-3.5 text-xs text-center"
                 >
-                  Order Now
+                  <i className="bi bi-cart-plus" />
+                  <span>Order Now</span>
                 </Link>
               ) : (
-                <div className="bg-[#1C1208]/05 border border-[#1C1208]/10 text-[#1C1208]/40 px-6 py-3 text-sm text-center rounded-sm">
+                <div className="bg-[#1C1208]/05 border border-[#1C1208]/10 text-[#1C1208]/40 px-6 py-3 text-sm text-center rounded-xl font-mono text-xs">
                   Currently Out of Stock
                 </div>
               )}

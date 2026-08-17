@@ -18,7 +18,8 @@ interface LogoProps {
   wordmark?: boolean
   /** Use a stacking layout (logo above text). ideal for auth screens */
   stacked?: boolean
-  className?: string
+  /** Text color variant: 'light' (default, #F5EFE4) or 'dark' (#1C1208) */
+  textColor?: "light" | "dark"
 }
 
 export default function Logo({
@@ -27,6 +28,7 @@ export default function Logo({
   wordmark = true,
   stacked = false,
   className = "",
+  textColor = "light",
 }: LogoProps) {
   const { box, title } = sizes[size]
 
@@ -42,15 +44,17 @@ export default function Logo({
     />
   )
 
+  const isDark = textColor === "dark"
+
   const text = wordmark && (
     <div className={`flex ${stacked ? "flex-col items-center text-center" : "flex-col leading-tight"}`}>
-      <span className={`font-serif ${title} font-semibold tracking-tight text-[#F5EFE4]`}>
+      <span className={`font-serif ${title} font-semibold tracking-tight ${isDark ? "text-[#1C1208]" : "text-[#F5EFE4]"}`}>
         Osotua Farming
       </span>
       {sizes[size].sub && (
-        <span className="font-mono text-[#C4882A] text-[10px] tracking-[0.22em] uppercase flex items-center gap-1.5 mt-0.5">
+        <span className={`font-mono ${isDark ? "text-[#8E5E16]" : "text-[#C4882A]"} text-[10px] tracking-[0.22em] uppercase flex items-center gap-1.5 mt-0.5`}>
           <span>Kajiado</span>
-          <span className="text-[#C4882A]/60">&bull;</span>
+          <span className={isDark ? "text-[#8E5E16]/60" : "text-[#C4882A]/60"}>&bull;</span>
           <span>Kenya</span>
         </span>
       )}

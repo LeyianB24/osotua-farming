@@ -53,8 +53,8 @@ export default async function BlogPostPage({
             />
           </div>
         ) : (
-          <div className="w-full h-56 bg-gradient-to-br from-[#3D6B3E] to-[#2a4a2b] rounded mb-10 flex items-center justify-center text-6xl">
-            🌿
+          <div className="w-full h-56 bg-gradient-to-br from-[#3D6B3E] to-[#2a4a2b] rounded-2xl mb-10 flex items-center justify-center text-5xl text-[#F5EFE4]/80">
+            <i className="bi bi-newspaper" />
           </div>
         )}
 
@@ -68,11 +68,13 @@ export default async function BlogPostPage({
         <div className="mt-16 pt-8 border-t border-[#1C1208]/10">
           <Link
             href="/blog"
-            className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase hover:underline"
+            className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase hover:underline inline-flex items-center gap-1.5"
           >
-            ← Back to Blog
+            <i className="bi bi-arrow-left" />
+            <span>Back to Blog</span>
           </Link>
         </div>
+
       </div>
     </div>
   )

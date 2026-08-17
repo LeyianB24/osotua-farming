@@ -19,7 +19,17 @@ export default async function AdminJobsPage() {
       count={openCount}
       countLabel={`open positions · ${jobs.length} total`}
       icon="bi-briefcase-fill"
+      action={
+        <Link
+          href="/admin/jobs/new"
+          className="btn-primary"
+          style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem" }}
+        >
+          <i className="bi bi-plus-lg" /> Post Job
+        </Link>
+      }
     >
+
       <AdminTable
         headers={["Title", "Department", "Type", "Location", "Applications", "Status"]}
         empty={jobs.length === 0}

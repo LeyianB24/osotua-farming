@@ -24,23 +24,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex min-h-screen bg-[#1C1208] text-[#F5EFE4] relative">
       {/* Mobile Top Navigation Bar */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#1C1208]/90 backdrop-blur-xl border-b border-[#C4882A]/20 z-40 px-4 flex items-center justify-between">
+      <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#FBF7F0]/95 backdrop-blur-xl border-b border-[#C4882A]/20 z-40 px-4 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#C4882A] hover:bg-[#C4882A]/20 transition-all"
+            className="w-10 h-10 rounded-xl bg-[#1C1208]/5 border border-[#1C1208]/10 flex items-center justify-center text-[#8E5E16] hover:bg-[#C4882A]/20 transition-all"
             aria-label="Toggle Sidebar Menu"
           >
             <i className={`bi ${isMobileOpen ? "bi-x-lg" : "bi-list"} text-xl`} />
           </button>
-          <Logo size="sm" />
+          <Logo size="sm" textColor="dark" />
         </div>
 
         <div className="flex items-center gap-2">
           {isAdmin && (
             <Link
               href={pathname.startsWith("/admin") ? "/dashboard" : "/admin"}
-              className="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#C4882A]/15 border border-[#C4882A]/40 text-[#C4882A]"
+              className="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#C4882A]/15 border border-[#C4882A]/40 text-[#8E5E16] font-bold"
             >
               {pathname.startsWith("/admin") ? "Member View" : "Admin HQ"}
             </Link>
