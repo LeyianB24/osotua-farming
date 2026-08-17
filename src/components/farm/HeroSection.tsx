@@ -3,10 +3,10 @@
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
 import TerrainWave from "@/components/shared/TerrainWave"
 import CountUp from "@/components/shared/CountUp"
 import { LOGO, HERD_FIELD } from "@/lib/images"
+
 
 const WORD_STAGGER = 0.09
 
@@ -235,7 +235,7 @@ export default function HeroSection() {
           <Link href="/barn" className="btn-primary">
             <i className="bi bi-bag-check-fill" />
             Explore Farm Barn
-            <ArrowRight className="w-4 h-4" />
+            <i className="bi bi-arrow-right" />
           </Link>
           <Link href="/breeds" className="btn-ghost">
             <i className="bi bi-heart-pulse-fill" />

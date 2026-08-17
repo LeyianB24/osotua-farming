@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 export default auth((req) => {
   const { pathname } = req.nextUrl
   const isAdminRoute = pathname.startsWith("/admin")
+  const isDashboardRoute = pathname.startsWith("/dashboard")
   const isApiAdminMutation =
     (pathname.startsWith("/api/v1/breeds") ||
       pathname.startsWith("/api/breeds") ||
@@ -31,11 +32,12 @@ export default auth((req) => {
 
   const response = NextResponse.next()
 
-  // Rule #17: Announce deprecations early on unversioned API calls
-  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/v1/") && !pathname.startsWith("/api/auth/")) {
-    response.headers.set("Deprecation", "@true")
-    response.headers.set("Sunset", "Sat, 31 Dec 2026 23:59:59 GMT")
-    response.headers.set("Link", '</api/v1/>; rel="successor-version"')
+  if (isDashboardRoute) {
+    if (!req.auth?.user) {
+      const loginUrl = new URL("/login", req.url)
+      loginUrl.searchParams.set("callbackUrl", pathname)
+      return NextResponse.redirect(loginUrl)
+    }
   }
 
   if (!isAdminRoute && !isApiAdminMutation) return response
@@ -59,6 +61,7 @@ export default auth((req) => {
 export const config = {
   matcher: [
     "/admin/:path*",
+    "/dashboard/:path*",
     "/api/breeds/:path*",
     "/api/products/:path*",
     "/api/livestock/:path*",

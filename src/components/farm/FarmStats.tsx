@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Calculator } from "lucide-react"
 import CountUp from "@/components/shared/CountUp"
 import TerrainWave from "@/components/shared/TerrainWave"
+
 
 const stats = [
   {

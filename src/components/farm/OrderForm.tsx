@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Check, ShoppingBag, ShieldCheck } from "lucide-react"
 import { useCart } from "../shared/CartContext"
 import { LivestockItemProps } from "./LivestockCard"
 
@@ -72,15 +71,16 @@ export default function OrderForm({
                 {item.name} <span className="text-[#C4882A] text-lg font-mono">#{item.tagNumber}</span>
               </h2>
               <p className="text-xs text-[#FBF7F0]/60 font-sans mt-0.5">
-                {item.breedName} • {item.weightKg} kg Live Weight • {item.species}
+                {item.breedName} &bull; {item.weightKg} kg Live Weight &bull; {item.species}
               </p>
             </div>
 
             <button
               onClick={onClose}
               className="p-2 rounded-full text-[#FBF7F0]/60 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Close"
             >
-              <X className="w-5 h-5" />
+              <i className="bi bi-x-lg text-lg" />
             </button>
           </div>
 
@@ -89,7 +89,7 @@ export default function OrderForm({
             {/* 1. Fulfillment Preference */}
             <div>
               <label className="block font-mono text-xs uppercase tracking-widest text-[#1C1208]/70 font-semibold mb-3">
-                1. Select Fulfillment & Preparation Method
+                1. Select Fulfillment &amp; Preparation Method
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
@@ -124,7 +124,7 @@ export default function OrderForm({
                   >
                     <div className="flex justify-between items-start mb-1">
                       <span className="font-semibold text-xs text-[#1C1208]">{opt.title}</span>
-                      {fulfillmentType === opt.id && <Check className="w-4 h-4 text-[#C4882A]" />}
+                      {fulfillmentType === opt.id && <i className="bi bi-check-lg text-[#C4882A]" />}
                     </div>
                     <p className="text-[11px] text-[#1C1208]/60 leading-tight mb-2">{opt.desc}</p>
                     <span className="font-mono text-[10px] text-[#C4882A] font-semibold">{opt.badge}</span>
@@ -137,7 +137,7 @@ export default function OrderForm({
             {fulfillmentType === "BUTCHER_CUTS" && (
               <div>
                 <label className="block font-mono text-xs uppercase tracking-widest text-[#1C1208]/70 font-semibold mb-3">
-                  2. Cold-Chain Packaging & Preservation
+                  2. Cold-Chain Packaging &amp; Preservation
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
@@ -172,7 +172,7 @@ export default function OrderForm({
                     >
                       <div className="flex justify-between items-start mb-1">
                         <span className="font-semibold text-xs text-[#1C1208]">{opt.title}</span>
-                        {packagingPref === opt.id && <Check className="w-4 h-4 text-[#3D6B3E]" />}
+                        {packagingPref === opt.id && <i className="bi bi-check-lg text-[#3D6B3E]" />}
                       </div>
                       <p className="text-[11px] text-[#1C1208]/60 leading-tight mb-1">{opt.desc}</p>
                       <span className="font-mono text-[10px] text-[#3D6B3E] font-semibold">{opt.badge}</span>
@@ -209,7 +209,7 @@ export default function OrderForm({
 
               <div className="sm:col-span-8">
                 <label className="block font-mono text-xs uppercase tracking-widest text-[#1C1208]/70 font-semibold mb-2">
-                  Custom Cutting & Aging Notes (Optional)
+                  Custom Cutting &amp; Aging Notes (Optional)
                 </label>
                 <input
                   type="text"
@@ -223,7 +223,7 @@ export default function OrderForm({
 
             {/* Guarantee Callout */}
             <div className="p-4 rounded-xl bg-[#3D6B3E]/10 border border-[#3D6B3E]/20 text-[#3D6B3E] flex items-center gap-3 text-xs">
-              <ShieldCheck className="w-5 h-5 shrink-0" />
+              <i className="bi bi-shield-check text-lg shrink-0" />
               <span>
                 <strong>Osotua Quality Guarantee:</strong> Every animal comes with full genetic pedigree certificate, 
                 veterinary health record, and 100% grass-fed guarantee.
@@ -240,7 +240,7 @@ export default function OrderForm({
                   KES {totalPrice.toLocaleString()}
                 </span>
                 {quantity > 1 && (
-                  <span className="text-xs text-[#FBF7F0]/60">({quantity} × KES {headUnitPrice.toLocaleString()})</span>
+                  <span className="text-xs text-[#FBF7F0]/60">({quantity} &times; KES {headUnitPrice.toLocaleString()})</span>
                 )}
               </div>
             </div>
@@ -253,12 +253,12 @@ export default function OrderForm({
             >
               {added ? (
                 <>
-                  <Check className="w-4 h-4 text-[#1C1208]" />
+                  <i className="bi bi-check-lg text-[#1C1208]" />
                   <span>Added to Cart!</span>
                 </>
               ) : (
                 <>
-                  <ShoppingBag className="w-4 h-4" />
+                  <i className="bi bi-bag-check" />
                   <span>Add Custom Order to Cart</span>
                 </>
               )}
@@ -269,3 +269,4 @@ export default function OrderForm({
     </AnimatePresence>
   )
 }
+

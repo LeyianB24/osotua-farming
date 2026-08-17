@@ -2,7 +2,6 @@
 
 import { useCart } from "./CartContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, Info, AlertTriangle, X } from "lucide-react";
 
 export default function ToastContainer() {
   const { toasts, removeToast } = useCart();
@@ -20,13 +19,13 @@ export default function ToastContainer() {
             className="pointer-events-auto flex items-start gap-3 p-4 bg-[#1C1208] text-[#F5EFE4] rounded-md shadow-2xl border border-[#C4882A]/30 backdrop-blur-lg"
           >
             {toast.type === "success" && (
-              <CheckCircle2 className="text-[#C4882A] shrink-0 mt-0.5" size={18} />
+              <i className="bi bi-check-circle-fill text-[#C4882A] text-lg shrink-0 mt-0.5" />
             )}
             {toast.type === "info" && (
-              <Info className="text-sky-400 shrink-0 mt-0.5" size={18} />
+              <i className="bi bi-info-circle-fill text-sky-400 text-lg shrink-0 mt-0.5" />
             )}
             {toast.type === "warning" && (
-              <AlertTriangle className="text-amber-400 shrink-0 mt-0.5" size={18} />
+              <i className="bi bi-exclamation-triangle-fill text-amber-400 text-lg shrink-0 mt-0.5" />
             )}
             <div className="flex-1 min-w-0">
               <h4 className="text-xs font-mono font-semibold text-[#C4882A] uppercase tracking-wider">
@@ -41,7 +40,7 @@ export default function ToastContainer() {
               className="text-[#F5EFE4]/40 hover:text-[#F5EFE4] transition-colors p-1"
               aria-label="Close notification"
             >
-              <X size={14} />
+              <i className="bi bi-x-lg text-xs" />
             </button>
           </motion.div>
         ))}
@@ -49,3 +48,4 @@ export default function ToastContainer() {
     </div>
   );
 }
+

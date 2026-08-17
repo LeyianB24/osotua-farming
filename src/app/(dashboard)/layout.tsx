@@ -13,7 +13,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname()
   const sessionRes = useSession?.()
   const session = sessionRes?.data
-  const isAdmin = session?.user?.role === "ADMIN"
+  const isAdmin = (session?.user as { role?: string } | undefined)?.role === "ADMIN"
+
 
   // Close mobile drawer on route change
   useEffect(() => {

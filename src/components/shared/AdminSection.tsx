@@ -1,8 +1,7 @@
-// Shared admin layout helpers — dark-glass table wrapper for all admin sub-pages
-// Usage: import AdminSection, { AdminTable, AdminRow, StatusBadge, EmptyState } from "@/components/shared/AdminSection"
-
 "use client"
+
 import React from "react"
+
 
 /* ── Section wrapper ─────────────────────────────── */
 export function AdminSection({

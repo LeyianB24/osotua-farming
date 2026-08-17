@@ -16,7 +16,9 @@ const SPECIES = [
   { name: "Dairy Cattle", description: "Dairy breeds selected for milk yield and climate resilience." },
   { name: "Goats", description: "Meat and dual-purpose goats thrives in semi-arid conditions." },
   { name: "Sheep", description: "Fat-tailed and meat sheep bred for the East African market." },
+  { name: "Poultry", description: "Free-range indigenous and dual-purpose improved poultry flock." },
 ]
+
 
 // ── Breeds keyed by species name ───────────────────────────
 const BREEDS: Record<string, Array<{
@@ -182,7 +184,23 @@ const BREEDS: Record<string, Array<{
       featured: false,
     },
   ],
+  Poultry: [
+    {
+      name: "Kuroiler / Improved Kienyeji",
+      purpose: "Dual-purpose (meat & eggs)",
+      description:
+        "Resilient, free-ranging dual-purpose poultry adapted to Kajiado rangelands. Fast-maturing with high egg production and rich, indigenous meat flavour.",
+      origin: "Kenya / East Africa",
+      maleWeight: "3.5–4.5 kg",
+      femaleWeight: "2.5–3.2 kg",
+      image: img("chickens.jpg"),
+      pricePerHead: 1500,
+      inStock: 80,
+      featured: true,
+    },
+  ],
 }
+
 
 // ── Product categories ─────────────────────────────────────
 const CATEGORIES: Array<{
@@ -370,13 +388,15 @@ async function main() {
     password: string
     role: UserRole
   }> = [
-    { name: "Farm Administrator",  email: "admin@osotua.co.ke",   phone: "+254700000000", password: "Admin1234!",   role: "ADMIN" },
-    { name: "Joyce Wambui",       email: "operator@osotua.co.ke", phone: "+254711000111", password: "Operator12!", role: "ADMIN" },
-    { name: "Daniel Otieno",       email: "customer@osotua.co.ke", phone: "+254722000222", password: "Customer1!", role: "CUSTOMER" },
-    { name: "Mary Chebet",         email: "user2@osotua.co.ke",   phone: "+254733000333", password: "Customer1!", role: "CUSTOMER" },
-    { name: "Samuel Njoroge",      email: "partner@osotua.co.ke", phone: "+254744000444", password: "Partner123!", role: "PARTNER_FARMER" },
-    { name: "Grace Mutua",         email: "investor@osotua.co.ke",phone: "+254755000555", password: "Investor1!", role: "INVESTOR" },
+    { name: "Farm Administrator",  email: "admin@osotuafarming.co.ke", phone: "+254700000000", password: "Admin1234!",   role: "ADMIN" },
+    { name: "Farm Operations",     email: "admin@osotua.co.ke",        phone: "+254700000001", password: "Admin1234!",   role: "ADMIN" },
+    { name: "Joyce Wambui",        email: "operator@osotua.co.ke",      phone: "+254711000111", password: "Operator12!", role: "ADMIN" },
+    { name: "Daniel Otieno",       email: "customer@osotua.co.ke",      phone: "+254722000222", password: "Customer1!", role: "CUSTOMER" },
+    { name: "Mary Chebet",         email: "user2@osotua.co.ke",        phone: "+254733000333", password: "Customer1!", role: "CUSTOMER" },
+    { name: "Samuel Njoroge",      email: "partner@osotua.co.ke",      phone: "+254744000444", password: "Partner123!", role: "PARTNER_FARMER" },
+    { name: "Grace Mutua",         email: "investor@osotua.co.ke",     phone: "+254755000555", password: "Investor1!", role: "INVESTOR" },
   ]
+
 
   for (const u of USERS) {
     const existing = await prisma.user.findUnique({ where: { email: u.email } })

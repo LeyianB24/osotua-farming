@@ -2,7 +2,6 @@
 
 import { useEffect } from "react"
 import Link from "next/link"
-import { AlertTriangle, RefreshCw, Home } from "lucide-react"
 
 export default function ErrorPage({
   error,
@@ -18,8 +17,8 @@ export default function ErrorPage({
   return (
     <div className="min-h-[80vh] bg-[#1C1208] flex items-center justify-center p-6 text-[#FBF7F0]">
       <div className="max-w-md w-full text-center space-y-6 bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-md shadow-2xl">
-        <div className="w-16 h-16 rounded-full bg-[#A0431E]/20 border border-[#A0431E]/30 text-[#A0431E] flex items-center justify-center mx-auto">
-          <AlertTriangle className="w-8 h-8" />
+        <div className="w-16 h-16 rounded-full bg-[#A0431E]/20 border border-[#A0431E]/30 text-[#A0431E] flex items-center justify-center mx-auto text-2xl">
+          <i className="bi bi-exclamation-triangle-fill" />
         </div>
 
         <div>
@@ -35,7 +34,7 @@ export default function ErrorPage({
             onClick={() => reset()}
             className="w-full sm:w-auto btn-primary py-3 px-6 text-xs flex items-center justify-center gap-2"
           >
-            <RefreshCw className="w-4 h-4" />
+            <i className="bi bi-arrow-clockwise text-sm" />
             <span>Try Again</span>
           </button>
 
@@ -43,7 +42,7 @@ export default function ErrorPage({
             href="/"
             className="w-full sm:w-auto btn-ghost py-3 px-6 text-xs flex items-center justify-center gap-2"
           >
-            <Home className="w-4 h-4" />
+            <i className="bi bi-house-door text-sm" />
             <span>Return Home</span>
           </Link>
         </div>
@@ -51,3 +50,4 @@ export default function ErrorPage({
     </div>
   )
 }
+

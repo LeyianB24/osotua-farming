@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { ShieldCheck, Scale, Calendar, ChevronRight, Heart } from "lucide-react"
 import OrderForm from "./OrderForm"
 
 export interface LivestockItemProps {
@@ -57,10 +56,10 @@ export default function LivestockCard({ item }: { item: LivestockItemProps }) {
 
             <button
               onClick={() => setIsLiked(!isLiked)}
-              className="pointer-events-auto p-2 rounded-full bg-white/80 backdrop-blur-md text-[#1C1208] hover:text-[#A0431E] hover:scale-110 transition-all shadow"
+              className="pointer-events-auto p-2 rounded-full bg-white/80 backdrop-blur-md text-[#1C1208] hover:text-[#A0431E] hover:scale-110 transition-all shadow flex items-center justify-center"
               aria-label="Wishlist"
             >
-              <Heart className={`w-3.5 h-3.5 ${isLiked ? "fill-[#A0431E] text-[#A0431E]" : ""}`} />
+              <i className={`bi ${isLiked ? "bi-heart-fill text-[#A0431E]" : "bi-heart"} text-xs`} />
             </button>
           </div>
 
@@ -85,7 +84,7 @@ export default function LivestockCard({ item }: { item: LivestockItemProps }) {
           <div>
             <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider text-[#C4882A]">
               <span>{item.species}</span>
-              <span className="text-[#1C1208]/40">• {item.origin ?? "Osotua Farm Estate"}</span>
+              <span className="text-[#1C1208]/40">&bull; {item.origin ?? "Osotua Farm Estate"}</span>
             </div>
 
             <h3 className="font-serif text-xl text-[#1C1208] font-semibold mt-1 group-hover:text-[#C4882A] transition-colors">
@@ -97,7 +96,7 @@ export default function LivestockCard({ item }: { item: LivestockItemProps }) {
           {/* Key Metrics Row */}
           <div className="grid grid-cols-2 gap-2 py-3 px-3 rounded-lg bg-[#FBF7F0] border border-[#1C1208]/05 text-xs font-sans">
             <div className="flex items-center gap-2 text-[#1C1208]/80">
-              <Scale className="w-3.5 h-3.5 text-[#C4882A]" />
+              <i className="bi bi-speedometer text-[#C4882A] text-sm" />
               <div>
                 <p className="text-[10px] font-mono text-[#1C1208]/40 uppercase">Live Weight</p>
                 <p className="font-semibold">{item.weightKg} kg</p>
@@ -105,7 +104,7 @@ export default function LivestockCard({ item }: { item: LivestockItemProps }) {
             </div>
 
             <div className="flex items-center gap-2 text-[#1C1208]/80">
-              <Calendar className="w-3.5 h-3.5 text-[#3D6B3E]" />
+              <i className="bi bi-calendar3 text-[#3D6B3E] text-sm" />
               <div>
                 <p className="text-[10px] font-mono text-[#1C1208]/40 uppercase">Age</p>
                 <p className="font-semibold">{item.ageMonths} mos</p>
@@ -115,8 +114,8 @@ export default function LivestockCard({ item }: { item: LivestockItemProps }) {
 
           {/* Verification Tag */}
           <div className="flex items-center gap-1.5 text-[11px] text-[#3D6B3E] font-medium">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Organic Pasture & Vet Certified</span>
+            <i className="bi bi-shield-check text-sm" />
+            <span>Organic Pasture &amp; Vet Certified</span>
           </div>
 
           {/* Pricing & CTA */}
@@ -134,7 +133,7 @@ export default function LivestockCard({ item }: { item: LivestockItemProps }) {
               className="btn-primary py-2 px-4 text-xs flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <span>{isAvailable ? "Reserve Head" : "Unavailable"}</span>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <i className="bi bi-chevron-right text-xs" />
             </button>
           </div>
         </div>
@@ -150,3 +149,4 @@ export default function LivestockCard({ item }: { item: LivestockItemProps }) {
     </>
   )
 }
+
