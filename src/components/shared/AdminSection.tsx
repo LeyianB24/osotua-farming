@@ -2,7 +2,6 @@
 
 import React from "react"
 
-
 /* ── Section wrapper ─────────────────────────────── */
 export function AdminSection({
   eyebrow,
@@ -22,15 +21,16 @@ export function AdminSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-mesh-earth noise min-h-screen" style={{ padding: "2.5rem 2rem 5rem" }}>
+    <div style={{ background: "#FBF7F0", padding: "2.5rem 2rem 5rem", minHeight: "100vh" }}>
       {/* Header card */}
       <div
-        className="glass-dark"
         style={{
           padding: "2rem 2.5rem",
-          borderRadius: "20px",
+          borderRadius: "24px",
           marginBottom: "2.5rem",
-          border: "1px solid rgba(196,136,42,0.25)",
+          background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5EB 100%)",
+          border: "1px solid rgba(196, 136, 42, 0.25)",
+          boxShadow: "0 10px 32px rgba(196, 136, 42, 0.08)",
           position: "relative",
           overflow: "hidden",
           display: "flex",
@@ -52,8 +52,8 @@ export function AdminSection({
             style={{
               display: "flex", alignItems: "center", gap: "0.75rem",
               fontFamily: "var(--font-space-grotesk), monospace",
-              fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.2em",
-              textTransform: "uppercase", color: "#C4882A", marginBottom: "0.75rem",
+              fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.2em",
+              textTransform: "uppercase", color: "#8E5E16", marginBottom: "0.75rem",
             }}
           >
             {icon && <i className={`bi ${icon}`} />}
@@ -62,13 +62,13 @@ export function AdminSection({
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F5EFE4", lineHeight: 1.05,
+              fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "#1C1208", lineHeight: 1.05,
             }}
           >
             {title}
           </h1>
           {count !== undefined && (
-            <div style={{ marginTop: "0.5rem", color: "rgba(245,239,228,0.5)", fontSize: "0.82rem" }}>
+            <div style={{ marginTop: "0.5rem", color: "#6B553E", fontSize: "0.85rem" }}>
               <span style={{ color: "#C4882A", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 700 }}>
                 {count}
               </span>{" "}
@@ -84,7 +84,7 @@ export function AdminSection({
   )
 }
 
-/* ── Dark glass table ─────────────────────────────── */
+/* ── Crisp white table container ─────────────────────────────── */
 export function AdminTable({
   headers,
   children,
@@ -100,25 +100,26 @@ export function AdminTable({
 }) {
   return (
     <div
-      className="glass-dark"
       style={{
-        borderRadius: "20px",
-        border: "1px solid rgba(196,136,42,0.2)",
+        borderRadius: "24px",
+        background: "#FFFFFF",
+        border: "1px solid rgba(196, 136, 42, 0.22)",
+        boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
         overflow: "hidden",
       }}
     >
       <div style={{ overflowX: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
           <thead>
-            <tr style={{ background: "rgba(0,0,0,0.35)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <tr style={{ background: "rgba(250, 245, 235, 0.9)", borderBottom: "1px solid rgba(196, 136, 42, 0.15)" }}>
               {headers.map((h) => (
                 <th
                   key={h}
                   style={{
-                    padding: "0.875rem 1.25rem",
+                    padding: "1rem 1.25rem",
                     fontFamily: "var(--font-space-grotesk), monospace",
-                    fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.2em",
-                    textTransform: "uppercase", color: "#C4882A",
+                    fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em",
+                    textTransform: "uppercase", color: "#8E5E16",
                     textAlign: "left",
                   }}
                 >
@@ -134,9 +135,9 @@ export function AdminTable({
           <div style={{ textAlign: "center", padding: "4rem 2rem" }}>
             <i
               className={`bi ${emptyIcon || "bi-inbox"}`}
-              style={{ fontSize: "2.5rem", color: "rgba(196,136,42,0.25)", display: "block", marginBottom: "1rem" }}
+              style={{ fontSize: "2.5rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1rem" }}
             />
-            <p style={{ color: "rgba(245,239,228,0.35)", fontSize: "0.9rem" }}>
+            <p style={{ color: "#786550", fontSize: "0.9rem" }}>
               {emptyText || "No records found."}
             </p>
           </div>
@@ -157,11 +158,11 @@ export function AdminRow({
   return (
     <tr
       style={{
-        borderBottom: "1px solid rgba(255,255,255,0.04)",
-        background: index % 2 === 0 ? "transparent" : "rgba(255,255,255,0.02)",
+        borderBottom: "1px solid rgba(196, 136, 42, 0.1)",
+        background: index % 2 === 0 ? "#FFFFFF" : "#FAF8F5",
         transition: "background 0.15s ease",
       }}
-      className="hover:bg-white/[0.04]"
+      className="hover:bg-[#FAF5EB]"
     >
       {children}
     </tr>
@@ -183,10 +184,10 @@ export function TD({
   return (
     <td
       style={{
-        padding: "0.875rem 1.25rem",
+        padding: "1rem 1.25rem",
         fontFamily: mono ? "var(--font-space-grotesk), monospace" : "inherit",
-        fontSize: mono ? "0.78rem" : "0.88rem",
-        color: accent ? "#C4882A" : muted ? "rgba(245,239,228,0.5)" : "#F5EFE4",
+        fontSize: mono ? "0.8rem" : "0.88rem",
+        color: accent ? "#C4882A" : muted ? "#786550" : "#1C1208",
         fontWeight: mono ? 600 : 400,
       }}
     >
@@ -201,12 +202,12 @@ export function StatusBadge({ status }: { status: string }) {
 
   const color =
     s === "ACTIVE" || s === "DELIVERED" || s === "PAID" || s === "COMPLETED" || s === "CONFIRMED"
-      ? { bg: "rgba(61,107,62,0.2)", border: "rgba(61,107,62,0.4)", text: "#5a9e5c" }
+      ? { bg: "rgba(46,125,50,0.12)", border: "rgba(46,125,50,0.35)", text: "#2E7D32" }
       : s === "PENDING" || s === "PROCESSING"
-      ? { bg: "rgba(196,136,42,0.2)", border: "rgba(196,136,42,0.4)", text: "#C4882A" }
+      ? { bg: "rgba(196,136,42,0.14)", border: "rgba(196,136,42,0.35)", text: "#8E5E16" }
       : s === "CANCELLED" || s === "SUSPENDED" || s === "REJECTED"
-      ? { bg: "rgba(160,67,30,0.2)", border: "rgba(160,67,30,0.4)", text: "#c55f3a" }
-      : { bg: "rgba(255,255,255,0.08)", border: "rgba(255,255,255,0.15)", text: "rgba(245,239,228,0.6)" }
+      ? { bg: "rgba(196,67,30,0.12)", border: "rgba(196,67,30,0.35)", text: "#C2410C" }
+      : { bg: "rgba(28,18,8,0.06)", border: "rgba(28,18,8,0.15)", text: "#5C4835" }
 
   return (
     <span

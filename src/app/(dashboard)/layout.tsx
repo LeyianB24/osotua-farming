@@ -22,7 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [pathname])
 
   return (
-    <div className="flex min-h-screen bg-[#1C1208] text-[#F5EFE4] relative">
+    <div className="flex min-h-screen bg-[#FBF7F0] text-[#1C1208] relative">
       {/* Mobile Top Navigation Bar */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#FBF7F0]/95 backdrop-blur-xl border-b border-[#C4882A]/20 z-40 px-4 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-3">

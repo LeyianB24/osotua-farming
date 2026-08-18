@@ -25,25 +25,34 @@ export default async function AdminPage() {
 
   const stats = [
     { label: "Breeds", value: breeds, href: "/admin/breeds", icon: "bi-shield-check", color: "#C4882A" },
-    { label: "Stocks", value: stocks, href: "/admin/stocks", icon: "bi-box-seam-fill", color: "#3D6B3E" },
+    { label: "Stocks", value: stocks, href: "/admin/stocks", icon: "bi-box-seam-fill", color: "#2E7D32" },
     { label: "Barn Menus", value: menus, href: "/admin/menus", icon: "bi-menu-button-wide-fill", color: "#C4882A" },
-    { label: "New Catches", value: catches, href: "/admin/catches", icon: "bi-basket3-fill", color: "#A0431E" },
-    { label: "Imports", value: imports, href: "/admin/imports", icon: "bi-truck-front-fill", color: "#3D6B3E" },
+    { label: "New Catches", value: catches, href: "/admin/catches", icon: "bi-basket3-fill", color: "#8E5E16" },
+    { label: "Imports", value: imports, href: "/admin/imports", icon: "bi-truck-front-fill", color: "#2E7D32" },
     { label: "Sales (Paid)", value: sales, href: "/admin/sales", icon: "bi-currency-exchange", color: "#C4882A" },
-    { label: "Products", value: products, href: "/admin/products", icon: "bi-droplet-fill", color: "#3D6B3E" },
+    { label: "Products", value: products, href: "/admin/products", icon: "bi-droplet-fill", color: "#2E7D32" },
     { label: "Orders", value: orders, href: "/admin/orders", icon: "bi-receipt-cutoff", color: "#C4882A" },
-    { label: "Farm Visits", value: visits, href: "/admin/visits", icon: "bi-calendar-event-fill", color: "#3D6B3E" },
+    { label: "Farm Visits", value: visits, href: "/admin/visits", icon: "bi-calendar-event-fill", color: "#2E7D32" },
     { label: "Partner Farmers", value: partners, href: "/admin/partners", icon: "bi-people-fill", color: "#C4882A" },
-    { label: "Open Jobs", value: jobs, href: "/admin/jobs", icon: "bi-briefcase-fill", color: "#3D6B3E" },
+    { label: "Open Jobs", value: jobs, href: "/admin/jobs", icon: "bi-briefcase-fill", color: "#2E7D32" },
   ]
 
   return (
-    <div className="bg-mesh-earth noise min-h-screen p-6 sm:p-10">
+    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="p-6 sm:p-10">
       {/* Header */}
-      <div className="glass-dark p-8 rounded-2xl mb-10 border border-[#C4882A]/20">
-        <div className="eyebrow text-[#C4882A] mb-2">Platform Administration</div>
-        <h1 className="font-serif text-4xl text-[#F5EFE4] font-light mb-2">Executive Command Center</h1>
-        <p className="text-[#F5EFE4]/60 text-sm max-w-xl">
+      <div
+        style={{
+          padding: "2rem 2.5rem",
+          borderRadius: "24px",
+          marginBottom: "2.5rem",
+          background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5EB 100%)",
+          border: "1px solid rgba(196, 136, 42, 0.25)",
+          boxShadow: "0 10px 32px rgba(196, 136, 42, 0.08)",
+        }}
+      >
+        <div className="eyebrow text-[#8E5E16] mb-2 font-bold">Platform Administration</div>
+        <h1 className="font-serif text-4xl text-[#1C1208] font-light mb-2">Executive Command Center</h1>
+        <p className="text-[#5C4835] text-sm max-w-xl">
           Real-time metrics, order ledgers, and operational oversight for Osotua Farming&apos;s Kajiado operations.
         </p>
       </div>
@@ -54,53 +63,69 @@ export default async function AdminPage() {
           <Link
             key={stat.label}
             href={stat.href}
-            className="glass-dark p-6 rounded-xl hover:-translate-y-1 transition-all duration-300 border border-white/10 hover:border-[#C4882A]/50 block no-underline group"
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(196, 136, 42, 0.22)",
+              boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
+              borderRadius: "20px",
+            }}
+            className="p-6 hover:-translate-y-1 transition-all duration-300 hover:border-[#C4882A] hover:shadow-md block no-underline group"
           >
-            <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-4 group-hover:bg-[#C4882A]/20 transition-colors">
+            <div
+              style={{ background: "rgba(196, 136, 42, 0.1)", border: "1px solid rgba(196, 136, 42, 0.2)" }}
+              className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#C4882A]/20 transition-colors"
+            >
               <i className={`bi ${stat.icon} text-lg`} style={{ color: stat.color }} />
             </div>
-            <div className="font-serif text-3xl text-[#F5EFE4] font-light mb-1">{stat.value}</div>
-            <div className="font-mono text-[10px] text-[#F5EFE4]/50 tracking-widest uppercase">{stat.label}</div>
+            <div className="font-serif text-3xl text-[#1C1208] font-semibold mb-1">{stat.value}</div>
+            <div className="font-mono text-[10px] text-[#8E5E16] font-bold tracking-widest uppercase">{stat.label}</div>
           </Link>
         ))}
       </div>
 
       {/* Recent Orders Ledger */}
-      <div className="glass-dark p-8 rounded-2xl border border-white/10">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+      <div
+        style={{
+          background: "#FFFFFF",
+          border: "1px solid rgba(196, 136, 42, 0.22)",
+          boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+          borderRadius: "24px",
+        }}
+        className="p-8"
+      >
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#C4882A]/15">
           <div>
-            <div className="eyebrow text-[#C4882A] mb-1">Transaction Ledger</div>
-            <h2 className="font-serif text-2xl text-[#F5EFE4] font-light">Recent Customer Orders</h2>
+            <div className="eyebrow text-[#8E5E16] mb-1 font-bold">Transaction Ledger</div>
+            <h2 className="font-serif text-2xl text-[#1C1208] font-light">Recent Customer Orders</h2>
           </div>
-          <Link href="/admin/orders" className="btn-ghost text-xs py-2 px-4 flex items-center gap-1.5">
+          <Link href="/admin/orders" className="btn-ghost text-xs py-2 px-4 flex items-center gap-1.5" style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}>
             <span>View All Orders</span>
             <i className="bi bi-arrow-right" />
           </Link>
-
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="bg-white/5 border-b border-white/10">
+              <tr style={{ background: "rgba(250, 245, 235, 0.9)", borderBottom: "1px solid rgba(196, 136, 42, 0.15)" }}>
                 {["Order ID", "Customer", "Type", "Amount", "Status", "Date"].map((h) => (
-                  <th key={h} className="font-mono text-[10px] text-[#F5EFE4]/50 tracking-widest uppercase text-left p-3">{h}</th>
+                  <th key={h} className="font-mono text-[10px] text-[#8E5E16] font-bold tracking-widest uppercase text-left p-3">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {recentOrders.map((order) => (
-                <tr key={order.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="p-3 font-mono text-xs text-[#C4882A]">#{order.id.slice(-6).toUpperCase()}</td>
-                  <td className="p-3 text-[#F5EFE4]">{order.customerName}</td>
-                  <td className="p-3 text-[#F5EFE4]/70">{order.type}</td>
-                  <td className="p-3 font-mono text-xs font-semibold text-[#F5EFE4]">KES {order.totalAmount.toLocaleString()}</td>
+                <tr key={order.id} className="border-b border-[#C4882A]/10 hover:bg-[#FAF6EE] transition-colors">
+                  <td className="p-3 font-mono text-xs font-bold text-[#C4882A]">#{order.id.slice(-6).toUpperCase()}</td>
+                  <td className="p-3 text-[#1C1208] font-medium">{order.customerName}</td>
+                  <td className="p-3 text-[#5C4835]">{order.type}</td>
+                  <td className="p-3 font-mono text-xs font-bold text-[#1C1208]">KES {order.totalAmount.toLocaleString()}</td>
                   <td className="p-3">
-                    <span className="font-mono text-[10px] bg-[#3D6B3E]/20 text-[#4E8A4F] border border-[#3D6B3E]/40 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                    <span className="font-mono text-[10px] font-bold bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/35 px-2.5 py-1 rounded-full uppercase tracking-wider">
                       {order.status}
                     </span>
                   </td>
-                  <td className="p-3 text-[#F5EFE4]/50 font-mono text-xs">
+                  <td className="p-3 text-[#786550] font-mono text-xs">
                     {new Date(order.createdAt).toLocaleDateString()}
                   </td>
                 </tr>
@@ -108,7 +133,7 @@ export default async function AdminPage() {
             </tbody>
           </table>
           {recentOrders.length === 0 && (
-            <div className="text-center py-10 text-[#F5EFE4]/40 text-sm">No orders recorded in the system.</div>
+            <div className="text-center py-10 text-[#786550] text-sm">No orders recorded in the system.</div>
           )}
         </div>
       </div>

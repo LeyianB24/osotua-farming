@@ -67,31 +67,32 @@ export default function DashboardSidebar({
 
   return (
     <aside
-      className={`bg-[#FBF7F0] text-[#1C1208] flex flex-col fixed top-0 bottom-0 left-0 z-40 border-r border-[#C4882A]/25 shadow-[4px_0_24px_rgba(28,18,8,0.08)] select-none transition-all duration-300 ${
+      className={`bg-[#FFFEFA] text-[#1C1208] flex flex-col fixed top-0 bottom-0 left-0 z-40 border-r border-[#C4882A]/20 shadow-[6px_0_30px_rgba(196,136,42,0.06)] select-none transition-all duration-300 ${
         collapsed ? "w-20" : "w-64"
       } ${
         mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       }`}
       style={{
-        background: "linear-gradient(180deg, #FBF7F0 0%, #F5EFE4 45%, #EFE5D3 100%)",
+        background: "linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 40%, #FAF5EB 100%)",
         WebkitBackdropFilter: "blur(24px)",
         backdropFilter: "blur(24px)",
       }}
     >
-      {/* Top ambient gold line */}
+      {/* Top radiant gold ambient line */}
       <div
         style={{
           height: "3px",
-          background: "linear-gradient(90deg, #C4882A 0%, rgba(196,136,42,0.6) 60%, rgba(217,154,48,0.2) 100%)",
+          background: "linear-gradient(90deg, #C4882A 0%, #E59A24 50%, #3D6B3E 100%)",
         }}
       />
 
       {/* Header Logo, Tier Pill & Toggle Button */}
-      <div className="p-4 border-b border-[#C4882A]/15 flex items-center justify-between gap-2 bg-[#FBF7F0]/60">
+      <div className="p-4 border-b border-[#C4882A]/15 flex items-center justify-between gap-2 bg-white/70 backdrop-blur-md">
         {!collapsed && (
           <div className="flex items-center justify-between flex-1 min-w-0">
             <Logo size="sm" textColor="dark" />
             <span
+              className="inline-flex items-center gap-1"
               style={{
                 fontFamily: "var(--font-space-grotesk), monospace",
                 fontSize: "0.55rem",
@@ -100,11 +101,15 @@ export default function DashboardSidebar({
                 textTransform: "uppercase",
                 padding: "0.25rem 0.65rem",
                 borderRadius: "100px",
-                background: isAdmin ? "rgba(160,67,30,0.12)" : "rgba(196,136,42,0.15)",
-                border: isAdmin ? "1px solid rgba(160,67,30,0.3)" : "1px solid rgba(196,136,42,0.35)",
-                color: isAdmin ? "#A0431E" : "#8E5E16",
+                background: isAdmin ? "rgba(196, 67, 30, 0.08)" : "rgba(61, 107, 62, 0.08)",
+                border: isAdmin ? "1px solid rgba(196, 67, 30, 0.25)" : "1px solid rgba(61, 107, 62, 0.25)",
+                color: isAdmin ? "#C2410C" : "#2E7D32",
               }}
             >
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: isAdmin ? "#C2410C" : "#2E7D32" }}
+              />
               {isAdmin ? "Admin HQ" : "VIP Member"}
             </span>
           </div>
@@ -114,7 +119,7 @@ export default function DashboardSidebar({
         {onToggleCollapse && (
           <button
             onClick={onToggleCollapse}
-            className="hidden lg:flex w-8 h-8 rounded-lg bg-[#1C1208]/5 border border-[#1C1208]/10 items-center justify-center text-[#8E5E16] hover:bg-[#C4882A]/20 hover:text-[#1C1208] transition-all flex-shrink-0"
+            className="hidden lg:flex w-8 h-8 rounded-lg bg-white border border-[#C4882A]/20 items-center justify-center text-[#8E5E16] hover:bg-[#C4882A]/15 hover:text-[#1C1208] shadow-xs transition-all flex-shrink-0"
             title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             aria-label="Toggle Sidebar"
           >
@@ -126,7 +131,7 @@ export default function DashboardSidebar({
         {onCloseMobile && (
           <button
             onClick={onCloseMobile}
-            className="lg:hidden w-8 h-8 rounded-lg bg-[#1C1208]/5 border border-[#1C1208]/10 flex items-center justify-center text-[#1C1208]/70 hover:text-[#1C1208] hover:bg-[#1C1208]/10 transition-all"
+            className="lg:hidden w-8 h-8 rounded-lg bg-white border border-[#C4882A]/20 flex items-center justify-center text-[#1C1208]/70 hover:text-[#1C1208] hover:bg-[#C4882A]/15 shadow-xs transition-all"
             aria-label="Close Mobile Navigation"
           >
             <i className="bi bi-x-lg text-sm" />
@@ -136,14 +141,14 @@ export default function DashboardSidebar({
 
       {/* Admin Quick Switch Portal Banner (If logged in user is ADMIN) */}
       {userIsAdmin && !collapsed && (
-        <div className="mx-3 mt-3 p-2.5 rounded-xl bg-gradient-to-r from-[#FBF7F0] to-[#EDE5D8] border border-[#C4882A]/30 shadow-xs flex items-center justify-between">
+        <div className="mx-3 mt-3 p-2.5 rounded-xl bg-white/90 border border-[#C4882A]/30 shadow-xs flex items-center justify-between">
           <div className="text-[10px] font-mono">
             <span className="font-bold text-[#1C1208] block">{isAdmin ? "Admin Control" : "Admin Account"}</span>
-            <span className="text-[#8E5E16]">{isAdmin ? "Viewing HQ" : "Member Portal"}</span>
+            <span className="text-[#8E5E16] font-medium">{isAdmin ? "Viewing HQ" : "Member Portal"}</span>
           </div>
           <Link
             href={isAdmin ? "/dashboard" : "/admin"}
-            className="px-2.5 py-1 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg bg-[#C4882A] text-[#1C1208] hover:bg-[#D99A30] shadow-xs hover:shadow-sm transition-all"
+            className="px-2.5 py-1 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg bg-[#C4882A] text-white hover:bg-[#D99A30] shadow-xs hover:shadow-sm transition-all"
           >
             {isAdmin ? "Member View" : "Admin HQ"}
           </Link>
@@ -161,7 +166,7 @@ export default function DashboardSidebar({
       >
         {links.map((item, idx) => {
           if ("section" in item && item.section) {
-            if (collapsed) return <div key={`sec-${idx}`} className="my-2 border-t border-[#C4882A]/20" />
+            if (collapsed) return <div key={`sec-${idx}`} className="my-2.5 border-t border-[#C4882A]/20" />
             return (
               <div
                 key={`sec-${idx}`}
@@ -171,12 +176,15 @@ export default function DashboardSidebar({
                   fontWeight: 700,
                   letterSpacing: "0.2em",
                   textTransform: "uppercase",
-                  color: "#8E5E16",
+                  color: "#9A671D",
                   padding: "0.9rem 0.75rem 0.35rem",
-                  opacity: 0.9,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
                 }}
               >
-                {item.section}
+                <span>{item.section}</span>
+                <span className="flex-1 h-px bg-gradient-to-r from-[#C4882A]/30 to-transparent" />
               </div>
             )
           }
@@ -202,20 +210,20 @@ export default function DashboardSidebar({
                 fontSize: "0.8rem",
                 fontFamily: "var(--font-space-grotesk), monospace",
                 fontWeight: active ? 700 : 500,
-                letterSpacing: "0.05em",
+                letterSpacing: "0.04em",
                 transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
                 background: active
-                  ? "linear-gradient(90deg, rgba(196,136,42,0.18) 0%, rgba(251,247,240,0.8) 100%)"
+                  ? "#FFFFFF"
                   : "transparent",
-                color: active ? "#1C1208" : "#3D2B17",
+                color: active ? "#1C1208" : "#2D2319",
                 borderLeft: !collapsed && active ? "3.5px solid #C4882A" : "3.5px solid transparent",
-                border: active ? "1px solid rgba(196,136,42,0.25)" : "1px solid transparent",
-                boxShadow: active ? "0 2px 8px rgba(196,136,42,0.12)" : "none",
+                border: active ? "1px solid rgba(196,136,42,0.3)" : "1px solid transparent",
+                boxShadow: active ? "0 2px 10px rgba(196,136,42,0.12)" : "none",
               }}
               className={
                 active
                   ? ""
-                  : "hover:text-[#1C1208] hover:bg-[#C4882A]/10 hover:border-[#C4882A]/15"
+                  : "hover:text-[#1C1208] hover:bg-white/80 hover:border-[#C4882A]/20 hover:shadow-xs"
               }
             >
               <i
@@ -238,6 +246,9 @@ export default function DashboardSidebar({
                   {link.label}
                 </span>
               )}
+              {!collapsed && active && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C4882A]" />
+              )}
             </Link>
           )
         })}
@@ -248,8 +259,8 @@ export default function DashboardSidebar({
         style={{
           padding: "1rem",
           borderTop: "1px solid rgba(196,136,42,0.2)",
-          background: "linear-gradient(180deg, rgba(237, 229, 216, 0.7) 0%, rgba(228, 218, 201, 0.9) 100%)",
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.6)",
+          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(250, 245, 235, 0.98) 100%)",
+          boxShadow: "0 -4px 16px rgba(196, 136, 42, 0.05)",
         }}
       >
         {session?.user && (
@@ -262,26 +273,29 @@ export default function DashboardSidebar({
               justifyContent: collapsed ? "center" : "flex-start",
             }}
           >
-            <div
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, #C4882A, #8E5E16)",
-                color: "#FBF7F0",
-                fontWeight: 700,
-                fontSize: "0.9rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                boxShadow: "0 2px 8px rgba(196,136,42,0.35)",
-              }}
-              className="ring-2 ring-white/60"
-              title={session.user.name || "User"}
-            >
-              {userInitial}
+            <div className="relative flex-shrink-0">
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg, #E59A24 0%, #C4882A 100%)",
+                  color: "#FFFFFF",
+                  fontWeight: 700,
+                  fontSize: "0.9rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 2px 8px rgba(196,136,42,0.3)",
+                }}
+                className="ring-2 ring-white"
+                title={session.user.name || "User"}
+              >
+                {userInitial}
+              </div>
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#2E7D32] ring-2 ring-white" />
             </div>
+
             {!collapsed && (
               <>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -299,7 +313,7 @@ export default function DashboardSidebar({
                   </div>
                   <div
                     style={{
-                      color: "#6B4B24",
+                      color: "#786550",
                       fontSize: "0.68rem",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
@@ -313,7 +327,7 @@ export default function DashboardSidebar({
                   onClick={() => signOut({ callbackUrl: "/login" })}
                   title="Sign Out"
                   style={{
-                    background: "rgba(255,255,255,0.8)",
+                    background: "#FFFFFF",
                     border: "1px solid rgba(196,136,42,0.25)",
                     borderRadius: "8px",
                     width: "30px",
@@ -321,11 +335,11 @@ export default function DashboardSidebar({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: "#3D2B17",
+                    color: "#6B553E",
                     cursor: "pointer",
                     transition: "all 0.2s ease",
                   }}
-                  className="hover:text-[#A0431E] hover:bg-[#A0431E]/10 hover:border-[#A0431E]/30"
+                  className="hover:text-[#DC2626] hover:bg-[#FEF2F2] hover:border-[#FCA5A5] shadow-xs"
                   aria-label="Sign Out"
                 >
                   <i className="bi bi-box-arrow-right" style={{ fontSize: "0.85rem" }} />
@@ -342,19 +356,19 @@ export default function DashboardSidebar({
             alignItems: "center",
             justifyContent: collapsed ? "center" : "flex-start",
             gap: "0.5rem",
-            color: "#6B4B24",
+            color: "#8E5E16",
             fontSize: "0.7rem",
             fontFamily: "var(--font-space-grotesk), monospace",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
             fontWeight: 600,
             textDecoration: "none",
-            transition: "color 0.2s ease",
+            transition: "all 0.2s ease",
           }}
-          className="hover:text-[#C4882A]"
+          className="hover:text-[#C4882A] group"
           title={collapsed ? "Back to Public Site" : undefined}
         >
-          <i className="bi bi-arrow-left" style={{ fontSize: "0.8rem" }} />
+          <i className="bi bi-arrow-left transition-transform group-hover:-translate-x-1" style={{ fontSize: "0.8rem" }} />
           {!collapsed && "Back to Public Site"}
         </Link>
       </div>

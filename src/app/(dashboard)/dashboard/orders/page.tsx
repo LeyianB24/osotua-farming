@@ -14,29 +14,29 @@ export default async function CustomerOrdersPage() {
   })
 
   return (
-    <div style={{ background: "#FBF7F0" }}>
+    <div style={{ background: "#FBF7F0", minHeight: "100vh" }}>
 
       {/* ── HERO ── */}
       <div
         className="bg-mesh-earth noise"
-        style={{ paddingTop: "10rem", paddingBottom: "4rem", position: "relative", overflow: "hidden" }}
+        style={{ paddingTop: "6rem", paddingBottom: "3rem", position: "relative", overflow: "hidden" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem" }}>
             Member Orders
           </div>
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
-              fontWeight: 300,
-              color: "#F5EFE4",
-              lineHeight: 1,
+              fontSize: "clamp(2.5rem, 5vw, 3.8rem)",
+              fontWeight: 400,
+              color: "#1C1208",
+              lineHeight: 1.05,
             }}
           >
             My <em style={{ color: "#C4882A", fontStyle: "italic" }}>Order History</em>
           </h1>
-          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "520px", marginTop: "1rem" }}>
+          <p style={{ color: "#5C4835", maxWidth: "520px", marginTop: "0.75rem", fontSize: "0.95rem" }}>
             Complete audit ledger of your livestock purchases, Barn Store orders, and delivery statuses.
           </p>
         </div>
@@ -44,8 +44,7 @@ export default async function CustomerOrdersPage() {
 
       {/* ── CONTENT ── */}
       <section
-        className="bg-mesh-green noise"
-        style={{ padding: "5rem 0 8rem" }}
+        style={{ padding: "3rem 0 6rem" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1, maxWidth: "960px" }}>
           {orders.length > 0 ? (
@@ -53,19 +52,20 @@ export default async function CustomerOrdersPage() {
               {orders.map((order) => (
                 <div
                   key={order.id}
-                  className="glass-dark"
                   style={{
                     borderRadius: "20px",
                     overflow: "hidden",
-                    border: "1px solid rgba(196,136,42,0.25)",
+                    background: "#FFFFFF",
+                    border: "1px solid rgba(196, 136, 42, 0.22)",
+                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
                   }}
                 >
                   {/* Order header row */}
                   <div
                     style={{
                       padding: "1.25rem 1.75rem",
-                      background: "rgba(0,0,0,0.3)",
-                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      background: "rgba(250, 245, 235, 0.85)",
+                      borderBottom: "1px solid rgba(196, 136, 42, 0.15)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
@@ -77,21 +77,21 @@ export default async function CustomerOrdersPage() {
                       <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.85rem", fontWeight: 700, color: "#C4882A" }}>
                         #{order.id.slice(-8).toUpperCase()}
                       </span>
-                      <span style={{ color: "rgba(245,239,228,0.45)", fontSize: "0.8rem" }}>
+                      <span style={{ color: "#786550", fontSize: "0.8rem" }}>
                         {new Date(order.createdAt).toDateString()}
                       </span>
                     </div>
 
                     <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
-                      <span style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "1.6rem", fontWeight: 400, color: "#F5EFE4" }}>
+                      <span style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "1.6rem", fontWeight: 600, color: "#1C1208" }}>
                         KES {order.totalAmount.toLocaleString()}
                       </span>
                       <span
                         style={{
-                          fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 600,
+                          fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 700,
                           letterSpacing: "0.14em", textTransform: "uppercase", padding: "0.3rem 0.75rem",
-                          borderRadius: "100px", background: "rgba(61,107,62,0.2)",
-                          border: "1px solid rgba(61,107,62,0.4)", color: "#5a9e5c",
+                          borderRadius: "100px", background: "rgba(46,125,50,0.12)",
+                          border: "1px solid rgba(46,125,50,0.35)", color: "#2E7D32",
                         }}
                       >
                         {order.status}
@@ -109,13 +109,13 @@ export default async function CustomerOrdersPage() {
                           justifyContent: "space-between",
                           alignItems: "center",
                           padding: "0.65rem 0",
-                          borderBottom: "1px solid rgba(255,255,255,0.04)",
+                          borderBottom: "1px solid rgba(196, 136, 42, 0.1)",
                         }}
                       >
-                        <span style={{ color: "#F5EFE4", fontSize: "0.9rem" }}>
+                        <span style={{ color: "#1C1208", fontSize: "0.9rem", fontWeight: 500 }}>
                           {item.breed?.name || item.product?.name || "Farm Item"}
                         </span>
-                        <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "rgba(245,239,228,0.5)", fontSize: "0.8rem" }}>
+                        <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#786550", fontSize: "0.85rem", fontWeight: 600 }}>
                           {item.quantity} × KES {item.unitPrice.toLocaleString()}
                         </span>
                       </div>
@@ -126,19 +126,25 @@ export default async function CustomerOrdersPage() {
             </div>
           ) : (
             <div
-              className="glass-dark"
-              style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "24px", border: "1px solid rgba(196,136,42,0.25)" }}
+              style={{
+                textAlign: "center",
+                padding: "5rem 2rem",
+                borderRadius: "24px",
+                background: "#FFFFFF",
+                border: "1px solid rgba(196, 136, 42, 0.22)",
+                boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+              }}
             >
               <i className="bi bi-box-seam" style={{ fontSize: "3rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1.25rem" }} />
               <h2
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "2.4rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.75rem",
+                  fontSize: "2.4rem", fontWeight: 400, color: "#1C1208", marginBottom: "0.75rem",
                 }}
               >
                 No Orders Yet
               </h2>
-              <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.9rem", marginBottom: "2.5rem" }}>
+              <p style={{ color: "#5C4835", fontSize: "0.9rem", marginBottom: "2rem" }}>
                 You haven&apos;t placed any orders yet. Visit the Barn Store or explore our livestock catalog.
               </p>
               <Link href="/barn" className="btn-primary">
