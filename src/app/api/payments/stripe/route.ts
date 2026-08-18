@@ -7,6 +7,9 @@ export async function POST(req: Request) {
     const { orderId } = await req.json()
     const order = await prisma.order.findUnique({ where: { id: orderId } })
     if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 })
+    if (order.status === "PAID") {
+      return NextResponse.json({ error: "Order is already paid" }, { status: 400 })
+    }
 
     const intent = await createPaymentIntent(order.totalAmount, orderId)
     return NextResponse.json({ clientSecret: intent.client_secret })

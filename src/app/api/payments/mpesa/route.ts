@@ -8,6 +8,9 @@ export async function POST(req: Request) {
 
     const order = await prisma.order.findUnique({ where: { id: orderId } })
     if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 })
+    if (order.status === "PAID") {
+      return NextResponse.json({ error: "Order is already paid" }, { status: 400 })
+    }
 
     const result = await stkPush({
       phone,
