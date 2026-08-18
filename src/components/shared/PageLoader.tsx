@@ -34,7 +34,7 @@ export default function PageLoader() {
         alignItems: "center",
         justifyContent: "center",
         gap: "2rem",
-        background: "linear-gradient(135deg, #1C1208 0%, #2a1a0a 60%, #1C1208 100%)",
+        background: "linear-gradient(135deg, #FFFFFF 0%, #FBF7F0 50%, #FAF5EB 100%)",
         animation: "loaderFadeOut 2s ease-out 1.5s forwards",
       }}
     >
@@ -45,14 +45,14 @@ export default function PageLoader() {
           width: "320px",
           height: "320px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(196,136,42,0.2) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(196,136,42,0.15) 0%, transparent 70%)",
           animation: "goldGlow 2s ease-in-out infinite",
         }}
       />
 
       {/* Logo mark */}
       <div style={{ animation: "logoPulse 1.5s ease-in-out infinite", position: "relative" }}>
-        <Logo size="xl" stacked wordmark asLink={false} />
+        <Logo size="xl" stacked wordmark asLink={false} textColor="dark" />
       </div>
 
       {/* Tagline */}

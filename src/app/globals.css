@@ -206,112 +206,112 @@ body {
   font-family: var(--font-dm-sans, "DM Sans"), sans-serif;
   font-size: 1rem;
   line-height: 1.8;
-  font-weight: 300;
-  color: rgba(245, 239, 228, 0.65);
+  font-weight: 400;
+  color: #5C4835;
 }
 
 /* ══════════════════════════════════════════════════════════
-   GLASSMORPHISM SYSTEM
+   GLASSMORPHISM SYSTEM (Radiant Cream & Savanna Gold)
 ══════════════════════════════════════════════════════════ */
 
-/* Light glass — for use on dark/image backgrounds */
+/* Light glass */
 .glass {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.88);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(196, 136, 42, 0.22);
   border-radius: 16px;
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 10px 32px rgba(196, 136, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* Gold-tinted glass — accent cards */
 .glass-gold {
-  background: rgba(196, 136, 42, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(253, 251, 247, 0.98) 100%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   backdrop-filter: blur(24px) saturate(200%);
-  border: 1px solid rgba(196, 136, 42, 0.25);
+  border: 1px solid rgba(196, 136, 42, 0.28);
   border-radius: 16px;
   box-shadow:
-    0 8px 32px rgba(196, 136, 42, 0.15),
-    inset 0 1px 0 rgba(196, 136, 42, 0.2);
+    0 12px 36px rgba(196, 136, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 /* Green glass — nature/breed sections */
 .glass-green {
-  background: rgba(61, 107, 62, 0.15);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 248, 243, 0.98) 100%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(61, 107, 62, 0.3);
+  border: 1px solid rgba(61, 107, 62, 0.25);
   border-radius: 16px;
   box-shadow:
-    0 8px 32px rgba(61, 107, 62, 0.2),
-    inset 0 1px 0 rgba(61, 107, 62, 0.15);
+    0 12px 36px rgba(61, 107, 62, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
-/* Dark glass — overlays on light backgrounds */
+/* Luminous frosted glass panel */
 .glass-dark {
-  background: rgba(28, 18, 8, 0.65);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(250, 245, 235, 0.96) 100%);
   -webkit-backdrop-filter: blur(32px) saturate(200%);
   backdrop-filter: blur(32px) saturate(200%);
-  border: 1px solid rgba(196, 136, 42, 0.2);
+  border: 1px solid rgba(196, 136, 42, 0.25);
   border-radius: 16px;
   box-shadow:
-    0 24px 64px rgba(28, 18, 8, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 16px 48px rgba(196, 136, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-/* Legacy — for existing dark card usage */
+/* Legacy card usage */
 .glass-card-dark {
-  background: rgba(28, 18, 8, 0.6);
+  background: rgba(255, 255, 255, 0.92);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(196, 136, 42, 0.2);
+  border: 1px solid rgba(196, 136, 42, 0.22);
   border-radius: 12px;
-  box-shadow: 0 16px 48px rgba(28, 18, 8, 0.35);
+  box-shadow: 0 10px 32px rgba(196, 136, 42, 0.08);
 }
 
 /* Navbar glass — fixed floating navbar */
 .glass-nav {
-  background: rgba(28, 18, 8, 0.72);
+  background: rgba(251, 247, 240, 0.88);
   -webkit-backdrop-filter: blur(40px) saturate(200%);
   backdrop-filter: blur(40px) saturate(200%);
-  border-bottom: 1px solid rgba(196, 136, 42, 0.15);
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(196, 136, 42, 0.18);
+  box-shadow: 0 4px 24px rgba(196, 136, 42, 0.06);
 }
 .glass-nav-scrolled {
-  background: rgba(28, 18, 8, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   -webkit-backdrop-filter: blur(60px) saturate(240%);
   backdrop-filter: blur(60px) saturate(240%);
   border-bottom: 1px solid rgba(196, 136, 42, 0.25);
-  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(196,136,42,0.08);
+  box-shadow: 0 8px 32px rgba(196, 136, 42, 0.1), 0 0 0 1px rgba(196,136,42,0.08);
 }
 
 /* ══════════════════════════════════════════════════════════
-   BACKGROUND MESH SYSTEM
+   BACKGROUND MESH SYSTEM (Sun-drenched Cream & Savanna)
 ══════════════════════════════════════════════════════════ */
 
 .bg-mesh-earth {
   background:
-    radial-gradient(ellipse 80% 80% at 20% 20%, rgba(196,136,42,0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.2) 0%, transparent 50%),
-    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(59,37,6,0.6) 0%, transparent 70%),
-    linear-gradient(135deg, #1C1208 0%, #2a1a0a 50%, #1a2010 100%);
+    radial-gradient(ellipse 80% 80% at 20% 20%, rgba(196,136,42,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(245,239,228,0.8) 0%, transparent 70%),
+    linear-gradient(135deg, #FBF7F0 0%, #FAF5EB 50%, #F5EFE4 100%);
 }
 
 .bg-mesh-gold {
   background:
-    radial-gradient(ellipse 70% 70% at 30% 30%, rgba(196,136,42,0.3) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 80% at 70% 70%, rgba(160,67,30,0.2) 0%, transparent 60%),
-    linear-gradient(160deg, #3B2506 0%, #1C1208 100%);
+    radial-gradient(ellipse 70% 70% at 30% 30%, rgba(196,136,42,0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 80% at 70% 70%, rgba(229,154,36,0.1) 0%, transparent 60%),
+    linear-gradient(160deg, #FFFFFF 0%, #FBF7F0 50%, #FAF5EB 100%);
 }
 
 .bg-mesh-green {
   background:
-    radial-gradient(ellipse 80% 80% at 10% 90%, rgba(61,107,62,0.4) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 60% at 90% 10%, rgba(196,136,42,0.2) 0%, transparent 50%),
-    linear-gradient(135deg, #1a2010 0%, #1C1208 100%);
+    radial-gradient(ellipse 80% 80% at 10% 90%, rgba(61,107,62,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 90% 10%, rgba(196,136,42,0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #F4F8F3 0%, #FBF7F0 50%, #FAF5EB 100%);
 }
 
 /* Noise texture overlay */

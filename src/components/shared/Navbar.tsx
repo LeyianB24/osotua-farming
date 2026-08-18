@@ -48,7 +48,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
           <div className="flex items-center justify-between" style={{ height: "72px" }}>
 
             {/* Logo */}
-            <Logo size="md" />
+            <Logo size="md" textColor="dark" />
 
             {/* Desktop nav — center */}
             <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
@@ -59,14 +59,14 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                     key={link.href}
                     href={link.href}
                     className={`relative font-mono text-[0.68rem] tracking-[0.2em] uppercase transition-colors duration-200 pb-0.5 ${
-                      active ? "text-[#C4882A]" : "text-[#F5EFE4]/65 hover:text-[#C4882A]"
+                      active ? "text-[#C4882A] font-bold" : "text-[#1C1208]/75 hover:text-[#C4882A]"
                     }`}
                   >
                     {link.label}
                     {active && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute -bottom-0.5 left-0 right-0 h-px bg-[#C4882A]"
+                        className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-[#C4882A]"
                         transition={{ type: "spring", stiffness: 400, damping: 32 }}
                       />
                     )}
@@ -83,7 +83,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="text-[#F5EFE4]/55 hover:text-[#25D366] transition-colors p-1.5"
+                className="text-[#1C1208]/75 hover:text-[#25D366] transition-colors p-1.5"
               >
                 <i className="bi bi-whatsapp text-xl leading-none" />
               </a>
@@ -91,22 +91,22 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
               {/* Portal */}
               <Link
                 href="/dashboard"
-                className="text-[#F5EFE4]/55 hover:text-[#C4882A] transition-colors font-mono text-[0.65rem] tracking-wider uppercase flex items-center gap-1.5"
+                className="text-[#1C1208]/75 hover:text-[#C4882A] transition-colors font-mono text-[0.65rem] tracking-wider uppercase flex items-center gap-1.5 font-bold"
               >
-                <i className="bi bi-person-circle text-base leading-none" />
+                <i className="bi bi-person-circle text-base leading-none text-[#C4882A]" />
                 Portal
               </Link>
 
               {/* Cart */}
               <Link
                 href="/cart"
-                className="relative text-[#F5EFE4]/65 hover:text-[#C4882A] transition-colors p-1.5"
+                className="relative text-[#1C1208]/75 hover:text-[#C4882A] transition-colors p-1.5"
                 aria-label={`Cart (${cartCount} items)`}
               >
                 <i className="bi bi-bag text-xl leading-none" />
                 {cartCount > 0 && (
                   <span
-                    className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[#1C1208] text-[9px] font-bold flex items-center justify-center leading-none"
+                    className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[#FFFFFF] text-[9px] font-bold flex items-center justify-center leading-none"
                     style={{ background: "linear-gradient(135deg, #C4882A, #D99A30)" }}
                   >
                     {cartCount}
@@ -115,7 +115,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
               </Link>
 
               {/* CTA */}
-              <Link href="/visit" className="btn-primary text-[0.7rem] py-2.5 px-5">
+              <Link href="/visit" className="btn-primary text-[0.7rem] py-2.5 px-5 shadow-sm">
                 Visit Us
                 <i className="bi bi-arrow-right" />
               </Link>
@@ -123,17 +123,17 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
 
             {/* Mobile controls */}
             <div className="flex items-center gap-3 lg:hidden">
-              <Link href="/cart" className="relative text-[#F5EFE4]/65 p-1.5">
+              <Link href="/cart" className="relative text-[#1C1208]/80 p-1.5">
                 <i className="bi bi-bag text-xl" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-[#1C1208] text-[9px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-[#FFFFFF] text-[9px] font-bold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
               </Link>
               <button
                 onClick={() => setOpen(!open)}
-                className="text-[#F5EFE4] hover:text-[#C4882A] transition-colors p-1.5 focus-visible:outline-none"
+                className="text-[#1C1208] hover:text-[#C4882A] transition-colors p-1.5 focus-visible:outline-none"
                 aria-expanded={open}
                 aria-label="Toggle menu"
               >
@@ -153,7 +153,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="lg:hidden fixed inset-0 top-[72px]"
               style={{
-                background: "rgba(28, 18, 8, 0.96)",
+                background: "rgba(251, 247, 240, 0.98)",
                 WebkitBackdropFilter: "blur(40px) saturate(200%)",
                 backdropFilter: "blur(40px) saturate(200%)",
                 zIndex: 99,
@@ -194,11 +194,11 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                           alignItems: "center",
                           justifyContent: "space-between",
                           padding: "1rem 0",
-                          borderBottom: "1px solid rgba(255,255,255,0.06)",
+                          borderBottom: "1px solid rgba(196,136,42,0.18)",
                           fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                           fontSize: "clamp(1.8rem, 7vw, 2.5rem)",
-                          fontWeight: 300,
-                          color: active ? "#C4882A" : "#F5EFE4",
+                          fontWeight: 400,
+                          color: active ? "#C4882A" : "#1C1208",
                           textDecoration: "none",
                           transition: "color 0.2s ease",
                           letterSpacing: "-0.01em",
@@ -231,6 +231,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-ghost justify-center text-center"
+                  style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
                 >
                   <i className="bi bi-whatsapp" />
                   WhatsApp Us

@@ -16,28 +16,34 @@ export default function ToastContainer() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="pointer-events-auto flex items-start gap-3 p-4 bg-[#1C1208] text-[#F5EFE4] rounded-md shadow-2xl border border-[#C4882A]/30 backdrop-blur-lg"
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(196, 136, 42, 0.3)",
+              boxShadow: "0 16px 40px rgba(196, 136, 42, 0.12)",
+              borderRadius: "16px",
+            }}
+            className="pointer-events-auto flex items-start gap-3 p-4 text-[#1C1208] backdrop-blur-lg"
           >
             {toast.type === "success" && (
-              <i className="bi bi-check-circle-fill text-[#C4882A] text-lg shrink-0 mt-0.5" />
+              <i className="bi bi-check-circle-fill text-[#2E7D32] text-lg shrink-0 mt-0.5" />
             )}
             {toast.type === "info" && (
-              <i className="bi bi-info-circle-fill text-sky-400 text-lg shrink-0 mt-0.5" />
+              <i className="bi bi-info-circle-fill text-[#C4882A] text-lg shrink-0 mt-0.5" />
             )}
             {toast.type === "warning" && (
-              <i className="bi bi-exclamation-triangle-fill text-amber-400 text-lg shrink-0 mt-0.5" />
+              <i className="bi bi-exclamation-triangle-fill text-[#C2410C] text-lg shrink-0 mt-0.5" />
             )}
             <div className="flex-1 min-w-0">
-              <h4 className="text-xs font-mono font-semibold text-[#C4882A] uppercase tracking-wider">
+              <h4 className="text-xs font-mono font-bold text-[#8E5E16] uppercase tracking-wider">
                 {toast.title}
               </h4>
-              <p className="text-xs text-[#F5EFE4]/80 mt-0.5 leading-relaxed">
+              <p className="text-xs text-[#5C4835] mt-0.5 leading-relaxed">
                 {toast.message}
               </p>
             </div>
             <button
               onClick={() => removeToast(toast.id)}
-              className="text-[#F5EFE4]/40 hover:text-[#F5EFE4] transition-colors p-1"
+              className="text-[#786550] hover:text-[#1C1208] transition-colors p-1"
               aria-label="Close notification"
             >
               <i className="bi bi-x-lg text-xs" />
@@ -48,4 +54,3 @@ export default function ToastContainer() {
     </div>
   );
 }
-

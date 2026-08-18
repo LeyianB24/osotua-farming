@@ -5,7 +5,6 @@ import { motion } from "framer-motion"
 import CountUp from "@/components/shared/CountUp"
 import TerrainWave from "@/components/shared/TerrainWave"
 
-
 const stats = [
   {
     label: "Acres of Regenerative Land",
@@ -13,7 +12,7 @@ const stats = [
     suffix: "+",
     subtext: "Chemical-free rotational pastures",
     icon: "bi-tree-fill",
-    color: "#3D6B3E",
+    color: "#2E7D32",
   },
   {
     label: "Pedigree Livestock Head",
@@ -37,7 +36,7 @@ const stats = [
     suffix: "+ Tons",
     subtext: "Grass-fed beef, mutton & dairy",
     icon: "bi-graph-up-arrow",
-    color: "#3D6B3E",
+    color: "#2E7D32",
   },
 ]
 
@@ -50,10 +49,13 @@ export default function FarmStats() {
 
   return (
     <>
-      {/* ── STATS SECTION ── */}
+      {/* ── STATS SECTION (Lively Cream & Savanna Theme) ── */}
       <section
-        className="bg-mesh-gold noise relative overflow-hidden"
-        style={{ padding: "6rem 0 8rem" }}
+        className="relative overflow-hidden"
+        style={{
+          background: "linear-gradient(180deg, #FBF7F0 0%, #FAF5EB 50%, #FFFFFF 100%)",
+          padding: "6rem 0 8rem",
+        }}
       >
         <div className="os-container relative z-10">
           {/* Section Header */}
@@ -77,7 +79,7 @@ export default function FarmStats() {
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "clamp(2.5rem, 5vw, 4rem)",
                 fontWeight: 300,
-                color: "#F5EFE4",
+                color: "#1C1208",
                 lineHeight: 1.1,
               }}
             >
@@ -89,13 +91,13 @@ export default function FarmStats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              style={{ marginTop: "1rem", color: "rgba(245,239,228,0.6)", lineHeight: 1.8 }}
+              style={{ marginTop: "1rem", color: "#5C4835", lineHeight: 1.8 }}
             >
               Every Osotua subscription directly rejuvenates Kenyan grasslands and supports indigenous pastoral communities.
             </motion.p>
           </div>
 
-          {/* 4-stat glass-gold grid */}
+          {/* 4-stat crisp cream grid */}
           <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
             style={{ marginBottom: "5rem" }}
@@ -108,14 +110,16 @@ export default function FarmStats() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="glass-gold"
                 style={{
+                  background: "linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 100%)",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  boxShadow: "0 10px 32px rgba(196, 136, 42, 0.08)",
+                  borderRadius: "20px",
                   padding: "1.75rem",
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.5rem",
                   cursor: "default",
-                  animation: `glassFloat ${6 + idx * 0.5}s ease-in-out ${idx * 0.3}s infinite`,
                 }}
               >
                 {/* Icon */}
@@ -123,9 +127,9 @@ export default function FarmStats() {
                   style={{
                     width: "48px",
                     height: "48px",
-                    borderRadius: "12px",
-                    background: `rgba(${stat.color === "#C4882A" ? "196,136,42" : "61,107,62"}, 0.15)`,
-                    border: `1px solid rgba(${stat.color === "#C4882A" ? "196,136,42" : "61,107,62"}, 0.3)`,
+                    borderRadius: "14px",
+                    background: `rgba(${stat.color === "#C4882A" ? "196,136,42" : "46,125,50"}, 0.12)`,
+                    border: `1px solid rgba(${stat.color === "#C4882A" ? "196,136,42" : "46,125,50"}, 0.25)`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -140,8 +144,8 @@ export default function FarmStats() {
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                     fontSize: "2.6rem",
-                    fontWeight: 300,
-                    color: "#F5EFE4",
+                    fontWeight: 400,
+                    color: "#1C1208",
                     lineHeight: 1,
                   }}
                 >
@@ -153,7 +157,7 @@ export default function FarmStats() {
                   style={{
                     fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
                     fontSize: "0.6rem",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
                     color: stat.color,
@@ -162,7 +166,7 @@ export default function FarmStats() {
                 >
                   {stat.label}
                 </div>
-                <p style={{ fontSize: "0.8rem", color: "rgba(245,239,228,0.5)", lineHeight: 1.5 }}>
+                <p style={{ fontSize: "0.82rem", color: "#6B553E", lineHeight: 1.5 }}>
                   {stat.subtext}
                 </p>
               </motion.div>
@@ -175,15 +179,22 @@ export default function FarmStats() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="glass-dark"
-            style={{ padding: "2.5rem 2.5rem 2.5rem", position: "relative", overflow: "hidden" }}
+            style={{
+              background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5EB 100%)",
+              border: "1px solid rgba(196, 136, 42, 0.25)",
+              boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
+              borderRadius: "24px",
+              padding: "2.5rem 2.5rem 2.5rem",
+              position: "relative",
+              overflow: "hidden",
+            }}
           >
             {/* Accent glow */}
             <div style={{
               position: "absolute", top: "-4rem", right: "-4rem",
               width: "280px", height: "280px",
               borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(196,136,42,0.18) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(196,136,42,0.12) 0%, transparent 70%)",
               pointerEvents: "none",
             }} />
 
@@ -197,12 +208,12 @@ export default function FarmStats() {
                     gap: "0.5rem",
                     padding: "0.4rem 1rem",
                     borderRadius: "100px",
-                    background: "rgba(196,136,42,0.15)",
-                    border: "1px solid rgba(196,136,42,0.3)",
-                    color: "#C4882A",
+                    background: "rgba(196,136,42,0.12)",
+                    border: "1px solid rgba(196,136,42,0.25)",
+                    color: "#8E5E16",
                     fontSize: "0.58rem",
                     fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
                   }}
@@ -216,14 +227,14 @@ export default function FarmStats() {
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                     fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
                     fontWeight: 300,
-                    color: "#F5EFE4",
+                    color: "#1C1208",
                     lineHeight: 1.2,
                   }}
                 >
                   Calculate Your Personal Pastoral Footprint
                 </h3>
 
-                <p style={{ fontSize: "0.9rem", color: "rgba(245,239,228,0.6)", lineHeight: 1.7 }}>
+                <p style={{ fontSize: "0.9rem", color: "#5C4835", lineHeight: 1.7 }}>
                   Adjust your estimated monthly farm order volume to see your direct ecological and economic contribution:
                 </p>
 
@@ -240,10 +251,10 @@ export default function FarmStats() {
                       style={{
                         fontFamily: "var(--font-space-grotesk), monospace",
                         fontSize: "0.6rem",
-                        fontWeight: 600,
+                        fontWeight: 700,
                         letterSpacing: "0.18em",
                         textTransform: "uppercase",
-                        color: "#C4882A",
+                        color: "#8E5E16",
                       }}
                     >
                       Monthly Volume:
@@ -252,12 +263,12 @@ export default function FarmStats() {
                       style={{
                         fontFamily: "var(--font-cormorant), Georgia, serif",
                         fontSize: "1.8rem",
-                        fontWeight: 400,
-                        color: "#F5EFE4",
+                        fontWeight: 500,
+                        color: "#1C1208",
                         lineHeight: 1,
                       }}
                     >
-                      {monthlyVolumeKg} <span style={{ fontSize: "1rem", color: "rgba(245,239,228,0.5)" }}>kg / mo</span>
+                      {monthlyVolumeKg} <span style={{ fontSize: "1rem", color: "#786550" }}>kg / mo</span>
                     </span>
                   </div>
                   <input
@@ -269,9 +280,9 @@ export default function FarmStats() {
                     onChange={(e) => setMonthlyVolumeKg(Number(e.target.value))}
                     style={{
                       width: "100%",
-                      height: "4px",
-                      background: `linear-gradient(to right, #C4882A ${((monthlyVolumeKg - 5) / 95) * 100}%, rgba(245,239,228,0.15) ${((monthlyVolumeKg - 5) / 95) * 100}%)`,
-                      borderRadius: "2px",
+                      height: "6px",
+                      background: `linear-gradient(to right, #C4882A ${((monthlyVolumeKg - 5) / 95) * 100}%, rgba(28,18,8,0.1) ${((monthlyVolumeKg - 5) / 95) * 100}%)`,
+                      borderRadius: "3px",
                       appearance: "none",
                       cursor: "pointer",
                       outline: "none",
@@ -283,7 +294,8 @@ export default function FarmStats() {
                       justifyContent: "space-between",
                       fontSize: "0.65rem",
                       fontFamily: "var(--font-space-grotesk), monospace",
-                      color: "rgba(245,239,228,0.3)",
+                      fontWeight: 600,
+                      color: "#786550",
                       marginTop: "0.5rem",
                     }}
                   >
@@ -296,17 +308,22 @@ export default function FarmStats() {
 
               {/* Right — Results */}
               <div
-                className="lg:col-span-6 glass-green"
-                style={{ padding: "1.75rem" }}
+                style={{
+                  padding: "1.75rem",
+                  background: "rgba(61, 107, 62, 0.08)",
+                  border: "1px solid rgba(61, 107, 62, 0.25)",
+                  borderRadius: "20px",
+                }}
+                className="lg:col-span-6"
               >
                 <div
                   style={{
                     fontFamily: "var(--font-space-grotesk), monospace",
                     fontSize: "0.58rem",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    color: "#3D6B3E",
+                    color: "#2E7D32",
                     borderBottom: "1px solid rgba(61,107,62,0.25)",
                     paddingBottom: "0.75rem",
                     marginBottom: "1.25rem",
@@ -321,7 +338,7 @@ export default function FarmStats() {
                     icon: "bi-cloud-fill",
                     value: `${carbonSequesteredKg} kg CO₂e`,
                     label: "Carbon soil-sequestered via managed rotational grazing",
-                    color: "#3D6B3E",
+                    color: "#2E7D32",
                   },
                   {
                     icon: "bi-geo-alt-fill",
@@ -333,7 +350,7 @@ export default function FarmStats() {
                     icon: "bi-people-fill",
                     value: `KES ${pastoralistIncomeKes.toLocaleString()}`,
                     label: "Direct fair wages paid to partner Maasai herders",
-                    color: "#3D6B3E",
+                    color: "#2E7D32",
                   },
                 ].map((item, i) => (
                   <div
@@ -347,11 +364,11 @@ export default function FarmStats() {
                   >
                     <div
                       style={{
-                        width: "32px",
-                        height: "32px",
-                        borderRadius: "8px",
-                        background: `rgba(${item.color === "#3D6B3E" ? "61,107,62" : "196,136,42"}, 0.15)`,
-                        border: `1px solid rgba(${item.color === "#3D6B3E" ? "61,107,62" : "196,136,42"}, 0.3)`,
+                        width: "34px",
+                        height: "34px",
+                        borderRadius: "10px",
+                        background: `rgba(${item.color === "#2E7D32" ? "46,125,50" : "196,136,42"}, 0.15)`,
+                        border: `1px solid rgba(${item.color === "#2E7D32" ? "46,125,50" : "196,136,42"}, 0.3)`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -365,14 +382,14 @@ export default function FarmStats() {
                         style={{
                           fontFamily: "var(--font-cormorant), Georgia, serif",
                           fontSize: "1.5rem",
-                          fontWeight: 400,
-                          color: "#F5EFE4",
+                          fontWeight: 500,
+                          color: "#1C1208",
                           lineHeight: 1.1,
                         }}
                       >
                         {item.value}
                       </div>
-                      <p style={{ fontSize: "0.78rem", color: "rgba(245,239,228,0.5)", lineHeight: 1.5, marginTop: "0.2rem" }}>
+                      <p style={{ fontSize: "0.78rem", color: "#5C4835", lineHeight: 1.5, marginTop: "0.2rem" }}>
                         {item.label}
                       </p>
                     </div>

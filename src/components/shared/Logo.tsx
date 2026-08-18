@@ -20,6 +20,7 @@ interface LogoProps {
   stacked?: boolean
   /** Text color variant: 'light' (default, #F5EFE4) or 'dark' (#1C1208) */
   textColor?: "light" | "dark"
+  className?: string
 }
 
 export default function Logo({

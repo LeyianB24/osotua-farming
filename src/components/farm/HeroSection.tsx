@@ -7,7 +7,6 @@ import TerrainWave from "@/components/shared/TerrainWave"
 import CountUp from "@/components/shared/CountUp"
 import { LOGO, HERD_FIELD } from "@/lib/images"
 
-
 const WORD_STAGGER = 0.09
 
 function WordReveal({ text, className }: { text: string; className?: string }) {
@@ -34,12 +33,12 @@ function WordReveal({ text, className }: { text: string; className?: string }) {
 
 const floatingStats = [
   { icon: "bi-geo-alt-fill",     value: 12500, suffix: "+",    label: "Acres Rangelands",   color: "#C4882A" },
-  { icon: "bi-people-fill",      value: 4800,  suffix: "+",    label: "Head of Livestock",  color: "#3D6B3E" },
+  { icon: "bi-people-fill",      value: 4800,  suffix: "+",    label: "Head of Livestock",  color: "#2E7D32" },
   { icon: "bi-graph-up",         value: 180,   suffix: "+",    label: "Partner Families",   color: "#C4882A" },
-  { icon: "bi-patch-check-fill", value: 450,   suffix: "t+",   label: "Organic Yield / yr", color: "#3D6B3E" },
+  { icon: "bi-patch-check-fill", value: 450,   suffix: "t+",   label: "Organic Yield / yr", color: "#2E7D32" },
 ]
 
-// Gold floating particles
+// Gold & Emerald floating particles
 const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
   id: i,
   left: `${5 + (i * 5.2) % 90}%`,
@@ -53,7 +52,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20"
-      style={{ background: "#1C1208" }}
+      style={{ background: "#FBF7F0" }}
     >
       {/* ── 1. RANCH PHOTO BACKGROUND LAYER ── */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -65,14 +64,14 @@ export default function HeroSection() {
           sizes="100vw"
           className="object-cover opacity-35 scale-105"
         />
-        {/* Dark luxury gradient overlays for legibility */}
+        {/* Sun-drenched warm gradient overlays */}
         <div
           className="absolute inset-0"
           style={{
             background: `
               radial-gradient(ellipse 80% 80% at 20% 20%, rgba(196,136,42,0.3) 0%, transparent 60%),
-              radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.25) 0%, transparent 50%),
-              linear-gradient(180deg, rgba(28,18,8,0.75) 0%, rgba(28,18,8,0.85) 60%, #1C1208 100%)
+              radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.2) 0%, transparent 50%),
+              linear-gradient(180deg, rgba(28,18,8,0.6) 0%, rgba(28,18,8,0.7) 55%, #FBF7F0 100%)
             `,
           }}
         />
@@ -85,13 +84,13 @@ export default function HeroSection() {
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.12, scale: 1 }}
+          animate={{ opacity: 0.1, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           style={{
             position: "relative",
             width: "min(700px, 85vw)",
             height: "min(700px, 85vw)",
-            filter: "drop-shadow(0 0 40px rgba(196,136,42,0.3))",
+            filter: "drop-shadow(0 0 40px rgba(196,136,42,0.25))",
           }}
         >
           <Image
@@ -110,7 +109,7 @@ export default function HeroSection() {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E")`,
           opacity: 0.45,
           pointerEvents: "none",
           zIndex: 1,
@@ -164,9 +163,9 @@ export default function HeroSection() {
             gap: "0.6rem",
             padding: "0.45rem 1.25rem",
             borderRadius: "100px",
-            background: "rgba(196,136,42,0.15)",
-            border: "1px solid rgba(196,136,42,0.35)",
-            color: "#C4882A",
+            background: "rgba(255, 255, 255, 0.15)",
+            border: "1px solid rgba(196, 136, 42, 0.4)",
+            color: "#E59A24",
             fontSize: "0.6rem",
             fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
             fontWeight: 600,
@@ -175,7 +174,7 @@ export default function HeroSection() {
             marginBottom: "2rem",
             WebkitBackdropFilter: "blur(16px)",
             backdropFilter: "blur(16px)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
           }}
         >
           <i className="bi bi-stars" style={{ fontSize: "0.85rem" }} />
@@ -186,7 +185,7 @@ export default function HeroSection() {
         {/* Hero headline */}
         <h1
           className="text-hero"
-          style={{ color: "#FBF7F0", maxWidth: "900px", marginBottom: "0.5rem", textShadow: "0 4px 24px rgba(0,0,0,0.4)" }}
+          style={{ color: "#FFFEFA", maxWidth: "900px", marginBottom: "0.5rem", textShadow: "0 4px 24px rgba(0,0,0,0.4)" }}
         >
           <WordReveal text="Pristine Livestock" />
           <br />
@@ -199,7 +198,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            style={{ color: "#C4882A", fontStyle: "normal" }}
+            style={{ color: "#D99A30", fontStyle: "normal" }}
           >
             Produce
           </motion.span>
@@ -215,10 +214,10 @@ export default function HeroSection() {
             fontSize: "1rem",
             lineHeight: 1.8,
             fontWeight: 300,
-            color: "rgba(245,239,228,0.75)",
+            color: "rgba(255, 253, 248, 0.85)",
             marginTop: "1.5rem",
             marginBottom: "2.5rem",
-            textShadow: "0 2px 12px rgba(0,0,0,0.6)",
+            textShadow: "0 2px 12px rgba(0,0,0,0.5)",
           }}
         >
           Directly from Kenya&apos;s sun-drenched pastures to your table. Ethical breeding,
@@ -237,7 +236,7 @@ export default function HeroSection() {
             Explore Farm Barn
             <i className="bi bi-arrow-right" />
           </Link>
-          <Link href="/breeds" className="btn-ghost">
+          <Link href="/breeds" className="btn-ghost" style={{ background: "rgba(255, 255, 255, 0.1)", borderColor: "rgba(255, 255, 255, 0.3)", color: "#FFFEFA" }}>
             <i className="bi bi-heart-pulse-fill" />
             View Pedigree Breeds
           </Link>
@@ -249,14 +248,14 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.6 }}
           className="anim-chevron"
-          style={{ marginTop: "3.5rem", color: "rgba(196,136,42,0.6)" }}
+          style={{ marginTop: "3.5rem", color: "rgba(196,136,42,0.8)" }}
           aria-hidden="true"
         >
           <i className="bi bi-chevron-down" style={{ fontSize: "1.4rem" }} />
         </motion.div>
       </div>
 
-      {/* ── FLOATING STAT CARDS ── */}
+      {/* ── FLOATING STAT CARDS (Refreshed in radiant cream glass) ── */}
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
@@ -271,16 +270,17 @@ export default function HeroSection() {
       >
         <div className="os-container">
           <div
-            className="glass-dark"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(2, 1fr)",
               gap: "1px",
-              borderRadius: "20px",
+              borderRadius: "24px",
               overflow: "hidden",
-              background: "rgba(28,18,8,0.7)",
-              border: "1px solid rgba(196,136,42,0.25)",
-              boxShadow: "0 24px 64px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)",
+              background: "linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(251, 247, 240, 0.98) 100%)",
+              border: "1px solid rgba(196,136,42,0.3)",
+              boxShadow: "0 24px 60px rgba(196,136,42,0.12), inset 0 1px 0 rgba(255,255,255,1)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
             }}
           >
             {floatingStats.map((stat, i) => (
@@ -290,22 +290,22 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.7 + i * 0.1, duration: 0.5 }}
                 style={{
-                  padding: "1.5rem",
+                  padding: "1.75rem",
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.35rem",
-                  background: "rgba(255,255,255,0.02)",
-                  borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                  borderRight: i % 2 === 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                  background: "rgba(255, 255, 255, 0.6)",
+                  borderBottom: i < 2 ? "1px solid rgba(196,136,42,0.15)" : "none",
+                  borderRight: i % 2 === 0 ? "1px solid rgba(196,136,42,0.15)" : "none",
                 }}
               >
                 <i className={`bi ${stat.icon}`} style={{ fontSize: "1.4rem", color: stat.color, marginBottom: "0.25rem" }} />
                 <div
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "2rem",
-                    fontWeight: 300,
-                    color: "#F5EFE4",
+                    fontSize: "2.2rem",
+                    fontWeight: 400,
+                    color: "#1C1208",
                     lineHeight: 1,
                   }}
                 >
@@ -314,11 +314,11 @@ export default function HeroSection() {
                 <div
                   style={{
                     fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                    fontSize: "0.58rem",
-                    fontWeight: 600,
+                    fontSize: "0.6rem",
+                    fontWeight: 700,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
-                    color: "rgba(245,239,228,0.5)",
+                    color: "#786550",
                   }}
                 >
                   {stat.label}

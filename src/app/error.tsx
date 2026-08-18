@@ -15,16 +15,24 @@ export default function ErrorPage({
   }, [error])
 
   return (
-    <div className="min-h-[80vh] bg-[#1C1208] flex items-center justify-center p-6 text-[#FBF7F0]">
-      <div className="max-w-md w-full text-center space-y-6 bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-md shadow-2xl">
-        <div className="w-16 h-16 rounded-full bg-[#A0431E]/20 border border-[#A0431E]/30 text-[#A0431E] flex items-center justify-center mx-auto text-2xl">
+    <div style={{ background: "#FBF7F0", minHeight: "80vh" }} className="flex items-center justify-center p-6 text-[#1C1208]">
+      <div
+        style={{
+          background: "#FFFFFF",
+          border: "1px solid rgba(196, 136, 42, 0.25)",
+          borderRadius: "28px",
+          boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
+        }}
+        className="max-w-md w-full text-center space-y-6 p-8"
+      >
+        <div className="w-16 h-16 rounded-full bg-[#C2410C]/12 border border-[#C2410C]/30 text-[#C2410C] flex items-center justify-center mx-auto text-2xl">
           <i className="bi bi-exclamation-triangle-fill" />
         </div>
 
         <div>
-          <span className="eyebrow justify-center text-[#C4882A] mb-2">System Notice</span>
-          <h1 className="font-serif text-3xl text-[#FBF7F0]">Something went wrong</h1>
-          <p className="text-xs text-[#FBF7F0]/60 mt-2 font-sans">
+          <span className="eyebrow justify-center text-[#8E5E16] mb-2 font-bold">System Notice</span>
+          <h1 className="font-serif text-3xl text-[#1C1208] font-normal">Something went wrong</h1>
+          <p className="text-xs text-[#5C4835] mt-2 font-sans">
             An unexpected error occurred while loading this farm resource. Our technical ranch team has been notified.
           </p>
         </div>
@@ -50,4 +58,3 @@ export default function ErrorPage({
     </div>
   )
 }
-
