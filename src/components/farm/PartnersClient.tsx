@@ -56,15 +56,15 @@ export default function PartnersClient() {
         style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
             Outgrower &amp; Producer Scheme
           </div>
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
               fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 300,
-              color: "#F5EFE4",
+              fontWeight: 400,
+              color: "#1C1208",
               lineHeight: 0.95,
               letterSpacing: "-0.02em",
               marginBottom: "1.5rem",
@@ -74,7 +74,7 @@ export default function PartnersClient() {
             <br />
             <em style={{ color: "#C4882A", fontStyle: "italic" }}>Osotua</em>
           </h1>
-          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem" }}>
+          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem" }}>
             Supply fresh vegetables, fodder, eggs, or dairy under our partner farmer outgrower scheme — benefiting from guaranteed offtake contracts, agronomy training, and input credit.
           </p>
         </div>
@@ -87,15 +87,15 @@ export default function PartnersClient() {
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ maxWidth: "560px", marginBottom: "4rem" }}>
-            <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+            <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1rem", fontWeight: 700 }}>
               Partnership Perks
             </div>
             <h2
               style={{
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "clamp(2.4rem, 4vw, 4rem)",
-                fontWeight: 300,
-                color: "#F5EFE4",
+                fontWeight: 400,
+                color: "#1C1208",
                 lineHeight: 1.1,
               }}
             >
@@ -107,11 +107,12 @@ export default function PartnersClient() {
             {BENEFITS.map((b) => (
               <div
                 key={b.label}
-                className="glass-dark"
                 style={{
                   padding: "2.5rem 2rem",
-                  borderRadius: "20px",
-                  border: "1px solid rgba(196,136,42,0.2)",
+                  borderRadius: "24px",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(196, 136, 42, 0.22)",
+                  boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
@@ -123,8 +124,8 @@ export default function PartnersClient() {
                       width: "48px",
                       height: "48px",
                       borderRadius: "14px",
-                      background: "rgba(196,136,42,0.15)",
-                      border: "1px solid rgba(196,136,42,0.3)",
+                      background: "rgba(196,136,42,0.12)",
+                      border: "1px solid rgba(196,136,42,0.25)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -139,14 +140,14 @@ export default function PartnersClient() {
                     style={{
                       fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                       fontSize: "1.4rem",
-                      fontWeight: 400,
-                      color: "#F5EFE4",
+                      fontWeight: 500,
+                      color: "#1C1208",
                       marginBottom: "0.75rem",
                     }}
                   >
                     {b.label}
                   </h3>
-                  <p style={{ color: "rgba(245,239,228,0.6)", fontSize: "0.85rem", lineHeight: 1.7 }}>
+                  <p style={{ color: "#5C4835", fontSize: "0.88rem", lineHeight: 1.7 }}>
                     {b.desc}
                   </p>
                 </div>
@@ -161,21 +162,21 @@ export default function PartnersClient() {
         <div className="os-container">
           <div className="max-w-2xl mx-auto">
             <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-              <div className="eyebrow justify-center" style={{ color: "#C4882A", marginBottom: "0.75rem" }}>
+              <div className="eyebrow justify-center" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
                 Outgrower Registration
               </div>
               <h2
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "clamp(2.4rem, 4vw, 3.5rem)",
-                  fontWeight: 300,
+                  fontWeight: 400,
                   color: "#1C1208",
                   lineHeight: 1.1,
                 }}
               >
                 Apply to Become a <em style={{ color: "#C4882A" }}>Partner Producer</em>
               </h2>
-              <p style={{ color: "#6B3E1A", fontSize: "0.95rem", marginTop: "1rem", lineHeight: 1.7 }}>
+              <p style={{ color: "#5C4835", fontSize: "0.95rem", marginTop: "1rem", lineHeight: 1.7 }}>
                 Fill out the application below. Our agricultural partnership team evaluates new farm partners within 3 business days.
               </p>
             </div>
@@ -183,11 +184,12 @@ export default function PartnersClient() {
             {submitted ? (
               <div
                 style={{
-                  background: "rgba(61,107,62,0.1)",
-                  border: "1px solid rgba(61,107,62,0.3)",
-                  borderRadius: "24px",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(46,125,50,0.3)",
+                  borderRadius: "28px",
                   padding: "4rem 2rem",
                   textAlign: "center",
+                  boxShadow: "0 16px 48px rgba(46,125,50,0.08)",
                 }}
               >
                 <div
@@ -195,12 +197,12 @@ export default function PartnersClient() {
                     width: "64px",
                     height: "64px",
                     borderRadius: "50%",
-                    background: "rgba(61,107,62,0.2)",
+                    background: "rgba(46,125,50,0.15)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     margin: "0 auto 1.5rem",
-                    color: "#3D6B3E",
+                    color: "#2E7D32",
                     fontSize: "2rem",
                   }}
                 >
@@ -210,14 +212,14 @@ export default function PartnersClient() {
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                     fontSize: "2.2rem",
-                    fontWeight: 400,
+                    fontWeight: 500,
                     color: "#1C1208",
                     marginBottom: "0.5rem",
                   }}
                 >
                   Application Submitted
                 </h3>
-                <p style={{ color: "#6B3E1A", fontSize: "0.9rem", maxWidth: "420px", margin: "0 auto 2rem" }}>
+                <p style={{ color: "#5C4835", fontSize: "0.9rem", maxWidth: "420px", margin: "0 auto 2rem" }}>
                   We have received your farm details. An Osotua field agronomist will reach out via phone/email to schedule a site inspection.
                 </p>
                 <button onClick={() => setSubmitted(false)} className="btn-primary">
@@ -229,20 +231,20 @@ export default function PartnersClient() {
                 onSubmit={handleSubmit}
                 style={{
                   background: "#FFFFFF",
-                  border: "1px solid #EDE5D8",
-                  borderRadius: "24px",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  borderRadius: "28px",
                   padding: "3rem",
-                  boxShadow: "0 10px 40px rgba(28,18,8,0.04)",
+                  boxShadow: "0 16px 48px rgba(196,136,42,0.08)",
                 }}
               >
                 {error && (
                   <div
                     style={{
-                      background: "rgba(160,67,30,0.1)",
-                      border: "1px solid rgba(160,67,30,0.3)",
+                      background: "#FEF2F2",
+                      border: "1px solid #FCA5A5",
                       borderRadius: "12px",
                       padding: "1rem",
-                      color: "#A0431E",
+                      color: "#991B1B",
                       fontSize: "0.85rem",
                       marginBottom: "2rem",
                       display: "flex",
@@ -250,7 +252,7 @@ export default function PartnersClient() {
                       gap: "0.5rem",
                     }}
                   >
-                    <i className="bi bi-exclamation-triangle-fill" />
+                    <i className="bi bi-exclamation-triangle-fill text-[#DC2626]" />
                     {error}
                   </div>
                 )}
@@ -263,10 +265,10 @@ export default function PartnersClient() {
                           display: "block",
                           fontFamily: "var(--font-space-grotesk), monospace",
                           fontSize: "0.62rem",
-                          fontWeight: 600,
+                          fontWeight: 700,
                           letterSpacing: "0.14em",
                           textTransform: "uppercase",
-                          color: "#1C1208",
+                          color: "#8E5E16",
                           marginBottom: "0.5rem",
                         }}
                       >
@@ -277,8 +279,7 @@ export default function PartnersClient() {
                         name={f.name}
                         required
                         placeholder={f.placeholder}
-                        className="os-input text-xs"
-                        style={{ background: "#FBF7F0", borderColor: "#EDE5D8" }}
+                        className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                       />
                     </div>
                   ))}
@@ -290,10 +291,10 @@ export default function PartnersClient() {
                       display: "block",
                       fontFamily: "var(--font-space-grotesk), monospace",
                       fontSize: "0.62rem",
-                      fontWeight: 600,
+                      fontWeight: 700,
                       letterSpacing: "0.14em",
                       textTransform: "uppercase",
-                      color: "#1C1208",
+                      color: "#8E5E16",
                       marginBottom: "0.5rem",
                     }}
                   >
@@ -302,8 +303,7 @@ export default function PartnersClient() {
                   <select
                     name="supplyType"
                     required
-                    className="os-input text-xs"
-                    style={{ background: "#FBF7F0", borderColor: "#EDE5D8" }}
+                    className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                   >
                     {SUPPLY_OPTIONS.map((opt) => (
                       <option key={opt} value={opt}>
@@ -316,8 +316,7 @@ export default function PartnersClient() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn-primary"
-                  style={{ width: "100%", justifyContent: "center", padding: "1.1rem" }}
+                  className="btn-primary w-full justify-center py-3.5 shadow-sm text-sm"
                 >
                   {loading ? "Submitting Application..." : "Submit Partner Application"}
                   <i className="bi bi-arrow-right" />

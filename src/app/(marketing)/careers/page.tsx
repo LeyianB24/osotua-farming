@@ -28,15 +28,15 @@ export default async function CareersPage() {
         style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
             Join Our Team
           </div>
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
               fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 300,
-              color: "#F5EFE4",
+              fontWeight: 400,
+              color: "#1C1208",
               lineHeight: 0.95,
               letterSpacing: "-0.02em",
               marginBottom: "1.5rem",
@@ -46,7 +46,7 @@ export default async function CareersPage() {
             <br />
             <em style={{ color: "#C4882A", fontStyle: "italic" }}>that lasts</em>
           </h1>
-          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem" }}>
+          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem" }}>
             We&apos;re building a world-class team of farmers, technologists, veterinarians, and agribusiness professionals committed to transforming East African agriculture.
           </p>
         </div>
@@ -62,8 +62,16 @@ export default async function CareersPage() {
             {PERKS.map((p) => (
               <div
                 key={p.title}
-                className="glass-dark"
-                style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem", borderRadius: "16px" }}
+                style={{
+                  padding: "2rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                  borderRadius: "20px",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(196, 136, 42, 0.22)",
+                  boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
+                }}
               >
                 <div
                   style={{
@@ -71,7 +79,7 @@ export default async function CareersPage() {
                     height: "48px",
                     borderRadius: "12px",
                     background: "rgba(196,136,42,0.12)",
-                    border: "1px solid rgba(196,136,42,0.3)",
+                    border: "1px solid rgba(196,136,42,0.25)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -83,13 +91,13 @@ export default async function CareersPage() {
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                     fontSize: "1.4rem",
-                    fontWeight: 400,
-                    color: "#F5EFE4",
+                    fontWeight: 500,
+                    color: "#1C1208",
                   }}
                 >
                   {p.title}
                 </div>
-                <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.85rem", lineHeight: 1.7 }}>
+                <p style={{ color: "#5C4835", fontSize: "0.88rem", lineHeight: 1.7 }}>
                   {p.desc}
                 </p>
               </div>
@@ -100,21 +108,20 @@ export default async function CareersPage() {
 
       {/* ── OPEN ROLES ── */}
       <section
-        className="bg-mesh-earth noise"
         style={{ padding: "7rem 0" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "3.5rem", flexWrap: "wrap", gap: "1rem" }}>
             <div>
-              <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "0.75rem" }}>
+              <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
                 Current Opportunities
               </div>
               <h2
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "clamp(2.4rem, 4vw, 4rem)",
-                  fontWeight: 300,
-                  color: "#F5EFE4",
+                  fontWeight: 400,
+                  color: "#1C1208",
                   lineHeight: 1.1,
                 }}
               >
@@ -129,12 +136,12 @@ export default async function CareersPage() {
                   gap: "0.4rem",
                   padding: "0.4rem 1rem",
                   borderRadius: "100px",
-                  background: "rgba(61,107,62,0.2)",
-                  border: "1px solid rgba(61,107,62,0.4)",
-                  color: "#5a9e5c",
-                  fontSize: "0.62rem",
+                  background: "rgba(46,125,50,0.12)",
+                  border: "1px solid rgba(46,125,50,0.35)",
+                  color: "#2E7D32",
+                  fontSize: "0.65rem",
                   fontFamily: "var(--font-space-grotesk), monospace",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   letterSpacing: "0.16em",
                   textTransform: "uppercase",
                 }}
@@ -151,8 +158,13 @@ export default async function CareersPage() {
                 <Link
                   key={job.id}
                   href={`/careers/${job.id}`}
-                  className="glass-dark group hover:-translate-y-1 hover:border-[#C4882A]/50 transition-all duration-300 block no-underline p-6"
-                  style={{ borderRadius: "16px" }}
+                  style={{
+                    borderRadius: "20px",
+                    background: "#FFFFFF",
+                    border: "1px solid rgba(196, 136, 42, 0.22)",
+                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
+                  }}
+                  className="group hover:-translate-y-1 hover:border-[#C4882A] hover:shadow-md transition-all duration-300 block no-underline p-6"
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
@@ -161,8 +173,8 @@ export default async function CareersPage() {
                           width: "44px",
                           height: "44px",
                           borderRadius: "12px",
-                          background: "rgba(196,136,42,0.15)",
-                          border: "1px solid rgba(196,136,42,0.3)",
+                          background: "rgba(196,136,42,0.12)",
+                          border: "1px solid rgba(196,136,42,0.25)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -176,8 +188,8 @@ export default async function CareersPage() {
                           style={{
                             fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                             fontSize: "1.5rem",
-                            fontWeight: 400,
-                            color: "#F5EFE4",
+                            fontWeight: 500,
+                            color: "#1C1208",
                             marginBottom: "0.35rem",
                           }}
                         >
@@ -185,13 +197,13 @@ export default async function CareersPage() {
                         </div>
                         <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                           {job.department && (
-                            <span style={{ fontSize: "0.6rem", fontFamily: "var(--font-space-grotesk), monospace", color: "#C4882A", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                            <span style={{ fontSize: "0.62rem", fontFamily: "var(--font-space-grotesk), monospace", color: "#8E5E16", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
                               <i className="bi bi-people-fill" style={{ marginRight: "4px" }} />
                               {job.department}
                             </span>
                           )}
                           {job.location && (
-                            <span style={{ fontSize: "0.6rem", fontFamily: "var(--font-space-grotesk), monospace", color: "rgba(245,239,228,0.45)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                            <span style={{ fontSize: "0.62rem", fontFamily: "var(--font-space-grotesk), monospace", color: "#786550", letterSpacing: "0.12em", textTransform: "uppercase" }}>
                               <i className="bi bi-geo-alt-fill" style={{ marginRight: "4px" }} />
                               {job.location}
                             </span>
@@ -200,7 +212,7 @@ export default async function CareersPage() {
                       </div>
                     </div>
 
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#C4882A", fontSize: "0.7rem", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#C4882A", fontSize: "0.75rem", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
                       Apply Role
                       <i className="bi bi-arrow-right" style={{ fontSize: "0.85rem" }} />
                     </div>
@@ -209,12 +221,21 @@ export default async function CareersPage() {
               ))}
             </div>
           ) : (
-            <div className="glass-dark" style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "20px" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "5rem 2rem",
+                borderRadius: "24px",
+                background: "#FFFFFF",
+                border: "1px solid rgba(196, 136, 42, 0.22)",
+                boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+              }}
+            >
               <i className="bi bi-briefcase" style={{ fontSize: "3rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1.25rem" }} />
-              <h3 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.75rem" }}>
+              <h3 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2rem", fontWeight: 400, color: "#1C1208", marginBottom: "0.75rem" }}>
                 No Open Roles Right Now
               </h3>
-              <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.9rem", marginBottom: "2rem", maxWidth: "420px", margin: "0 auto 2rem" }}>
+              <p style={{ color: "#5C4835", fontSize: "0.9rem", marginBottom: "2rem", maxWidth: "420px", margin: "0 auto 2rem" }}>
                 We don&apos;t have active job openings at the moment, but we always welcome exceptional talent in agriculture and tech.
               </p>
               <a href="mailto:careers@osotuafarming.co.ke" className="btn-primary">
@@ -233,23 +254,33 @@ export default async function CareersPage() {
         style={{ padding: "7rem 0" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="glass-gold" style={{ padding: "3.5rem", borderRadius: "24px", position: "relative", overflow: "hidden" }}>
-            <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.25rem" }}>
+          <div
+            style={{
+              padding: "3.5rem",
+              borderRadius: "28px",
+              position: "relative",
+              overflow: "hidden",
+              background: "#FFFFFF",
+              border: "1px solid rgba(196, 136, 42, 0.25)",
+              boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
+            }}
+          >
+            <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.25rem", fontWeight: 700 }}>
               Student Program
             </div>
             <h2
               style={{
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "clamp(2.4rem, 4vw, 4rem)",
-                fontWeight: 300,
-                color: "#F5EFE4",
+                fontWeight: 400,
+                color: "#1C1208",
                 lineHeight: 1.1,
                 marginBottom: "1rem",
               }}
             >
               Internships &amp; Attachments
             </h2>
-            <p style={{ color: "rgba(245,239,228,0.6)", fontSize: "0.95rem", lineHeight: 1.8, maxWidth: "540px", marginBottom: "2.5rem" }}>
+            <p style={{ color: "#5C4835", fontSize: "1rem", lineHeight: 1.8, maxWidth: "540px", marginBottom: "2.5rem" }}>
               We welcome university students and recent graduates in agriculture, veterinary medicine, software engineering, and agribusiness for structured 3–6 month attachments at our Kajiado ranch.
             </p>
 

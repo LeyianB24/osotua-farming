@@ -48,12 +48,20 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
   if (!job) {
     return (
       <div className="bg-[#FBF7F0] pt-32 min-h-screen flex items-center justify-center">
-        <div className="text-center p-8 bg-white border border-[#EDE5D8] rounded-2xl shadow max-w-md">
+        <div
+          style={{
+            background: "#FFFFFF",
+            border: "1px solid rgba(196, 136, 42, 0.22)",
+            borderRadius: "24px",
+            boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+          }}
+          className="text-center p-8 max-w-md"
+        >
           <div className="w-16 h-16 rounded-full bg-[#C4882A]/10 text-[#C4882A] flex items-center justify-center mx-auto text-2xl mb-4">
             <i className="bi bi-briefcase" />
           </div>
           <h2 className="font-serif text-2xl text-[#1C1208]">Position Not Found</h2>
-          <p className="text-xs text-[#6B3E1A] mt-2">The career vacancy you are seeking may have expired or been filled.</p>
+          <p className="text-xs text-[#5C4835] mt-2">The career vacancy you are seeking may have expired or been filled.</p>
           <Link href="/careers" className="btn-primary mt-6 inline-flex text-xs">
             <i className="bi bi-arrow-left" />
             Back to Careers
@@ -64,19 +72,34 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
   }
 
   return (
-    <div className="bg-[#FBF7F0] pt-24 min-h-screen">
+    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-24">
       {/* Header */}
-      <div className="bg-[#1C1208] py-20 px-4 sm:px-6 lg:px-8">
+      <div
+        style={{
+          background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5EB 100%)",
+          borderBottom: "1px solid rgba(196, 136, 42, 0.22)",
+        }}
+        className="py-16 px-4 sm:px-6 lg:px-8"
+      >
         <div className="max-w-5xl mx-auto">
-          <div className="font-mono text-[10px] text-[#F5EFE4]/40 tracking-wide mb-4 flex items-center gap-2">
-            <Link href="/careers" className="text-[#C4882A] hover:underline">Careers</Link>
-            <span className="text-[#F5EFE4]/30">/</span>
-            <span className="text-[#F5EFE4]/50">{job.title}</span>
+          <div className="font-mono text-[11px] text-[#786550] tracking-wide mb-4 flex items-center gap-2">
+            <Link href="/careers" className="text-[#8E5E16] hover:underline font-bold">Careers</Link>
+            <span className="text-[#C4882A]/50">/</span>
+            <span className="text-[#1C1208]">{job.title}</span>
           </div>
-          <h1 className="font-serif text-4xl sm:text-5xl font-light text-[#F5EFE4] mb-4">{job.title}</h1>
+          <h1 className="font-serif text-4xl sm:text-5xl font-normal text-[#1C1208] mb-4">{job.title}</h1>
           <div className="flex flex-wrap gap-2">
             {[job.department, job.type, job.location].map((tag) => (
-              <span key={tag} className="font-mono text-[9px] text-[#C4882A] border border-[#C4882A]/30 px-3 py-1.5 rounded-sm tracking-wide uppercase">
+              <span
+                key={tag}
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(196, 136, 42, 0.3)",
+                  color: "#8E5E16",
+                  borderRadius: "100px",
+                }}
+                className="font-mono text-[10px] font-bold px-3.5 py-1 tracking-wide uppercase shadow-xs"
+              >
                 {tag}
               </span>
             ))}
@@ -88,22 +111,30 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Job info */}
           <div>
-            <h2 className="font-serif text-2xl text-[#1C1208] mb-4">About the Role</h2>
-            <p className="text-[#1C1208]/65 leading-relaxed mb-8 whitespace-pre-line text-sm">{job.description}</p>
+            <h2 className="font-serif text-3xl text-[#1C1208] mb-4 font-normal">About the Role</h2>
+            <p className="text-[#5C4835] leading-relaxed mb-8 whitespace-pre-line text-sm">{job.description}</p>
 
-            <h2 className="font-serif text-2xl text-[#1C1208] mb-4">Requirements</h2>
-            <p className="text-[#1C1208]/65 leading-relaxed whitespace-pre-line text-sm">{job.requirements}</p>
+            <h2 className="font-serif text-3xl text-[#1C1208] mb-4 font-normal">Requirements</h2>
+            <p className="text-[#5C4835] leading-relaxed whitespace-pre-line text-sm">{job.requirements}</p>
           </div>
 
           {/* Apply form */}
           <div>
             {submitted ? (
-              <div className="bg-[#3D6B3E]/10 border border-[#3D6B3E]/30 rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 rounded-full bg-[#3D6B3E]/20 text-[#3D6B3E] flex items-center justify-center mx-auto text-3xl mb-4">
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(46, 125, 50, 0.3)",
+                  borderRadius: "28px",
+                  boxShadow: "0 16px 48px rgba(46, 125, 50, 0.08)",
+                }}
+                className="p-8 text-center"
+              >
+                <div className="w-16 h-16 rounded-full bg-[#2E7D32]/12 text-[#2E7D32] flex items-center justify-center mx-auto text-3xl mb-4 border border-[#2E7D32]/30">
                   <i className="bi bi-check-circle-fill" />
                 </div>
-                <h3 className="font-serif text-2xl text-[#1C1208] mb-2">Application Received</h3>
-                <p className="text-[#1C1208]/65 text-xs leading-relaxed">
+                <h3 className="font-serif text-2xl text-[#1C1208] mb-2 font-medium">Application Received</h3>
+                <p className="text-[#5C4835] text-xs leading-relaxed">
                   Thank you for applying to join Osotua Farming. Our recruitment team will review your credentials and contact you if shortlisted.
                 </p>
                 <Link href="/careers" className="btn-primary mt-6 inline-flex text-xs">
@@ -111,20 +142,28 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
                 </Link>
               </div>
             ) : (
-              <div className="bg-white border border-[#EDE5D8] rounded-2xl p-8 shadow-sm">
-                <div className="eyebrow text-[#C4882A] mb-1">Direct Application</div>
-                <h3 className="font-serif text-2xl text-[#1C1208] mb-6 font-light">Apply for this Position</h3>
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  borderRadius: "28px",
+                  boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
+                }}
+                className="p-8"
+              >
+                <div className="eyebrow text-[#8E5E16] mb-1 font-bold">Direct Application</div>
+                <h3 className="font-serif text-3xl text-[#1C1208] mb-6 font-normal">Apply for this Position</h3>
 
                 {errorMsg && (
-                  <div className="mb-4 p-3 rounded-xl bg-[#A0431E]/10 border border-[#A0431E]/30 text-[#A0431E] text-xs flex items-center gap-2">
-                    <i className="bi bi-exclamation-triangle-fill" />
+                  <div className="mb-4 p-3 rounded-xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-2">
+                    <i className="bi bi-exclamation-triangle-fill text-[#DC2626]" />
                     <span>{errorMsg}</span>
                   </div>
                 )}
 
                 <form onSubmit={handleApply} className="space-y-4">
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#1C1208]/70 font-semibold mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Full Name *
                     </label>
                     <input
@@ -132,13 +171,13 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
                       name="fullName"
                       required
                       placeholder="e.g. Dennis Nzioka"
-                      className="os-input text-xs bg-[#FBF7F0]"
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#1C1208]/70 font-semibold mb-1">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                         Email Address *
                       </label>
                       <input
@@ -146,11 +185,11 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
                         name="email"
                         required
                         placeholder="dennis@example.com"
-                        className="os-input text-xs bg-[#FBF7F0]"
+                        className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#1C1208]/70 font-semibold mb-1">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                         Phone Number *
                       </label>
                       <input
@@ -158,25 +197,25 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
                         name="phone"
                         required
                         placeholder="+254 700 000000"
-                        className="os-input text-xs bg-[#FBF7F0]"
+                        className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#1C1208]/70 font-semibold mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       CV / LinkedIn / Portfolio URL
                     </label>
                     <input
                       type="url"
                       name="cvUrl"
                       placeholder="https://linkedin.com/in/username"
-                      className="os-input text-xs bg-[#FBF7F0]"
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#1C1208]/70 font-semibold mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Cover Letter / Professional Summary *
                     </label>
                     <textarea
@@ -184,14 +223,14 @@ export default function JobDetailClient({ job }: { job: JobData | null }) {
                       required
                       rows={5}
                       placeholder="Highlight your agricultural experience, qualifications, and motivation to join Osotua Farming..."
-                      className="os-input text-xs bg-[#FBF7F0]"
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full btn-primary py-3 text-xs justify-center flex items-center gap-2"
+                    className="w-full btn-primary py-3.5 text-xs justify-center flex items-center gap-2 shadow-sm"
                   >
                     {submitting ? "Submitting Application..." : "Submit Job Application"}
                     <i className="bi bi-arrow-right" />

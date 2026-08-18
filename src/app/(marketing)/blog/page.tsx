@@ -21,15 +21,15 @@ export default async function BlogPage() {
         style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
             Knowledge Hub &amp; Field Stories
           </div>
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
               fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 300,
-              color: "#F5EFE4",
+              fontWeight: 400,
+              color: "#1C1208",
               lineHeight: 0.95,
               letterSpacing: "-0.02em",
               marginBottom: "1.5rem",
@@ -39,7 +39,7 @@ export default async function BlogPage() {
             <br />
             <em style={{ color: "#C4882A", fontStyle: "italic" }}>ranch</em>
           </h1>
-          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem" }}>
+          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem" }}>
             Farming guides, purebred profiles, seasonal harvest updates, and stories from Kajiado&apos;s most innovative agribusiness.
           </p>
         </div>
@@ -47,8 +47,7 @@ export default async function BlogPage() {
 
       {/* ── BLOG POSTS ── */}
       <section
-        className="bg-mesh-green noise"
-        style={{ padding: "6rem 0 8rem" }}
+        style={{ padding: "5rem 0 8rem" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
           {posts.length > 0 ? (
@@ -57,35 +56,42 @@ export default async function BlogPage() {
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="glass-dark group hover:-translate-y-2 hover:border-[#C4882A]/50 transition-all duration-300 flex flex-col no-underline"
-                  style={{ borderRadius: "20px", overflow: "hidden" }}
+                  style={{
+                    borderRadius: "24px",
+                    overflow: "hidden",
+                    background: "#FFFFFF",
+                    border: "1px solid rgba(196, 136, 42, 0.22)",
+                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
+                  }}
+                  className="group hover:-translate-y-2 hover:border-[#C4882A] hover:shadow-lg transition-all duration-300 flex flex-col no-underline"
                 >
                   {/* Cover */}
                   <div
                     style={{
                       height: "180px",
                       position: "relative",
-                      background: "linear-gradient(135deg, rgba(196,136,42,0.2) 0%, rgba(28,18,8,0.9) 100%)",
+                      background: "linear-gradient(135deg, #FAF5EB 0%, #F5EFE4 100%)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      borderBottom: "1px solid rgba(196, 136, 42, 0.15)",
                     }}
                   >
-                    <i className="bi bi-journal-text" style={{ fontSize: "3.5rem", color: "rgba(196,136,42,0.3)" }} />
+                    <i className="bi bi-journal-text" style={{ fontSize: "3.5rem", color: "rgba(196,136,42,0.4)" }} />
                     {post.category && (
                       <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
                         <span
                           style={{
                             fontFamily: "var(--font-space-grotesk), monospace",
-                            fontSize: "0.58rem",
-                            fontWeight: 600,
+                            fontSize: "0.6rem",
+                            fontWeight: 700,
                             letterSpacing: "0.14em",
                             textTransform: "uppercase",
                             padding: "0.3rem 0.75rem",
                             borderRadius: "100px",
-                            background: "rgba(196,136,42,0.2)",
-                            border: "1px solid rgba(196,136,42,0.4)",
-                            color: "#C4882A",
+                            background: "rgba(196,136,42,0.15)",
+                            border: "1px solid rgba(196,136,42,0.35)",
+                            color: "#8E5E16",
                           }}
                         >
                           {post.category}
@@ -94,13 +100,13 @@ export default async function BlogPage() {
                     )}
                   </div>
 
-                  <div style={{ padding: "1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
+                  <div style={{ padding: "1.75rem", flex: 1, display: "flex", flexDirection: "column" }}>
                     <h2
                       style={{
                         fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                         fontSize: "1.5rem",
-                        fontWeight: 400,
-                        color: "#F5EFE4",
+                        fontWeight: 500,
+                        color: "#1C1208",
                         lineHeight: 1.25,
                         marginBottom: "0.75rem",
                       }}
@@ -110,18 +116,18 @@ export default async function BlogPage() {
                     </h2>
 
                     {post.excerpt && (
-                      <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.88rem", lineHeight: 1.7, marginBottom: "1.5rem" }}>
+                      <p style={{ color: "#5C4835", fontSize: "0.9rem", lineHeight: 1.7, marginBottom: "1.5rem" }}>
                         {post.excerpt}
                       </p>
                     )}
 
-                    <div style={{ marginTop: "auto", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ marginTop: "auto", paddingTop: "1rem", borderTop: "1px solid rgba(196, 136, 42, 0.12)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       {post.publishedAt && (
-                        <span style={{ color: "rgba(245,239,228,0.4)", fontSize: "0.75rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
+                        <span style={{ color: "#786550", fontSize: "0.8rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
                           {new Date(post.publishedAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
                         </span>
                       )}
-                      <span style={{ color: "#C4882A", fontSize: "0.68rem", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                      <span style={{ color: "#C4882A", fontSize: "0.75rem", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "0.3rem" }}>
                         Read Post
                         <i className="bi bi-arrow-right" />
                       </span>
@@ -131,12 +137,21 @@ export default async function BlogPage() {
               ))}
             </div>
           ) : (
-            <div className="glass-dark" style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "24px" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "5rem 2rem",
+                borderRadius: "24px",
+                background: "#FFFFFF",
+                border: "1px solid rgba(196, 136, 42, 0.22)",
+                boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+              }}
+            >
               <i className="bi bi-journal-album" style={{ fontSize: "3rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1.25rem" }} />
-              <h3 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#F5EFE4", marginBottom: "0.75rem" }}>
+              <h3 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "2rem", fontWeight: 400, color: "#1C1208", marginBottom: "0.75rem" }}>
                 Stories Coming Soon
               </h3>
-              <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.9rem" }}>
+              <p style={{ color: "#5C4835", fontSize: "0.9rem" }}>
                 We are preparing upcoming ranch updates and breeding guides. Check back shortly.
               </p>
             </div>

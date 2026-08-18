@@ -61,15 +61,15 @@ export default function ContactClient() {
         style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
             Get in Touch
           </div>
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
               fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 300,
-              color: "#F5EFE4",
+              fontWeight: 400,
+              color: "#1C1208",
               lineHeight: 0.95,
               letterSpacing: "-0.02em",
               marginBottom: "1.5rem",
@@ -79,7 +79,7 @@ export default function ContactClient() {
             <br />
             <em style={{ color: "#C4882A", fontStyle: "italic" }}>farming</em>
           </h1>
-          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "540px", lineHeight: 1.8, fontSize: "1rem" }}>
+          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem" }}>
             Whether you&apos;re looking to purchase purebred livestock, source fresh produce, explore investment opportunities, or schedule a ranch visit — our team is at your service.
           </p>
         </div>
@@ -94,13 +94,13 @@ export default function ContactClient() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Left: Contact Info */}
             <div className="lg:col-span-5 space-y-5">
-              <div className="eyebrow" style={{ color: "#C4882A" }}>Direct Communication</div>
+              <div className="eyebrow" style={{ color: "#8E5E16", fontWeight: 700 }}>Direct Communication</div>
               <h2
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "clamp(2.4rem, 4vw, 3.5rem)",
-                  fontWeight: 300,
-                  color: "#F5EFE4",
+                  fontWeight: 400,
+                  color: "#1C1208",
                   lineHeight: 1.1,
                   marginBottom: "1.5rem",
                 }}
@@ -112,21 +112,27 @@ export default function ContactClient() {
                 {CONTACT_ITEMS.map((item) => (
                   <div
                     key={item.label}
-                    className="glass-dark p-5 rounded-2xl border border-white/10 flex items-start gap-4"
+                    style={{
+                      background: "#FFFFFF",
+                      border: "1px solid rgba(196, 136, 42, 0.22)",
+                      boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
+                      borderRadius: "20px",
+                    }}
+                    className="p-5 flex items-start gap-4"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-[#C4882A]/15 text-[#C4882A] flex items-center justify-center shrink-0 text-lg">
+                    <div className="w-10 h-10 rounded-xl bg-[#C4882A]/12 text-[#C4882A] flex items-center justify-center shrink-0 text-lg">
                       <i className={`bi ${item.icon}`} />
                     </div>
                     <div>
-                      <div className="text-[10px] font-mono uppercase tracking-widest text-[#C4882A]">{item.label}</div>
+                      <div className="text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold">{item.label}</div>
                       {item.href ? (
-                        <a href={item.href} className="text-sm font-medium text-[#F5EFE4] hover:text-[#C4882A] transition-colors">
+                        <a href={item.href} className="text-sm font-bold text-[#1C1208] hover:text-[#C4882A] transition-colors">
                           {item.value}
                         </a>
                       ) : (
-                        <div className="text-sm font-medium text-[#F5EFE4]">{item.value}</div>
+                        <div className="text-sm font-bold text-[#1C1208]">{item.value}</div>
                       )}
-                      {item.sub && <div className="text-xs text-[#F5EFE4]/50 mt-0.5">{item.sub}</div>}
+                      {item.sub && <div className="text-xs text-[#5C4835] mt-0.5">{item.sub}</div>}
                     </div>
                   </div>
                 ))}
@@ -135,14 +141,22 @@ export default function ContactClient() {
 
             {/* Right: Contact Form */}
             <div className="lg:col-span-7">
-              <div className="glass-dark p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl">
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  borderRadius: "28px",
+                  boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
+                }}
+                className="p-8 sm:p-10"
+              >
                 {submitted ? (
                   <div className="text-center py-12 space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-[#3D6B3E]/20 text-[#3D6B3E] flex items-center justify-center mx-auto text-3xl border border-[#3D6B3E]/40">
+                    <div className="w-16 h-16 rounded-full bg-[#2E7D32]/12 text-[#2E7D32] flex items-center justify-center mx-auto text-3xl border border-[#2E7D32]/35">
                       <i className="bi bi-check-circle-fill" />
                     </div>
-                    <h3 className="font-serif text-3xl text-[#F5EFE4]">Message Dispatched</h3>
-                    <p className="text-xs text-[#F5EFE4]/60 max-w-md mx-auto leading-relaxed">
+                    <h3 className="font-serif text-3xl text-[#1C1208] font-medium">Message Dispatched</h3>
+                    <p className="text-xs text-[#5C4835] max-w-md mx-auto leading-relaxed">
                       Thank you for contacting Osotua Farming. Our ranch office will review your inquiry and respond within 24 hours.
                     </p>
                     <button
@@ -155,15 +169,15 @@ export default function ContactClient() {
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
                     {errorMessage && (
-                      <div className="p-3 rounded-xl bg-[#A0431E]/20 border border-[#A0431E]/40 text-[#F5EFE4] text-xs flex items-center gap-2">
-                        <i className="bi bi-exclamation-triangle-fill text-[#A0431E]" />
+                      <div className="p-3 rounded-xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-2">
+                        <i className="bi bi-exclamation-triangle-fill text-[#DC2626]" />
                         <span>{errorMessage}</span>
                       </div>
                     )}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/70 mb-1">
+                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                           Your Name *
                         </label>
                         <input
@@ -171,12 +185,12 @@ export default function ContactClient() {
                           name="name"
                           required
                           placeholder="e.g. Moses Ole Sironka"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/70 mb-1">
+                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                           Email Address *
                         </label>
                         <input
@@ -184,32 +198,32 @@ export default function ContactClient() {
                           name="email"
                           required
                           placeholder="moses@example.co.ke"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/70 mb-1">
+                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                           Phone Number (Optional)
                         </label>
                         <input
                           type="tel"
                           name="phone"
                           placeholder="+254 700 000 000"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/70 mb-1">
+                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                           Subject *
                         </label>
                         <select
                           name="subject"
                           required
-                          className="w-full bg-[#1C1208] border border-white/10 rounded-xl p-3 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                         >
                           {SUBJECT_OPTIONS.map((sub) => (
                             <option key={sub} value={sub}>
@@ -221,7 +235,7 @@ export default function ContactClient() {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/70 mb-1">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                         Your Message *
                       </label>
                       <textarea
@@ -229,14 +243,14 @@ export default function ContactClient() {
                         required
                         rows={4}
                         placeholder="Tell us about your requirements, livestock inquiries, or delivery questions..."
-                        className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                        className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full btn-primary py-3 text-xs justify-center flex items-center gap-2"
+                      className="w-full btn-primary py-3.5 text-xs justify-center flex items-center gap-2 shadow-sm"
                     >
                       {loading ? (
                         <>

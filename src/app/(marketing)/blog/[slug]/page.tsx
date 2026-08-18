@@ -16,63 +16,73 @@ export default async function BlogPostPage({
   if (!post) notFound()
 
   return (
-    <div className="bg-[#FBF7F0] pt-24 min-h-screen">
+    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Breadcrumb */}
-        <div className="font-mono text-[10px] text-[#1C1208]/40 tracking-wide mb-8 flex items-center gap-2">
-          <Link href="/blog" className="hover:text-[#C4882A] transition-colors">Blog</Link>
+        <div className="font-mono text-[11px] text-[#786550] tracking-wide mb-8 flex items-center gap-2">
+          <Link href="/blog" className="hover:text-[#C4882A] transition-colors font-bold">Blog</Link>
           <span>/</span>
-          <span className="truncate">{post.title}</span>
+          <span className="truncate text-[#1C1208]">{post.title}</span>
         </div>
 
-        {/* Header */}
-        <div className="mb-10">
-          <span className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase">{post.category}</span>
-          <h1 className="font-serif text-4xl sm:text-5xl font-light text-[#1C1208] mt-2 mb-4 leading-tight">
-            {post.title}
-          </h1>
-          <p className="text-[#1C1208]/55 text-lg leading-relaxed border-l-2 border-[#C4882A] pl-4">
-            {post.excerpt}
-          </p>
-          {post.publishedAt && (
-            <div className="font-mono text-[10px] text-[#1C1208]/30 tracking-wide mt-4">
-              Published {new Date(post.publishedAt).toDateString()}
+        <div
+          style={{
+            background: "#FFFFFF",
+            border: "1px solid rgba(196, 136, 42, 0.22)",
+            borderRadius: "28px",
+            boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
+          }}
+          className="p-8 sm:p-12"
+        >
+          {/* Header */}
+          <div className="mb-10">
+            <span className="font-mono text-[10px] text-[#8E5E16] font-bold tracking-widest uppercase">{post.category}</span>
+            <h1 className="font-serif text-4xl sm:text-5xl font-normal text-[#1C1208] mt-2 mb-4 leading-tight">
+              {post.title}
+            </h1>
+            <p className="text-[#5C4835] text-lg leading-relaxed border-l-2 border-[#C4882A] pl-4">
+              {post.excerpt}
+            </p>
+            {post.publishedAt && (
+              <div className="font-mono text-[11px] text-[#786550] tracking-wide mt-4">
+                Published {new Date(post.publishedAt).toDateString()}
+              </div>
+            )}
+          </div>
+
+          {/* Cover image placeholder */}
+          {post.coverImage ? (
+            <div className="relative mb-10 h-64 w-full overflow-hidden rounded-2xl border border-[#C4882A]/20">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                sizes="(min-width: 768px) 768px, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <div className="w-full h-56 bg-gradient-to-br from-[#FAF5EB] to-[#F5EFE4] border border-[#C4882A]/20 rounded-2xl mb-10 flex items-center justify-center text-5xl text-[#C4882A]/50">
+              <i className="bi bi-newspaper" />
             </div>
           )}
-        </div>
 
-        {/* Cover image placeholder */}
-        {post.coverImage ? (
-          <div className="relative mb-10 h-64 w-full overflow-hidden rounded">
-            <Image
-              src={post.coverImage}
-              alt={post.title}
-              fill
-              sizes="(min-width: 768px) 768px, 100vw"
-              className="object-cover"
-            />
+          {/* Content */}
+          <div
+            className="prose prose-lg max-w-none text-[#1C1208] leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+
+          {/* Back */}
+          <div className="mt-16 pt-8 border-t border-[#C4882A]/15">
+            <Link
+              href="/blog"
+              className="font-mono text-[11px] text-[#8E5E16] font-bold tracking-widest uppercase hover:text-[#C4882A] inline-flex items-center gap-1.5"
+            >
+              <i className="bi bi-arrow-left" />
+              <span>Back to Blog</span>
+            </Link>
           </div>
-        ) : (
-          <div className="w-full h-56 bg-gradient-to-br from-[#3D6B3E] to-[#2a4a2b] rounded-2xl mb-10 flex items-center justify-center text-5xl text-[#F5EFE4]/80">
-            <i className="bi bi-newspaper" />
-          </div>
-        )}
-
-        {/* Content */}
-        <div
-          className="prose prose-lg max-w-none text-[#1C1208]/75 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-
-        {/* Back */}
-        <div className="mt-16 pt-8 border-t border-[#1C1208]/10">
-          <Link
-            href="/blog"
-            className="font-mono text-[10px] text-[#C4882A] tracking-widest uppercase hover:underline inline-flex items-center gap-1.5"
-          >
-            <i className="bi bi-arrow-left" />
-            <span>Back to Blog</span>
-          </Link>
         </div>
 
       </div>

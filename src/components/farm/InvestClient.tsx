@@ -8,7 +8,7 @@ const TIERS = [
     min: 100000,
     max: 499999,
     icon: "bi-tree",
-    color: "#3D6B3E",
+    color: "#2E7D32",
     perks: ["Quarterly digital reports", "Farm visit priority access", "Newsletter updates"],
   },
   {
@@ -39,7 +39,7 @@ export default function InvestClient() {
   const [amount, setAmount] = useState(500000)
   const [duration, setDuration] = useState(3)
   const [investmentType, setInvestmentType] = useState<"breeding" | "barn">("breeding")
-  
+
   // Modal / Form state
   const [showModal, setShowModal] = useState(false)
   const [fullName, setFullName] = useState("")
@@ -47,7 +47,7 @@ export default function InvestClient() {
   const [phone, setPhone] = useState("")
   const [note, setNote] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [requested, setRequested] = useState(false)
+  const [, setRequested] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
 
   const roiRate = investmentType === "breeding" ? 0.16 : 0.14
@@ -97,19 +97,16 @@ export default function InvestClient() {
         className="bg-mesh-earth noise"
         style={{ padding: "8rem 0 7rem", position: "relative", overflow: "hidden" }}
       >
-        <div style={{ position: "absolute", top: "10%", left: "5%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(196,136,42,0.18) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: "5%", right: "8%", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(61,107,62,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
-
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1.5rem" }}>
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
             Investor Relations
           </div>
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
               fontSize: "clamp(3rem, 7vw, 6.5rem)",
-              fontWeight: 300,
-              color: "#F5EFE4",
+              fontWeight: 400,
+              color: "#1C1208",
               lineHeight: 0.95,
               letterSpacing: "-0.02em",
               marginBottom: "2rem",
@@ -119,7 +116,7 @@ export default function InvestClient() {
             Invest in{" "}
             <em style={{ color: "#C4882A", fontStyle: "italic" }}>Africa&apos;s future</em>
           </h1>
-          <p style={{ color: "rgba(245,239,228,0.65)", maxWidth: "520px", lineHeight: 1.8, fontSize: "1rem", marginBottom: "3rem" }}>
+          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem", marginBottom: "3rem" }}>
             Osotua Farming offers a high-yield opportunity uniting climate-resilient livestock genetics, organic produce supply, and modern agribusiness technology — all from a single titled ranch in Kajiado.
           </p>
 
@@ -135,14 +132,14 @@ export default function InvestClient() {
                 <div
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "2.4rem",
-                    fontWeight: 300,
+                    fontSize: "2.6rem",
+                    fontWeight: 500,
                     color: "#C4882A",
                   }}
                 >
                   {s.value}
                 </div>
-                <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.62rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(245,239,228,0.4)" }}>
+                <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#8E5E16" }}>
                   {s.label}
                 </div>
               </div>
@@ -152,17 +149,17 @@ export default function InvestClient() {
       </div>
 
       {/* ── PILLARS ── */}
-      <section style={{ padding: "6rem 0", borderBottom: "1px solid #EDE5D8" }}>
+      <section style={{ padding: "6rem 0", borderBottom: "1px solid rgba(196,136,42,0.15)" }}>
         <div className="os-container">
           <div style={{ maxWidth: "600px", marginBottom: "4rem" }}>
-            <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "0.75rem" }}>
+            <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
               Our Business Model
             </div>
             <h2
               style={{
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
-                fontWeight: 300,
+                fontWeight: 400,
                 color: "#1C1208",
                 lineHeight: 1.1,
               }}
@@ -177,8 +174,9 @@ export default function InvestClient() {
                 key={p.label}
                 style={{
                   background: "#FFFFFF",
-                  border: "1px solid #EDE5D8",
-                  borderRadius: "20px",
+                  border: "1px solid rgba(196, 136, 42, 0.22)",
+                  boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+                  borderRadius: "24px",
                   padding: "2.5rem 2rem",
                   display: "flex",
                   flexDirection: "column",
@@ -192,6 +190,7 @@ export default function InvestClient() {
                       height: "48px",
                       borderRadius: "12px",
                       background: "rgba(196,136,42,0.12)",
+                      border: "1px solid rgba(196,136,42,0.25)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -205,23 +204,23 @@ export default function InvestClient() {
                     style={{
                       fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                       fontSize: "1.6rem",
-                      fontWeight: 400,
+                      fontWeight: 500,
                       color: "#1C1208",
                       marginBottom: "0.75rem",
                     }}
                   >
                     {p.label}
                   </h3>
-                  <p style={{ color: "#6B3E1A", fontSize: "0.88rem", lineHeight: 1.7 }}>
+                  <p style={{ color: "#5C4835", fontSize: "0.9rem", lineHeight: 1.7 }}>
                     {p.desc}
                   </p>
                 </div>
 
-                <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid #EDE5D8", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#6B3E1A" }}>
+                <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(196,136,42,0.15)", display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#8E5E16" }}>
                     {p.statLabel}
                   </span>
-                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1.2rem", fontWeight: 700, color: "#3D6B3E" }}>
+                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1.3rem", fontWeight: 700, color: "#2E7D32" }}>
                     {p.stat}
                   </span>
                 </div>
@@ -233,20 +232,20 @@ export default function InvestClient() {
 
       {/* ── INTERACTIVE CALCULATOR ── */}
       <section
-        className="bg-mesh-earth noise"
-        style={{ padding: "7rem 0", color: "#F5EFE4" }}
+        className="bg-mesh-green noise"
+        style={{ padding: "7rem 0" }}
       >
         <div className="os-container">
           <div style={{ textAlign: "center", maxWidth: "600px", margin: "0 auto 4rem" }}>
-            <div className="eyebrow justify-center" style={{ color: "#C4882A", marginBottom: "0.75rem" }}>
+            <div className="eyebrow justify-center" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
               Yield Simulator
             </div>
             <h2
               style={{
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "clamp(2.2rem, 4vw, 3.8rem)",
-                fontWeight: 300,
-                color: "#F5EFE4",
+                fontWeight: 400,
+                color: "#1C1208",
                 lineHeight: 1.1,
               }}
             >
@@ -266,16 +265,17 @@ export default function InvestClient() {
           >
             {/* Left — Controls */}
             <div
-              className="glass-dark"
               style={{
                 padding: "2.5rem",
-                borderRadius: "24px",
-                border: "1px solid rgba(196,136,42,0.25)",
+                borderRadius: "28px",
+                background: "#FFFFFF",
+                border: "1px solid rgba(196, 136, 42, 0.25)",
+                boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
               }}
             >
               {/* Type Switcher */}
               <div style={{ marginBottom: "2.5rem" }}>
-                <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "#C4882A", marginBottom: "0.75rem" }}>
+                <label style={{ display: "block", fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#8E5E16", marginBottom: "0.75rem" }}>
                   1. Enterprise Focus
                 </label>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
@@ -290,16 +290,17 @@ export default function InvestClient() {
                         type="button"
                         onClick={() => setInvestmentType(t.id as "breeding" | "barn")}
                         style={{
-                          padding: "1rem",
-                          borderRadius: "14px",
+                          padding: "1.1rem",
+                          borderRadius: "16px",
                           textAlign: "left",
-                          background: active ? "rgba(196,136,42,0.2)" : "rgba(255,255,255,0.04)",
-                          border: active ? "1px solid #C4882A" : "1px solid rgba(255,255,255,0.08)",
+                          background: active ? "linear-gradient(135deg, #C4882A, #D99A30)" : "#FAF6EE",
+                          border: active ? "1px solid #C4882A" : "1px solid rgba(196, 136, 42, 0.2)",
                           cursor: "pointer",
+                          boxShadow: active ? "0 4px 16px rgba(196,136,42,0.25)" : "none",
                         }}
                       >
-                        <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.72rem", fontWeight: 600, color: "#F5EFE4" }}>{t.label}</div>
-                        <div style={{ fontSize: "0.68rem", color: "rgba(245,239,228,0.4)", marginTop: "0.25rem" }}>{t.sub}</div>
+                        <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.75rem", fontWeight: 700, color: active ? "#FFFFFF" : "#1C1208" }}>{t.label}</div>
+                        <div style={{ fontSize: "0.7rem", color: active ? "rgba(255,255,255,0.85)" : "#786550", marginTop: "0.25rem" }}>{t.sub}</div>
                       </button>
                     )
                   })}
@@ -309,10 +310,10 @@ export default function InvestClient() {
               {/* Amount Slider */}
               <div style={{ marginBottom: "2.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.75rem" }}>
-                  <label style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "#C4882A" }}>
+                  <label style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#8E5E16" }}>
                     2. Capital Allocation
                   </label>
-                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1.1rem", fontWeight: 700, color: "#C4882A" }}>
+                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1.2rem", fontWeight: 700, color: "#C4882A" }}>
                     KES {amount.toLocaleString()}
                   </span>
                 </div>
@@ -330,10 +331,10 @@ export default function InvestClient() {
               {/* Duration Slider */}
               <div style={{ marginBottom: "2.5rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.75rem" }}>
-                  <label style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", color: "#C4882A" }}>
+                  <label style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#8E5E16" }}>
                     3. Investment Horizon
                   </label>
-                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1.1rem", fontWeight: 700, color: "#C4882A" }}>
+                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1.2rem", fontWeight: 700, color: "#C4882A" }}>
                     {duration} Years
                   </span>
                 </div>
@@ -351,8 +352,7 @@ export default function InvestClient() {
               <button
                 type="button"
                 onClick={() => setShowModal(true)}
-                className="btn-primary"
-                style={{ width: "100%", justifyContent: "center" }}
+                className="btn-primary w-full justify-center py-3.5 shadow-sm text-sm"
               >
                 <i className="bi bi-file-earmark-text" />
                 Inquire &amp; Request Prospectus
@@ -361,39 +361,40 @@ export default function InvestClient() {
 
             {/* Right — Projected Summary */}
             <div
-              className="glass-dark"
               style={{
                 padding: "2.5rem",
-                borderRadius: "24px",
-                border: "1px solid rgba(196,136,42,0.25)",
+                borderRadius: "28px",
+                background: "#FFFFFF",
+                border: "1px solid rgba(196, 136, 42, 0.25)",
+                boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
                 display: "flex",
                 flexDirection: "column",
                 gap: "1.5rem",
               }}
             >
               {[
-                { label: "Principal Capital", value: `KES ${amount.toLocaleString()}`, color: "rgba(245,239,228,0.8)" },
-                { label: "Estimated Yield", value: `+ KES ${Math.round(profit).toLocaleString()}`, color: "#3D6B3E" },
+                { label: "Principal Capital", value: `KES ${amount.toLocaleString()}`, color: "#1C1208" },
+                { label: "Estimated Yield", value: `+ KES ${Math.round(profit).toLocaleString()}`, color: "#2E7D32" },
               ].map((row) => (
-                <div key={row.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingBottom: "0.875rem", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,239,228,0.4)" }}>
+                <div key={row.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingBottom: "0.875rem", borderBottom: "1px solid rgba(196,136,42,0.15)" }}>
+                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#786550" }}>
                     {row.label}
                   </span>
-                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1rem", fontWeight: 700, color: row.color }}>
+                  <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "1.1rem", fontWeight: 700, color: row.color }}>
                     {row.value}
                   </span>
                 </div>
               ))}
 
               <div>
-                <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.58rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(245,239,228,0.35)", marginBottom: "0.5rem" }}>
+                <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#8E5E16", marginBottom: "0.5rem" }}>
                   Total Projected Value
                 </div>
                 <div
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "3rem",
-                    fontWeight: 300,
+                    fontSize: "3.2rem",
+                    fontWeight: 500,
                     color: "#C4882A",
                     lineHeight: 1,
                   }}
@@ -403,13 +404,13 @@ export default function InvestClient() {
               </div>
 
               <div style={{ marginTop: "0.5rem" }}>
-                <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.55rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,239,228,0.3)", marginBottom: "0.75rem" }}>
+                <div style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#8E5E16", marginBottom: "0.75rem" }}>
                   Tier Benefits ({activeTier.label})
                 </div>
                 {activeTier.perks.map((perk) => (
                   <div key={perk} style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem" }}>
-                    <i className="bi bi-check-circle-fill" style={{ fontSize: "0.75rem", color: "#3D6B3E" }} />
-                    <span style={{ fontSize: "0.8rem", color: "rgba(245,239,228,0.6)" }}>{perk}</span>
+                    <i className="bi bi-check-circle-fill" style={{ fontSize: "0.85rem", color: "#2E7D32" }} />
+                    <span style={{ fontSize: "0.85rem", color: "#5C4835" }}>{perk}</span>
                   </div>
                 ))}
               </div>
@@ -420,29 +421,37 @@ export default function InvestClient() {
 
       {/* ── MODAL INQUIRY ── */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1C1208]/80 backdrop-blur-md">
-          <div className="relative w-full max-w-lg bg-[#1C1208] border border-[#C4882A]/30 rounded-2xl p-6 sm:p-8 text-[#F5EFE4] shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1C1208]/60 backdrop-blur-md">
+          <div
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(196, 136, 42, 0.25)",
+              borderRadius: "28px",
+              boxShadow: "0 24px 60px rgba(196, 136, 42, 0.15)",
+            }}
+            className="relative w-full max-w-lg p-6 sm:p-8"
+          >
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-[#F5EFE4]/60 hover:text-white"
+              className="absolute top-4 right-4 text-[#786550] hover:text-[#1C1208]"
               aria-label="Close"
             >
               <i className="bi bi-x-lg text-lg" />
             </button>
 
-            <div className="eyebrow text-[#C4882A] mb-1">Investor Enquiry</div>
-            <h3 className="font-serif text-2xl font-light mb-4">Request Official 2026 Prospectus</h3>
+            <div className="eyebrow text-[#8E5E16] mb-1 font-bold">Investor Enquiry</div>
+            <h3 className="font-serif text-3xl font-normal text-[#1C1208] mb-4">Request Official 2026 Prospectus</h3>
 
             {formSuccess ? (
-              <div className="p-4 rounded-xl bg-[#3D6B3E]/20 border border-[#3D6B3E]/40 text-[#3D6B3E] text-center my-4">
+              <div className="p-4 rounded-xl bg-[#2E7D32]/12 border border-[#2E7D32]/35 text-[#2E7D32] text-center my-4">
                 <i className="bi bi-check-circle-fill text-2xl mb-1 block" />
-                <p className="font-semibold text-sm">Prospectus Request Received!</p>
-                <p className="text-xs text-[#F5EFE4]/60 mt-1">Our investor relations desk will contact you shortly.</p>
+                <p className="font-bold text-sm">Prospectus Request Received!</p>
+                <p className="text-xs text-[#5C4835] mt-1">Our investor relations desk will contact you shortly.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmitInquiry} className="space-y-4">
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/60 mb-1">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                     Full Name *
                   </label>
                   <input
@@ -451,13 +460,13 @@ export default function InvestClient() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="e.g. Senator Grace Mutua"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/60 mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Email Address *
                     </label>
                     <input
@@ -466,11 +475,11 @@ export default function InvestClient() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="name@investor.co.ke"
-                      className="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/60 mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Phone Number
                     </label>
                     <input
@@ -478,13 +487,13 @@ export default function InvestClient() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+254 700 000000"
-                      className="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#F5EFE4]/60 mb-1">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                     Investment Notes or Inquiries (Optional)
                   </label>
                   <textarea
@@ -492,7 +501,7 @@ export default function InvestClient() {
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Tell us about your portfolio horizon, syndicate, or specific questions..."
-                    className="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-xs text-[#F5EFE4] outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                   />
                 </div>
 
@@ -500,7 +509,7 @@ export default function InvestClient() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full btn-primary py-3 text-xs justify-center"
+                    className="w-full btn-primary py-3.5 text-xs justify-center shadow-sm"
                   >
                     {isSubmitting ? "Submitting Request..." : `Submit Inquiry (KES ${amount.toLocaleString()})`}
                   </button>

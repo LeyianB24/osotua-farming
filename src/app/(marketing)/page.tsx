@@ -43,8 +43,11 @@ export default async function HomePage() {
       {/* ── 3. FEATURED BREEDS ── */}
       {breeds.length > 0 && (
         <section
-          className="bg-mesh-green noise"
-          style={{ padding: "7rem 0 8rem", position: "relative" }}
+          style={{
+            background: "linear-gradient(180deg, #FBF7F0 0%, #FAF5EB 50%, #FFFFFF 100%)",
+            padding: "6rem 0 8rem",
+            position: "relative",
+          }}
         >
           <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
             {/* Header */}
@@ -60,7 +63,7 @@ export default async function HomePage() {
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                   fontWeight: 300,
-                  color: "#F5EFE4",
+                  color: "#1C1208",
                   lineHeight: 1.05,
                   marginBottom: "1rem",
                 }}
@@ -68,7 +71,7 @@ export default async function HomePage() {
                 Premium livestock,{" "}
                 <em style={{ color: "#C4882A", fontStyle: "italic" }}>bred for Africa</em>
               </h2>
-              <p style={{ color: "rgba(245,239,228,0.6)", lineHeight: 1.8, maxWidth: "480px" }}>
+              <p style={{ color: "#5C4835", lineHeight: 1.8, maxWidth: "480px" }}>
                 Every animal at Osotua is selected for genetic superiority, climate resilience, tick tolerance, and commercial value.
               </p>
             </div>
@@ -82,7 +85,7 @@ export default async function HomePage() {
 
             {/* View all CTA */}
             <div style={{ marginTop: "3rem", textAlign: "center" }}>
-              <Link href="/breeds" className="btn-ghost">
+              <Link href="/breeds" className="btn-primary">
                 <i className="bi bi-heart-pulse-fill" />
                 View All Breeds
                 <i className="bi bi-arrow-right" />
@@ -92,20 +95,32 @@ export default async function HomePage() {
 
           {/* Wave to next section */}
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
-            <TerrainWave fillColor="#1C1208" />
+            <TerrainWave fillColor="#FFFFFF" />
           </div>
         </section>
       )}
 
       {/* ── 4. HERD PHOTOGRAPHY FULL-BLEED QUOTE ── */}
       <section
-        className="bg-mesh-earth noise"
-        style={{ padding: "7rem 0", position: "relative", overflow: "hidden" }}
+        style={{
+          background: "linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 50%, #FAF5EB 100%)",
+          padding: "7rem 0",
+          position: "relative",
+          overflow: "hidden",
+        }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left — quote glass panel */}
-            <div className="glass-dark" style={{ padding: "3rem" }}>
+            <div
+              style={{
+                padding: "3rem",
+                background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5EB 100%)",
+                border: "1px solid rgba(196, 136, 42, 0.25)",
+                borderRadius: "24px",
+                boxShadow: "0 20px 60px rgba(196, 136, 42, 0.08)",
+              }}
+            >
               <div
                 className="eyebrow"
                 style={{ color: "#C4882A", marginBottom: "1.5rem" }}
@@ -118,16 +133,16 @@ export default async function HomePage() {
                   fontSize: "clamp(2rem, 4vw, 3.2rem)",
                   fontWeight: 300,
                   fontStyle: "italic",
-                  color: "#F5EFE4",
+                  color: "#1C1208",
                   lineHeight: 1.3,
                   marginBottom: "2rem",
-                  borderLeft: "3px solid rgba(196,136,42,0.5)",
+                  borderLeft: "3px solid #C4882A",
                   paddingLeft: "1.5rem",
                 }}
               >
                 &ldquo;Osotua — a bond of friendship that endures through care, trust, and the land we share.&rdquo;
               </blockquote>
-              <p style={{ color: "rgba(245,239,228,0.55)", lineHeight: 1.8, fontSize: "0.9rem" }}>
+              <p style={{ color: "#5C4835", lineHeight: 1.8, fontSize: "0.95rem" }}>
                 At Osotua Farming, we believe that extraordinary livestock begins with extraordinary care — ethical breeding, regenerative pastures, and deep respect for the Maasai pastoral tradition.
               </p>
               <div style={{ marginTop: "2rem" }}>
@@ -153,7 +168,9 @@ export default async function HomePage() {
                     position: "relative",
                     aspectRatio: "1/1",
                     overflow: "hidden",
-                    borderRadius: "16px",
+                    borderRadius: "18px",
+                    border: "1px solid rgba(196, 136, 42, 0.2)",
+                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.08)",
                   }}
                 >
                   <Image
@@ -162,33 +179,35 @@ export default async function HomePage() {
                     fill
                     sizes="(min-width: 1024px) 20vw, 45vw"
                     className="object-cover transition-transform duration-700 hover:scale-110"
-                    style={{ opacity: 0.85 }}
                     loading="lazy"
                   />
                   <div style={{
                     position: "absolute",
                     inset: 0,
-                    background: "linear-gradient(135deg, rgba(196,136,42,0.08) 0%, transparent 60%)",
-                    borderRadius: "16px",
+                    background: "linear-gradient(180deg, transparent 60%, rgba(28,18,8,0.4) 100%)",
                   }} />
                 </div>
               ))}
             </div>
           </div>
         </div>
+
+        {/* Wave to next section */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
+          <TerrainWave fillColor="#FAF5EB" />
+        </div>
       </section>
 
       {/* ── 5. BARN STORE ── */}
       {products.length > 0 && (
         <section
-          className="bg-mesh-earth noise"
-          style={{ padding: "7rem 0 8rem", position: "relative", overflow: "hidden" }}
+          style={{
+            background: "linear-gradient(180deg, #FAF5EB 0%, #FBF7F0 50%, #FFFFFF 100%)",
+            padding: "7rem 0 8rem",
+            position: "relative",
+            overflow: "hidden",
+          }}
         >
-          {/* Top wave */}
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0 }}>
-            <TerrainWave fillColor="#1C1208" flip />
-          </div>
-
           <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
             <div style={{ maxWidth: "600px", marginBottom: "4rem" }}>
               <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
@@ -199,7 +218,7 @@ export default async function HomePage() {
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                   fontWeight: 300,
-                  color: "#F5EFE4",
+                  color: "#1C1208",
                   lineHeight: 1.05,
                   marginBottom: "1rem",
                 }}
@@ -207,14 +226,14 @@ export default async function HomePage() {
                 Everything fresh,{" "}
                 <em style={{ color: "#C4882A", fontStyle: "italic" }}>everything ours</em>
               </h2>
-              <p style={{ color: "rgba(245,239,228,0.6)", lineHeight: 1.8 }}>
+              <p style={{ color: "#5C4835", lineHeight: 1.8 }}>
                 Walk into our Barn or order online. Every product carries the Osotua promise — raised here in Kajiado, handled with artisanal care.
               </p>
             </div>
 
             {/* Auto-scroll photo strip */}
             <div
-              style={{ overflow: "hidden", position: "relative", marginBottom: "3.5rem", borderRadius: "16px" }}
+              style={{ overflow: "hidden", position: "relative", marginBottom: "3.5rem", borderRadius: "18px" }}
             >
               <div className="photo-strip-track">
                 {[...products, ...products].map((product, i) => (
@@ -226,10 +245,12 @@ export default async function HomePage() {
                     <div style={{
                       width: "200px",
                       height: "140px",
-                      borderRadius: "12px",
+                      borderRadius: "14px",
                       overflow: "hidden",
                       position: "relative",
-                      background: "rgba(28,18,8,0.5)",
+                      background: "#FFFFFF",
+                      border: "1px solid rgba(196, 136, 42, 0.2)",
+                      boxShadow: "0 4px 16px rgba(196, 136, 42, 0.08)",
                     }}>
                       {product.image ? (
                         <Image
@@ -246,7 +267,7 @@ export default async function HomePage() {
                         </div>
                       )}
                       {/* Glass hover label */}
-                      <div className="glass-dark" style={{
+                      <div style={{
                         position: "absolute",
                         bottom: "0.5rem",
                         left: "0.5rem",
@@ -255,8 +276,10 @@ export default async function HomePage() {
                         borderRadius: "8px",
                         fontSize: "0.65rem",
                         fontFamily: "var(--font-space-grotesk), monospace",
-                        fontWeight: 600,
-                        color: "#F5EFE4",
+                        fontWeight: 700,
+                        color: "#FFFFFF",
+                        background: "rgba(28,18,8,0.75)",
+                        backdropFilter: "blur(6px)",
                         letterSpacing: "0.06em",
                       }}>
                         {product.name}
@@ -270,11 +293,11 @@ export default async function HomePage() {
             {/* Product cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {products.map((product) => (
-                <ProductCard key={product.id} product={product} dark />
+                <ProductCard key={product.id} product={product} dark={false} />
               ))}
             </div>
 
-            <div style={{ marginTop: "3rem", textAlign: "center" }}>
+            <div style={{ marginTop: "3.5rem", textAlign: "center" }}>
               <Link href="/barn" className="btn-primary">
                 <i className="bi bi-bag-check-fill" />
                 Shop the Barn Store
@@ -284,15 +307,19 @@ export default async function HomePage() {
           </div>
 
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
-            <TerrainWave fillColor="#FBF7F0" />
+            <TerrainWave fillColor="#FAF5EB" />
           </div>
         </section>
       )}
 
       {/* ── 6. GET INVOLVED ── */}
       <section
-        className="bg-mesh-gold noise"
-        style={{ padding: "7rem 0 8rem", position: "relative", overflow: "hidden" }}
+        style={{
+          background: "linear-gradient(180deg, #FAF5EB 0%, #FBF7F0 50%, #FFFFFF 100%)",
+          padding: "7rem 0 8rem",
+          position: "relative",
+          overflow: "hidden",
+        }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ textAlign: "center", maxWidth: "640px", margin: "0 auto 4rem" }}>
@@ -304,7 +331,7 @@ export default async function HomePage() {
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                 fontWeight: 300,
-                color: "#F5EFE4",
+                color: "#1C1208",
                 lineHeight: 1.05,
                 marginBottom: "1rem",
               }}
@@ -312,31 +339,37 @@ export default async function HomePage() {
               This farm belongs{" "}
               <em style={{ color: "#C4882A", fontStyle: "italic" }}>to all of us</em>
             </h2>
-            <p style={{ color: "rgba(245,239,228,0.6)", lineHeight: 1.8 }}>
+            <p style={{ color: "#5C4835", lineHeight: 1.8 }}>
               Whether you want to work, invest, partner, or learn — there is a place for you at Osotua Farming.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {[
-                { icon: "bi-briefcase-fill",     title: "Careers",         desc: "Join our world-class team of farmers, technologists, and agribusiness professionals.", href: "/careers" },
-                { icon: "bi-graph-up-arrow",     title: "Invest",          desc: "Partner with us and participate in Kenya's most exciting farm venture.", href: "/invest" },
-                { icon: "bi-people-fill",        title: "Partner Farmers", desc: "Supply vegetables, fodder, or eggs under our outgrower scheme.", href: "/partners" },
-                { icon: "bi-mortarboard-fill",   title: "Internships",     desc: "Students in agriculture, IT, and business are welcome for attachments.", href: "/careers#internships" },
-                { icon: "bi-building-fill",      title: "B2B Supply",      desc: "Hotels, restaurants, and supermarkets — get consistent quality supply.", href: "/contact#b2b" },
-                { icon: "bi-calendar-check-fill",title: "Farm Visits",     desc: "Book a guided tour and experience Osotua Farming for yourself.", href: "/visit" },
-              ].map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  className="glass-gold group hover:-translate-y-2 hover:shadow-[0_32px_80px_rgba(196,136,42,0.25)] hover:border-[#C4882A]/50 transition-all duration-300 block no-underline flex flex-col p-7"
-                >
+            {[
+              { icon: "bi-briefcase-fill",     title: "Careers",         desc: "Join our world-class team of farmers, technologists, and agribusiness professionals.", href: "/careers" },
+              { icon: "bi-graph-up-arrow",     title: "Invest",          desc: "Partner with us and participate in Kenya's most exciting farm venture.", href: "/invest" },
+              { icon: "bi-people-fill",        title: "Partner Farmers", desc: "Supply vegetables, fodder, or eggs under our outgrower scheme.", href: "/partners" },
+              { icon: "bi-mortarboard-fill",   title: "Internships",     desc: "Students in agriculture, IT, and business are welcome for attachments.", href: "/careers#internships" },
+              { icon: "bi-building-fill",      title: "B2B Supply",      desc: "Hotels, restaurants, and supermarkets — get consistent quality supply.", href: "/contact#b2b" },
+              { icon: "bi-calendar-check-fill",title: "Farm Visits",     desc: "Book a guided tour and experience Osotua Farming for yourself.", href: "/visit" },
+            ].map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="group hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(196,136,42,0.18)] transition-all duration-300 block no-underline flex flex-col p-7"
+                style={{
+                  background: "linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 100%)",
+                  border: "1px solid rgba(196, 136, 42, 0.22)",
+                  borderRadius: "20px",
+                  boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
+                }}
+              >
                 <div style={{
                   width: "52px",
                   height: "52px",
                   borderRadius: "14px",
-                  background: "rgba(196,136,42,0.15)",
-                  border: "1px solid rgba(196,136,42,0.3)",
+                  background: "rgba(196,136,42,0.12)",
+                  border: "1px solid rgba(196,136,42,0.25)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -347,15 +380,15 @@ export default async function HomePage() {
                 <div
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "1.4rem",
+                    fontSize: "1.5rem",
                     fontWeight: 400,
-                    color: "#F5EFE4",
+                    color: "#1C1208",
                     marginBottom: "0.75rem",
                   }}
                 >
                   {item.title}
                 </div>
-                <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.88rem", lineHeight: 1.7, flex: 1 }}>
+                <p style={{ color: "#5C4835", fontSize: "0.9rem", lineHeight: 1.7, flex: 1 }}>
                   {item.desc}
                 </p>
                 <div
@@ -366,7 +399,7 @@ export default async function HomePage() {
                     gap: "0.4rem",
                     fontFamily: "var(--font-space-grotesk), monospace",
                     fontSize: "0.62rem",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
                     color: "#C4882A",
@@ -415,10 +448,10 @@ export default async function HomePage() {
                 style={{
                   fontFamily: "var(--font-space-grotesk), monospace",
                   fontSize: "0.62rem",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   letterSpacing: "0.24em",
                   textTransform: "uppercase",
-                  color: "rgba(28,18,8,0.6)",
+                  color: "rgba(28,18,8,0.7)",
                 }}
               >
                 Osotua Farming, Kajiado County
@@ -429,8 +462,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 8. NEWSLETTER ── */}
-      <section style={{ background: "#1C1208", padding: "5rem 0" }}>
+      {/* ── 8. NEWSLETTER (Warm Cream & Savanna) ── */}
+      <section
+        style={{
+          background: "linear-gradient(180deg, #FAF5EB 0%, #F5EFE4 100%)",
+          padding: "5rem 0",
+          borderTop: "1px solid rgba(196,136,42,0.2)",
+        }}
+      >
         <div className="os-container">
           <div
             style={{
@@ -450,13 +489,13 @@ export default async function HomePage() {
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "clamp(2rem, 4vw, 3rem)",
                   fontWeight: 300,
-                  color: "#F5EFE4",
+                  color: "#1C1208",
                   marginBottom: "0.75rem",
                 }}
               >
                 Stay close to the land
               </h3>
-              <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.9rem" }}>
+              <p style={{ color: "#5C4835", fontSize: "0.95rem" }}>
                 Monthly updates — new breeds, seasonal harvests, farm stories, and exclusive offers.
               </p>
             </div>

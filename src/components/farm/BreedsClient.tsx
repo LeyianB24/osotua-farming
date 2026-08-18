@@ -50,15 +50,20 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
 
   return (
     <div
-      className="bg-mesh-earth noise"
-      style={{ padding: "4rem 0 6rem", position: "relative" }}
+      style={{ background: "#FBF7F0", padding: "3rem 0 6rem", position: "relative" }}
     >
       <div className="os-container relative" style={{ zIndex: 1 }}>
 
         {/* ── CONTROL BAR ── */}
         <div
-          className="glass-dark"
-          style={{ padding: "1.5rem", marginBottom: "2.5rem", borderRadius: "20px" }}
+          style={{
+            padding: "1.5rem",
+            marginBottom: "2.5rem",
+            borderRadius: "24px",
+            background: "#FFFFFF",
+            border: "1px solid rgba(196, 136, 42, 0.22)",
+            boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+          }}
         >
           {/* Search + sort row */}
           <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
@@ -67,7 +72,7 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
                 className="bi bi-search"
                 style={{
                   position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)",
-                  color: "rgba(245,239,228,0.4)", fontSize: "0.9rem", pointerEvents: "none",
+                  color: "#8E5E16", fontSize: "0.9rem", pointerEvents: "none",
                 }}
               />
               <input
@@ -77,35 +82,33 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
                 placeholder="Search by breed, purpose, or origin..."
                 style={{
                   width: "100%",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "10px",
+                  background: "#FAF6EE",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  borderRadius: "12px",
                   padding: "0.75rem 1rem 0.75rem 2.75rem",
                   fontFamily: "var(--font-dm-sans, 'DM Sans'), sans-serif",
                   fontSize: "0.9rem",
-                  color: "#F5EFE4",
+                  color: "#1C1208",
                   outline: "none",
                   transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                   paddingRight: searchQuery ? "2.5rem" : "1rem",
                 }}
                 onFocus={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(196,136,42,0.5)";
-                  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(196,136,42,0.1)";
+                  e.currentTarget.style.borderColor = "#C4882A";
+                  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(196,136,42,0.15)";
                 }}
                 onBlur={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(196, 136, 42, 0.25)";
                   e.currentTarget.style.boxShadow = "";
                 }}
               />
-              {/* Placeholder color via injected CSS */}
-              <style>{`input::placeholder { color: rgba(245,239,228,0.3); }`}</style>
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
                   style={{
                     position: "absolute", right: "0.875rem", top: "50%", transform: "translateY(-50%)",
                     background: "none", border: "none", cursor: "pointer",
-                    color: "rgba(245,239,228,0.45)", fontSize: "0.85rem",
+                    color: "#786550", fontSize: "0.85rem",
                   }}
                 >
                   <i className="bi bi-x-lg" />
@@ -132,25 +135,25 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
                   appearance: "none",
                   cursor: "pointer",
                   minWidth: "180px",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "10px",
+                  background: "#FAF6EE",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  borderRadius: "12px",
                   fontFamily: "var(--font-dm-sans, 'DM Sans'), sans-serif",
                   fontSize: "0.85rem",
-                  color: "#F5EFE4",
+                  color: "#1C1208",
                   outline: "none",
                 }}
               >
-                <option value="name" style={{ background: "#1C1208" }}>Sort by Name</option>
-                <option value="price-asc" style={{ background: "#1C1208" }}>Price: Low to High</option>
-                <option value="price-desc" style={{ background: "#1C1208" }}>Price: High to Low</option>
-                <option value="stock" style={{ background: "#1C1208" }}>Most Available</option>
+                <option value="name">Sort by Name</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="stock">Most Available</option>
               </select>
               <i
                 className="bi bi-chevron-down"
                 style={{
                   position: "absolute", right: "0.875rem", top: "50%", transform: "translateY(-50%)",
-                  color: "rgba(245,239,228,0.4)", fontSize: "0.75rem", pointerEvents: "none",
+                  color: "#8E5E16", fontSize: "0.75rem", pointerEvents: "none",
                 }}
               />
             </div>
@@ -164,23 +167,24 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                padding: "0.45rem 1rem",
-                background: selectedSpecies === "all" ? "rgba(196,136,42,0.2)" : "rgba(255,255,255,0.04)",
-                color: selectedSpecies === "all" ? "#C4882A" : "rgba(245,239,228,0.55)",
-                border: selectedSpecies === "all" ? "1px solid rgba(196,136,42,0.45)" : "1px solid rgba(255,255,255,0.08)",
+                padding: "0.45rem 1.1rem",
+                background: selectedSpecies === "all" ? "linear-gradient(135deg, #C4882A, #D99A30)" : "#FAF6EE",
+                color: selectedSpecies === "all" ? "#FFFFFF" : "#5C4835",
+                border: selectedSpecies === "all" ? "1px solid #C4882A" : "1px solid rgba(196, 136, 42, 0.2)",
                 borderRadius: "100px",
                 fontSize: "0.65rem",
                 fontFamily: "var(--font-space-grotesk), monospace",
-                fontWeight: 600,
+                fontWeight: 700,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 cursor: "pointer",
                 transition: "all 0.2s ease",
+                boxShadow: selectedSpecies === "all" ? "0 4px 12px rgba(196,136,42,0.25)" : "none",
               }}
             >
               <i className="bi bi-collection" style={{ fontSize: "0.8rem" }} />
               All Livestock
-              <span style={{ opacity: 0.5, fontWeight: 400 }}>({initialBreeds.length})</span>
+              <span style={{ opacity: selectedSpecies === "all" ? 0.9 : 0.6, fontWeight: 400 }}>({initialBreeds.length})</span>
             </button>
 
             {speciesList.map((sp) => {
@@ -195,23 +199,24 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "0.4rem",
-                    padding: "0.45rem 1rem",
-                    background: active ? "rgba(196,136,42,0.2)" : "rgba(255,255,255,0.04)",
-                    color: active ? "#C4882A" : "rgba(245,239,228,0.55)",
-                    border: active ? "1px solid rgba(196,136,42,0.45)" : "1px solid rgba(255,255,255,0.08)",
+                    padding: "0.45rem 1.1rem",
+                    background: active ? "linear-gradient(135deg, #C4882A, #D99A30)" : "#FAF6EE",
+                    color: active ? "#FFFFFF" : "#5C4835",
+                    border: active ? "1px solid #C4882A" : "1px solid rgba(196, 136, 42, 0.2)",
                     borderRadius: "100px",
                     fontSize: "0.65rem",
                     fontFamily: "var(--font-space-grotesk), monospace",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     cursor: "pointer",
                     transition: "all 0.2s ease",
+                    boxShadow: active ? "0 4px 12px rgba(196,136,42,0.25)" : "none",
                   }}
                 >
                   <i className={`bi ${icon}`} style={{ fontSize: "0.8rem" }} />
                   {sp.name}
-                  <span style={{ opacity: 0.5, fontWeight: 400 }}>({count})</span>
+                  <span style={{ opacity: active ? 0.9 : 0.6, fontWeight: 400 }}>({count})</span>
                 </button>
               );
             })}
@@ -224,13 +229,13 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
                   alignItems: "center",
                   gap: "0.4rem",
                   padding: "0.45rem 1rem",
-                  background: "rgba(160,67,30,0.1)",
-                  color: "#c55f3a",
-                  border: "1px solid rgba(160,67,30,0.3)",
+                  background: "rgba(196,67,30,0.1)",
+                  color: "#C2410C",
+                  border: "1px solid rgba(196,67,30,0.3)",
                   borderRadius: "100px",
                   fontSize: "0.62rem",
                   fontFamily: "var(--font-space-grotesk), monospace",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   cursor: "pointer",
@@ -244,12 +249,12 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
           </div>
 
           {/* Results count */}
-          <p style={{ color: "rgba(245,239,228,0.4)", fontSize: "0.78rem", marginTop: "1rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
+          <p style={{ color: "#786550", fontSize: "0.8rem", marginTop: "1rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
             Showing{" "}
-            <strong style={{ color: "#C4882A" }}>{sorted.length}</strong>
+            <strong style={{ color: "#C4882A", fontWeight: 700 }}>{sorted.length}</strong>
             {" "}of {initialBreeds.length} breeds
             {selectedSpecies !== "all" && (
-              <span> · <span style={{ color: "#C4882A", fontWeight: 600 }}>{selectedSpecies}</span></span>
+              <span> · <span style={{ color: "#8E5E16", fontWeight: 700 }}>{selectedSpecies}</span></span>
             )}
           </p>
         </div>
@@ -263,8 +268,14 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
           </div>
         ) : (
           <div
-            className="glass-dark"
-            style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "20px" }}
+            style={{
+              textAlign: "center",
+              padding: "5rem 2rem",
+              borderRadius: "24px",
+              background: "#FFFFFF",
+              border: "1px solid rgba(196, 136, 42, 0.22)",
+              boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
+            }}
           >
             <i
               className="bi bi-search"
@@ -274,14 +285,14 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
               style={{
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "2rem",
-                fontWeight: 300,
-                color: "#F5EFE4",
+                fontWeight: 400,
+                color: "#1C1208",
                 marginBottom: "0.75rem",
               }}
             >
               No breeds found
             </h3>
-            <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.9rem", marginBottom: "2rem" }}>
+            <p style={{ color: "#5C4835", fontSize: "0.9rem", marginBottom: "2rem" }}>
               Try a different search term or species filter.
             </p>
             <button
