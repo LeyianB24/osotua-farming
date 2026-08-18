@@ -30,7 +30,7 @@ export default function CartClient() {
   };
 
   return (
-    <div style={{ background: "#FBF7F0" }}>
+    <div style={{ background: "#FBF7F0", minHeight: "100vh" }}>
       {/* ── HERO BANNER ── */}
       <div
         className="bg-mesh-earth noise"
@@ -39,15 +39,15 @@ export default function CartClient() {
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
             <div>
-              <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+              <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1rem", fontWeight: 700 }}>
                 Shopping Basket
               </div>
               <h1
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "clamp(3rem, 6vw, 5.5rem)",
-                  fontWeight: 300,
-                  color: "#F5EFE4",
+                  fontWeight: 400,
+                  color: "#1C1208",
                   lineHeight: 1,
                 }}
               >
@@ -62,14 +62,14 @@ export default function CartClient() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.5rem",
-                  background: "rgba(160,67,30,0.12)",
-                  border: "1px solid rgba(160,67,30,0.3)",
+                  background: "rgba(194,65,12,0.1)",
+                  border: "1px solid rgba(194,65,12,0.3)",
                   borderRadius: "100px",
                   padding: "0.5rem 1.1rem",
-                  color: "#c55f3a",
+                  color: "#C2410C",
                   fontFamily: "var(--font-space-grotesk), monospace",
-                  fontSize: "0.62rem",
-                  fontWeight: 600,
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   cursor: "pointer",
@@ -85,22 +85,29 @@ export default function CartClient() {
 
       {/* ── MAIN CONTENT ── */}
       <section
-        className="bg-mesh-green noise"
-        style={{ padding: "5rem 0 8rem" }}
+        style={{ padding: "4rem 0 8rem" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
           {cart.length === 0 ? (
             <div
-              className="glass-dark"
-              style={{ textAlign: "center", padding: "5rem 2rem", borderRadius: "24px", maxWidth: "560px", margin: "0 auto" }}
+              style={{
+                textAlign: "center",
+                padding: "5rem 2rem",
+                borderRadius: "28px",
+                maxWidth: "560px",
+                margin: "0 auto",
+                background: "#FFFFFF",
+                border: "1px solid rgba(196, 136, 42, 0.22)",
+                boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
+              }}
             >
               <div
                 style={{
                   width: "64px",
                   height: "64px",
                   borderRadius: "50%",
-                  background: "rgba(196,136,42,0.15)",
-                  border: "1px solid rgba(196,136,42,0.3)",
+                  background: "rgba(196,136,42,0.12)",
+                  border: "1px solid rgba(196,136,42,0.25)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -114,8 +121,8 @@ export default function CartClient() {
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "2.5rem",
-                  fontWeight: 300,
-                  color: "#F5EFE4",
+                  fontWeight: 400,
+                  color: "#1C1208",
                   marginBottom: "0.75rem",
                 }}
               >
@@ -123,7 +130,7 @@ export default function CartClient() {
               </h2>
               <p
                 style={{
-                  color: "rgba(245,239,228,0.55)",
+                  color: "#5C4835",
                   fontSize: "0.95rem",
                   maxWidth: "380px",
                   margin: "0 auto 2.5rem",
@@ -159,14 +166,16 @@ export default function CartClient() {
                   return (
                     <div
                       key={item.id}
-                      className="glass-dark"
                       style={{
                         padding: "1.5rem 2rem",
-                        borderRadius: "20px",
+                        borderRadius: "24px",
                         display: "flex",
                         alignItems: "center",
                         gap: "1.5rem",
                         flexWrap: "wrap",
+                        background: "#FFFFFF",
+                        border: "1px solid rgba(196, 136, 42, 0.22)",
+                        boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
                       }}
                     >
                       {/* Image */}
@@ -174,11 +183,11 @@ export default function CartClient() {
                         style={{
                           width: "80px",
                           height: "80px",
-                          borderRadius: "14px",
+                          borderRadius: "16px",
                           overflow: "hidden",
                           position: "relative",
                           flexShrink: 0,
-                          background: "#1C1208",
+                          background: "#FAF6EE",
                           border: "1px solid rgba(196,136,42,0.2)",
                         }}
                       >
@@ -200,7 +209,7 @@ export default function CartClient() {
                               color: "#C4882A",
                             }}
                           >
-                            <i className="bi bi-box-seam" />
+                            <i className="bi bi-box-seam text-2xl" />
                           </div>
                         )}
                       </div>
@@ -210,11 +219,11 @@ export default function CartClient() {
                         <div
                           style={{
                             fontFamily: "var(--font-space-grotesk), monospace",
-                            fontSize: "0.58rem",
-                            fontWeight: 600,
+                            fontSize: "0.62rem",
+                            fontWeight: 700,
                             letterSpacing: "0.15em",
                             textTransform: "uppercase",
-                            color: "#C4882A",
+                            color: "#8E5E16",
                             marginBottom: "0.25rem",
                           }}
                         >
@@ -224,8 +233,8 @@ export default function CartClient() {
                           style={{
                             fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                             fontSize: "1.4rem",
-                            fontWeight: 400,
-                            color: "#F5EFE4",
+                            fontWeight: 500,
+                            color: "#1C1208",
                             lineHeight: 1.2,
                           }}
                         >
@@ -235,7 +244,7 @@ export default function CartClient() {
                           style={{
                             fontFamily: "var(--font-space-grotesk), monospace",
                             fontSize: "0.85rem",
-                            color: "rgba(245,239,228,0.5)",
+                            color: "#786550",
                             marginTop: "0.35rem",
                           }}
                         >
@@ -249,8 +258,8 @@ export default function CartClient() {
                           display: "flex",
                           alignItems: "center",
                           gap: "0.5rem",
-                          background: "rgba(255,255,255,0.05)",
-                          border: "1px solid rgba(255,255,255,0.1)",
+                          background: "#FAF6EE",
+                          border: "1px solid rgba(196, 136, 42, 0.25)",
                           borderRadius: "100px",
                           padding: "0.25rem 0.5rem",
                         }}
@@ -263,7 +272,7 @@ export default function CartClient() {
                             borderRadius: "50%",
                             background: "transparent",
                             border: "none",
-                            color: "#F5EFE4",
+                            color: "#1C1208",
                             cursor: "pointer",
                             display: "flex",
                             alignItems: "center",
@@ -271,16 +280,16 @@ export default function CartClient() {
                           }}
                           aria-label="Decrease quantity"
                         >
-                          <i className="bi bi-dash" />
+                          <i className="bi bi-dash font-bold" />
                         </button>
                         <span
                           style={{
                             fontFamily: "var(--font-space-grotesk), monospace",
                             fontSize: "0.85rem",
-                            fontWeight: 600,
+                            fontWeight: 700,
                             minWidth: "24px",
                             textAlign: "center",
-                            color: "#F5EFE4",
+                            color: "#1C1208",
                           }}
                         >
                           {item.quantity}
@@ -293,7 +302,7 @@ export default function CartClient() {
                             borderRadius: "50%",
                             background: "transparent",
                             border: "none",
-                            color: "#F5EFE4",
+                            color: "#1C1208",
                             cursor: "pointer",
                             display: "flex",
                             alignItems: "center",
@@ -301,7 +310,7 @@ export default function CartClient() {
                           }}
                           aria-label="Increase quantity"
                         >
-                          <i className="bi bi-plus" />
+                          <i className="bi bi-plus font-bold" />
                         </button>
                       </div>
 
@@ -309,7 +318,7 @@ export default function CartClient() {
                       <div
                         style={{
                           fontFamily: "var(--font-space-grotesk), monospace",
-                          fontSize: "1.1rem",
+                          fontSize: "1.15rem",
                           fontWeight: 700,
                           color: "#C4882A",
                           minWidth: "110px",
@@ -325,13 +334,13 @@ export default function CartClient() {
                         style={{
                           background: "transparent",
                           border: "none",
-                          color: "rgba(245,239,228,0.3)",
+                          color: "#786550",
                           cursor: "pointer",
                           padding: "0.5rem",
                           transition: "color 0.2s ease",
                         }}
-                        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#A0431E")}
-                        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(245,239,228,0.3)")}
+                        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#C2410C")}
+                        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#786550")}
                         aria-label="Remove item"
                       >
                         <i className="bi bi-x-lg text-sm" />
@@ -343,11 +352,12 @@ export default function CartClient() {
 
               {/* Order Summary Sidebar */}
               <div
-                className="glass-dark"
                 style={{
                   padding: "2.5rem 2rem",
-                  borderRadius: "24px",
-                  border: "1px solid rgba(196,136,42,0.25)",
+                  borderRadius: "28px",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
                   position: "sticky",
                   top: "100px",
                 }}
@@ -356,10 +366,10 @@ export default function CartClient() {
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                     fontSize: "1.8rem",
-                    fontWeight: 300,
-                    color: "#F5EFE4",
+                    fontWeight: 400,
+                    color: "#1C1208",
                     marginBottom: "1.5rem",
-                    borderBottom: "1px solid rgba(255,255,255,0.08)",
+                    borderBottom: "1px solid rgba(196, 136, 42, 0.15)",
                     paddingBottom: "1rem",
                   }}
                 >
@@ -367,22 +377,22 @@ export default function CartClient() {
                 </h3>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "rgba(245,239,228,0.7)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "#5C4835" }}>
                     <span>Subtotal</span>
-                    <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#F5EFE4" }}>
+                    <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#1C1208", fontWeight: 600 }}>
                       KES {cartTotal.toLocaleString()}
                     </span>
                   </div>
 
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "rgba(245,239,228,0.7)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "#5C4835" }}>
                     <span>Cold-Chain Delivery</span>
-                    <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#F5EFE4" }}>
+                    <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#1C1208", fontWeight: 600 }}>
                       KES {deliveryFee.toLocaleString()}
                     </span>
                   </div>
 
                   {discount > 0 && (
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "#5a9e5c" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: "#2E7D32", fontWeight: 600 }}>
                       <span>Discount (Promo)</span>
                       <span style={{ fontFamily: "var(--font-space-grotesk), monospace" }}>
                         - KES {discount.toLocaleString()}
@@ -405,7 +415,8 @@ export default function CartClient() {
                         fontSize: "0.75rem",
                         textTransform: "uppercase",
                         letterSpacing: "0.1em",
-                        color: "rgba(245,239,228,0.6)",
+                        color: "#8E5E16",
+                        fontWeight: 700,
                       }}
                     >
                       Total Amount
@@ -413,8 +424,8 @@ export default function CartClient() {
                     <span
                       style={{
                         fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                        fontSize: "2.2rem",
-                        fontWeight: 600,
+                        fontSize: "2.4rem",
+                        fontWeight: 700,
                         color: "#C4882A",
                       }}
                     >
@@ -433,12 +444,12 @@ export default function CartClient() {
                       onChange={(e) => setPromoCode(e.target.value)}
                       disabled={promoApplied}
                       style={{
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                        borderRadius: "8px",
+                        background: "#FAF6EE",
+                        border: "1px solid rgba(196, 136, 42, 0.25)",
+                        borderRadius: "12px",
                         padding: "0.6rem 0.9rem",
-                        color: "#F5EFE4",
-                        fontSize: "0.8rem",
+                        color: "#1C1208",
+                        fontSize: "0.85rem",
                         flex: 1,
                         outline: "none",
                         fontFamily: "var(--font-space-grotesk), monospace",
@@ -448,12 +459,13 @@ export default function CartClient() {
                       type="submit"
                       disabled={promoApplied || !promoCode}
                       style={{
-                        background: promoApplied ? "#3D6B3E" : "rgba(196,136,42,0.2)",
-                        border: "1px solid rgba(196,136,42,0.4)",
-                        borderRadius: "8px",
-                        padding: "0.6rem 1rem",
-                        color: "#F5EFE4",
+                        background: promoApplied ? "#2E7D32" : "#C4882A",
+                        border: "none",
+                        borderRadius: "12px",
+                        padding: "0.6rem 1.1rem",
+                        color: "#FFFFFF",
                         fontSize: "0.75rem",
+                        fontWeight: 700,
                         cursor: "pointer",
                         fontFamily: "var(--font-space-grotesk), monospace",
                       }}
@@ -462,10 +474,10 @@ export default function CartClient() {
                     </button>
                   </div>
                   {promoError && (
-                    <p style={{ color: "#A0431E", fontSize: "0.75rem", marginTop: "0.5rem" }}>{promoError}</p>
+                    <p style={{ color: "#C2410C", fontSize: "0.75rem", marginTop: "0.5rem" }}>{promoError}</p>
                   )}
                   {promoApplied && (
-                    <p style={{ color: "#5a9e5c", fontSize: "0.75rem", marginTop: "0.5rem" }}>
+                    <p style={{ color: "#2E7D32", fontSize: "0.75rem", marginTop: "0.5rem", fontWeight: 600 }}>
                       Coupon code successfully activated!
                     </p>
                   )}
@@ -474,8 +486,7 @@ export default function CartClient() {
                 {/* Checkout CTA */}
                 <Link
                   href="/checkout"
-                  className="btn-primary"
-                  style={{ width: "100%", justifyContent: "center", padding: "1rem" }}
+                  className="btn-primary w-full justify-center py-3.5 shadow-sm text-sm"
                 >
                   Proceed to Checkout
                   <i className="bi bi-arrow-right" />
@@ -484,7 +495,7 @@ export default function CartClient() {
                 <p
                   style={{
                     fontSize: "0.75rem",
-                    color: "rgba(245,239,228,0.4)",
+                    color: "#786550",
                     textAlign: "center",
                     marginTop: "1.25rem",
                     display: "flex",
@@ -493,7 +504,7 @@ export default function CartClient() {
                     gap: "0.4rem",
                   }}
                 >
-                  <i className="bi bi-shield-lock" />
+                  <i className="bi bi-shield-lock text-[#2E7D32]" />
                   M-Pesa STK Push &amp; Card Protected
                 </p>
               </div>

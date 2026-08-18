@@ -24,9 +24,9 @@ export default function OrderTimeline({ status }: OrderTimelineProps) {
     <div className="w-full py-6">
       <div className="relative flex items-center justify-between">
         {/* Background connector line */}
-        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#C4882A]/20 -translate-y-1/2 z-0" />
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#C4882A]/25 -translate-y-1/2 z-0" />
 
-        {STEPS.map((step, idx) => {
+        {STEPS.map((step) => {
           const state = getStepState(step.key)
           const isCompleted = state === "completed"
           const isCancelled = state === "cancelled"
@@ -36,17 +36,17 @@ export default function OrderTimeline({ status }: OrderTimelineProps) {
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
                   isCancelled
-                    ? "bg-[#A0431E]/20 border-[#A0431E] text-[#A0431E]"
+                    ? "bg-[#C2410C]/15 border-[#C2410C] text-[#C2410C]"
                     : isCompleted
-                    ? "bg-[#C4882A] border-[#C4882A] text-[#1C1208] shadow-lg shadow-[#C4882A]/30"
-                    : "bg-[#1C1208] border-[#C4882A]/30 text-[#F5EFE4]/40"
+                    ? "bg-[#C4882A] border-[#C4882A] text-white shadow-md shadow-[#C4882A]/25"
+                    : "bg-[#FFFFFF] border-[#C4882A]/30 text-[#786550]"
                 }`}
               >
                 <i className={`bi ${step.icon} text-base`} />
               </div>
               <span
                 className={`mt-2 text-[0.7rem] font-mono tracking-wider uppercase text-center max-w-[90px] ${
-                  isCompleted ? "text-[#C4882A] font-semibold" : "text-[#F5EFE4]/40"
+                  isCompleted ? "text-[#8E5E16] font-bold" : "text-[#786550]"
                 }`}
               >
                 {step.label}

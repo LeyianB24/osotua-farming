@@ -53,7 +53,7 @@ export default function OrderForm({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-[#1C1208]/80 backdrop-blur-md"
+          className="fixed inset-0 bg-[#1C1208]/60 backdrop-blur-md"
         />
 
         {/* Modal Window */}
@@ -61,23 +61,35 @@ export default function OrderForm({
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-2xl bg-[#FBF7F0] border border-[#C4882A]/30 rounded-2xl shadow-2xl overflow-hidden z-10 my-8"
+          style={{
+            background: "#FFFFFF",
+            border: "1px solid rgba(196, 136, 42, 0.25)",
+            borderRadius: "28px",
+            boxShadow: "0 24px 60px rgba(196, 136, 42, 0.15)",
+          }}
+          className="relative w-full max-w-2xl overflow-hidden z-10 my-8"
         >
           {/* Header */}
-          <div className="bg-[#1C1208] text-[#FBF7F0] p-6 flex items-start justify-between relative border-b border-[#C4882A]/30">
+          <div
+            style={{
+              background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5EB 100%)",
+              borderBottom: "1px solid rgba(196, 136, 42, 0.2)",
+            }}
+            className="p-6 flex items-start justify-between relative"
+          >
             <div>
-              <span className="eyebrow text-[#C4882A] mb-1">Custom Livestock Order</span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-light">
-                {item.name} <span className="text-[#C4882A] text-lg font-mono">#{item.tagNumber}</span>
+              <span className="eyebrow text-[#8E5E16] mb-1 font-bold">Custom Livestock Order</span>
+              <h2 className="font-serif text-2xl sm:text-3xl font-normal text-[#1C1208]">
+                {item.name} <span className="text-[#C4882A] text-lg font-mono font-bold">#{item.tagNumber}</span>
               </h2>
-              <p className="text-xs text-[#FBF7F0]/60 font-sans mt-0.5">
+              <p className="text-xs text-[#5C4835] font-sans mt-0.5">
                 {item.breedName} &bull; {item.weightKg} kg Live Weight &bull; {item.species}
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="p-2 rounded-full text-[#FBF7F0]/60 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-2 rounded-full text-[#786550] hover:text-[#1C1208] hover:bg-black/5 transition-colors"
               aria-label="Close"
             >
               <i className="bi bi-x-lg text-lg" />
@@ -88,7 +100,7 @@ export default function OrderForm({
           <div className="p-6 sm:p-8 space-y-6 max-h-[70vh] overflow-y-auto">
             {/* 1. Fulfillment Preference */}
             <div>
-              <label className="block font-mono text-xs uppercase tracking-widest text-[#1C1208]/70 font-semibold mb-3">
+              <label className="block font-mono text-xs uppercase tracking-widest text-[#8E5E16] font-bold mb-3">
                 1. Select Fulfillment &amp; Preparation Method
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -116,18 +128,20 @@ export default function OrderForm({
                     key={opt.id}
                     type="button"
                     onClick={() => setFulfillmentType(opt.id as "LIVE_TRANSPORT" | "BUTCHER_CUTS" | "FARM_PICKUP")}
+                    style={{
+                      background: fulfillmentType === opt.id ? "rgba(196, 136, 42, 0.08)" : "#FAF8F5",
+                      borderColor: fulfillmentType === opt.id ? "#C4882A" : "rgba(196, 136, 42, 0.2)",
+                    }}
                     className={`p-4 rounded-xl border text-left transition-all relative ${
-                      fulfillmentType === opt.id
-                        ? "border-[#C4882A] bg-[#C4882A]/10 shadow-sm"
-                        : "border-[#1C1208]/15 bg-white hover:border-[#1C1208]/30"
+                      fulfillmentType === opt.id ? "ring-2 ring-[#C4882A]/30 shadow-xs" : "hover:border-[#C4882A]/50"
                     }`}
                   >
                     <div className="flex justify-between items-start mb-1">
-                      <span className="font-semibold text-xs text-[#1C1208]">{opt.title}</span>
-                      {fulfillmentType === opt.id && <i className="bi bi-check-lg text-[#C4882A]" />}
+                      <span className="font-bold text-xs text-[#1C1208]">{opt.title}</span>
+                      {fulfillmentType === opt.id && <i className="bi bi-check-lg text-[#C4882A] font-bold" />}
                     </div>
-                    <p className="text-[11px] text-[#1C1208]/60 leading-tight mb-2">{opt.desc}</p>
-                    <span className="font-mono text-[10px] text-[#C4882A] font-semibold">{opt.badge}</span>
+                    <p className="text-[11px] text-[#5C4835] leading-tight mb-2">{opt.desc}</p>
+                    <span className="font-mono text-[10px] text-[#C4882A] font-bold">{opt.badge}</span>
                   </button>
                 ))}
               </div>
@@ -136,7 +150,7 @@ export default function OrderForm({
             {/* 2. Packaging Options */}
             {fulfillmentType === "BUTCHER_CUTS" && (
               <div>
-                <label className="block font-mono text-xs uppercase tracking-widest text-[#1C1208]/70 font-semibold mb-3">
+                <label className="block font-mono text-xs uppercase tracking-widest text-[#8E5E16] font-bold mb-3">
                   2. Cold-Chain Packaging &amp; Preservation
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -164,18 +178,20 @@ export default function OrderForm({
                       key={opt.id}
                       type="button"
                       onClick={() => setPackagingPref(opt.id as "VACUUM_SEALED" | "CRATE_COLD_CHAIN" | "STANDARD")}
+                      style={{
+                        background: packagingPref === opt.id ? "rgba(46, 125, 50, 0.08)" : "#FAF8F5",
+                        borderColor: packagingPref === opt.id ? "#2E7D32" : "rgba(196, 136, 42, 0.2)",
+                      }}
                       className={`p-3.5 rounded-xl border text-left transition-all ${
-                        packagingPref === opt.id
-                          ? "border-[#3D6B3E] bg-[#3D6B3E]/10"
-                          : "border-[#1C1208]/15 bg-white hover:border-[#1C1208]/30"
+                        packagingPref === opt.id ? "ring-2 ring-[#2E7D32]/30 shadow-xs" : "hover:border-[#2E7D32]/50"
                       }`}
                     >
                       <div className="flex justify-between items-start mb-1">
-                        <span className="font-semibold text-xs text-[#1C1208]">{opt.title}</span>
-                        {packagingPref === opt.id && <i className="bi bi-check-lg text-[#3D6B3E]" />}
+                        <span className="font-bold text-xs text-[#1C1208]">{opt.title}</span>
+                        {packagingPref === opt.id && <i className="bi bi-check-lg text-[#2E7D32] font-bold" />}
                       </div>
-                      <p className="text-[11px] text-[#1C1208]/60 leading-tight mb-1">{opt.desc}</p>
-                      <span className="font-mono text-[10px] text-[#3D6B3E] font-semibold">{opt.badge}</span>
+                      <p className="text-[11px] text-[#5C4835] leading-tight mb-1">{opt.desc}</p>
+                      <span className="font-mono text-[10px] text-[#2E7D32] font-bold">{opt.badge}</span>
                     </button>
                   ))}
                 </div>
@@ -185,22 +201,22 @@ export default function OrderForm({
             {/* 3. Quantity & Special Instructions */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
               <div className="sm:col-span-4">
-                <label className="block font-mono text-xs uppercase tracking-widest text-[#1C1208]/70 font-semibold mb-2">
+                <label className="block font-mono text-xs uppercase tracking-widest text-[#8E5E16] font-bold mb-2">
                   Head Count
                 </label>
-                <div className="flex items-center border border-[#1C1208]/20 bg-white rounded-lg p-1 w-full justify-between">
+                <div className="flex items-center border border-[#C4882A]/30 bg-[#FAF6EE] rounded-xl p-1 w-full justify-between">
                   <button
                     type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-8 h-8 flex items-center justify-center font-bold text-[#1C1208] hover:bg-[#FBF7F0] rounded"
+                    className="w-8 h-8 flex items-center justify-center font-bold text-[#1C1208] hover:bg-white rounded-lg"
                   >
                     -
                   </button>
-                  <span className="font-mono font-bold text-sm">{quantity} Head</span>
+                  <span className="font-mono font-bold text-sm text-[#1C1208]">{quantity} Head</span>
                   <button
                     type="button"
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-8 h-8 flex items-center justify-center font-bold text-[#1C1208] hover:bg-[#FBF7F0] rounded"
+                    className="w-8 h-8 flex items-center justify-center font-bold text-[#1C1208] hover:bg-white rounded-lg"
                   >
                     +
                   </button>
@@ -208,7 +224,7 @@ export default function OrderForm({
               </div>
 
               <div className="sm:col-span-8">
-                <label className="block font-mono text-xs uppercase tracking-widest text-[#1C1208]/70 font-semibold mb-2">
+                <label className="block font-mono text-xs uppercase tracking-widest text-[#8E5E16] font-bold mb-2">
                   Custom Cutting &amp; Aging Notes (Optional)
                 </label>
                 <input
@@ -216,13 +232,13 @@ export default function OrderForm({
                   placeholder="e.g. 21-day dry aging requested, separate organ meats..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="os-input text-xs"
+                  className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                 />
               </div>
             </div>
 
             {/* Guarantee Callout */}
-            <div className="p-4 rounded-xl bg-[#3D6B3E]/10 border border-[#3D6B3E]/20 text-[#3D6B3E] flex items-center gap-3 text-xs">
+            <div className="p-4 rounded-xl bg-[#2E7D32]/12 border border-[#2E7D32]/35 text-[#2E7D32] flex items-center gap-3 text-xs">
               <i className="bi bi-shield-check text-lg shrink-0" />
               <span>
                 <strong>Osotua Quality Guarantee:</strong> Every animal comes with full genetic pedigree certificate, 
@@ -232,15 +248,21 @@ export default function OrderForm({
           </div>
 
           {/* Footer Summary & Action */}
-          <div className="bg-[#1C1208] text-[#FBF7F0] p-6 border-t border-[#C4882A]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div
+            style={{
+              background: "#FAF8F5",
+              borderTop: "1px solid rgba(196, 136, 42, 0.2)",
+            }}
+            className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+          >
             <div>
-              <span className="text-[10px] font-mono uppercase text-[#FBF7F0]/50">Total Reservation Deposit</span>
+              <span className="text-[10px] font-mono uppercase text-[#786550] font-bold">Total Reservation Deposit</span>
               <div className="flex items-baseline gap-2">
-                <span className="font-serif text-3xl font-bold text-[#C4882A]">
+                <span className="font-serif text-3xl font-bold text-[#1C1208]">
                   KES {totalPrice.toLocaleString()}
                 </span>
                 {quantity > 1 && (
-                  <span className="text-xs text-[#FBF7F0]/60">({quantity} &times; KES {headUnitPrice.toLocaleString()})</span>
+                  <span className="text-xs text-[#786550]">({quantity} &times; KES {headUnitPrice.toLocaleString()})</span>
                 )}
               </div>
             </div>
@@ -249,11 +271,11 @@ export default function OrderForm({
               type="button"
               onClick={handleAddToCart}
               disabled={added}
-              className="w-full sm:w-auto btn-primary py-3.5 px-8 text-xs flex items-center justify-center gap-2"
+              className="w-full sm:w-auto btn-primary py-3.5 px-8 text-xs flex items-center justify-center gap-2 shadow-sm"
             >
               {added ? (
                 <>
-                  <i className="bi bi-check-lg text-[#1C1208]" />
+                  <i className="bi bi-check-lg text-white font-bold" />
                   <span>Added to Cart!</span>
                 </>
               ) : (
@@ -269,4 +291,3 @@ export default function OrderForm({
     </AnimatePresence>
   )
 }
-

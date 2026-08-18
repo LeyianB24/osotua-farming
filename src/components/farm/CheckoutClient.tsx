@@ -103,14 +103,15 @@ export default function CheckoutClient() {
       <div style={{ background: "#FBF7F0" }} className="pt-32 pb-20 min-h-screen">
         <div className="os-container">
           <div
-            className="glass-dark"
             style={{
               textAlign: "center",
               padding: "5rem 2rem",
-              borderRadius: "24px",
+              borderRadius: "28px",
               maxWidth: "520px",
               margin: "0 auto",
-              border: "1px solid rgba(196,136,42,0.25)",
+              background: "#FFFFFF",
+              border: "1px solid rgba(196, 136, 42, 0.25)",
+              boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
             }}
           >
             <i
@@ -126,8 +127,8 @@ export default function CheckoutClient() {
               style={{
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                 fontSize: "2.4rem",
-                fontWeight: 300,
-                color: "#F5EFE4",
+                fontWeight: 400,
+                color: "#1C1208",
                 marginBottom: "0.75rem",
               }}
             >
@@ -135,7 +136,7 @@ export default function CheckoutClient() {
             </h2>
             <p
               style={{
-                color: "rgba(245,239,228,0.55)",
+                color: "#5C4835",
                 fontSize: "0.9rem",
                 marginBottom: "2.5rem",
               }}
@@ -153,7 +154,7 @@ export default function CheckoutClient() {
   }
 
   return (
-    <div style={{ background: "#FBF7F0" }}>
+    <div style={{ background: "#FBF7F0", minHeight: "100vh" }}>
       {/* ── HERO ── */}
       <div
         className="bg-mesh-earth noise"
@@ -165,15 +166,15 @@ export default function CheckoutClient() {
         }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "1rem" }}>
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1rem", fontWeight: 700 }}>
             Secure Checkout
           </div>
           <h1
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
               fontSize: "clamp(2.5rem, 5vw, 4rem)",
-              fontWeight: 300,
-              color: "#F5EFE4",
+              fontWeight: 400,
+              color: "#1C1208",
               marginBottom: "1rem",
               lineHeight: 1.1,
             }}
@@ -182,7 +183,7 @@ export default function CheckoutClient() {
           </h1>
           <p
             style={{
-              color: "rgba(245,239,228,0.65)",
+              color: "#5C4835",
               fontSize: "1rem",
               maxWidth: "520px",
               lineHeight: 1.7,
@@ -223,18 +224,18 @@ export default function CheckoutClient() {
                       justifyContent: "center",
                       fontSize: "0.75rem",
                       fontFamily: "var(--font-space-grotesk), monospace",
-                      fontWeight: 600,
+                      fontWeight: 700,
                       background: active
                         ? "#C4882A"
                         : passed
-                        ? "#3D6B3E"
-                        : "rgba(255,255,255,0.08)",
-                      color: active || passed ? "#1C1208" : "rgba(245,239,228,0.4)",
+                        ? "#2E7D32"
+                        : "#FAF6EE",
+                      color: active || passed ? "#FFFFFF" : "#786550",
                       border: active
                         ? "1px solid #C4882A"
                         : passed
-                        ? "1px solid #3D6B3E"
-                        : "1px solid rgba(255,255,255,0.12)",
+                        ? "1px solid #2E7D32"
+                        : "1px solid rgba(196, 136, 42, 0.25)",
                     }}
                   >
                     {passed ? <i className="bi bi-check-lg" /> : idx + 1}
@@ -243,10 +244,10 @@ export default function CheckoutClient() {
                     style={{
                       fontFamily: "var(--font-space-grotesk), monospace",
                       fontSize: "0.68rem",
-                      fontWeight: active ? 600 : 400,
+                      fontWeight: 700,
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
-                      color: active ? "#F5EFE4" : passed ? "#5a9e5c" : "rgba(245,239,228,0.4)",
+                      color: active ? "#1C1208" : passed ? "#2E7D32" : "#786550",
                     }}
                   >
                     {s.label}
@@ -262,8 +263,8 @@ export default function CheckoutClient() {
       <section style={{ padding: "4rem 0 6rem" }}>
         <div className="os-container">
           {errorMsg && (
-            <div className="mb-6 p-4 rounded-xl bg-[#A0431E]/20 border border-[#A0431E]/40 text-[#F5EFE4] text-sm flex items-center gap-3 max-w-4xl mx-auto">
-              <i className="bi bi-exclamation-triangle-fill text-[#A0431E] text-lg" />
+            <div className="mb-6 p-4 rounded-xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-sm flex items-center gap-3 max-w-4xl mx-auto">
+              <i className="bi bi-exclamation-triangle-fill text-[#DC2626] text-lg" />
               <span>{errorMsg}</span>
             </div>
           )}
@@ -272,25 +273,26 @@ export default function CheckoutClient() {
           {step === "details" && (
             <form onSubmit={handleNextToPayment} style={{ maxWidth: "800px", margin: "0 auto" }}>
               <div
-                className="glass-dark"
                 style={{
                   padding: "3rem",
-                  borderRadius: "24px",
-                  border: "1px solid rgba(196,136,42,0.25)",
+                  borderRadius: "28px",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(196, 136, 42, 0.25)",
+                  boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
                 }}
               >
                 <div
                   className="eyebrow"
-                  style={{ color: "#C4882A", marginBottom: "0.75rem" }}
+                  style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}
                 >
                   Step 1
                 </div>
                 <h2
                   style={{
                     fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "2rem",
-                    fontWeight: 300,
-                    color: "#F5EFE4",
+                    fontSize: "2.2rem",
+                    fontWeight: 400,
+                    color: "#1C1208",
                     marginBottom: "2rem",
                   }}
                 >
@@ -303,11 +305,11 @@ export default function CheckoutClient() {
                       style={{
                         display: "block",
                         fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.6rem",
-                        fontWeight: 600,
+                        fontSize: "0.62rem",
+                        fontWeight: 700,
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "rgba(245,239,228,0.6)",
+                        color: "#8E5E16",
                         marginBottom: "0.5rem",
                       }}
                     >
@@ -319,16 +321,7 @@ export default function CheckoutClient() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Kiprono Koech"
-                      style={{
-                        width: "100%",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                        borderRadius: "10px",
-                        padding: "0.875rem 1.125rem",
-                        color: "#F5EFE4",
-                        outline: "none",
-                        fontSize: "0.9rem",
-                      }}
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
 
@@ -337,11 +330,11 @@ export default function CheckoutClient() {
                       style={{
                         display: "block",
                         fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.6rem",
-                        fontWeight: 600,
+                        fontSize: "0.62rem",
+                        fontWeight: 700,
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "rgba(245,239,228,0.6)",
+                        color: "#8E5E16",
                         marginBottom: "0.5rem",
                       }}
                     >
@@ -353,16 +346,7 @@ export default function CheckoutClient() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="name@company.co.ke"
-                      style={{
-                        width: "100%",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                        borderRadius: "10px",
-                        padding: "0.875rem 1.125rem",
-                        color: "#F5EFE4",
-                        outline: "none",
-                        fontSize: "0.9rem",
-                      }}
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
 
@@ -371,11 +355,11 @@ export default function CheckoutClient() {
                       style={{
                         display: "block",
                         fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.6rem",
-                        fontWeight: 600,
+                        fontSize: "0.62rem",
+                        fontWeight: 700,
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "rgba(245,239,228,0.6)",
+                        color: "#8E5E16",
                         marginBottom: "0.5rem",
                       }}
                     >
@@ -387,16 +371,7 @@ export default function CheckoutClient() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+254 700 000 000"
-                      style={{
-                        width: "100%",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                        borderRadius: "10px",
-                        padding: "0.875rem 1.125rem",
-                        color: "#F5EFE4",
-                        outline: "none",
-                        fontSize: "0.9rem",
-                      }}
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
 
@@ -405,11 +380,11 @@ export default function CheckoutClient() {
                       style={{
                         display: "block",
                         fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.6rem",
-                        fontWeight: 600,
+                        fontSize: "0.62rem",
+                        fontWeight: 700,
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "rgba(245,239,228,0.6)",
+                        color: "#8E5E16",
                         marginBottom: "0.5rem",
                       }}
                     >
@@ -421,16 +396,7 @@ export default function CheckoutClient() {
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="e.g. Karen Plains, House 4B, Nairobi"
-                      style={{
-                        width: "100%",
-                        background: "rgba(255,255,255,0.06)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                        borderRadius: "10px",
-                        padding: "0.875rem 1.125rem",
-                        color: "#F5EFE4",
-                        outline: "none",
-                        fontSize: "0.9rem",
-                      }}
+                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
                 </div>
@@ -442,7 +408,7 @@ export default function CheckoutClient() {
                     alignItems: "center",
                     marginTop: "3rem",
                     paddingTop: "2rem",
-                    borderTop: "1px solid rgba(255,255,255,0.08)",
+                    borderTop: "1px solid rgba(196, 136, 42, 0.15)",
                   }}
                 >
                   <Link href="/cart" className="btn-ghost">
@@ -461,24 +427,25 @@ export default function CheckoutClient() {
           {/* STEP 2: PAYMENT */}
           {step === "payment" && (
             <div
-              className="glass-dark"
               style={{
                 maxWidth: "800px",
                 margin: "0 auto",
                 padding: "3rem",
-                borderRadius: "24px",
-                border: "1px solid rgba(196,136,42,0.25)",
+                borderRadius: "28px",
+                background: "#FFFFFF",
+                border: "1px solid rgba(196, 136, 42, 0.25)",
+                boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
               }}
             >
-              <div className="eyebrow" style={{ color: "#C4882A", marginBottom: "0.75rem" }}>
+              <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
                 Step 2
               </div>
               <h2
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "2rem",
-                  fontWeight: 300,
-                  color: "#F5EFE4",
+                  fontSize: "2.2rem",
+                  fontWeight: 400,
+                  color: "#1C1208",
                   marginBottom: "2rem",
                 }}
               >
@@ -508,17 +475,18 @@ export default function CheckoutClient() {
                         padding: "1.5rem",
                         borderRadius: "16px",
                         textAlign: "left",
-                        background: active ? "rgba(196,136,42,0.18)" : "rgba(255,255,255,0.04)",
-                        border: active ? "1px solid #C4882A" : "1px solid rgba(255,255,255,0.08)",
+                        background: active ? "linear-gradient(135deg, #C4882A, #D99A30)" : "#FAF6EE",
+                        border: active ? "1px solid #C4882A" : "1px solid rgba(196, 136, 42, 0.2)",
                         cursor: "pointer",
                         transition: "all 0.25s ease",
+                        boxShadow: active ? "0 4px 16px rgba(196,136,42,0.25)" : "none",
                       }}
                     >
                       <i
                         className={`bi ${m.icon}`}
                         style={{
                           fontSize: "1.5rem",
-                          color: active ? "#C4882A" : "rgba(245,239,228,0.5)",
+                          color: active ? "#FFFFFF" : "#C4882A",
                           display: "block",
                           marginBottom: "0.5rem",
                         }}
@@ -526,14 +494,14 @@ export default function CheckoutClient() {
                       <div
                         style={{
                           fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                          fontSize: "1.2rem",
-                          fontWeight: 400,
-                          color: "#F5EFE4",
+                          fontSize: "1.3rem",
+                          fontWeight: 500,
+                          color: active ? "#FFFFFF" : "#1C1208",
                         }}
                       >
                         {m.title}
                       </div>
-                      <div style={{ fontSize: "0.7rem", color: "rgba(245,239,228,0.4)", marginTop: "0.2rem" }}>
+                      <div style={{ fontSize: "0.72rem", color: active ? "rgba(255,255,255,0.85)" : "#786550", marginTop: "0.2rem" }}>
                         {m.sub}
                       </div>
                     </button>
@@ -544,9 +512,9 @@ export default function CheckoutClient() {
               {paymentMethod === "mpesa" && (
                 <div
                   style={{
-                    background: "rgba(61,107,62,0.15)",
-                    border: "1px solid rgba(61,107,62,0.35)",
-                    borderRadius: "14px",
+                    background: "#FAF8F5",
+                    border: "1px solid rgba(46, 125, 50, 0.35)",
+                    borderRadius: "18px",
                     padding: "1.5rem",
                     marginBottom: "2rem",
                   }}
@@ -555,11 +523,11 @@ export default function CheckoutClient() {
                     style={{
                       display: "block",
                       fontFamily: "var(--font-space-grotesk), monospace",
-                      fontSize: "0.58rem",
-                      fontWeight: 600,
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
                       letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "#5a9e5c",
+                      color: "#2E7D32",
                       marginBottom: "0.5rem",
                     }}
                   >
@@ -570,18 +538,9 @@ export default function CheckoutClient() {
                     value={mpesaPhone || phone}
                     onChange={(e) => setMpesaPhone(e.target.value)}
                     placeholder="0712345678"
-                    style={{
-                      width: "100%",
-                      background: "rgba(255,255,255,0.08)",
-                      border: "1px solid rgba(61,107,62,0.4)",
-                      borderRadius: "10px",
-                      padding: "0.875rem 1.125rem",
-                      color: "#F5EFE4",
-                      outline: "none",
-                      fontSize: "0.9rem",
-                    }}
+                    className="w-full bg-[#FFFFFF] border border-[#2E7D32]/40 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#2E7D32]"
                   />
-                  <p style={{ color: "rgba(245,239,228,0.5)", fontSize: "0.78rem", marginTop: "0.75rem" }}>
+                  <p style={{ color: "#5C4835", fontSize: "0.8rem", marginTop: "0.75rem" }}>
                     You will receive a prompt on your phone to authorize payment of KES {grandTotal.toLocaleString()}.
                   </p>
                 </div>
@@ -608,14 +567,15 @@ export default function CheckoutClient() {
           {/* STEP 3: CONFIRMED */}
           {step === "confirmed" && (
             <div
-              className="glass-dark"
               style={{
                 textAlign: "center",
                 padding: "5rem 2.5rem",
-                borderRadius: "24px",
+                borderRadius: "28px",
                 maxWidth: "600px",
                 margin: "0 auto",
-                border: "1px solid rgba(61,107,62,0.4)",
+                background: "#FFFFFF",
+                border: "1px solid rgba(46, 125, 50, 0.35)",
+                boxShadow: "0 16px 48px rgba(46, 125, 50, 0.08)",
               }}
             >
               <div
@@ -623,32 +583,32 @@ export default function CheckoutClient() {
                   width: "64px",
                   height: "64px",
                   borderRadius: "50%",
-                  background: "rgba(61,107,62,0.2)",
-                  border: "1px solid rgba(61,107,62,0.4)",
+                  background: "rgba(46, 125, 50, 0.15)",
+                  border: "1px solid rgba(46, 125, 50, 0.35)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   margin: "0 auto 1.5rem",
-                  color: "#5a9e5c",
+                  color: "#2E7D32",
                 }}
               >
                 <i className="bi bi-check-circle-fill" style={{ fontSize: "2rem" }} />
               </div>
-              <div className="eyebrow justify-center" style={{ color: "#5a9e5c", marginBottom: "0.75rem" }}>
+              <div className="eyebrow justify-center" style={{ color: "#2E7D32", marginBottom: "0.75rem", fontWeight: 700 }}>
                 Order Confirmed
               </div>
               <h2
                 style={{
                   fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
                   fontSize: "2.8rem",
-                  fontWeight: 300,
-                  color: "#F5EFE4",
+                  fontWeight: 400,
+                  color: "#1C1208",
                   marginBottom: "0.5rem",
                 }}
               >
                 Thank You for Your Order!
               </h2>
-              <p style={{ color: "rgba(245,239,228,0.55)", fontSize: "0.9rem", marginBottom: "2rem" }}>
+              <p style={{ color: "#5C4835", fontSize: "0.95rem", marginBottom: "2rem" }}>
                 Order Reference:{" "}
                 <strong
                   style={{ color: "#C4882A", fontFamily: "var(--font-space-grotesk), monospace" }}
