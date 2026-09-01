@@ -1,26 +1,37 @@
 /* eslint-disable no-console */
-import { PrismaClient, UserRole } from "@prisma/client"
+import {
+  PrismaClient,
+  UserRole,
+  Gender,
+  LivestockStatus,
+  NewCatchStatus,
+  ImportStatus,
+  SaleChannel,
+  SaleStatus,
+  VisitStatus,
+  PartnerStatus,
+  OrderType,
+  OrderStatus,
+  SubscriptionFreq,
+  SubscriptionStatus,
+} from "@prisma/client"
 import { hashPassword } from "../src/lib/password"
 
 const prisma = new PrismaClient()
 
-// All image values are paths served from /public. Descriptive, named
-// photos so each breed/product is unmistakable.
 const img = (p: string) => `/images/${p}`
-
 const LOGO_URL = "/logos/Rooted in Tradition, Growing with Nature (1).png"
 
 // ── Species ────────────────────────────────────────────────
 const SPECIES = [
   { name: "Beef Cattle", description: "Beef breeds raised for premium meat production on the Kajiado rangelands." },
   { name: "Dairy Cattle", description: "Dairy breeds selected for milk yield and climate resilience." },
-  { name: "Goats", description: "Meat and dual-purpose goats thrives in semi-arid conditions." },
+  { name: "Goats", description: "Meat and dual-purpose goats thriving in semi-arid conditions." },
   { name: "Sheep", description: "Fat-tailed and meat sheep bred for the East African market." },
   { name: "Poultry", description: "Free-range indigenous and dual-purpose improved poultry flock." },
 ]
 
-
-// ── Breeds keyed by species name ───────────────────────────
+// ── Breeds ─────────────────────────────────────────────────
 const BREEDS: Record<string, Array<{
   name: string
   purpose: string
@@ -38,7 +49,7 @@ const BREEDS: Record<string, Array<{
       name: "Boran",
       purpose: "Beef",
       description:
-        "A hardy indigenous African zebu breed evolved over centuries on the rangelands. Bos indicus genetics give it heat tolerance, tick resistance, and excellent forage conversion. Boran beef is finely marbled, tender, and uniquely flavoured — the cornerstone of our beef enterprise.",
+        "A hardy indigenous African zebu breed evolved over centuries on the rangelands. Bos indicus genetics give it heat tolerance, tick resistance, and excellent forage conversion. Boran beef is finely marbled, tender, and uniquely flavoured.",
       origin: "East Africa (Kenya)",
       maleWeight: "700–850 kg",
       femaleWeight: "450–550 kg",
@@ -51,7 +62,7 @@ const BREEDS: Record<string, Array<{
       name: "Bonsmara",
       purpose: "Beef",
       description:
-        "A South African composite of Afrikaner, Hereford, and Shorthorn — the only breed worldwide scientifically developed and authenticated at a research station. Exceptional beef quality, calm temperament, and excellent adaptability to African conditions.",
+        "A South African composite of Afrikaner, Hereford, and Shorthorn — scientifically developed for exceptional beef quality, calm temperament, and adaptability.",
       origin: "South Africa",
       maleWeight: "750–900 kg",
       femaleWeight: "500–620 kg",
@@ -64,7 +75,7 @@ const BREEDS: Record<string, Array<{
       name: "Brahman",
       purpose: "Beef",
       description:
-        "An American composite of Indian Gir, Guzerat, and Nellore genetics, Brahman cattle thrive in hot, humid conditions and are prized for hybrid vigour when crossed with indigenous breeds.",
+        "Prized for hybrid vigour, heat tolerance, and exceptional growth rates on pastoral rangelands.",
       origin: "United States (Indian origin)",
       maleWeight: "800–1,100 kg",
       femaleWeight: "500–700 kg",
@@ -77,7 +88,7 @@ const BREEDS: Record<string, Array<{
       name: "Simmental Cross",
       purpose: "Beef",
       description:
-        "A crossbred beef animal from Swiss Simmental genetics paired with indigenous zebu for fast growth, high carcass yield, and excellent maternal traits. Ideal for commercial beef production in mixed pasture systems.",
+        "Fast growth, high carcass yield, and excellent maternal traits for commercial beef production.",
       origin: "Switzerland × Kenya",
       maleWeight: "900–1,200 kg",
       femaleWeight: "600–750 kg",
@@ -92,7 +103,7 @@ const BREEDS: Record<string, Array<{
       name: "Sahiwal",
       purpose: "Dual-purpose (milk & beef)",
       description:
-        "One of the finest indigenous dairy zebu breeds. Resistant to ticks and heat, producing 2,000–3,000 kg of rich milk per lactation on forage alone. Sahiwal bulls are also sought after for beef crossings across East Africa.",
+        "Fine indigenous dairy zebu breed. Heat and parasite resistant, producing rich high-butterfat milk on rangeland forage.",
       origin: "Pakistan / India (now widespread in Kenya)",
       maleWeight: "500–600 kg",
       femaleWeight: "350–450 kg",
@@ -105,7 +116,7 @@ const BREEDS: Record<string, Array<{
       name: "Friesian × Sahiwal",
       purpose: "Dairy",
       description:
-        "A crossbred dairy animal combining Friesian milk yield with Sahiwal hardiness. Well-suited to Kajiado's climate and the backbone of our commercial dairy herd.",
+        "Combines Friesian volume with Sahiwal resilience — perfect for commercial rangeland dairying.",
       origin: "Kenyan crossbred",
       maleWeight: "600–750 kg",
       femaleWeight: "450–550 kg",
@@ -120,7 +131,7 @@ const BREEDS: Record<string, Array<{
       name: "Boer",
       purpose: "Meat",
       description:
-        "The world's premier meat goat — muscular, fast-growing, and docile. Our Boers are bred from South African genetics and thrive on the Kajiado browse.",
+        "Premier global meat goat — muscular, fast-growing, docility, and exceptional feed conversion.",
       origin: "South Africa",
       maleWeight: "90–150 kg",
       femaleWeight: "60–90 kg",
@@ -133,7 +144,7 @@ const BREEDS: Record<string, Array<{
       name: "Galla",
       purpose: "Meat",
       description:
-        "An indigenous Kenyan goat perfectly adapted to arid conditions. Hardy, drought-resistant, and central to the Maasai pastoral economy.",
+        "Indigenous Kenyan goat adapted to arid climates. Hardy, drought-tolerant, and prolific.",
       origin: "Northern Kenya",
       maleWeight: "60–80 kg",
       femaleWeight: "40–55 kg",
@@ -146,7 +157,7 @@ const BREEDS: Record<string, Array<{
       name: "Boer × Galla",
       purpose: "Meat",
       description:
-        "A crossbred meat goat offering the size and growth of Boer with the hardiness of the indigenous Galla. Ideal for smallholder outgrowers and commercial ranches alike.",
+        "Crossbred meat goat combining Boer heavy muscling with Galla hardiness.",
       origin: "Kenyan crossbred",
       maleWeight: "80–110 kg",
       femaleWeight: "55–70 kg",
@@ -161,7 +172,7 @@ const BREEDS: Record<string, Array<{
       name: "Dorper",
       purpose: "Meat",
       description:
-        "A South African composite of Dorset Horn and Persian Blackhead — a fast-growing, fat-tailed sheep prized for premium, lean meat. Dorpers lamb easily and adapt well to Kajiado's savannah.",
+        "Fast-growing, fat-tailed sheep prized for premium lean meat and effortless lambing on open pasture.",
       origin: "South Africa",
       maleWeight: "90–110 kg",
       femaleWeight: "60–80 kg",
@@ -174,7 +185,7 @@ const BREEDS: Record<string, Array<{
       name: "Red Maasai × Dorper",
       purpose: "Meat",
       description:
-        "A resilient cross preserving the indigenous Red Maasai's worm-resistance with the Dorper's growth. A practical choice for disease-prone rangeland.",
+        "Resilient cross preserving indigenous worm-resistance with Dorper meat yield.",
       origin: "Kenyan crossbred",
       maleWeight: "70–95 kg",
       femaleWeight: "50–65 kg",
@@ -189,7 +200,7 @@ const BREEDS: Record<string, Array<{
       name: "Kuroiler / Improved Kienyeji",
       purpose: "Dual-purpose (meat & eggs)",
       description:
-        "Resilient, free-ranging dual-purpose poultry adapted to Kajiado rangelands. Fast-maturing with high egg production and rich, indigenous meat flavour.",
+        "Resilient, free-ranging dual-purpose poultry adapted to Kajiado rangelands.",
       origin: "Kenya / East Africa",
       maleWeight: "3.5–4.5 kg",
       femaleWeight: "2.5–3.2 kg",
@@ -201,13 +212,8 @@ const BREEDS: Record<string, Array<{
   ],
 }
 
-
-// ── Product categories ─────────────────────────────────────
-const CATEGORIES: Array<{
-  name: string
-  slug: string
-  image: string | null
-}> = [
+// ── Categories ─────────────────────────────────────────────
+const CATEGORIES = [
   { name: "Beef Cuts", slug: "beef-cuts", image: img("beef cuts.jpg") },
   { name: "Dairy Products", slug: "dairy-products", image: img("sahiwal cow.jpg") },
   { name: "Goat Meat", slug: "goat-meat", image: img("boer goat.jpg") },
@@ -217,7 +223,7 @@ const CATEGORIES: Array<{
   { name: "Ranch Box", slug: "ranch-box", image: img("vegetables.jpg") },
 ]
 
-// ── Products keyed by category name ────────────────────────
+// ── Products ───────────────────────────────────────────────
 const PRODUCTS: Record<string, Array<{
   name: string
   slug: string
@@ -233,8 +239,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Boran Sirloin Steak",
       slug: "boran-sirloin-steak",
-      description:
-        "Dry-aged Boran sirloin, fully trimmed and portioned. Two steaks per pack. Distinctive, lightly marbled, pasture-raised beef from the Osotua rangelands.",
+      description: "Dry-aged Boran sirloin, portioned 2 steaks per pack. Pasture-raised tender beef.",
       price: 1250,
       unit: "500g pack",
       image: img("prime beef.jpg"),
@@ -245,8 +250,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Braising Beef Cubes",
       slug: "braising-beef-cubes",
-      description:
-        "Lean beef cubes cut for stews and curries. Aged for tenderness, slow-cooks beautifully — a Kenyan table favourite.",
+      description: "Lean aged beef cubes cut for stews and rich slow-cooked broths.",
       price: 800,
       unit: "kg",
       image: img("beef cuts.jpg"),
@@ -259,8 +263,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Farm Fresh Raw Milk",
       slug: "farm-fresh-raw-milk",
-      description:
-        "Unpasteurised whole milk from our Sahiwal × Friesian herd. Best within 48 hours — chill on delivery.",
+      description: "Unpasteurised whole milk from our Sahiwal herd. High natural butterfat content.",
       price: 120,
       unit: "litre",
       image: img("sahiwal cow.jpg"),
@@ -271,8 +274,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Artisan Maasai Ghee",
       slug: "artisan-maasai-ghee",
-      description:
-        "Traditional cultured ghee, hand-churned in the Maasai style. Rich, nutty, golden — perfect for high-heat cooking.",
+      description: "Hand-churned cultured ghee in traditional Maasai style. Golden, nutty aroma.",
       price: 950,
       unit: "350g jar",
       image: img("sahiwal bull.jpg"),
@@ -285,8 +287,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Whole Boer Goat (Dressed)",
       slug: "whole-boer-goat-dressed",
-      description:
-        "A whole Boer goat, dressed and ready. Approx. 18–22 kg dressed weight. Serves 25+; ideal for ceremonies and nyama choma parties.",
+      description: "Whole dressed Boer goat (approx. 18–22 kg). Ideal for celebrations & nyama choma.",
       price: 8500,
       unit: "whole",
       image: img("boer goat.jpg"),
@@ -297,8 +298,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Goat Mbuzi Mix",
       slug: "goat-mbuzi-mix",
-      description:
-        "A mixed cut pack: ribs, leg, shoulder. Marinate, grill, or slow-roast with rosemary and garlic.",
+      description: "Mixed cuts pack: ribs, leg, and shoulder for grilling or stews.",
       price: 1100,
       unit: "kg",
       image: img("meat.jpg"),
@@ -311,8 +311,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Dorper Lamb Leg",
       slug: "dorper-lamb-leg",
-      description:
-        "A bone-in Dorper lamb leg — premium roasting cut. Rub with herbs, slow-roast four hours. Feeds 6–8.",
+      description: "Bone-in Dorper lamb leg. Prime roasting joint feeding 6–8 people.",
       price: 2200,
       unit: "2.5kg leg",
       image: img("lamb chops.jpg"),
@@ -325,8 +324,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Ranch Garden Spinach",
       slug: "ranch-garden-spinach",
-      description:
-        "Pesticide-free spinach grown on the ranch's drip-irrigated kitchen garden. Harvested the morning of delivery.",
+      description: "Organic drip-irrigated spinach harvested fresh morning of dispatch.",
       price: 80,
       unit: "500g bunch",
       image: img("cabbages.jpeg"),
@@ -337,8 +335,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Heritage Tomatoes",
       slug: "heritage-tomatoes",
-      description:
-        "Vine-ripened heritage tomatoes — sun-grown, sweet, and imperfect. Perfect for salads and sauces.",
+      description: "Sun-ripened vine tomatoes bursting with heirloom sweet flavour.",
       price: 250,
       unit: "kg",
       image: img("ripe tomatoes.jpg"),
@@ -351,8 +348,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "Seasonal Fruit Box",
       slug: "seasonal-fruit-box",
-      description:
-        "A 5kg mix of in-season orchard fruit — mangoes, papayas, bananas, and citrus depending on the harvest.",
+      description: "5kg crate of fresh in-season orchard harvest (mangoes, papayas, citrus).",
       price: 1500,
       unit: "5kg box",
       image: img("pineapples.jpg"),
@@ -365,8 +361,7 @@ const PRODUCTS: Record<string, Array<{
     {
       name: "The Osotua Ranch Box",
       slug: "the-osotua-ranch-box",
-      description:
-        "A curated weekly box: 2kg beef cuts, 1kg goat, 2 litres milk, seasonal vegetables, and a fruit selection. Subscribe for weekly, fortnightly, or monthly delivery.",
+      description: "Curated weekly hamper: 2kg beef, 1kg goat, 2L fresh milk, seasonal veggies & fruit.",
       price: 4200,
       unit: "weekly box",
       image: img("vegetables.jpg"),
@@ -378,25 +373,18 @@ const PRODUCTS: Record<string, Array<{
 }
 
 async function main() {
-  console.log("→ Seeding Osotua Farming database…")
+  console.log("→ Seeding Osotua Farming database with comprehensive ecosystem data…")
 
-  // Pass 0: Users (admin + several demo users)
-  const USERS: Array<{
-    name: string
-    email: string
-    phone: string
-    password: string
-    role: UserRole
-  }> = [
-    { name: "Farm Administrator",  email: "admin@osotuafarming.co.ke", phone: "+254700000000", password: "Admin1234!",   role: "ADMIN" },
-    { name: "Farm Operations",     email: "admin@osotua.co.ke",        phone: "+254700000001", password: "Admin1234!",   role: "ADMIN" },
-    { name: "Joyce Wambui",        email: "operator@osotua.co.ke",      phone: "+254711000111", password: "Operator12!", role: "ADMIN" },
-    { name: "Daniel Otieno",       email: "customer@osotua.co.ke",      phone: "+254722000222", password: "Customer1!", role: "CUSTOMER" },
-    { name: "Mary Chebet",         email: "user2@osotua.co.ke",        phone: "+254733000333", password: "Customer1!", role: "CUSTOMER" },
-    { name: "Samuel Njoroge",      email: "partner@osotua.co.ke",      phone: "+254744000444", password: "Partner123!", role: "PARTNER_FARMER" },
-    { name: "Grace Mutua",         email: "investor@osotua.co.ke",     phone: "+254755000555", password: "Investor1!", role: "INVESTOR" },
+  // 1. Users
+  const USERS = [
+    { name: "Farm Administrator", email: "admin@osotuafarming.co.ke", phone: "+254700000000", password: "Admin1234!", role: UserRole.ADMIN },
+    { name: "Farm Operations", email: "admin@osotua.co.ke", phone: "+254700000001", password: "Admin1234!", role: UserRole.ADMIN },
+    { name: "Joyce Wambui", email: "operator@osotua.co.ke", phone: "+254711000111", password: "Operator12!", role: UserRole.ADMIN },
+    { name: "Daniel Otieno", email: "customer@osotua.co.ke", phone: "+254722000222", password: "Customer1!", role: UserRole.CUSTOMER },
+    { name: "Mary Chebet", email: "user2@osotua.co.ke", phone: "+254733000333", password: "Customer1!", role: UserRole.CUSTOMER },
+    { name: "Samuel Njoroge", email: "partner@osotua.co.ke", phone: "+254744000444", password: "Partner123!", role: UserRole.PARTNER_FARMER },
+    { name: "Grace Mutua", email: "investor@osotua.co.ke", phone: "+254755000555", password: "Investor1!", role: UserRole.INVESTOR },
   ]
-
 
   for (const u of USERS) {
     const existing = await prisma.user.findUnique({ where: { email: u.email } })
@@ -407,9 +395,9 @@ async function main() {
       await prisma.user.create({ data: { name: u.name, email: u.email, phone: u.phone, role: u.role, password } })
     }
   }
-  console.log(`  Users upserted: ${USERS.length}`)
+  console.log(`  ✓ Users upserted: ${USERS.length}`)
 
-  // Pass 1: Species
+  // 2. Species
   for (const s of SPECIES) {
     await prisma.species.upsert({
       where: { name: s.name },
@@ -418,9 +406,9 @@ async function main() {
     })
   }
   const speciesRecords = await prisma.species.findMany()
-  console.log(`  Species upserted: ${speciesRecords.length}`)
+  console.log(`  ✓ Species upserted: ${speciesRecords.length}`)
 
-  // Pass 2: Breeds
+  // 3. Breeds
   let breedCount = 0
   for (const [speciesName, list] of Object.entries(BREEDS)) {
     const species = speciesRecords.find((s) => s.name === speciesName)!
@@ -441,9 +429,9 @@ async function main() {
       breedCount++
     }
   }
-  console.log(`  Breeds upserted: ${breedCount}`)
+  console.log(`  ✓ Breeds upserted: ${breedCount}`)
 
-  // Pass 3: Categories
+  // 4. Categories
   for (const c of CATEGORIES) {
     const existing = await prisma.productCategory.findUnique({ where: { slug: c.slug } })
     if (existing) {
@@ -453,9 +441,9 @@ async function main() {
     }
   }
   const catRecords = await prisma.productCategory.findMany()
-  console.log(`  Product categories upserted: ${catRecords.length}`)
+  console.log(`  ✓ Product categories upserted: ${catRecords.length}`)
 
-  // Pass 4: Products
+  // 5. Products
   let productCount = 0
   for (const [catName, list] of Object.entries(PRODUCTS)) {
     const cat = catRecords.find((c) => c.name === catName)
@@ -473,8 +461,324 @@ async function main() {
       productCount++
     }
   }
-  console.log(`  Products upserted: ${productCount}`)
-  console.log("✓ Seed complete.")
+  console.log(`  ✓ Products upserted: ${productCount}`)
+
+  const allBreeds = await prisma.breed.findMany()
+  const allProducts = await prisma.product.findMany()
+  const customerUser = await prisma.user.findUnique({ where: { email: "customer@osotua.co.ke" } })
+  const maryUser = await prisma.user.findUnique({ where: { email: "user2@osotua.co.ke" } })
+
+  // 6. Individual Livestock Herd (Tags & Weight)
+  const boranBreed = allBreeds.find((b) => b.name === "Boran")
+  const boerBreed = allBreeds.find((b) => b.name === "Boer")
+  const sahiwalBreed = allBreeds.find((b) => b.name === "Sahiwal")
+  const dorperBreed = allBreeds.find((b) => b.name === "Dorper")
+
+  const LIVESTOCK_HERD = [
+    { tagNumber: "OS-BOR-001", breedId: boranBreed?.id, gender: Gender.MALE, weight: 780, status: LivestockStatus.BREEDING_STOCK, notes: "Pedigree stud bull. Sire: Kajiado Pride." },
+    { tagNumber: "OS-BOR-002", breedId: boranBreed?.id, gender: Gender.FEMALE, weight: 510, status: LivestockStatus.AVAILABLE, notes: "Heifer, 28 months, vaccinated." },
+    { tagNumber: "OS-SAH-003", breedId: sahiwalBreed?.id, gender: Gender.FEMALE, weight: 440, status: LivestockStatus.AVAILABLE, notes: "Lactating dam, 14L/day average." },
+    { tagNumber: "OS-BOE-004", breedId: boerBreed?.id, gender: Gender.MALE, weight: 115, status: LivestockStatus.AVAILABLE, notes: "Young buck with excellent conformation." },
+    { tagNumber: "OS-DOR-005", breedId: dorperBreed?.id, gender: Gender.FEMALE, weight: 72, status: LivestockStatus.RESERVED, notes: "Ewe carrying twins." },
+    { tagNumber: "OS-DOR-006", breedId: dorperBreed?.id, gender: Gender.MALE, weight: 95, status: LivestockStatus.AVAILABLE, notes: "Prime slaughter ram." },
+  ]
+
+  for (const l of LIVESTOCK_HERD) {
+    if (!l.breedId) continue
+    await prisma.livestock.upsert({
+      where: { tagNumber: l.tagNumber },
+      update: { weight: l.weight, status: l.status, notes: l.notes },
+      create: {
+        tagNumber: l.tagNumber,
+        breedId: l.breedId,
+        gender: l.gender,
+        weight: l.weight,
+        status: l.status,
+        notes: l.notes,
+        birthDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 2),
+      },
+    })
+  }
+  console.log(`  ✓ Livestock Herd registry seeded`)
+
+  // 7. Stock Records
+  for (const p of allProducts.slice(0, 4)) {
+    await prisma.stock.create({
+      data: {
+        productId: p.id,
+        name: p.name,
+        unit: p.unit,
+        quantity: p.stockQty,
+        reorderAt: 10,
+        note: "Barn Cold Room Shelf A",
+      },
+    })
+  }
+  console.log(`  ✓ Stock inventory records seeded`)
+
+  // 8. Barn Dining Menus
+  const MENUS = [
+    {
+      name: "Kajiado Nyama Choma Weekend Feast",
+      slug: "kajiado-nyama-choma-weekend-feast",
+      description: "Charcoal slow-roasted Boran beef ribs & Dorper lamb, accompanied by ugali, kachumbari, and sautéed greens.",
+      price: 3200,
+      servings: 4,
+      image: img("meat.jpg"),
+      available: true,
+      weekOf: new Date(),
+    },
+    {
+      name: "Pasture-to-Table Family Platter",
+      slug: "pasture-to-table-family-platter",
+      description: "Grilled Boer mbuzi cuts, roast farm potatoes, heritage tomato salad, and fresh artisan butter milk.",
+      price: 4500,
+      servings: 6,
+      image: img("beef cuts.jpg"),
+      available: true,
+      weekOf: new Date(),
+    },
+  ]
+
+  for (const m of MENUS) {
+    await prisma.menu.upsert({
+      where: { slug: m.slug },
+      update: { price: m.price, servings: m.servings, available: m.available },
+      create: {
+        name: m.name,
+        slug: m.slug,
+        description: m.description,
+        price: m.price,
+        servings: m.servings,
+        image: m.image,
+        available: m.available,
+        weekOf: m.weekOf,
+      },
+    })
+  }
+  console.log(`  ✓ Barn Dining Menus seeded`)
+
+  // 9. Fresh Catches
+  if (boranBreed) {
+    await prisma.newCatch.create({
+      data: {
+        breedId: boranBreed.id,
+        name: "Prime Dry-Aged Boran Ribeye Batch #44",
+        quantity: 85,
+        unit: "kg",
+        price: 1800,
+        status: NewCatchStatus.AGING,
+        note: "Hanging in ranch dry-aging room at 2°C for 21 days.",
+      },
+    })
+  }
+  if (dorperBreed) {
+    await prisma.newCatch.create({
+      data: {
+        breedId: dorperBreed.id,
+        name: "Fresh Dorper Lamb Carcasses Batch #12",
+        quantity: 12,
+        unit: "carcass",
+        price: 9500,
+        status: NewCatchStatus.FRESH,
+        note: "Morning slaughter from East Pasture flock.",
+      },
+    })
+  }
+  console.log(`  ✓ Fresh slaughter batches seeded`)
+
+  // 10. Imports
+  await prisma.import.upsert({
+    where: { reference: "IMP-2026-081" },
+    update: { status: ImportStatus.RECEIVED },
+    create: {
+      reference: "IMP-2026-081",
+      supplierName: "Karoo Genetics South Africa",
+      breedId: boerBreed?.id,
+      productName: "Boer Breeding Bucks (Stud Line)",
+      quantity: 5,
+      unitPrice: 110000,
+      totalValue: 550000,
+      status: ImportStatus.RECEIVED,
+      arrivedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
+      notes: "Quarantine completed at JKIA Livestock station. Healthy and in paddock 4.",
+    },
+  })
+  console.log(`  ✓ Supplier Imports seeded`)
+
+  // 11. Sales Ledger
+  await prisma.sale.upsert({
+    where: { reference: "SLS-2026-104" },
+    update: { totalAmount: 90000 },
+    create: {
+      reference: "SLS-2026-104",
+      breedId: boranBreed?.id,
+      customerName: "Olarro Safari Lodge",
+      customerPhone: "+254711888999",
+      quantity: 2,
+      unitPrice: 45000,
+      totalAmount: 90000,
+      channel: SaleChannel.WHOLESALE,
+      status: SaleStatus.COMPLETED,
+      paidAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),
+      note: "Delivery to Maasai Mara airstrip logistics depot.",
+    },
+  })
+  console.log(`  ✓ Sales Ledger seeded`)
+
+  // 12. Careers / Jobs
+  const JOBS = [
+    {
+      title: "Senior Rangeland Agronomist",
+      department: "Agronomy & Pasture",
+      type: "Full-time",
+      location: "Kajiado Ranch (On-site)",
+      description: "Lead rotational grazing strategies, fodder conservation, and soil microbiome revitalization across 1,200 acres.",
+      requirements: "BSc/MSc in Agronomy or Range Management, 5+ years experience in semi-arid pasture ecosystems.",
+      isOpen: true,
+    },
+    {
+      title: "Pedigree Livestock Breeding Specialist",
+      department: "Herd Health & Genetics",
+      type: "Full-time",
+      location: "Kajiado Ranch (On-site)",
+      description: "Manage artificial insemination, pedigree studbook registration, and veterinary oversight for Boran cattle and Boer goats.",
+      requirements: "Veterinary Medicine degree or Animal Genetics degree, demonstrated track record with registered studs.",
+      isOpen: true,
+    },
+    {
+      title: "Barn Store Logistics & E-Commerce Coordinator",
+      department: "Commercial Operations",
+      type: "Full-time",
+      location: "Nairobi Hub / Kajiado",
+      description: "Coordinate cold-chain fulfillment, customer deliveries, and direct-to-consumer farm box dispatches.",
+      requirements: "Diploma/Degree in Supply Chain or Logistics, familiarity with Next.js e-commerce order workflows.",
+      isOpen: true,
+    },
+  ]
+
+  for (const j of JOBS) {
+    const existing = await prisma.job.findFirst({ where: { title: j.title } })
+    if (existing) {
+      await prisma.job.update({ where: { id: existing.id }, data: j })
+    } else {
+      await prisma.job.create({ data: j })
+    }
+  }
+  console.log(`  ✓ Careers & Job Postings seeded`)
+
+  // 13. Blog & Stories
+  const POSTS = [
+    {
+      title: "Why Boran Genetics Are the Future of African Regenerative Ranching",
+      slug: "why-boran-genetics-are-the-future",
+      excerpt: "How centuries of natural selection created a drought-hardy, parasite-resistant zebu capable of producing Michelin-grade marbling on pasture.",
+      content: `The African Boran is not merely an indigenous survivor; it is an evolutionary masterpiece. For over a millennium, pastoralist communities across the Horn of Africa guided the selection of this magnificent zebu. Today at Osotua Farming, we blend traditional herd wisdom with modern genomics to produce breeding stock that excels under changing climatic conditions.\n\nOur Boran cattle thrive on natural savannah grasses, requiring zero artificial concentrates. Their thick, pigmented hides repel parasites, and their remarkable feed conversion ratio delivers nutrient-dense, flavorful beef with a low carbon footprint.`,
+      coverImage: img("boran bulls.jpg"),
+      category: "Breeding & Genetics",
+      published: true,
+      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14),
+    },
+    {
+      title: "From Pasture to Plate: The True Art of Cold-Room Dry Aging",
+      slug: "pasture-to-plate-art-of-dry-aging",
+      excerpt: "Unlocking deep umami flavours and silk-like tenderness through controlled humidity and temperature aging.",
+      content: `Dry aging beef is a marriage of science and patience. Inside the Osotua ranch butchery, prime loins rest in a strictly controlled microclimate for 21 to 28 days. Natural enzymes break down muscle fibres, concentrating the natural savory flavours and creating an unforgettable dining experience.`,
+      coverImage: img("prime beef.jpg"),
+      category: "The Barn Store",
+      published: true,
+      publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5),
+    },
+  ]
+
+  for (const p of POSTS) {
+    await prisma.post.upsert({
+      where: { slug: p.slug },
+      update: { content: p.content, excerpt: p.excerpt, published: p.published },
+      create: p,
+    })
+  }
+  console.log(`  ✓ Blog Posts & Ranch Stories seeded`)
+
+  // 14. Farm Visits
+  await prisma.farmVisit.create({
+    data: {
+      fullName: "Dr. Evans Muli",
+      email: "evans.muli@agrikenya.org",
+      phone: "+254722554433",
+      groupSize: 6,
+      visitDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      purpose: "Ranch tour and appraisal of Boran breeding bull stock for our Machakos outgrower project.",
+      status: VisitStatus.CONFIRMED,
+    },
+  })
+  console.log(`  ✓ Farm Visit bookings seeded`)
+
+  // 15. Partner Farmers
+  await prisma.partnerFarmer.create({
+    data: {
+      fullName: "Samuel Njoroge",
+      email: "partner@osotua.co.ke",
+      phone: "+254744000444",
+      location: "Kajiado North (Kimuka)",
+      supplyType: "Vegetables & Fodder",
+      status: PartnerStatus.ACTIVE,
+    },
+  })
+  console.log(`  ✓ Partner Farmers seeded`)
+
+  // 16. Customer Orders & Items
+  if (customerUser && allProducts.length > 0) {
+    const ranchBoxProduct = allProducts.find((p) => p.slug === "the-osotua-ranch-box") || allProducts[0]
+    const steakProduct = allProducts.find((p) => p.slug === "boran-sirloin-steak") || allProducts[0]
+
+    const demoOrder = await prisma.order.create({
+      data: {
+        userId: customerUser.id,
+        customerName: customerUser.name || "Daniel Otieno",
+        customerEmail: customerUser.email,
+        customerPhone: customerUser.phone || "+254722000222",
+        type: OrderType.PRODUCT,
+        status: OrderStatus.CONFIRMED,
+        totalAmount: 5450,
+        paymentMethod: "MPESA",
+        paymentRef: "MP-OSOTUA-998822",
+        deliveryAddress: "Karen Hardy Estate, House #14, Nairobi",
+        deliveryDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
+        notes: "Please call gate security upon arrival.",
+        items: {
+          create: [
+            {
+              productId: ranchBoxProduct.id,
+              quantity: 1,
+              unitPrice: ranchBoxProduct.price,
+              totalPrice: ranchBoxProduct.price,
+            },
+            {
+              productId: steakProduct.id,
+              quantity: 1,
+              unitPrice: steakProduct.price,
+              totalPrice: steakProduct.price,
+            },
+          ],
+        },
+      },
+    })
+
+    // 17. Subscription
+    await prisma.subscription.create({
+      data: {
+        userId: customerUser.id,
+        productId: ranchBoxProduct.id,
+        frequency: SubscriptionFreq.WEEKLY,
+        status: SubscriptionStatus.ACTIVE,
+        nextDelivery: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
+      },
+    })
+    console.log(`  ✓ Customer Orders & Subscriptions seeded`)
+  }
+
+  console.log("✓ Entire Osotua Ecosystem database seed complete!")
   console.log(`  Logo path: ${LOGO_URL}`)
 }
 
