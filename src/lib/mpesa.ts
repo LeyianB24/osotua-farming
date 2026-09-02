@@ -40,7 +40,8 @@ export async function stkPush({
     "base64"
   )
 
-  const callbackUrl = `${process.env.NEXTAUTH_URL}/api/payments/mpesa/callback`
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || "https://osotua-farming.vercel.app"
+  const callbackUrl = `${appUrl}/api/payments/mpesa/callback`
 
   const res = await fetch(`${BASE_URL}/mpesa/stkpush/v1/processrequest`, {
     method: "POST",

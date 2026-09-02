@@ -20,14 +20,14 @@ export const metadata: Metadata = {
     "Boran cattle Kenya", "Sahiwal dairy", "Boer goats Kenya",
     "Dorper sheep", "farm fresh produce Kenya", "buy livestock Kenya",
   ],
-  authors: [{ name: "Osotua Farming", url: "https://osotuafarming.co.ke" }],
+  authors: [{ name: "Osotua Farming", url: "https://osotua-farming.vercel.app" }],
   creator: "Bezalel Technologies LTD",
   publisher: "Osotua Farming",
-  metadataBase: new URL(process.env.NEXTAUTH_URL || "https://osotuafarming.co.ke"),
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "https://osotua-farming.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_KE",
-    url: "https://osotuafarming.co.ke",
+    url: "https://osotua-farming.vercel.app",
     siteName: "Osotua Farming",
     title: "Osotua Farming — From Our Land, To Your Table",
     description: "Premium indigenous livestock, fresh dairy, beef, vegetables, and fruits from Kajiado County, Kenya.",
@@ -41,8 +41,14 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: {
-    icon: [{ url: "/favicon.ico" }],
-    apple: [{ url: "/logos/Rooted in Tradition, Growing with Nature (1).png" }],
+    icon: [
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
   },
 }
 

@@ -1,26 +1,44 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useSyncExternalStore } from "react"
 import Logo from "./Logo"
 
+const emptySubscribe = () => () => {}
+
 export default function PageLoader() {
-  const [mounted, setMounted] = useState(false)
-  const [visible, setVisible] = useState(false)
+  const isClient = useSyncExternalStore(emptySubscribe, () => true, () => false)
+  const [isExiting, setIsExiting] = useState(false)
+  const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-    const hasLoaded = typeof window !== "undefined" && sessionStorage.getItem("os-loaded") === "1"
-    if (!hasLoaded) {
-      setVisible(true)
-      const timer = setTimeout(() => {
-        setVisible(false)
+    // If already loaded this session, skip immediately
+    try {
+      if (sessionStorage.getItem("os-loaded") === "1") {
+        setIsFinished(true)
+        return
+      }
+    } catch {}
+
+    // Trigger smooth fade-out after 450ms
+    const exitTimer = setTimeout(() => {
+      setIsExiting(true)
+      try {
         sessionStorage.setItem("os-loaded", "1")
-      }, 1600)
-      return () => clearTimeout(timer)
+      } catch {}
+    }, 450)
+
+    // Complete exit and unmount from DOM at 750ms
+    const finishTimer = setTimeout(() => {
+      setIsFinished(true)
+    }, 750)
+
+    return () => {
+      clearTimeout(exitTimer)
+      clearTimeout(finishTimer)
     }
   }, [])
 
-  if (!mounted || !visible) return null
+  if (!isClient || isFinished) return null
 
   return (
     <div
@@ -33,53 +51,51 @@ export default function PageLoader() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: "2rem",
-        background: "linear-gradient(135deg, #FFFFFF 0%, #FBF7F0 50%, #FAF5EB 100%)",
-        animation: "loaderFadeOut 2s ease-out 1.5s forwards",
+        gap: "1rem",
+        backgroundColor: "rgba(251, 247, 240, 0.96)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        transition: "opacity 300ms cubic-bezier(0.16, 1, 0.3, 1), transform 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+        opacity: isExiting ? 0 : 1,
+        transform: isExiting ? "scale(1.02)" : "scale(1)",
+        pointerEvents: isExiting ? "none" : "auto",
       }}
     >
-      {/* Radial glow behind logo */}
+      {/* Brand Mark */}
       <div
         style={{
-          position: "absolute",
-          width: "320px",
-          height: "320px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(196,136,42,0.15) 0%, transparent 70%)",
-          animation: "goldGlow 2s ease-in-out infinite",
-        }}
-      />
-
-      {/* Logo mark */}
-      <div style={{ animation: "logoPulse 1.5s ease-in-out infinite", position: "relative" }}>
-        <Logo size="xl" stacked wordmark asLink={false} textColor="dark" />
-      </div>
-
-      {/* Tagline */}
-      <p
-        style={{
-          fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-          fontSize: "0.6rem",
-          fontWeight: 600,
-          letterSpacing: "0.3em",
-          textTransform: "uppercase",
-          color: "rgba(196,136,42,0.7)",
-          position: "relative",
-          animation: "fadeIn 0.8s ease 0.4s both",
+          transition: "transform 300ms ease",
+          transform: isExiting ? "scale(0.96)" : "scale(1)",
         }}
       >
-        From our land, to your table
-      </p>
+        <Logo size="md" wordmark={false} asLink={false} textColor="dark" />
+      </div>
 
-      {/* Spinner bar */}
+      {/* Brand Title */}
+      <div className="flex flex-col items-center">
+        <span
+          style={{
+            fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+            fontSize: "1.1rem",
+            fontWeight: 600,
+            letterSpacing: "0.02em",
+            color: "#1C1208",
+          }}
+        >
+          Osotua Farming
+        </span>
+      </div>
+
+      {/* Micro Shimmer Progress Line */}
       <div
         style={{
           position: "relative",
-          width: "120px",
+          width: "72px",
           height: "2px",
-          background: "rgba(196,136,42,0.15)",
+          backgroundColor: "rgba(196, 136, 42, 0.15)",
           borderRadius: "1px",
           overflow: "hidden",
+          marginTop: "0.25rem",
         }}
       >
         <div
@@ -88,10 +104,11 @@ export default function PageLoader() {
             inset: 0,
             background: "linear-gradient(90deg, transparent, #C4882A, transparent)",
             backgroundSize: "200% 100%",
-            animation: "goldShimmer 1.2s linear infinite",
+            animation: "goldShimmer 0.9s linear infinite",
           }}
         />
       </div>
     </div>
   )
 }
+
