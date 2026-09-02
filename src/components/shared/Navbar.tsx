@@ -33,13 +33,19 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <>
       <header
-        className={`os-navbar transition-all duration-500 ${
+        className={`os-navbar transition-all duration-300 ${
           scrolled ? "glass-nav-scrolled" : "glass-nav"
         }`}
         style={{ top: 0, left: 0, right: 0, position: "fixed", zIndex: 100 }}
@@ -122,18 +128,22 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             </div>
 
             {/* Mobile controls */}
-            <div className="flex items-center gap-3 lg:hidden">
-              <Link href="/cart" className="relative text-[#1C1208]/80 p-1.5">
+            <div className="flex items-center gap-2 lg:hidden">
+              <Link
+                href="/cart"
+                className="relative text-[#1C1208]/80 p-2"
+                aria-label={`Cart (${cartCount} items)`}
+              >
                 <i className="bi bi-bag text-xl" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-[#FFFFFF] text-[9px] font-bold flex items-center justify-center">
+                  <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#C4882A] text-[#FFFFFF] text-[9px] font-bold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
               </Link>
               <button
                 onClick={() => setOpen(!open)}
-                className="text-[#1C1208] hover:text-[#C4882A] transition-colors p-1.5 focus-visible:outline-none"
+                className="text-[#1C1208] hover:text-[#C4882A] transition-colors p-2 focus-visible:outline-none flex items-center justify-center"
                 aria-expanded={open}
                 aria-label="Toggle menu"
               >
@@ -142,105 +152,161 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             </div>
           </div>
         </div>
+      </header>
 
-        {/* Mobile full-screen glass overlay menu */}
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="lg:hidden fixed inset-0 top-[72px]"
+      {/* Mobile full-screen drawer menu — rendered outside header to prevent stacking/clipping issues */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:hidden fixed left-0 right-0 bottom-0"
+            style={{
+              top: "72px",
+              height: "calc(100dvh - 72px)",
+              background: "#FBF7F0",
+              zIndex: 99,
+              overflowY: "auto",
+              overflowX: "hidden",
+              WebkitOverflowScrolling: "touch",
+              borderTop: "1px solid rgba(196,136,42,0.15)",
+              boxShadow: "0 20px 40px rgba(28, 18, 8, 0.08)",
+            }}
+          >
+            <div
+              className="os-container"
               style={{
-                background: "rgba(251, 247, 240, 0.98)",
-                WebkitBackdropFilter: "blur(40px) saturate(200%)",
-                backdropFilter: "blur(40px) saturate(200%)",
-                zIndex: 99,
+                minHeight: "100%",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
-                padding: "2rem 2rem 4rem",
+                justifyContent: "space-between",
+                paddingTop: "1.5rem",
+                paddingBottom: "2.5rem",
               }}
             >
-              {/* Decorative glow */}
-              <div style={{
-                position: "absolute",
-                top: "20%",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "280px",
-                height: "280px",
-                borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(196,136,42,0.12) 0%, transparent 70%)",
-                pointerEvents: "none",
-              }} />
-
-              <nav className="relative flex flex-col gap-1">
+              {/* Navigation links */}
+              <nav className="flex flex-col gap-1 w-full" aria-label="Mobile navigation">
                 {navLinks.map((link, i) => {
-                  const active = pathname === link.href;
+                  const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
                   return (
                     <motion.div
                       key={link.href}
-                      initial={{ opacity: 0, x: -24 }}
+                      initial={{ opacity: 0, x: -16 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.06, duration: 0.35 }}
+                      transition={{ delay: i * 0.04, duration: 0.25 }}
                     >
                       <Link
                         href={link.href}
                         onClick={() => setOpen(false)}
+                        className="group flex items-center justify-between py-3.5 transition-colors"
                         style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          padding: "1rem 0",
-                          borderBottom: "1px solid rgba(196,136,42,0.18)",
-                          fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                          fontSize: "clamp(1.8rem, 7vw, 2.5rem)",
-                          fontWeight: 400,
-                          color: active ? "#C4882A" : "#1C1208",
+                          borderBottom: "1px solid rgba(196,136,42,0.12)",
                           textDecoration: "none",
-                          transition: "color 0.2s ease",
-                          letterSpacing: "-0.01em",
                         }}
                       >
-                        {link.label}
-                        <i className="bi bi-arrow-right" style={{ fontSize: "1rem", color: "#C4882A", opacity: active ? 1 : 0.4 }} />
+                        <span
+                          style={{
+                            fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                            fontSize: "1.75rem",
+                            fontWeight: active ? 600 : 400,
+                            color: active ? "#C4882A" : "#1C1208",
+                            letterSpacing: "-0.01em",
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          {link.label}
+                        </span>
+                        <i
+                          className="bi bi-arrow-right text-base transition-transform group-hover:translate-x-1"
+                          style={{ color: "#C4882A", opacity: active ? 1 : 0.4 }}
+                        />
                       </Link>
                     </motion.div>
                   );
                 })}
+
+                {/* Dashboard Portal Link */}
+                <motion.div
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navLinks.length * 0.04, duration: 0.25 }}
+                >
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setOpen(false)}
+                    className="group flex items-center justify-between py-3.5 transition-colors"
+                    style={{
+                      borderBottom: "1px solid rgba(196,136,42,0.12)",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <span
+                      className="flex items-center gap-2.5"
+                      style={{
+                        fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                        fontSize: "1.75rem",
+                        fontWeight: pathname.startsWith("/dashboard") ? 600 : 400,
+                        color: pathname.startsWith("/dashboard") ? "#C4882A" : "#1C1208",
+                        letterSpacing: "-0.01em",
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      <i className="bi bi-person-circle text-xl text-[#C4882A]" />
+                      Customer Portal
+                    </span>
+                    <i
+                      className="bi bi-arrow-right text-base transition-transform group-hover:translate-x-1"
+                      style={{ color: "#C4882A", opacity: pathname.startsWith("/dashboard") ? 1 : 0.4 }}
+                    />
+                  </Link>
+                </motion.div>
               </nav>
 
+              {/* Bottom Quick Action CTAs */}
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.42, duration: 0.35 }}
-                className="relative mt-8 flex flex-col gap-3"
+                transition={{ delay: (navLinks.length + 1) * 0.04, duration: 0.25 }}
+                className="mt-8 flex flex-col gap-3 w-full"
               >
                 <Link
                   href="/visit"
                   onClick={() => setOpen(false)}
-                  className="btn-primary justify-center text-center"
+                  className="btn-primary justify-center text-center py-3.5 text-xs tracking-wider"
+                  style={{ width: "100%" }}
                 >
                   <i className="bi bi-geo-alt-fill" />
-                  Visit the Ranch
+                  VISIT THE RANCH
                 </Link>
+
                 <a
                   href="https://wa.me/254700000000"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-ghost justify-center text-center"
-                  style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
+                  className="btn-ghost justify-center text-center py-3 text-xs tracking-wider font-bold"
+                  style={{
+                    width: "100%",
+                    color: "#1C1208",
+                    borderColor: "rgba(196,136,42,0.35)",
+                    background: "rgba(255,255,255,0.7)",
+                  }}
                 >
-                  <i className="bi bi-whatsapp" />
-                  WhatsApp Us
+                  <i className="bi bi-whatsapp text-[#25D366] text-base" />
+                  WHATSAPP US
                 </a>
+
+                <div className="text-center mt-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8E5E16]/80">
+                    Kajiado, Kenya &bull; Ethical Breeding &amp; Artisanal Produce
+                  </p>
+                </div>
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
