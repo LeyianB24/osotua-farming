@@ -234,62 +234,78 @@ export default function HomeMarketplaceClient({
         </div>
 
         {/* Luxury Harvest Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {harvest.map((item) => {
             const isAdded = addedId === item.id
             return (
               <div
                 key={item.id}
-                className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-5 shadow-lg shadow-[#1C1208]/04 hover:border-[#C4882A] hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
+                className="group bg-[#FFFFFF] rounded-3xl border border-[#C4882A]/20 hover:border-[#C4882A] p-5 shadow-lg shadow-[#1C1208]/04 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-full min-w-0 overflow-hidden"
               >
-                <div>
-                  {/* Photo container */}
-                  <div className="w-full h-52 rounded-2xl bg-[#FAF5EB] border border-[#C4882A]/15 relative overflow-hidden mb-4">
+                {/* ── TOP MEDIA & CONTENT ── */}
+                <div className="min-w-0 w-full">
+                  {/* Framed Media Window */}
+                  <div className="relative w-full h-56 rounded-2xl bg-[#FAF5EB] overflow-hidden mb-4 border border-[#C4882A]/15">
                     {item.image ? (
                       <Image
                         src={item.image}
                         alt={item.name}
                         fill
-                        className="object-cover group-hover:scale-108 transition-transform duration-700"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[#C4882A]">
-                        <i className="bi bi-basket text-4xl" />
+                      <div className="w-full h-full flex items-center justify-center text-[#C4882A]/40">
+                        <i className="bi bi-basket text-5xl" />
                       </div>
                     )}
 
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none" />
 
-                    {/* Tag badge top left */}
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#8E5E16] border border-[#C4882A]/30 shadow-xs">
+                    {/* Top Tag Badge */}
+                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider bg-white/95 backdrop-blur-md text-[#8E5E16] border border-amber-200/70 shadow-xs max-w-[70%] truncate">
                       {item.tag || "Fresh Harvest"}
-                    </span>
+                    </div>
 
-                    {/* Cooperative pill bottom left */}
-                    <span className="absolute bottom-3 left-3 text-[11px] font-mono text-white font-bold uppercase tracking-wider flex items-center gap-1 drop-shadow-sm">
-                      <i className="bi bi-geo-alt-fill text-[#D99A30]" />
-                      {item.farmName}
-                    </span>
+                    {/* Cooperative Origin Pill */}
+                    <div className="absolute bottom-3 left-3 text-[10px] font-mono text-white font-bold uppercase tracking-wider flex items-center gap-1 drop-shadow-md bg-black/40 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/15 max-w-[80%] truncate">
+                      <i className="bi bi-geo-alt-fill text-[#D99A30] shrink-0" />
+                      <span className="truncate">{item.farmName}</span>
+                    </div>
                   </div>
 
-                  {/* Title */}
-                  <Link
-                    href={`/shop/${item.slug || item.id}`}
-                    className="font-serif text-2xl font-normal text-[#1C1208] hover:text-[#C4882A] transition-colors block leading-tight mb-2"
-                  >
-                    {item.name}
-                  </Link>
-                  <p className="text-xs text-[#5C4835] line-clamp-2 leading-relaxed">
-                    Freshly harvested from smallholder fields, sorted, and packed with full cold-chain traceability.
-                  </p>
+                  {/* Card Content */}
+                  <div className="space-y-1.5 min-w-0">
+                    <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#C4882A] truncate">
+                      {item.categoryName || "Fresh Shamba Produce"}
+                    </div>
+                    <Link
+                      href={`/shop/${item.slug || item.id}`}
+                      style={{
+                        fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+                        fontSize: "1.45rem",
+                        fontWeight: 500,
+                        lineHeight: 1.2,
+                        color: "#1C1208",
+                      }}
+                      className="group-hover:text-[#C4882A] transition-colors block truncate"
+                    >
+                      {item.name}
+                    </Link>
+                    <p className="text-xs text-[#6B5744] line-clamp-2 leading-relaxed min-h-[36px]">
+                      Picked at peak ripeness, carefully graded, and packed cold-chain from our local smallholder cooperatives.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Price & Add to Cart footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-[#C4882A]/15 mt-5">
-                  <div>
-                    <span className="text-[10px] font-mono text-[#786550] block uppercase">Direct Farm Price</span>
-                    <span className="font-mono text-lg font-bold text-[#1C1208]">
+                {/* ── FOOTER: PRICE & ADD BUTTON ── */}
+                <div className="pt-4 border-t border-[#C4882A]/15 mt-4 flex items-center justify-between gap-3 w-full">
+                  <div className="min-w-0">
+                    <span className="text-[9px] font-mono uppercase tracking-wider text-[#8A7560] block font-semibold">
+                      Farm Gate Price
+                    </span>
+                    <span className="font-mono text-lg font-bold text-[#1C1208] whitespace-nowrap">
                       KSh {item.price.toLocaleString()}
                       <span className="text-xs text-[#786550] font-normal ml-1">/{item.unit}</span>
                     </span>
@@ -297,23 +313,15 @@ export default function HomeMarketplaceClient({
 
                   <button
                     onClick={() => handleAdd(item)}
-                    className={`btn-primary py-2.5 px-4 text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+                    type="button"
+                    className={`px-4 py-2 rounded-full font-mono text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95 transition-all duration-200 shrink-0 ${
                       isAdded
-                        ? "bg-[#2E7D32] border-[#2E7D32] text-white"
-                        : "shadow-sm"
+                        ? "bg-[#2E7D32] text-white"
+                        : "bg-[#1C1208] hover:bg-[#C4882A] text-white"
                     }`}
                   >
-                    {isAdded ? (
-                      <>
-                        <i className="bi bi-check-lg" />
-                        <span>Added</span>
-                      </>
-                    ) : (
-                      <>
-                        <i className="bi bi-plus-lg" />
-                        <span>Add</span>
-                      </>
-                    )}
+                    <i className={`bi ${isAdded ? "bi-check-lg" : "bi-plus-lg"}`} />
+                    <span>{isAdded ? "Added" : "Add"}</span>
                   </button>
                 </div>
               </div>

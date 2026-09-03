@@ -90,12 +90,12 @@ export default function BreedCard({ breed }: Props) {
             <h3
               style={{
                 fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                fontSize: "1.85rem",
-                fontWeight: 400,
-                lineHeight: 1.1,
+                fontSize: "1.45rem",
+                fontWeight: 500,
+                lineHeight: 1.2,
                 color: "#1C1208",
               }}
-              className="group-hover:text-[#C4882A] transition-colors"
+              className="group-hover:text-[#C4882A] transition-colors truncate"
             >
               {breed.name}
             </h3>

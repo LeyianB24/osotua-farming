@@ -122,12 +122,12 @@ export default function ProductCard({ product, dark }: Props) {
             href={`/barn/${product.slug}`}
             style={{
               fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "1.75rem",
-              fontWeight: 400,
-              lineHeight: 1.15,
+              fontSize: "1.45rem",
+              fontWeight: 500,
+              lineHeight: 1.2,
               color: dark ? "#F5EFE4" : "#1C1208",
             }}
-            className="group-hover:text-[#C4882A] transition-colors block"
+            className="group-hover:text-[#C4882A] transition-colors block truncate"
           >
             {product.name}
           </Link>
