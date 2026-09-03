@@ -9,12 +9,11 @@ import Logo from "./Logo";
 import { useCart } from "./CartContext";
 
 const navLinks = [
-  { label: "Our Breeds", href: "/breeds" },
-  { label: "The Barn", href: "/barn" },
-  { label: "Invest", href: "/invest" },
-  { label: "Partners", href: "/partners" },
-  { label: "Blog", href: "/blog" },
+  { label: "Shop", href: "/shop" },
+  { label: "Our farmers", href: "/partners" },
+  { label: "Breeds", href: "/breeds" },
   { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar({ cartCount: initialCartCount }: { cartCount?: number }) {
@@ -61,13 +60,13 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             {/* Desktop nav — center */}
             <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
               {navLinks.map((link) => {
-                const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+                const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`));
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative font-mono text-[0.68rem] tracking-[0.2em] uppercase transition-colors duration-200 pb-0.5 ${
-                      active ? "text-[#C4882A] font-bold" : "text-[#1C1208]/75 hover:text-[#C4882A]"
+                    className={`relative text-xs tracking-normal font-medium transition-colors duration-200 pb-0.5 ${
+                      active ? "text-[#C4882A] font-semibold" : "text-[#1C1208]/80 hover:text-[#C4882A]"
                     }`}
                   >
                     {link.label}
@@ -93,17 +92,8 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 aria-label="WhatsApp"
                 className="text-[#1C1208]/75 hover:text-[#25D366] transition-colors p-1.5"
               >
-                <i className="bi bi-whatsapp text-xl leading-none" />
+                <i className="bi bi-whatsapp text-lg leading-none" />
               </a>
-
-              {/* Portal */}
-              <Link
-                href="/dashboard"
-                className="text-[#1C1208]/75 hover:text-[#C4882A] transition-colors font-mono text-[0.65rem] tracking-wider uppercase flex items-center gap-1.5 font-bold"
-              >
-                <i className="bi bi-person-circle text-base leading-none text-[#C4882A]" />
-                Portal
-              </Link>
 
               {/* Cart */}
               <Link
@@ -111,7 +101,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 className="relative text-[#1C1208]/75 hover:text-[#C4882A] transition-colors p-1.5"
                 aria-label={`Cart (${cartCount} items)`}
               >
-                <i className="bi bi-bag text-xl leading-none" />
+                <i className="bi bi-bag text-lg leading-none" />
                 {cartCount > 0 && (
                   <span
                     className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[#FFFFFF] text-[9px] font-bold flex items-center justify-center leading-none"
@@ -122,10 +112,13 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 )}
               </Link>
 
-              {/* CTA */}
-              <Link href="/visit" className="btn-primary text-[0.7rem] py-2.5 px-5 shadow-sm">
-                Visit Us
-                <i className="bi bi-arrow-right" />
+              {/* Sign In / Portal */}
+              <Link
+                href="/dashboard"
+                className="btn-primary text-xs py-2 px-4 shadow-sm"
+              >
+                <i className="bi bi-person-circle" />
+                <span>Portal</span>
               </Link>
             </div>
 

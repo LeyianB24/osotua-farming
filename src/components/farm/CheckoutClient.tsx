@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/components/shared/CartContext";
 
@@ -65,13 +66,13 @@ function CheckoutContent() {
     }
   }, [searchParams, cart, addToCart]);
 
-  const deliveryFee = cartTotal > 0 ? 500 : 0;
+  const deliveryFee = 0; // Complimentary rangeland cold transit
   const grandTotal = cartTotal + deliveryFee;
 
   const handleNextToPayment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !phone || !address) {
-      setErrorMsg("Please fill in all required delivery details.");
+      setErrorMsg("Please provide all required delivery details before proceeding.");
       return;
     }
     setErrorMsg("");
@@ -109,7 +110,7 @@ function CheckoutContent() {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to create order record");
+        throw new Error("Failed to record order in ledger");
       }
 
       const orderData = await res.json();
@@ -117,7 +118,7 @@ function CheckoutContent() {
       setOrderId(savedOrderId);
       setOrderRef(generatedRef);
 
-      // If M-Pesa is selected, trigger STK Push & Start Status Polling
+      // Trigger M-Pesa STK Push
       if (paymentMethod === "mpesa") {
         setMpesaPollingStatus("sent");
         try {
@@ -131,7 +132,7 @@ function CheckoutContent() {
           });
           setMpesaPollingStatus("waiting_pin");
 
-          // Start polling order status
+          // Poll payment verification status
           let attempts = 0;
           const interval = setInterval(async () => {
             attempts++;
@@ -148,12 +149,10 @@ function CheckoutContent() {
                   clearInterval(interval);
                 }
               }
-            } catch {
-              // Ignore polling errors
-            }
+            } catch {}
           }, 3500);
         } catch (mpesaErr) {
-          console.warn("STK Push initiated:", mpesaErr);
+          console.warn("STK Push triggered:", mpesaErr);
         }
       }
 
@@ -169,57 +168,25 @@ function CheckoutContent() {
 
   if (cart.length === 0 && step !== "confirmed") {
     return (
-      <div style={{ background: "#FBF7F0" }} className="pt-32 pb-20 min-h-screen">
-        <div className="os-container">
-          <div
-            style={{
-              textAlign: "center",
-              padding: "5rem 2rem",
-              borderRadius: "28px",
-              maxWidth: "520px",
-              margin: "0 auto",
-              background: "#FFFFFF",
-              border: "1px solid rgba(196, 136, 42, 0.25)",
-              boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
-            }}
-          >
-            <i
-              className="bi bi-basket3-fill"
-              style={{
-                fontSize: "3rem",
-                color: "rgba(196,136,42,0.3)",
-                display: "block",
-                marginBottom: "1.25rem",
-              }}
-            />
-            <h2
-              style={{
-                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                fontSize: "2.4rem",
-                fontWeight: 400,
-                color: "#1C1208",
-                marginBottom: "0.75rem",
-              }}
-            >
+      <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-36 pb-24 text-[#1C1208]">
+        <div className="max-w-lg mx-auto px-4 text-center">
+          <div className="p-8 sm:p-12 rounded-3xl bg-[#FFFFFF] border border-[#C4882A]/25 shadow-xl shadow-[#1C1208]/04">
+            <div className="w-16 h-16 rounded-2xl bg-[#C4882A]/12 border border-[#C4882A]/30 flex items-center justify-center text-[#C4882A] text-2xl mx-auto mb-4">
+              <i className="bi bi-basket3" />
+            </div>
+            <h2 className="font-serif text-3xl font-normal text-[#1C1208] mb-2">
               Your Basket is Empty
             </h2>
-            <p
-              style={{
-                color: "#5C4835",
-                fontSize: "0.9rem",
-                marginBottom: "2.5rem",
-              }}
-            >
-              Please add fresh produce or purebred livestock to your cart before proceeding.
+            <p className="text-xs text-[#5C4835] leading-relaxed mb-6">
+              Select premium cold-pack cuts, dairy jars, or purebred livestock from the Barn Store to proceed to checkout.
             </p>
-            <div className="flex gap-3 justify-center">
-              <Link href="/barn" className="btn-primary">
+            <div className="flex gap-3 justify-center flex-wrap">
+              <Link href="/barn" className="btn-primary text-xs py-2.5 px-5">
                 <i className="bi bi-shop" />
-                Go to Barn Store
+                <span>Visit Barn Store</span>
               </Link>
-              <Link href="/breeds" className="btn-ghost" style={{ borderColor: "rgba(196,136,42,0.3)", color: "#1C1208" }}>
-                <i className="bi bi-shield-check" />
-                Browse Breeds
+              <Link href="/breeds" className="btn-ghost text-xs py-2.5 px-5" style={{ color: "#1C1208" }}>
+                <span>Browse Breeds</span>
               </Link>
             </div>
           </div>
@@ -229,57 +196,26 @@ function CheckoutContent() {
   }
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }}>
-      {/* ── HERO ── */}
-      <div
-        className="bg-mesh-earth noise"
-        style={{
-          paddingTop: "10rem",
-          paddingBottom: "4rem",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1rem", fontWeight: 700 }}>
-            Secure Checkout
+    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-28 pb-24 text-[#1C1208]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Header */}
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 border border-[#C4882A]/30 text-[#8E5E16] mb-2">
+            <i className="bi bi-shield-lock-fill text-[#C4882A]" />
+            Encrypted Ranch Checkout
           </div>
-          <h1
-            style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(2.5rem, 5vw, 4rem)",
-              fontWeight: 400,
-              color: "#1C1208",
-              marginBottom: "1rem",
-              lineHeight: 1.1,
-            }}
-          >
-            Complete Your <em style={{ color: "#C4882A" }}>Osotua Order</em>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#1C1208] font-normal tracking-tight">
+            Complete Your <em className="text-[#C4882A] italic">Osotua Order</em>
           </h1>
-          <p
-            style={{
-              color: "#5C4835",
-              fontSize: "1rem",
-              maxWidth: "520px",
-              lineHeight: 1.7,
-            }}
-          >
-            Direct cold-chain delivery and pedigree livestock transport from Kajiado County.
+          <p className="text-xs text-[#5C4835] mt-1 font-mono">
+            Direct cold-chain delivery and purebred livestock allocation from Kajiado County.
           </p>
 
-          {/* Stepper */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "1.5rem",
-              marginTop: "2.5rem",
-              flexWrap: "wrap",
-            }}
-          >
+          {/* Stepper Pill Bar */}
+          <div className="flex items-center gap-3 mt-6 flex-wrap">
             {[
-              { id: "details", label: "1. Delivery Details" },
-              { id: "payment", label: "2. Payment Selection" },
+              { id: "details", label: "1. Destination" },
+              { id: "payment", label: "2. Payment" },
               { id: "confirmed", label: "3. Confirmation" },
             ].map((s, idx) => {
               const active = step === s.id;
@@ -288,103 +224,50 @@ function CheckoutContent() {
                 (s.id === "payment" && step === "confirmed");
 
               return (
-                <div key={s.id} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <div
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "0.75rem",
-                      fontFamily: "var(--font-space-grotesk), monospace",
-                      fontWeight: 700,
-                      background: active
-                        ? "#C4882A"
-                        : passed
-                        ? "#2E7D32"
-                        : "#FAF6EE",
-                      color: active || passed ? "#FFFFFF" : "#786550",
-                      border: active
-                        ? "1px solid #C4882A"
-                        : passed
-                        ? "1px solid #2E7D32"
-                        : "1px solid rgba(196, 136, 42, 0.25)",
-                    }}
-                  >
+                <div
+                  key={s.id}
+                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                    active
+                      ? "bg-[#C4882A] text-[#FFFFFF] shadow-sm shadow-[#C4882A]/30"
+                      : passed
+                      ? "bg-[#2E7D32]/15 text-[#2E7D32] border border-[#2E7D32]/30"
+                      : "bg-[#FAF5EB] text-[#786550] border border-[#C4882A]/20"
+                  }`}
+                >
+                  <span className="w-4 h-4 rounded-full bg-[#FFFFFF]/25 flex items-center justify-center text-[10px]">
                     {passed ? <i className="bi bi-check-lg" /> : idx + 1}
-                  </div>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-space-grotesk), monospace",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: active ? "#1C1208" : passed ? "#2E7D32" : "#786550",
-                    }}
-                  >
-                    {s.label}
                   </span>
+                  <span>{s.label}</span>
                 </div>
               );
             })}
           </div>
         </div>
-      </div>
 
-      {/* ── FORM CONTENT ── */}
-      <section style={{ padding: "4rem 0 6rem" }}>
-        <div className="os-container">
-          {errorMsg && (
-            <div className="mb-6 p-4 rounded-xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-sm flex items-center gap-3 max-w-4xl mx-auto">
-              <i className="bi bi-exclamation-triangle-fill text-[#DC2626] text-lg" />
-              <span>{errorMsg}</span>
-            </div>
-          )}
+        {errorMsg && (
+          <div className="mb-6 p-4 rounded-2xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-3">
+            <i className="bi bi-exclamation-triangle-fill text-[#DC2626] text-lg shrink-0" />
+            <span>{errorMsg}</span>
+          </div>
+        )}
 
-          {/* STEP 1: DETAILS */}
-          {step === "details" && (
-            <form onSubmit={handleNextToPayment} style={{ maxWidth: "800px", margin: "0 auto" }}>
-              <div
-                style={{
-                  padding: "3rem",
-                  borderRadius: "28px",
-                  background: "#FFFFFF",
-                  border: "1px solid rgba(196, 136, 42, 0.25)",
-                  boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
-                }}
-              >
-                <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
-                  Step 1
+        {/* ── TWO-COLUMN CHECKOUT ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Form Area (7 cols) */}
+          <div className="lg:col-span-7">
+            {/* STEP 1: DESTINATION DETAILS */}
+            {step === "details" && (
+              <form onSubmit={handleNextToPayment} className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04 space-y-5">
+                <div className="pb-4 border-b border-[#C4882A]/15 flex items-center justify-between">
+                  <h2 className="font-serif text-2xl text-[#1C1208] font-normal">
+                    Recipient &amp; Delivery Destination
+                  </h2>
+                  <span className="text-[10px] font-mono uppercase text-[#8E5E16] font-bold">Step 1 of 2</span>
                 </div>
-                <h2
-                  style={{
-                    fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "2.2rem",
-                    fontWeight: 400,
-                    color: "#1C1208",
-                    marginBottom: "2rem",
-                  }}
-                >
-                  Recipient &amp; Delivery Destination
-                </h2>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.62rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.16em",
-                        textTransform: "uppercase",
-                        color: "#8E5E16",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Full Name *
                     </label>
                     <input
@@ -398,18 +281,7 @@ function CheckoutContent() {
                   </div>
 
                   <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.62rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.16em",
-                        textTransform: "uppercase",
-                        color: "#8E5E16",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Email Address *
                     </label>
                     <input
@@ -421,20 +293,11 @@ function CheckoutContent() {
                       className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
+                </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.62rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.16em",
-                        textTransform: "uppercase",
-                        color: "#8E5E16",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Phone / WhatsApp *
                     </label>
                     <input
@@ -448,18 +311,7 @@ function CheckoutContent() {
                   </div>
 
                   <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-space-grotesk), monospace",
-                        fontSize: "0.62rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.16em",
-                        textTransform: "uppercase",
-                        color: "#8E5E16",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
                       Physical Delivery Address *
                     </label>
                     <input
@@ -473,303 +325,244 @@ function CheckoutContent() {
                   </div>
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginTop: "3rem",
-                    paddingTop: "2rem",
-                    borderTop: "1px solid rgba(196, 136, 42, 0.15)",
-                  }}
-                >
-                  <Link href="/cart" className="btn-ghost">
-                    <i className="bi bi-arrow-left" />
-                    Review Cart
+                <div className="flex items-center justify-between pt-6 border-t border-[#C4882A]/15">
+                  <Link href="/cart" className="text-xs font-mono font-bold text-[#786550] hover:text-[#C4882A] flex items-center gap-1.5">
+                    <i className="bi bi-arrow-left" /> Return to Cart
                   </Link>
-                  <button type="submit" className="btn-primary">
-                    Proceed to Payment
-                    <i className="bi bi-arrow-right" />
+                  <button type="submit" className="btn-primary py-2.5 px-6 text-xs shadow-sm">
+                    <span>Continue to Payment</span>
+                    <i className="bi bi-arrow-right ml-1" />
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* STEP 2: PAYMENT SELECTION */}
+            {step === "payment" && (
+              <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04 space-y-6">
+                <div className="pb-4 border-b border-[#C4882A]/15 flex items-center justify-between">
+                  <h2 className="font-serif text-2xl text-[#1C1208] font-normal">
+                    Select Payment Instrument
+                  </h2>
+                  <span className="text-[10px] font-mono uppercase text-[#8E5E16] font-bold">Step 2 of 2</span>
+                </div>
+
+                {/* Instrument Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {[
+                    { id: "mpesa", title: "M-Pesa STK", desc: "Instant phone prompt", icon: "bi-phone" },
+                    { id: "card", title: "Credit Card", desc: "Visa, Mastercard", icon: "bi-credit-card" },
+                    { id: "bank", title: "Bank Wire", desc: "KCB Bank RTGS", icon: "bi-bank" },
+                  ].map((m) => {
+                    const active = paymentMethod === m.id;
+                    return (
+                      <button
+                        key={m.id}
+                        type="button"
+                        onClick={() => setPaymentMethod(m.id as "mpesa" | "card" | "bank")}
+                        className={`p-4 rounded-2xl text-left border transition-all cursor-pointer ${
+                          active
+                            ? "bg-[#C4882A] text-[#FFFFFF] border-[#C4882A] shadow-md shadow-[#C4882A]/30"
+                            : "bg-[#FAF6EE] text-[#1C1208] border-[#C4882A]/20 hover:border-[#C4882A]/50"
+                        }`}
+                      >
+                        <i className={`bi ${m.icon} text-xl block mb-2 ${active ? "text-[#FFFFFF]" : "text-[#C4882A]"}`} />
+                        <div className="text-xs font-bold font-mono uppercase tracking-wider">{m.title}</div>
+                        <div className={`text-[10px] mt-0.5 ${active ? "text-[#FFFFFF]/80" : "text-[#786550]"}`}>{m.desc}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* M-PESA STK INPUT */}
+                {paymentMethod === "mpesa" && (
+                  <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#2E7D32]/35 space-y-2">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#2E7D32] font-bold">
+                      M-Pesa Registered Mobile Number
+                    </label>
+                    <input
+                      type="tel"
+                      value={mpesaPhone || phone}
+                      onChange={(e) => setMpesaPhone(e.target.value)}
+                      placeholder="0712345678"
+                      className="w-full bg-[#FFFFFF] border border-[#2E7D32]/40 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#2E7D32]"
+                    />
+                    <p className="text-[11px] text-[#5C4835] leading-relaxed">
+                      You will receive an automatic PIN authorization on this mobile number for <strong>KES {grandTotal.toLocaleString()}</strong>.
+                    </p>
+                  </div>
+                )}
+
+                {/* BANK TRANSFER INSTRUCTIONS */}
+                {paymentMethod === "bank" && (
+                  <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#C4882A]/35 space-y-3">
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold">
+                      Ranch Banking Settlement Details
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                      <div>
+                        <span className="text-[#786550] block text-[10px]">Bank</span>
+                        <strong className="text-[#1C1208]">KCB Bank Kenya</strong>
+                      </div>
+                      <div>
+                        <span className="text-[#786550] block text-[10px]">Account Name</span>
+                        <strong className="text-[#1C1208]">Osotua Farming Ltd</strong>
+                      </div>
+                      <div>
+                        <span className="text-[#786550] block text-[10px]">Account No</span>
+                        <strong className="text-[#1C1208]">1289 3847 2901</strong>
+                      </div>
+                      <div>
+                        <span className="text-[#786550] block text-[10px]">Branch / Swift</span>
+                        <strong className="text-[#1C1208]">Kajiado / KCBLKENX</strong>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between pt-6 border-t border-[#C4882A]/15">
+                  <button
+                    type="button"
+                    onClick={() => setStep("details")}
+                    className="text-xs font-mono font-bold text-[#786550] hover:text-[#C4882A] flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <i className="bi bi-arrow-left" /> Edit Details
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCompleteOrder}
+                    disabled={isProcessing}
+                    className="btn-primary py-2.5 px-8 text-xs shadow-sm cursor-pointer"
+                  >
+                    {isProcessing ? (
+                      <>
+                        <i className="bi bi-arrow-repeat animate-spin" />
+                        <span>Processing Order...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Authorize KES {grandTotal.toLocaleString()}</span>
+                        <i className="bi bi-shield-check ml-1" />
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
-            </form>
-          )}
+            )}
 
-          {/* STEP 2: PAYMENT */}
-          {step === "payment" && (
-            <div
-              style={{
-                maxWidth: "800px",
-                margin: "0 auto",
-                padding: "3rem",
-                borderRadius: "28px",
-                background: "#FFFFFF",
-                border: "1px solid rgba(196, 136, 42, 0.25)",
-                boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
-              }}
-            >
-              <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
-                Step 2
-              </div>
-              <h2
-                style={{
-                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "2.2rem",
-                  fontWeight: 400,
-                  color: "#1C1208",
-                  marginBottom: "2rem",
-                }}
-              >
-                Choose Payment Instrument
-              </h2>
+            {/* STEP 3: ORDER CONFIRMED */}
+            {step === "confirmed" && (
+              <div className="bg-[#FFFFFF] border border-[#2E7D32]/35 rounded-3xl p-8 sm:p-12 text-center shadow-xl shadow-[#2E7D32]/05 space-y-4">
+                <div className="w-16 h-16 rounded-2xl bg-[#2E7D32]/15 border border-[#2E7D32]/35 flex items-center justify-center text-[#2E7D32] text-3xl mx-auto mb-2">
+                  <i className="bi bi-check2-circle" />
+                </div>
+                <div className="text-[10px] font-mono uppercase tracking-widest text-[#2E7D32] font-bold">
+                  Order Successfully Placed
+                </div>
+                <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1208] font-normal">
+                  Thank You for Your Order
+                </h2>
+                <p className="text-xs text-[#5C4835] font-mono">
+                  Official Reference: <strong className="text-[#C4882A]">{orderRef}</strong>
+                </p>
 
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                  gap: "1rem",
-                  marginBottom: "2.5rem",
-                }}
-              >
-                {[
-                  { id: "mpesa", title: "M-Pesa STK Push", sub: "Instant Daraja prompt on your phone", icon: "bi-phone" },
-                  { id: "card", title: "Credit / Debit Card", sub: "Visa, Mastercard, Amex", icon: "bi-credit-card" },
-                  { id: "bank", title: "Direct Bank Transfer", sub: "KCB Bank RTGS / Wire", icon: "bi-bank" },
-                ].map((m) => {
-                  const active = paymentMethod === m.id;
-                  return (
-                    <button
-                      key={m.id}
-                      type="button"
-                      onClick={() => setPaymentMethod(m.id as "mpesa" | "card" | "bank")}
-                      style={{
-                        padding: "1.5rem",
-                        borderRadius: "16px",
-                        textAlign: "left",
-                        background: active ? "linear-gradient(135deg, #C4882A, #D99A30)" : "#FAF6EE",
-                        border: active ? "1px solid #C4882A" : "1px solid rgba(196, 136, 42, 0.2)",
-                        cursor: "pointer",
-                        transition: "all 0.25s ease",
-                        boxShadow: active ? "0 4px 16px rgba(196,136,42,0.25)" : "none",
-                      }}
-                    >
-                      <i
-                        className={`bi ${m.icon}`}
-                        style={{
-                          fontSize: "1.5rem",
-                          color: active ? "#FFFFFF" : "#C4882A",
-                          display: "block",
-                          marginBottom: "0.5rem",
-                        }}
-                      />
-                      <div
-                        style={{
-                          fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                          fontSize: "1.3rem",
-                          fontWeight: 500,
-                          color: active ? "#FFFFFF" : "#1C1208",
-                        }}
-                      >
-                        {m.title}
-                      </div>
-                      <div style={{ fontSize: "0.72rem", color: active ? "rgba(255,255,255,0.85)" : "#786550", marginTop: "0.2rem" }}>
-                        {m.sub}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+                {paymentMethod === "mpesa" && (
+                  <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#2E7D32]/30 text-xs max-w-md mx-auto text-left flex items-center gap-3 my-4">
+                    <i
+                      className={`bi ${
+                        mpesaPollingStatus === "confirmed"
+                          ? "bi-patch-check-fill text-[#2E7D32]"
+                          : "bi-arrow-repeat animate-spin text-[#C4882A]"
+                      } text-2xl shrink-0`}
+                    />
+                    <div>
+                      <span className="font-bold text-[#1C1208] block">
+                        {mpesaPollingStatus === "confirmed"
+                          ? "M-Pesa Payment Confirmed"
+                          : "STK Prompt Dispatched"}
+                      </span>
+                      <span className="text-[#5C4835] text-[11px] leading-tight block mt-0.5">
+                        {mpesaPollingStatus === "confirmed"
+                          ? "Your payment is verified and recorded in the cold-packing schedule."
+                          : `Please check your phone (${mpesaPhone || phone}) to enter your PIN.`}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
-              {/* M-PESA PROMPT BOX */}
-              {paymentMethod === "mpesa" && (
-                <div
-                  style={{
-                    background: "#FAF8F5",
-                    border: "1px solid rgba(46, 125, 50, 0.35)",
-                    borderRadius: "18px",
-                    padding: "1.5rem",
-                    marginBottom: "2rem",
-                  }}
-                >
-                  <label
-                    style={{
-                      display: "block",
-                      fontFamily: "var(--font-space-grotesk), monospace",
-                      fontSize: "0.62rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.16em",
-                      textTransform: "uppercase",
-                      color: "#2E7D32",
-                      marginBottom: "0.5rem",
-                    }}
+                <div className="flex gap-3 justify-center pt-4 flex-wrap">
+                  <Link
+                    href={orderId ? `/orders/${orderId}` : "/dashboard/orders"}
+                    className="btn-primary text-xs py-3 px-6 shadow-sm"
                   >
-                    M-Pesa Phone Number for STK Push
-                  </label>
-                  <input
-                    type="tel"
-                    value={mpesaPhone || phone}
-                    onChange={(e) => setMpesaPhone(e.target.value)}
-                    placeholder="0712345678"
-                    className="w-full bg-[#FFFFFF] border border-[#2E7D32]/40 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#2E7D32]"
-                  />
-                  <p style={{ color: "#5C4835", fontSize: "0.8rem", marginTop: "0.75rem" }}>
-                    An instant STK Push prompt will appear on this handset to authorize payment of KES {grandTotal.toLocaleString()}.
-                  </p>
+                    <i className="bi bi-speedometer2" />
+                    <span>Track Live Dispatch Status</span>
+                  </Link>
+                  <Link href="/barn" className="btn-ghost text-xs py-3 px-6" style={{ color: "#1C1208" }}>
+                    <span>Return to Store</span>
+                  </Link>
                 </div>
-              )}
+              </div>
+            )}
+          </div>
 
-              {/* BANK TRANSFER DETAILS BOX */}
-              {paymentMethod === "bank" && (
-                <div
-                  style={{
-                    background: "#FAF8F5",
-                    border: "1px solid rgba(196, 136, 42, 0.3)",
-                    borderRadius: "18px",
-                    padding: "1.5rem",
-                    marginBottom: "2rem",
-                  }}
-                >
-                  <div className="eyebrow text-[#8E5E16] mb-2 font-bold">Ranch Banking Details</div>
-                  <div className="grid grid-cols-2 gap-3 text-xs text-[#1C1208]">
-                    <div>
-                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Bank Name</span>
-                      <strong>KCB Bank Kenya</strong>
+          {/* Right Summary Sidebar (5 cols) */}
+          <div className="lg:col-span-5">
+            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04 sticky top-28 space-y-5">
+              <div className="flex items-center justify-between pb-4 border-b border-[#C4882A]/15">
+                <h3 className="font-serif text-xl text-[#1C1208] font-normal">
+                  Order Summary
+                </h3>
+                <span className="font-mono text-xs text-[#8E5E16] font-bold">{cart.length} items</span>
+              </div>
+
+              {/* Cart List */}
+              <div className="divide-y divide-[#C4882A]/10 max-h-72 overflow-y-auto pr-1">
+                {cart.map((item) => (
+                  <div key={item.id} className="py-3 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-[#FAF5EB] border border-[#C4882A]/20 relative overflow-hidden shrink-0 flex items-center justify-center text-[#C4882A]">
+                        {item.image ? (
+                          <Image src={item.image} alt={item.name} fill className="object-cover" />
+                        ) : (
+                          <i className="bi bi-box-seam text-lg" />
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-[#1C1208] truncate">{item.name}</div>
+                        <div className="text-[10px] font-mono text-[#786550]">
+                          {item.quantity} × KES {item.price.toLocaleString()}
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Account Name</span>
-                      <strong>Osotua Farming Limited</strong>
-                    </div>
-                    <div>
-                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Account Number</span>
-                      <strong className="font-mono">1289 3847 2901</strong>
-                    </div>
-                    <div>
-                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Branch / Swift</span>
-                      <strong>Kajiado / KCBLKENX</strong>
+                    <div className="font-mono text-xs font-bold text-[#1C1208] shrink-0">
+                      KES {(item.price * item.quantity).toLocaleString()}
                     </div>
                   </div>
-                </div>
-              )}
+                ))}
+              </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <button type="button" onClick={() => setStep("details")} className="btn-ghost">
-                  <i className="bi bi-arrow-left" />
-                  Back
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCompleteOrder}
-                  disabled={isProcessing}
-                  className="btn-primary shadow-sm"
-                >
-                  {isProcessing ? (
-                    <>
-                      <i className="bi bi-arrow-repeat animate-spin" />
-                      <span>Initiating Order...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Pay KES {grandTotal.toLocaleString()}</span>
-                      <i className="bi bi-check-lg" />
-                    </>
-                  )}
-                </button>
+              {/* Totals */}
+              <div className="pt-4 border-t border-[#C4882A]/15 space-y-2 text-xs">
+                <div className="flex justify-between text-[#5C4835]">
+                  <span>Subtotal</span>
+                  <span className="font-mono font-bold text-[#1C1208]">KES {cartTotal.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-[#5C4835]">
+                  <span>Refrigerated Delivery</span>
+                  <span className="font-mono text-[#2E7D32] font-bold">Complimentary</span>
+                </div>
+                <div className="flex justify-between items-center text-sm pt-3 border-t border-[#C4882A]/15">
+                  <span className="font-serif text-base font-bold text-[#1C1208]">Total Amount</span>
+                  <span className="font-mono text-lg font-bold text-[#C4882A]">
+                    KES {grandTotal.toLocaleString()}
+                  </span>
+                </div>
               </div>
             </div>
-          )}
-
-          {/* STEP 3: CONFIRMED */}
-          {step === "confirmed" && (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "5rem 2.5rem",
-                borderRadius: "28px",
-                maxWidth: "640px",
-                margin: "0 auto",
-                background: "#FFFFFF",
-                border: "1px solid rgba(46, 125, 50, 0.35)",
-                boxShadow: "0 16px 48px rgba(46, 125, 50, 0.08)",
-              }}
-            >
-              <div
-                style={{
-                  width: "64px",
-                  height: "64px",
-                  borderRadius: "50%",
-                  background: "rgba(46, 125, 50, 0.15)",
-                  border: "1px solid rgba(46, 125, 50, 0.35)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "0 auto 1.5rem",
-                  color: "#2E7D32",
-                }}
-              >
-                <i className="bi bi-check-circle-fill" style={{ fontSize: "2rem" }} />
-              </div>
-              <div className="eyebrow justify-center" style={{ color: "#2E7D32", marginBottom: "0.75rem", fontWeight: 700 }}>
-                Order Confirmed
-              </div>
-              <h2
-                style={{
-                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "2.8rem",
-                  fontWeight: 400,
-                  color: "#1C1208",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Thank You for Your Order!
-              </h2>
-              <p style={{ color: "#5C4835", fontSize: "0.95rem", marginBottom: "1.5rem" }}>
-                Order Reference:{" "}
-                <strong
-                  style={{ color: "#C4882A", fontFamily: "var(--font-space-grotesk), monospace" }}
-                >
-                  {orderRef}
-                </strong>
-              </p>
-
-              {/* M-Pesa Live Feedback banner */}
-              {paymentMethod === "mpesa" && (
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#2E7D32]/30 text-xs mb-6 max-w-md mx-auto text-left flex items-center gap-3">
-                  <i
-                    className={`bi ${
-                      mpesaPollingStatus === "confirmed"
-                        ? "bi-patch-check-fill text-[#2E7D32]"
-                        : "bi-arrow-repeat animate-spin text-[#C4882A]"
-                    } text-xl`}
-                  />
-                  <div>
-                    <span className="font-bold text-[#1C1208] block">
-                      {mpesaPollingStatus === "confirmed"
-                        ? "M-Pesa Payment Received!"
-                        : "STK Prompt Dispatched to Handset"}
-                    </span>
-                    <span className="text-[#5C4835] text-[11px]">
-                      {mpesaPollingStatus === "confirmed"
-                        ? "Your payment was verified. Cold-chain packing is now in progress."
-                        : `Please enter your M-Pesa PIN on ${mpesaPhone || phone} to authorize KES ${grandTotal.toLocaleString()}.`}
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-                <Link href={orderId ? `/orders/${orderId}` : "/dashboard"} className="btn-primary shadow-sm">
-                  <i className="bi bi-speedometer2" />
-                  Track Live Dispatch Status
-                </Link>
-                <Link href="/barn" className="btn-ghost" style={{ borderColor: "rgba(196,136,42,0.3)", color: "#1C1208" }}>
-                  Return to Barn Store
-                </Link>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
@@ -778,7 +571,7 @@ export default function CheckoutClient() {
   return (
     <Suspense
       fallback={
-        <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-32 text-center text-sm font-mono text-[#8E5E16]">
+        <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-36 text-center text-xs font-mono text-[#8E5E16]">
           Loading Osotua Checkout...
         </div>
       }
