@@ -1,12 +1,28 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { partnerStatusSchema } from "@/lib/schemas"
-import { getSessionUser, isAdmin, unauthorized, forbidden, badRequest, notFound, serverError, parseError } from "@/lib/api-utils"
+import { getSessionUser, isAdmin, unauthorized, forbidden, notFound, badRequest, serverError, parseError } from "@/lib/api-utils"
 import { ZodError } from "zod"
 
-type IdRouteContext = { params: Promise<{ id: string }> }
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params
+    const partner = await prisma.partnerFarmer.findUnique({ where: { id } })
+    if (!partner) return notFound("Partner farmer record not found")
+    return NextResponse.json(partner)
+  } catch (err) {
+    console.error("Fetch partner error:", err)
+    return serverError("Failed to fetch partner farmer")
+  }
+}
 
-export async function PATCH(req: Request, { params }: IdRouteContext) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const user = await getSessionUser()
     if (!user) return unauthorized()
@@ -15,16 +31,24 @@ export async function PATCH(req: Request, { params }: IdRouteContext) {
     const { id } = await params
     const body = await req.json()
     const data = partnerStatusSchema.parse(body)
-    const partner = await prisma.partnerFarmer.update({ where: { id }, data })
-    return NextResponse.json(partner)
+
+    const updated = await prisma.partnerFarmer.update({
+      where: { id },
+      data: { status: data.status },
+    })
+
+    return NextResponse.json(updated)
   } catch (err) {
     if (err instanceof ZodError) return badRequest(parseError(err))
-    if (err && typeof err === "object" && "code" in err && (err as { code: string }).code === "P2025") return notFound()
-    return serverError()
+    console.error("Update partner status error:", err)
+    return serverError("Failed to update partner farmer status")
   }
 }
 
-export async function DELETE(_: Request, { params }: IdRouteContext) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const user = await getSessionUser()
     if (!user) return unauthorized()
@@ -34,7 +58,7 @@ export async function DELETE(_: Request, { params }: IdRouteContext) {
     await prisma.partnerFarmer.delete({ where: { id } })
     return NextResponse.json({ success: true })
   } catch (err) {
-    if (err && typeof err === "object" && "code" in err && (err as { code: string }).code === "P2025") return notFound()
-    return serverError()
+    console.error("Delete partner error:", err)
+    return serverError("Failed to delete partner farmer")
   }
 }

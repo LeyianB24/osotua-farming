@@ -50,7 +50,6 @@ export default function ProductCard({ product, dark }: Props) {
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault()
-    e.stopPropagation()
     if (!product.inStock) return
     addToCart({
       id: product.id,
@@ -67,7 +66,6 @@ export default function ProductCard({ product, dark }: Props) {
 
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault()
-    e.stopPropagation()
     setWishlist((v) => !v)
   }
 
@@ -95,7 +93,7 @@ export default function ProductCard({ product, dark }: Props) {
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLDivElement
-        el.style.transform = "translateY(-10px) scale(1.01)"
+        el.style.transform = "translateY(-8px) scale(1.01)"
         el.style.boxShadow = dark
           ? "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,136,42,0.35), inset 0 1px 0 rgba(255,255,255,0.12)"
           : "0 24px 64px rgba(28,18,8,0.14), 0 0 0 1px rgba(196,136,42,0.2)"
@@ -157,6 +155,7 @@ export default function ProductCard({ product, dark }: Props) {
 
         {/* Wishlist */}
         <button
+          type="button"
           onClick={handleWishlist}
           aria-label={wishlist ? "Remove from wishlist" : "Add to wishlist"}
           style={{
@@ -207,14 +206,12 @@ export default function ProductCard({ product, dark }: Props) {
         </div>
       </Link>
 
-      {/* Card body */}
-      <Link
-        href={`/barn/${product.slug}`}
+      {/* Card body container */}
+      <div
         style={{
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          textDecoration: "none",
           padding: "1.25rem",
         }}
       >
@@ -232,7 +229,9 @@ export default function ProductCard({ product, dark }: Props) {
           {product.category.name}
         </div>
 
-        <div
+        <Link
+          href={`/barn/${product.slug}`}
+          className="hover:text-[#C4882A] transition-colors"
           style={{
             fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
             fontSize: "1.3rem",
@@ -240,13 +239,14 @@ export default function ProductCard({ product, dark }: Props) {
             color: dark ? "#F5EFE4" : "#1C1208",
             lineHeight: 1.2,
             marginBottom: "0.4rem",
+            textDecoration: "none",
           }}
         >
           {product.name}
-        </div>
+        </Link>
 
         <div style={{ color: dark ? "rgba(245,239,228,0.4)" : "rgba(28,18,8,0.4)", fontSize: "0.78rem", marginBottom: "1rem" }}>
-          Ranch-direct · Osotua Farming, Kajiado
+          Ranch-direct &bull; Osotua Farming, Kajiado
         </div>
 
         {/* Price + Add button */}
@@ -288,6 +288,7 @@ export default function ProductCard({ product, dark }: Props) {
 
           {product.inStock ? (
             <button
+              type="button"
               onClick={handleAdd}
               style={{
                 display: "flex",
@@ -299,7 +300,7 @@ export default function ProductCard({ product, dark }: Props) {
                 border: added
                   ? "1px solid rgba(61,107,62,0.35)"
                   : "1px solid rgba(196,136,42,0.35)",
-                color: added ? "#5a9e5c" : "#C4882A",
+                color: added ? "#2E7D32" : "#8E5E16",
                 borderRadius: "100px",
                 padding: "0.6rem 1.1rem",
                 fontSize: "0.68rem",
@@ -331,7 +332,7 @@ export default function ProductCard({ product, dark }: Props) {
             </span>
           )}
         </div>
-      </Link>
+      </div>
     </div>
   )
 }

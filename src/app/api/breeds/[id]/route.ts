@@ -1,26 +1,31 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { breedPatchSchema } from "@/lib/schemas"
-import { getSessionUser, isAdmin, unauthorized, forbidden, badRequest, notFound, serverError, parseError } from "@/lib/api-utils"
+import { getSessionUser, isAdmin, unauthorized, forbidden, notFound, badRequest, serverError, parseError } from "@/lib/api-utils"
 import { ZodError } from "zod"
 
-type IdRouteContext = { params: Promise<{ id: string }> }
-
-export async function GET(_: Request, { params }: IdRouteContext) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const { id } = await params
     const breed = await prisma.breed.findUnique({
       where: { id },
       include: { species: true },
     })
-    if (!breed) return notFound()
+    if (!breed) return notFound("Breed not found")
     return NextResponse.json(breed)
-  } catch {
-    return serverError()
+  } catch (err) {
+    console.error("Fetch breed error:", err)
+    return serverError("Failed to fetch breed")
   }
 }
 
-export async function PATCH(req: Request, { params }: IdRouteContext) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const user = await getSessionUser()
     if (!user) return unauthorized()
@@ -29,16 +34,25 @@ export async function PATCH(req: Request, { params }: IdRouteContext) {
     const { id } = await params
     const body = await req.json()
     const data = breedPatchSchema.parse(body)
-    const breed = await prisma.breed.update({ where: { id }, data })
-    return NextResponse.json(breed)
+
+    const updated = await prisma.breed.update({
+      where: { id },
+      data,
+      include: { species: true },
+    })
+
+    return NextResponse.json(updated)
   } catch (err) {
     if (err instanceof ZodError) return badRequest(parseError(err))
-    if (err && typeof err === "object" && "code" in err && (err as { code: string }).code === "P2025") return notFound()
-    return serverError()
+    console.error("Update breed error:", err)
+    return serverError("Failed to update breed")
   }
 }
 
-export async function DELETE(_: Request, { params }: IdRouteContext) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const user = await getSessionUser()
     if (!user) return unauthorized()
@@ -48,7 +62,7 @@ export async function DELETE(_: Request, { params }: IdRouteContext) {
     await prisma.breed.delete({ where: { id } })
     return NextResponse.json({ success: true })
   } catch (err) {
-    if (err && typeof err === "object" && "code" in err && (err as { code: string }).code === "P2025") return notFound()
-    return serverError()
+    console.error("Delete breed error:", err)
+    return serverError("Failed to delete breed")
   }
 }

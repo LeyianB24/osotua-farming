@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getSessionUser, isAdmin, unauthorized, forbidden, serverError, apiSuccess } from "@/lib/api-utils"
 

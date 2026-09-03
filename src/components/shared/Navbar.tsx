@@ -38,9 +38,11 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
     };
   }, [open]);
 
-  useEffect(() => {
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (prevPath !== pathname) {
+    setPrevPath(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   return (
     <>

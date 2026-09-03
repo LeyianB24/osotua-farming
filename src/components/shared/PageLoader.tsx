@@ -10,14 +10,20 @@ export default function PageLoader() {
   const [isExiting, setIsExiting] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
 
-  useEffect(() => {
-    // If already loaded this session, skip immediately
-    try {
-      if (sessionStorage.getItem("os-loaded") === "1") {
-        setIsFinished(true)
-        return
+  const isLoadedInSession = useSyncExternalStore(
+    emptySubscribe,
+    () => {
+      try {
+        return sessionStorage.getItem("os-loaded") === "1"
+      } catch {
+        return false
       }
-    } catch {}
+    },
+    () => true
+  )
+
+  useEffect(() => {
+    if (isLoadedInSession) return
 
     // Trigger smooth fade-out after 450ms
     const exitTimer = setTimeout(() => {
@@ -36,9 +42,9 @@ export default function PageLoader() {
       clearTimeout(exitTimer)
       clearTimeout(finishTimer)
     }
-  }, [])
+  }, [isLoadedInSession])
 
-  if (!isClient || isFinished) return null
+  if (!isClient || isLoadedInSession || isFinished) return null
 
   return (
     <div

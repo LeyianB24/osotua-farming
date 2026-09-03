@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 
+export const metadata = { title: "My Orders — Osotua Farming" }
+
 export default async function CustomerOrdersPage() {
   const session = await auth()
   if (!session?.user?.id) redirect("/login")
@@ -15,15 +17,14 @@ export default async function CustomerOrdersPage() {
 
   return (
     <div style={{ background: "#FBF7F0", minHeight: "100vh" }}>
-
       {/* ── HERO ── */}
       <div
         className="bg-mesh-earth noise"
         style={{ paddingTop: "6rem", paddingBottom: "3rem", position: "relative", overflow: "hidden" }}
       >
         <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem" }}>
-            Member Orders
+          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
+            Member Portal
           </div>
           <h1
             style={{
@@ -37,23 +38,21 @@ export default async function CustomerOrdersPage() {
             My <em style={{ color: "#C4882A", fontStyle: "italic" }}>Order History</em>
           </h1>
           <p style={{ color: "#5C4835", maxWidth: "520px", marginTop: "0.75rem", fontSize: "0.95rem" }}>
-            Complete audit ledger of your livestock purchases, Barn Store orders, and delivery statuses.
+            Complete audit ledger of your livestock purchases, Barn Store orders, and live delivery tracking.
           </p>
         </div>
       </div>
 
       {/* ── CONTENT ── */}
-      <section
-        style={{ padding: "3rem 0 6rem" }}
-      >
+      <section style={{ padding: "3rem 0 6rem" }}>
         <div className="os-container" style={{ position: "relative", zIndex: 1, maxWidth: "960px" }}>
           {orders.length > 0 ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               {orders.map((order) => (
                 <div
                   key={order.id}
                   style={{
-                    borderRadius: "20px",
+                    borderRadius: "24px",
                     overflow: "hidden",
                     background: "#FFFFFF",
                     border: "1px solid rgba(196, 136, 42, 0.22)",
@@ -77,21 +76,27 @@ export default async function CustomerOrdersPage() {
                       <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.85rem", fontWeight: 700, color: "#C4882A" }}>
                         #{order.id.slice(-8).toUpperCase()}
                       </span>
-                      <span style={{ color: "#786550", fontSize: "0.8rem" }}>
-                        {new Date(order.createdAt).toDateString()}
+                      <span style={{ color: "#786550", fontSize: "0.8rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
+                        {new Date(order.createdAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
                       </span>
                     </div>
 
-                    <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                       <span style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "1.6rem", fontWeight: 600, color: "#1C1208" }}>
                         KES {order.totalAmount.toLocaleString()}
                       </span>
                       <span
                         style={{
-                          fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.6rem", fontWeight: 700,
-                          letterSpacing: "0.14em", textTransform: "uppercase", padding: "0.3rem 0.75rem",
-                          borderRadius: "100px", background: "rgba(46,125,50,0.12)",
-                          border: "1px solid rgba(46,125,50,0.35)", color: "#2E7D32",
+                          fontFamily: "var(--font-space-grotesk), monospace",
+                          fontSize: "0.6rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.14em",
+                          textTransform: "uppercase",
+                          padding: "0.3rem 0.75rem",
+                          borderRadius: "100px",
+                          background: order.status === "DELIVERED" ? "rgba(46,125,50,0.12)" : "rgba(196,136,42,0.12)",
+                          border: order.status === "DELIVERED" ? "1px solid rgba(46,125,50,0.35)" : "1px solid rgba(196,136,42,0.35)",
+                          color: order.status === "DELIVERED" ? "#2E7D32" : "#8E5E16",
                         }}
                       >
                         {order.status}
@@ -120,6 +125,20 @@ export default async function CustomerOrdersPage() {
                         </span>
                       </div>
                     ))}
+
+                    <div className="pt-4 flex items-center justify-between flex-wrap gap-3">
+                      <div className="text-xs text-[#5C4835]">
+                        <i className="bi bi-geo-alt-fill text-[#C4882A] mr-1" />
+                        {order.deliveryAddress || "Ranch Collection Depot"}
+                      </div>
+                      <Link
+                        href={`/orders/${order.id}`}
+                        className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5 shadow-xs"
+                      >
+                        <i className="bi bi-eye-fill" />
+                        <span>View Order Details &amp; Tracking</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -155,7 +174,6 @@ export default async function CustomerOrdersPage() {
           )}
         </div>
       </section>
-
     </div>
   )
 }

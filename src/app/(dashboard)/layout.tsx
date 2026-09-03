@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { usePathname } from "next/navigation"
 import DashboardSidebar from "@/components/shared/DashboardSidebar"
 import Logo from "@/components/shared/Logo"
@@ -16,10 +16,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const isAdmin = (session?.user as { role?: string } | undefined)?.role === "ADMIN"
 
 
-  // Close mobile drawer on route change
-  useEffect(() => {
+  const [prevPath, setPrevPath] = useState(pathname)
+  if (prevPath !== pathname) {
+    setPrevPath(pathname)
     setIsMobileOpen(false)
-  }, [pathname])
+  }
 
   return (
     <div className="flex min-h-screen bg-[#FBF7F0] text-[#1C1208] relative">

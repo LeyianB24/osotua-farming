@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { AdminSection, AdminTable, AdminRow, TD, StatusBadge } from "@/components/shared/AdminSection"
+import { AdminSection, AdminTable, AdminRow, TD } from "@/components/shared/AdminSection"
 
 export const metadata = { title: "Customers — Osotua Admin" }
 

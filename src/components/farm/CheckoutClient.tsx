@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useCart } from "@/components/shared/CartContext";
 
-export default function CheckoutClient() {
-  const { cart, cartTotal, clearCart } = useCart();
+function CheckoutContent() {
+  const searchParams = useSearchParams();
+  const { cart, cartTotal, clearCart, addToCart } = useCart();
   const [step, setStep] = useState<"details" | "payment" | "confirmed">("details");
 
   // Form State
@@ -19,6 +21,49 @@ export default function CheckoutClient() {
   const [orderRef, setOrderRef] = useState("");
   const [orderId, setOrderId] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [mpesaPollingStatus, setMpesaPollingStatus] = useState<"idle" | "sent" | "waiting_pin" | "confirmed">("idle");
+
+  // Hydrate searchParams (e.g. /checkout?product=xyz or /checkout?breed=abc)
+  useEffect(() => {
+    const productId = searchParams.get("product");
+    const breedId = searchParams.get("breed");
+
+    if (productId && cart.every((i) => i.id !== productId)) {
+      fetch(`/api/products/${productId}`)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data) {
+            addToCart({
+              id: data.id,
+              name: data.name,
+              price: data.price,
+              unit: data.unit,
+              image: data.image,
+              categoryName: data.category?.name,
+              type: "product",
+            });
+          }
+        })
+        .catch(() => {});
+    } else if (breedId && cart.every((i) => i.id !== breedId)) {
+      fetch(`/api/breeds/${breedId}`)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data) {
+            addToCart({
+              id: data.id,
+              name: data.name,
+              price: data.pricePerHead,
+              unit: "head",
+              image: data.image,
+              categoryName: data.species?.name,
+              type: "breed",
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [searchParams, cart, addToCart]);
 
   const deliveryFee = cartTotal > 0 ? 500 : 0;
   const grandTotal = cartTotal + deliveryFee;
@@ -43,7 +88,7 @@ export default function CheckoutClient() {
         customerName: name,
         customerEmail: email,
         customerPhone: phone,
-        type: "PRODUCT",
+        type: cart.some((i) => i.type === "breed") ? "MIXED" : "PRODUCT",
         totalAmount: grandTotal,
         paymentMethod: paymentMethod.toUpperCase(),
         paymentRef: generatedRef,
@@ -72,8 +117,9 @@ export default function CheckoutClient() {
       setOrderId(savedOrderId);
       setOrderRef(generatedRef);
 
-      // If M-Pesa is selected, trigger STK Push
+      // If M-Pesa is selected, trigger STK Push & Start Status Polling
       if (paymentMethod === "mpesa") {
+        setMpesaPollingStatus("sent");
         try {
           await fetch("/api/payments/mpesa", {
             method: "POST",
@@ -83,8 +129,31 @@ export default function CheckoutClient() {
               orderId: savedOrderId,
             }),
           });
+          setMpesaPollingStatus("waiting_pin");
+
+          // Start polling order status
+          let attempts = 0;
+          const interval = setInterval(async () => {
+            attempts++;
+            if (attempts > 12) {
+              clearInterval(interval);
+              return;
+            }
+            try {
+              const checkRes = await fetch(`/api/payments/mpesa/status?orderId=${savedOrderId}`);
+              if (checkRes.ok) {
+                const checkData = await checkRes.json();
+                if (checkData.isPaid) {
+                  setMpesaPollingStatus("confirmed");
+                  clearInterval(interval);
+                }
+              }
+            } catch {
+              // Ignore polling errors
+            }
+          }, 3500);
         } catch (mpesaErr) {
-          console.warn("STK Push triggered in sandbox mode:", mpesaErr);
+          console.warn("STK Push initiated:", mpesaErr);
         }
       }
 
@@ -141,12 +210,18 @@ export default function CheckoutClient() {
                 marginBottom: "2.5rem",
               }}
             >
-              Please add items to your cart before proceeding to checkout.
+              Please add fresh produce or purebred livestock to your cart before proceeding.
             </p>
-            <Link href="/barn" className="btn-primary">
-              <i className="bi bi-shop" />
-              Go to Barn Store
-            </Link>
+            <div className="flex gap-3 justify-center">
+              <Link href="/barn" className="btn-primary">
+                <i className="bi bi-shop" />
+                Go to Barn Store
+              </Link>
+              <Link href="/breeds" className="btn-ghost" style={{ borderColor: "rgba(196,136,42,0.3)", color: "#1C1208" }}>
+                <i className="bi bi-shield-check" />
+                Browse Breeds
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -281,10 +356,7 @@ export default function CheckoutClient() {
                   boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
                 }}
               >
-                <div
-                  className="eyebrow"
-                  style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}
-                >
+                <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
                   Step 1
                 </div>
                 <h2
@@ -320,7 +392,7 @@ export default function CheckoutClient() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Kiprono Koech"
+                      placeholder="e.g. Moses Ole Sironka"
                       className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
@@ -345,7 +417,7 @@ export default function CheckoutClient() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="name@company.co.ke"
+                      placeholder="moses@example.co.ke"
                       className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                     />
                   </div>
@@ -461,9 +533,9 @@ export default function CheckoutClient() {
                 }}
               >
                 {[
-                  { id: "mpesa", title: "M-Pesa STK Push", sub: "Instant Daraja prompt", icon: "bi-phone" },
+                  { id: "mpesa", title: "M-Pesa STK Push", sub: "Instant Daraja prompt on your phone", icon: "bi-phone" },
                   { id: "card", title: "Credit / Debit Card", sub: "Visa, Mastercard, Amex", icon: "bi-credit-card" },
-                  { id: "bank", title: "Direct Bank Transfer", sub: "RTGS / Wire", icon: "bi-bank" },
+                  { id: "bank", title: "Direct Bank Transfer", sub: "KCB Bank RTGS / Wire", icon: "bi-bank" },
                 ].map((m) => {
                   const active = paymentMethod === m.id;
                   return (
@@ -509,6 +581,7 @@ export default function CheckoutClient() {
                 })}
               </div>
 
+              {/* M-PESA PROMPT BOX */}
               {paymentMethod === "mpesa" && (
                 <div
                   style={{
@@ -541,8 +614,41 @@ export default function CheckoutClient() {
                     className="w-full bg-[#FFFFFF] border border-[#2E7D32]/40 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#2E7D32]"
                   />
                   <p style={{ color: "#5C4835", fontSize: "0.8rem", marginTop: "0.75rem" }}>
-                    You will receive a prompt on your phone to authorize payment of KES {grandTotal.toLocaleString()}.
+                    An instant STK Push prompt will appear on this handset to authorize payment of KES {grandTotal.toLocaleString()}.
                   </p>
+                </div>
+              )}
+
+              {/* BANK TRANSFER DETAILS BOX */}
+              {paymentMethod === "bank" && (
+                <div
+                  style={{
+                    background: "#FAF8F5",
+                    border: "1px solid rgba(196, 136, 42, 0.3)",
+                    borderRadius: "18px",
+                    padding: "1.5rem",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <div className="eyebrow text-[#8E5E16] mb-2 font-bold">Ranch Banking Details</div>
+                  <div className="grid grid-cols-2 gap-3 text-xs text-[#1C1208]">
+                    <div>
+                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Bank Name</span>
+                      <strong>KCB Bank Kenya</strong>
+                    </div>
+                    <div>
+                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Account Name</span>
+                      <strong>Osotua Farming Limited</strong>
+                    </div>
+                    <div>
+                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Account Number</span>
+                      <strong className="font-mono">1289 3847 2901</strong>
+                    </div>
+                    <div>
+                      <span className="text-[#786550] block text-[10px] font-mono uppercase">Branch / Swift</span>
+                      <strong>Kajiado / KCBLKENX</strong>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -555,10 +661,19 @@ export default function CheckoutClient() {
                   type="button"
                   onClick={handleCompleteOrder}
                   disabled={isProcessing}
-                  className="btn-primary"
+                  className="btn-primary shadow-sm"
                 >
-                  {isProcessing ? "Processing..." : `Pay KES ${grandTotal.toLocaleString()}`}
-                  <i className="bi bi-check-lg" />
+                  {isProcessing ? (
+                    <>
+                      <i className="bi bi-arrow-repeat animate-spin" />
+                      <span>Initiating Order...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Pay KES {grandTotal.toLocaleString()}</span>
+                      <i className="bi bi-check-lg" />
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -571,7 +686,7 @@ export default function CheckoutClient() {
                 textAlign: "center",
                 padding: "5rem 2.5rem",
                 borderRadius: "28px",
-                maxWidth: "600px",
+                maxWidth: "640px",
                 margin: "0 auto",
                 background: "#FFFFFF",
                 border: "1px solid rgba(46, 125, 50, 0.35)",
@@ -608,7 +723,7 @@ export default function CheckoutClient() {
               >
                 Thank You for Your Order!
               </h2>
-              <p style={{ color: "#5C4835", fontSize: "0.95rem", marginBottom: "2rem" }}>
+              <p style={{ color: "#5C4835", fontSize: "0.95rem", marginBottom: "1.5rem" }}>
                 Order Reference:{" "}
                 <strong
                   style={{ color: "#C4882A", fontFamily: "var(--font-space-grotesk), monospace" }}
@@ -617,13 +732,38 @@ export default function CheckoutClient() {
                 </strong>
               </p>
 
+              {/* M-Pesa Live Feedback banner */}
+              {paymentMethod === "mpesa" && (
+                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#2E7D32]/30 text-xs mb-6 max-w-md mx-auto text-left flex items-center gap-3">
+                  <i
+                    className={`bi ${
+                      mpesaPollingStatus === "confirmed"
+                        ? "bi-patch-check-fill text-[#2E7D32]"
+                        : "bi-arrow-repeat animate-spin text-[#C4882A]"
+                    } text-xl`}
+                  />
+                  <div>
+                    <span className="font-bold text-[#1C1208] block">
+                      {mpesaPollingStatus === "confirmed"
+                        ? "M-Pesa Payment Received!"
+                        : "STK Prompt Dispatched to Handset"}
+                    </span>
+                    <span className="text-[#5C4835] text-[11px]">
+                      {mpesaPollingStatus === "confirmed"
+                        ? "Your payment was verified. Cold-chain packing is now in progress."
+                        : `Please enter your M-Pesa PIN on ${mpesaPhone || phone} to authorize KES ${grandTotal.toLocaleString()}.`}
+                    </span>
+                  </div>
+                </div>
+              )}
+
               <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-                <Link href={orderId ? `/orders/${orderId}` : "/dashboard"} className="btn-primary">
+                <Link href={orderId ? `/orders/${orderId}` : "/dashboard"} className="btn-primary shadow-sm">
                   <i className="bi bi-speedometer2" />
-                  Track Order Status
+                  Track Live Dispatch Status
                 </Link>
-                <Link href="/barn" className="btn-ghost">
-                  Return to Barn
+                <Link href="/barn" className="btn-ghost" style={{ borderColor: "rgba(196,136,42,0.3)", color: "#1C1208" }}>
+                  Return to Barn Store
                 </Link>
               </div>
             </div>
@@ -631,5 +771,19 @@ export default function CheckoutClient() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function CheckoutClient() {
+  return (
+    <Suspense
+      fallback={
+        <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-32 text-center text-sm font-mono text-[#8E5E16]">
+          Loading Osotua Checkout...
+        </div>
+      }
+    >
+      <CheckoutContent />
+    </Suspense>
   );
 }

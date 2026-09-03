@@ -148,6 +148,7 @@ export function apiSuccess<T>(data: T, req?: Request, options?: { status?: numbe
 }
 
 // ── Rule #5: 201 Created + Location Header ───────────────────
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function apiCreated<T>(data: T, location: string, req?: Request): NextResponse {
   const payload = serializeUTC(data)
   const etag = generateETag(payload)

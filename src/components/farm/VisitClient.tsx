@@ -20,6 +20,7 @@ export default function VisitClient() {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
+  const [timeSlot, setTimeSlot] = useState("morning")
   const [notes, setNotes] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
 
@@ -38,7 +39,7 @@ export default function VisitClient() {
         phone,
         groupSize: Number(groupSize),
         visitDate: new Date(visitDate).toISOString(),
-        purpose: `${activeTour.title} (KES ${estimatedCost.toLocaleString()})${notes ? ` - ${notes}` : ""}`,
+        purpose: `${activeTour.title} [${timeSlot === "morning" ? "Morning 9:30 AM" : "Afternoon 2:00 PM"}] (KES ${estimatedCost.toLocaleString()})${notes ? ` - ${notes}` : ""}`,
       }
 
       const res = await fetch("/api/visits", {
@@ -359,10 +360,43 @@ export default function VisitClient() {
                           type="date"
                           name="visitDate"
                           required
+                          min={new Date().toISOString().split("T")[0]}
                           value={visitDate}
                           onChange={(e) => setVisitDate(e.target.value)}
                           className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
                         />
+                      </div>
+
+                      <div className="sm:col-span-2">
+                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-2">
+                          Arrival Time Slot *
+                        </label>
+                        <div className="grid grid-cols-2 gap-3">
+                          {[
+                            { id: "morning", label: "Morning Session", time: "09:30 AM – 12:30 PM", icon: "bi-sun-fill" },
+                            { id: "afternoon", label: "Afternoon Session", time: "02:00 PM – 05:00 PM", icon: "bi-sunset-fill" },
+                          ].map((slot) => {
+                            const active = timeSlot === slot.id
+                            return (
+                              <button
+                                key={slot.id}
+                                type="button"
+                                onClick={() => setTimeSlot(slot.id)}
+                                className={`p-3 rounded-xl text-left border transition-all ${
+                                  active
+                                    ? "bg-[#C4882A]/15 border-[#C4882A] ring-1 ring-[#C4882A]"
+                                    : "bg-[#FAF6EE] border-[#C4882A]/25"
+                                }`}
+                              >
+                                <div className="flex items-center gap-2 text-xs font-bold text-[#1C1208]">
+                                  <i className={`bi ${slot.icon} text-[#C4882A]`} />
+                                  <span>{slot.label}</span>
+                                </div>
+                                <div className="text-[10px] text-[#5C4835] mt-0.5 font-mono">{slot.time}</div>
+                              </button>
+                            )
+                          })}
+                        </div>
                       </div>
 
                       <div className="sm:col-span-2">
