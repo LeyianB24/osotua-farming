@@ -12,6 +12,7 @@ export const RANCH_WIDE = img("R.jpg")
 export const RANCH_PANO = img("2400x0.jpg")
 export const FIELD_DAY = img("WhatsApp Image 2026-08-10 at 11.56.50.jpeg")
 export const HERD_FIELD = img("WhatsApp Image 2026-08-10 at 11.55.21.jpeg")
+export const RANGELANDS_HERD = img("osotua-rangelands-herd.jpg")
 
 // Anonymous WhatsApp ranch photos — used only in slideshows/galleries.
 export const RANCH_GALLERY: string[] = [

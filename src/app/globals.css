@@ -148,12 +148,15 @@ body {
   overflow-x: hidden;
 }
 
-/* ══════════════════════════════════════════════════════════
-   TYPOGRAPHY
-══════════════════════════════════════════════════════════ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-cormorant, "Cormorant Garamond"), Georgia, serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
 
 .font-serif {
   font-family: var(--font-cormorant, "Cormorant Garamond"), Georgia, serif !important;
+  text-rendering: optimizeLegibility;
 }
 .font-mono {
   font-family: var(--font-space-grotesk, "Space Grotesk"), monospace !important;
@@ -460,12 +463,31 @@ body {
 
 .os-container {
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
-@media (min-width: 640px)  { .os-container { padding: 0 2.5rem; } }
-@media (min-width: 1280px) { .os-container { padding: 0 4rem; } }
+@media (min-width: 640px) {
+  .os-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .os-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+@media (min-width: 1440px) {
+  .os-container {
+    max-width: 1536px;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
 
 /* ══════════════════════════════════════════════════════════
    FORM ELEMENTS

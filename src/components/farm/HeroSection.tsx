@@ -5,7 +5,7 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import TerrainWave from "@/components/shared/TerrainWave"
 import CountUp from "@/components/shared/CountUp"
-import { LOGO, HERD_FIELD } from "@/lib/images"
+import { HERD_FIELD } from "@/lib/images"
 
 const WORD_STAGGER = 0.09
 
@@ -54,53 +54,27 @@ export default function HeroSection() {
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20"
       style={{ background: "#FBF7F0" }}
     >
-      {/* ── 1. RANCH PHOTO BACKGROUND LAYER ── */}
+      {/* ── 1. AUTHENTIC RANCH FARM BACKGROUND LAYER ── */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <Image
           src={HERD_FIELD}
-          alt="Osotua Pastoral Herd at Pasture"
+          alt="Osotua Pastoral Farm & Cattle Herds at Pasture"
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-35 scale-105"
+          className="object-cover scale-100"
+          style={{ opacity: 0.78 }}
         />
-        {/* Sun-drenched warm gradient overlays */}
+        {/* Cinematic warm pastoral rangeland overlays */}
         <div
           className="absolute inset-0"
           style={{
             background: `
-              radial-gradient(ellipse 80% 80% at 20% 20%, rgba(196,136,42,0.3) 0%, transparent 60%),
-              radial-gradient(ellipse 60% 60% at 80% 80%, rgba(61,107,62,0.2) 0%, transparent 50%),
-              linear-gradient(180deg, rgba(28,18,8,0.6) 0%, rgba(28,18,8,0.7) 55%, #FBF7F0 100%)
+              radial-gradient(ellipse at 50% 30%, rgba(196,136,42,0.2) 0%, transparent 65%),
+              linear-gradient(180deg, rgba(28,18,8,0.65) 0%, rgba(28,18,8,0.4) 40%, rgba(28,18,8,0.75) 85%, #FBF7F0 100%)
             `,
           }}
         />
-      </div>
-
-      {/* ── 2. WATERMARK LOGO BACKGROUND LAYER ── */}
-      <div
-        className="absolute inset-0 pointer-events-none flex items-center justify-center z-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          style={{
-            position: "relative",
-            width: "min(700px, 85vw)",
-            height: "min(700px, 85vw)",
-            filter: "drop-shadow(0 0 40px rgba(196,136,42,0.25))",
-          }}
-        >
-          <Image
-            src={LOGO}
-            alt="Osotua Farming Crest"
-            fill
-            className="object-contain"
-            priority
-          />
-        </motion.div>
       </div>
 
       {/* Noise texture overlay */}

@@ -9,11 +9,12 @@ import Logo from "./Logo";
 import { useCart } from "./CartContext";
 
 const navLinks = [
-  { label: "Shop", href: "/shop" },
-  { label: "Our farmers", href: "/partners" },
-  { label: "Breeds", href: "/breeds" },
+  { label: "Our Breeds", href: "/breeds" },
+  { label: "The Barn", href: "/barn" },
+  { label: "Invest", href: "/invest" },
+  { label: "Partners", href: "/partners" },
+  { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar({ cartCount: initialCartCount }: { cartCount?: number }) {
@@ -65,8 +66,8 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative text-xs tracking-normal font-medium transition-colors duration-200 pb-0.5 ${
-                      active ? "text-[#C4882A] font-semibold" : "text-[#1C1208]/80 hover:text-[#C4882A]"
+                    className={`relative font-mono text-[0.68rem] tracking-[0.2em] uppercase transition-colors duration-200 pb-0.5 ${
+                      active ? "text-[#C4882A] font-bold" : "text-[#1C1208]/75 hover:text-[#C4882A]"
                     }`}
                   >
                     {link.label}
@@ -95,6 +96,15 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 <i className="bi bi-whatsapp text-lg leading-none" />
               </a>
 
+              {/* Portal */}
+              <Link
+                href="/dashboard"
+                className="text-[#1C1208]/75 hover:text-[#C4882A] transition-colors font-mono text-[0.65rem] tracking-wider uppercase flex items-center gap-1.5 font-bold"
+              >
+                <i className="bi bi-person-circle text-base leading-none text-[#C4882A]" />
+                Portal
+              </Link>
+
               {/* Cart */}
               <Link
                 href="/cart"
@@ -112,13 +122,10 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 )}
               </Link>
 
-              {/* Sign In / Portal */}
-              <Link
-                href="/dashboard"
-                className="btn-primary text-xs py-2 px-4 shadow-sm"
-              >
-                <i className="bi bi-person-circle" />
-                <span>Portal</span>
+              {/* CTA */}
+              <Link href="/visit" className="btn-primary text-[0.7rem] py-2.5 px-5 shadow-sm">
+                Visit Us
+                <i className="bi bi-arrow-right" />
               </Link>
             </div>
 

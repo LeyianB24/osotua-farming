@@ -30,23 +30,12 @@ const categoryIcons: Record<string, string> = {
   "Sheep Meat":     "bi-scissors",
 }
 
-const categoryGradients: Record<string, string> = {
-  "Beef Cuts":      "radial-gradient(ellipse at 40% 30%, rgba(160,67,30,0.4) 0%, rgba(28,18,8,0.95) 70%)",
-  "Dairy Products": "radial-gradient(ellipse at 40% 30%, rgba(196,136,42,0.35) 0%, rgba(28,18,8,0.95) 70%)",
-  "Vegetables":     "radial-gradient(ellipse at 40% 30%, rgba(61,107,62,0.4) 0%, rgba(15,25,12,0.95) 70%)",
-  "Fruits":         "radial-gradient(ellipse at 40% 30%, rgba(196,136,42,0.3) 0%, rgba(28,18,8,0.95) 70%)",
-  "Ranch Box":      "radial-gradient(ellipse at 40% 30%, rgba(59,37,6,0.5) 0%, rgba(28,18,8,0.95) 70%)",
-  "Goat Meat":      "radial-gradient(ellipse at 40% 30%, rgba(61,107,62,0.3) 0%, rgba(20,30,15,0.95) 70%)",
-  "Sheep Meat":     "radial-gradient(ellipse at 40% 30%, rgba(196,136,42,0.25) 0%, rgba(28,18,8,0.95) 70%)",
-}
-
 export default function ProductCard({ product, dark }: Props) {
   const { addToCart } = useCart()
   const [added, setAdded] = useState(false)
   const [wishlist, setWishlist] = useState(false)
   const src = product.image ?? imageForCategory(product.category.name)
   const icon = categoryIcons[product.category.name] || "bi-bag"
-  const cardBg = categoryGradients[product.category.name] || categoryGradients["Beef Cuts"]
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -61,7 +50,7 @@ export default function ProductCard({ product, dark }: Props) {
       type: "product",
     })
     setAdded(true)
-    setTimeout(() => setAdded(false), 2500)
+    setTimeout(() => setAdded(false), 2000)
   }
 
   const handleWishlist = (e: React.MouseEvent) => {
@@ -70,269 +59,109 @@ export default function ProductCard({ product, dark }: Props) {
   }
 
   return (
-    <div
-      className="group"
-      style={{
-        borderRadius: "20px",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease",
-        background: dark
-          ? "rgba(255,255,255,0.06)"
-          : "rgba(255,255,255,0.92)",
-        border: dark
-          ? "1px solid rgba(255,255,255,0.1)"
-          : "1px solid rgba(28,18,8,0.08)",
-        backdropFilter: dark ? "blur(20px) saturate(180%)" : "none",
-        WebkitBackdropFilter: dark ? "blur(20px) saturate(180%)" : "none",
-        boxShadow: dark
-          ? "0 8px 32px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.08)"
-          : "0 2px 12px rgba(28,18,8,0.06)",
-        cursor: "default",
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLDivElement
-        el.style.transform = "translateY(-8px) scale(1.01)"
-        el.style.boxShadow = dark
-          ? "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,136,42,0.35), inset 0 1px 0 rgba(255,255,255,0.12)"
-          : "0 24px 64px rgba(28,18,8,0.14), 0 0 0 1px rgba(196,136,42,0.2)"
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLDivElement
-        el.style.transform = ""
-        el.style.boxShadow = dark
-          ? "0 8px 32px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.08)"
-          : "0 2px 12px rgba(28,18,8,0.06)"
-      }}
-    >
-      {/* Image area */}
-      <Link href={`/barn/${product.slug}`} style={{ display: "block", position: "relative", overflow: "hidden", aspectRatio: "4/3", textDecoration: "none" }}>
-        <div style={{ position: "absolute", inset: 0, background: cardBg }} />
-        {src ? (
-          <Image
-            src={src}
-            alt={product.name}
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        ) : (
-          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <i className={`bi ${icon}`} style={{ fontSize: "4rem", color: "rgba(196,136,42,0.35)" }} />
-          </div>
-        )}
-
-        {/* Overlay gradient */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(28,18,8,0.85) 0%, rgba(28,18,8,0.1) 50%, transparent 100%)" }} />
-
-        {/* Category badge */}
-        <div
-          style={{
-            position: "absolute",
-            top: "0.75rem",
-            left: "0.75rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.4rem",
-            padding: "0.3rem 0.75rem",
-            borderRadius: "100px",
-            background: "rgba(28,18,8,0.72)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            WebkitBackdropFilter: "blur(8px)",
-            backdropFilter: "blur(8px)",
-            color: "#F5EFE4",
-            fontSize: "0.56rem",
-            fontFamily: "var(--font-space-grotesk), monospace",
-            fontWeight: 600,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-          }}
-        >
-          <i className={`bi ${icon}`} />
-          {product.category.name}
-        </div>
-
-        {/* Wishlist */}
-        <button
-          type="button"
-          onClick={handleWishlist}
-          aria-label={wishlist ? "Remove from wishlist" : "Add to wishlist"}
-          style={{
-            position: "absolute",
-            top: "0.75rem",
-            right: "0.75rem",
-            width: "34px",
-            height: "34px",
-            borderRadius: "50%",
-            background: wishlist ? "#C4882A" : "rgba(28,18,8,0.65)",
-            WebkitBackdropFilter: "blur(8px)",
-            backdropFilter: "blur(8px)",
-            border: `1px solid ${wishlist ? "rgba(196,136,42,0.8)" : "rgba(255,255,255,0.12)"}`,
-            color: wishlist ? "#1C1208" : "rgba(255,255,255,0.75)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-          }}
-        >
-          <i className={`bi ${wishlist ? "bi-heart-fill" : "bi-heart"}`} style={{ fontSize: "0.85rem" }} />
-        </button>
-
-        {/* Stock badge */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "0.75rem",
-            left: "0.75rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.35rem",
-            padding: "0.25rem 0.65rem",
-            borderRadius: "100px",
-            background: product.inStock ? "rgba(61,107,62,0.85)" : "rgba(160,67,30,0.85)",
-            border: `1px solid ${product.inStock ? "rgba(61,107,62,0.6)" : "rgba(160,67,30,0.5)"}`,
-            color: "#F5EFE4",
-            fontSize: "0.56rem",
-            fontFamily: "var(--font-space-grotesk), monospace",
-            fontWeight: 600,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-          }}
-        >
-          <i className={`bi ${product.inStock ? "bi-check-circle-fill" : "bi-x-circle-fill"}`} />
-          {product.inStock ? "In Stock" : "Sold Out"}
-        </div>
-      </Link>
-
-      {/* Card body container */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          padding: "1.25rem",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: "var(--font-space-grotesk), monospace",
-            fontSize: "0.56rem",
-            fontWeight: 600,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "#C4882A",
-            marginBottom: "0.5rem",
-          }}
-        >
-          {product.category.name}
-        </div>
-
+    <div className="group h-full flex flex-col justify-between rounded-3xl p-5 bg-[#FFFFFF] border border-[#C4882A]/25 hover:border-[#C4882A] shadow-lg shadow-[#1C1208]/04 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300">
+      
+      {/* ── IMAGE SECTION ── */}
+      <div>
         <Link
           href={`/barn/${product.slug}`}
-          className="hover:text-[#C4882A] transition-colors"
-          style={{
-            fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-            fontSize: "1.3rem",
-            fontWeight: 400,
-            color: dark ? "#F5EFE4" : "#1C1208",
-            lineHeight: 1.2,
-            marginBottom: "0.4rem",
-            textDecoration: "none",
-          }}
+          className="relative block w-full h-52 rounded-2xl bg-[#FAF5EB] border border-[#C4882A]/15 overflow-hidden mb-4"
         >
-          {product.name}
-        </Link>
-
-        <div style={{ color: dark ? "rgba(245,239,228,0.4)" : "rgba(28,18,8,0.4)", fontSize: "0.78rem", marginBottom: "1rem" }}>
-          Ranch-direct &bull; Osotua Farming, Kajiado
-        </div>
-
-        {/* Price + Add button */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: "auto",
-            paddingTop: "1rem",
-            borderTop: dark ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(28,18,8,0.06)",
-          }}
-        >
-          <div>
-            <div style={{
-              fontFamily: "var(--font-space-grotesk), monospace",
-              fontSize: "0.52rem",
-              fontWeight: 600,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: dark ? "rgba(245,239,228,0.3)" : "rgba(28,18,8,0.35)",
-              marginBottom: "0.2rem",
-            }}>
-              Price
+          {src ? (
+            <Image
+              src={src}
+              alt={product.name}
+              fill
+              sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover group-hover:scale-108 transition-transform duration-700"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-[#C4882A]/40">
+              <i className={`bi ${icon} text-5xl`} />
             </div>
-            <div style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "1.5rem",
-              fontWeight: 500,
-              color: "#C4882A",
-              lineHeight: 1,
-            }}>
-              KES {product.price.toLocaleString()}
-              <span style={{ fontSize: "0.75rem", fontWeight: 300, color: dark ? "rgba(245,239,228,0.35)" : "rgba(28,18,8,0.35)", marginLeft: "4px" }}>
-                /{product.unit}
-              </span>
-            </div>
+          )}
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+          {/* Category Tag Top Left */}
+          <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#1C1208]/80 text-[#FFFFFF] backdrop-blur-md border border-white/20 shadow-xs">
+            <i className={`bi ${icon} text-[#D99A30]`} />
+            <span>{product.category.name}</span>
           </div>
 
-          {product.inStock ? (
-            <button
-              type="button"
-              onClick={handleAdd}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                background: added
-                  ? "rgba(61,107,62,0.15)"
-                  : "rgba(196,136,42,0.15)",
-                border: added
-                  ? "1px solid rgba(61,107,62,0.35)"
-                  : "1px solid rgba(196,136,42,0.35)",
-                color: added ? "#2E7D32" : "#8E5E16",
-                borderRadius: "100px",
-                padding: "0.6rem 1.1rem",
-                fontSize: "0.68rem",
-                fontFamily: "var(--font-space-grotesk), monospace",
-                fontWeight: 700,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                transition: "all 0.25s ease",
-              }}
-            >
-              <i className={`bi ${added ? "bi-check-lg" : "bi-bag-plus-fill"}`} style={{ fontSize: "0.9rem" }} />
-              {added ? "Added!" : "Add"}
-            </button>
-          ) : (
-            <span style={{
-              fontSize: "0.62rem",
-              fontFamily: "var(--font-space-grotesk), monospace",
-              color: "#A0431E",
-              background: "rgba(160,67,30,0.08)",
-              border: "1px solid rgba(160,67,30,0.2)",
-              borderRadius: "100px",
-              padding: "0.4rem 0.8rem",
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}>
-              Sold Out
-            </span>
-          )}
+          {/* Wishlist Button Top Right */}
+          <button
+            type="button"
+            onClick={handleWishlist}
+            aria-label={wishlist ? "Remove from wishlist" : "Add to wishlist"}
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-[#1C1208]/75 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:text-red-400 transition-colors shadow-xs"
+          >
+            <i className={`bi ${wishlist ? "bi-heart-fill text-red-400" : "bi-heart"} text-xs`} />
+          </button>
+
+          {/* Stock Status Bottom Left */}
+          <div
+            className={`absolute bottom-3 left-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-md border shadow-xs ${
+              product.inStock
+                ? "bg-[#2E7D32]/90 text-white border-green-400/40"
+                : "bg-red-800/90 text-white border-red-400/40"
+            }`}
+          >
+            <span className={`w-2 h-2 rounded-full ${product.inStock ? "bg-[#86efac]" : "bg-red-300"}`} />
+            <span>{product.inStock ? "In Stock" : "Sold Out"}</span>
+          </div>
+        </Link>
+
+        {/* ── CARD CONTENT ── */}
+        <div className="space-y-1 mb-4">
+          <span className="text-[10px] font-mono text-[#8E5E16] uppercase tracking-wider font-bold block">
+            Ranch Direct &bull; Kajiado
+          </span>
+          <Link
+            href={`/barn/${product.slug}`}
+            style={{
+              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
+              fontSize: "1.75rem",
+              fontWeight: 400,
+              lineHeight: 1.15,
+              color: dark ? "#F5EFE4" : "#1C1208",
+            }}
+            className="group-hover:text-[#C4882A] transition-colors block"
+          >
+            {product.name}
+          </Link>
         </div>
       </div>
+
+      {/* ── CARD FOOTER ── */}
+      <div className="pt-4 border-t border-[#C4882A]/15 flex items-center justify-between gap-3 mt-2">
+        <div>
+          <span className="text-[10px] font-mono text-[#786550] uppercase block">Price</span>
+          <span className="font-mono text-base sm:text-lg font-bold text-[#1C1208]">
+            KES {product.price.toLocaleString()}
+            <span className="text-xs text-[#786550] font-normal ml-1">/{product.unit}</span>
+          </span>
+        </div>
+
+        {product.inStock ? (
+          <button
+            type="button"
+            onClick={handleAdd}
+            className={`btn-primary py-2 px-3.5 text-xs font-mono font-bold uppercase tracking-wider inline-flex items-center gap-1.5 transition-all duration-200 cursor-pointer shrink-0 ${
+              added ? "bg-[#2E7D32] border-[#2E7D32] text-white" : ""
+            }`}
+          >
+            <i className={`bi ${added ? "bi-check-lg" : "bi-bag-plus-fill"}`} />
+            <span>{added ? "Added" : "Add"}</span>
+          </button>
+        ) : (
+          <span className="text-xs font-mono font-bold text-[#A0431E] bg-red-50 border border-red-200 py-1.5 px-3 rounded-full uppercase shrink-0">
+            Sold Out
+          </span>
+        )}
+      </div>
+
     </div>
   )
 }
