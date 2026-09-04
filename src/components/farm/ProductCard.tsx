@@ -45,16 +45,16 @@ export default function ProductCard({ product }: Props) {
     <div
       style={{
         background: "#FFFFFF",
-        borderRadius: "14px",
+        borderRadius: "16px",
         border: "1px solid #EDE6D6",
       }}
-      className="group overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between h-full"
+      className="group overflow-hidden shadow-xs hover:shadow-lg hover:border-[#C4922E]/40 transition-all flex flex-col justify-between h-full"
     >
       {/* ── IMAGE SECTION WITH BADGES ── */}
       <div>
         <Link
           href={`/barn/${product.slug}`}
-          className="relative block h-44 w-full bg-stone-200 overflow-hidden"
+          className="relative block h-48 sm:h-52 w-full bg-stone-100 overflow-hidden"
         >
           {src ? (
             <Image
@@ -71,13 +71,13 @@ export default function ProductCard({ product }: Props) {
           )}
 
           {/* Top-left: Category pill */}
-          <div className="absolute top-2 left-2 bg-[#14100A]/70 backdrop-blur-xs text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+          <div className="absolute top-3 left-3 bg-[#14100A]/70 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-[9.5px] font-bold uppercase tracking-wider">
             {product.category.name}
           </div>
 
           {/* Top-right: Status pill */}
           <div
-            className={`absolute top-2 right-2 px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider text-white ${
+            className={`absolute top-3 right-3 px-2.5 py-1 rounded-md text-[9.5px] font-bold uppercase tracking-wider text-white ${
               product.inStock ? "bg-[#3F6B3F]" : "bg-red-800"
             }`}
           >
@@ -85,19 +85,19 @@ export default function ProductCard({ product }: Props) {
           </div>
 
           {/* Bottom-left: Origin pill */}
-          <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white font-medium uppercase tracking-wider flex items-center gap-1 drop-shadow-md bg-[#14100A]/60 backdrop-blur-xs px-2 py-0.5 rounded max-w-[85%] truncate">
+          <div className="absolute bottom-3 left-3 text-[10px] font-mono text-white font-medium uppercase tracking-wider flex items-center gap-1.5 drop-shadow-md bg-[#14100A]/60 backdrop-blur-xs px-2.5 py-1 rounded-md max-w-[85%] truncate">
             <i className="bi bi-geo-alt-fill text-[#C4922E]" />
             <span>Kajiado Co-op</span>
           </div>
         </Link>
 
         {/* ── CARD CONTENT ── */}
-        <div className="p-3.5 pb-1">
+        <div className="p-5 pb-2 space-y-1">
           <div
             style={{
-              letterSpacing: "0.08em",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
-              fontSize: "9px",
+              fontSize: "10px",
               color: "#C4922E",
               fontWeight: 700,
             }}
@@ -108,10 +108,9 @@ export default function ProductCard({ product }: Props) {
             href={`/barn/${product.slug}`}
             style={{
               fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-              fontSize: "17px",
-              margin: "2px 0 6px",
+              fontSize: "18px",
               color: "#211C15",
-              lineHeight: 1.2,
+              lineHeight: 1.25,
               textDecoration: "none",
             }}
             className="truncate block hover:text-[#C4922E] transition-colors"
@@ -122,13 +121,13 @@ export default function ProductCard({ product }: Props) {
       </div>
 
       {/* ── CARD FOOTER ── */}
-      <div className="p-3.5 pt-0 flex justify-between items-center border-t border-stone-100 mt-3">
+      <div className="p-5 pt-3 flex justify-between items-center border-t border-stone-100 mt-2">
         <div>
           <div
             style={{
-              letterSpacing: "0.08em",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
-              fontSize: "8px",
+              fontSize: "9px",
               color: "#6B6558",
               fontWeight: 600,
             }}
@@ -138,13 +137,14 @@ export default function ProductCard({ product }: Props) {
           <div
             style={{
               fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-              fontSize: "16px",
+              fontSize: "17px",
               color: "#211C15",
-              fontWeight: 600,
+              fontWeight: 500,
+              marginTop: "2px",
             }}
           >
             KES {product.price.toLocaleString()}
-            <span style={{ fontSize: "11px", color: "#6B6558", fontWeight: 400, marginLeft: "3px" }}>
+            <span style={{ fontSize: "12px", color: "#6B6558", fontWeight: 400, marginLeft: "4px" }}>
               /{product.unit}
             </span>
           </div>
@@ -157,9 +157,9 @@ export default function ProductCard({ product }: Props) {
             style={{
               background: added ? "#3F6B3F" : "#C4922E",
               color: added ? "#FFFFFF" : "#211C15",
-              fontSize: "9px",
-              padding: "6px 12px",
-              borderRadius: "6px",
+              fontSize: "10px",
+              padding: "7px 14px",
+              borderRadius: "8px",
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               fontWeight: 700,
@@ -175,9 +175,9 @@ export default function ProductCard({ product }: Props) {
             style={{
               background: "#EDE6D6",
               color: "#8A7560",
-              fontSize: "8px",
-              padding: "4px 8px",
-              borderRadius: "4px",
+              fontSize: "9px",
+              padding: "5px 10px",
+              borderRadius: "6px",
               fontWeight: 700,
               textTransform: "uppercase",
             }}

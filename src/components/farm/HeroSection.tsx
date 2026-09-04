@@ -32,10 +32,46 @@ function WordReveal({ text, className }: { text: string; className?: string }) {
 }
 
 const floatingStats = [
-  { icon: "bi-geo-alt-fill",     value: 12500, suffix: "+",    label: "Acres Rangelands",   color: "#C4882A" },
-  { icon: "bi-people-fill",      value: 4800,  suffix: "+",    label: "Head of Livestock",  color: "#2E7D32" },
-  { icon: "bi-graph-up",         value: 180,   suffix: "+",    label: "Partner Families",   color: "#C4882A" },
-  { icon: "bi-patch-check-fill", value: 450,   suffix: "t+",   label: "Organic Yield / yr", color: "#2E7D32" },
+  {
+    icon: "bi-tree-fill",
+    value: 12500,
+    suffix: "+",
+    label: "ACRES OF REGENERATIVE LAND",
+    subcopy: "Chemical-free rotational pastures",
+    iconBg: "#EBF5EB",
+    color: "#3F6B3F",
+    labelColor: "#3F6B3F",
+  },
+  {
+    icon: "bi-award-fill",
+    value: 4800,
+    suffix: "+",
+    label: "PEDIGREE LIVESTOCK HEAD",
+    subcopy: "Dorper, Boran & Dairy Crosses",
+    iconBg: "#FBF3E3",
+    color: "#C4922E",
+    labelColor: "#8E5E16",
+  },
+  {
+    icon: "bi-people-fill",
+    value: 180,
+    suffix: "+",
+    label: "PARTNER PASTORALIST FAMILIES",
+    subcopy: "Direct fair-trade empowerment",
+    iconBg: "#FAF0E1",
+    color: "#8E5E16",
+    labelColor: "#8E5E16",
+  },
+  {
+    icon: "bi-graph-up-arrow",
+    value: 450,
+    suffix: "+ Tons",
+    label: "ANNUAL ORGANIC YIELD",
+    subcopy: "Grass-fed beef, mutton & dairy",
+    iconBg: "#EBF5EB",
+    color: "#3F6B3F",
+    labelColor: "#3F6B3F",
+  },
 ]
 
 // Gold & Emerald floating particles
@@ -229,7 +265,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* ── FLOATING STAT CARDS (Refreshed in radiant cream glass) ── */}
+      {/* ── FLOATING STAT CARDS (4 Spacious, Airy Floating White Cards) ── */}
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
@@ -238,55 +274,56 @@ export default function HeroSection() {
           position: "relative",
           zIndex: 10,
           width: "100%",
-          paddingBottom: "0",
-          marginTop: "3rem",
+          paddingBottom: "1.5rem",
+          marginTop: "3.5rem",
         }}
       >
         <div className="os-container">
-          <div
-            className="grid grid-cols-2 lg:grid-cols-4 shadow-xl mb-6 overflow-hidden rounded-2xl border border-[#EDE6D6]"
-            style={{
-              background: "#FFFFFF",
-            }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {floatingStats.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.7 + i * 0.1, duration: 0.5 }}
-                className={`p-6 sm:p-7 flex flex-col justify-center border-b sm:border-b-0 border-[#EDE6D6] ${
-                  i < 3 ? "lg:border-r" : ""
-                } ${i % 2 === 0 ? "border-r lg:border-r-[#EDE6D6]" : ""}`}
-                style={{
-                  background: "#FFFFFF",
-                }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="bg-white rounded-[24px] p-7 sm:p-8 border border-[#EDE6D6] shadow-[0_12px_32px_rgba(33,28,21,0.05)] hover:shadow-[0_16px_40px_rgba(33,28,21,0.08)] transition-all flex flex-col justify-between"
               >
-                <div style={{ color: stat.color, fontSize: "16px", marginBottom: "8px" }}>◆</div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                    fontSize: "clamp(24px, 2.5vw, 32px)",
-                    fontWeight: 400,
-                    color: "#211C15",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  <CountUp target={stat.value} suffix={stat.suffix} />
+                <div>
+                  {/* Soft Rounded Icon Badge */}
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6"
+                    style={{ background: stat.iconBg, color: stat.color }}
+                  >
+                    <i className={`bi ${stat.icon} text-xl`} />
+                  </div>
+
+                  {/* Large Serif Number */}
+                  <div
+                    className="text-4xl sm:text-[40px] text-[#211C15] font-normal leading-none"
+                    style={{
+                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                    }}
+                  >
+                    <CountUp target={stat.value} suffix={stat.suffix} />
+                  </div>
+
+                  {/* Tracked Uppercase Label */}
+                  <div
+                    className="text-[10.5px] font-bold tracking-[0.12em] uppercase mt-3"
+                    style={{
+                      fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
+                      color: stat.labelColor,
+                    }}
+                  >
+                    {stat.label}
+                  </div>
                 </div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-inter, 'Inter'), sans-serif",
-                    fontSize: "10px",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "#6B6558",
-                    marginTop: "6px",
-                  }}
-                >
-                  {stat.label}
-                </div>
+
+                {/* Warm Gray Subcopy */}
+                <p className="text-xs sm:text-sm text-[#6B6558] mt-3 leading-relaxed">
+                  {stat.subcopy}
+                </p>
               </motion.div>
             ))}
           </div>

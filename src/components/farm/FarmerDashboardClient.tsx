@@ -172,125 +172,150 @@ export default function FarmerDashboardClient({
           </p>
         </div>
 
-        {/* ── 3. STAT STRIP ── */}
-        <div
-          style={{
-            background: "#FFFFFF",
-            borderRadius: "14px",
-            border: "1px solid #EDE6D6",
-          }}
-          className="grid grid-cols-2 lg:grid-cols-4 shadow-sm mb-8 overflow-hidden"
-        >
+        {/* ── 3. STAT STRIP (4 Spacious Floating White Cards) ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10">
           {/* Stat 1: Portfolio Value */}
-          <div className="p-5 sm:p-6 border-b sm:border-b-0 border-r border-[#EDE6D6]">
-            <div style={{ color: "#C4922E", fontSize: "16px", marginBottom: "8px" }}>◆</div>
-            <div
-              style={{
-                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                fontSize: "clamp(22px, 2.5vw, 28px)",
-                color: "#211C15",
-                fontWeight: 400,
-                lineHeight: 1.1,
-              }}
-            >
-              KSh {metrics.portfolioValue.toLocaleString()}
+          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#C4922E] flex items-center justify-center mb-4">
+                <i className="bi bi-wallet2 text-lg" />
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(24px, 2.5vw, 30px)",
+                  color: "#211C15",
+                  fontWeight: 400,
+                  lineHeight: 1.1,
+                }}
+              >
+                KSh {metrics.portfolioValue.toLocaleString()}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  color: "#8E5E16",
+                  fontWeight: 700,
+                  marginTop: "8px",
+                }}
+              >
+                PORTFOLIO VALUE
+              </div>
             </div>
-            <div
-              style={{
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                fontSize: "10px",
-                color: "#6B6558",
-                fontWeight: 600,
-                marginTop: "6px",
-              }}
-            >
-              PORTFOLIO VALUE
-            </div>
+            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
+              Total estimated livestock and harvest equity.
+            </p>
           </div>
 
           {/* Stat 2: Livestock Owned */}
-          <div className="p-5 sm:p-6 border-b sm:border-b-0 lg:border-r border-[#EDE6D6]">
-            <div style={{ color: "#3F6B3F", fontSize: "16px", marginBottom: "8px" }}>◆</div>
-            <div
-              style={{
-                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                fontSize: "clamp(22px, 2.5vw, 28px)",
-                color: "#211C15",
-                fontWeight: 400,
-                lineHeight: 1.1,
-              }}
-            >
-              {metrics.headCount} head
+          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#3F6B3F] flex items-center justify-center mb-4">
+                <i className="bi bi-award text-lg" />
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(24px, 2.5vw, 30px)",
+                  color: "#211C15",
+                  fontWeight: 400,
+                  lineHeight: 1.1,
+                }}
+              >
+                {metrics.headCount} head
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  color: "#3F6B3F",
+                  fontWeight: 700,
+                  marginTop: "8px",
+                }}
+              >
+                LIVESTOCK OWNED
+              </div>
             </div>
-            <div
-              style={{
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                fontSize: "10px",
-                color: "#6B6558",
-                fontWeight: 600,
-                marginTop: "6px",
-              }}
-            >
-              LIVESTOCK OWNED
-            </div>
+            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
+              Tagged &amp; registered in Kajiado stud registry.
+            </p>
           </div>
 
           {/* Stat 3: Yield YTD */}
-          <div className="p-5 sm:p-6 border-r border-[#EDE6D6]">
-            <div style={{ color: "#C4922E", fontSize: "16px", marginBottom: "8px" }}>◆</div>
-            <div
-              style={{
-                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                fontSize: "clamp(22px, 2.5vw, 28px)",
-                color: "#211C15",
-                fontWeight: 400,
-                lineHeight: 1.1,
-              }}
-            >
-              {metrics.yieldYtd}
+          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#C4922E] flex items-center justify-center mb-4">
+                <i className="bi bi-graph-up-arrow text-lg" />
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(24px, 2.5vw, 30px)",
+                  color: "#211C15",
+                  fontWeight: 400,
+                  lineHeight: 1.1,
+                }}
+              >
+                {metrics.yieldYtd}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  color: "#8E5E16",
+                  fontWeight: 700,
+                  marginTop: "8px",
+                }}
+              >
+                YIELD, YTD
+              </div>
             </div>
-            <div
-              style={{
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                fontSize: "10px",
-                color: "#6B6558",
-                fontWeight: 600,
-                marginTop: "6px",
-              }}
-            >
-              YIELD, YTD
-            </div>
+            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
+              Herd weight gain and milk production return.
+            </p>
           </div>
 
           {/* Stat 4: Next Payout */}
-          <div className="p-5 sm:p-6">
-            <div style={{ color: "#3F6B3F", fontSize: "16px", marginBottom: "8px" }}>◆</div>
-            <div
-              style={{
-                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                fontSize: "clamp(22px, 2.5vw, 28px)",
-                color: "#211C15",
-                fontWeight: 400,
-                lineHeight: 1.1,
-              }}
-            >
-              {metrics.nextPayout}
+          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#3F6B3F] flex items-center justify-center mb-4">
+                <i className="bi bi-calendar-check text-lg" />
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(24px, 2.5vw, 30px)",
+                  color: "#211C15",
+                  fontWeight: 400,
+                  lineHeight: 1.1,
+                }}
+              >
+                {metrics.nextPayout}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  color: "#3F6B3F",
+                  fontWeight: 700,
+                  marginTop: "8px",
+                }}
+              >
+                NEXT PAYOUT
+              </div>
             </div>
-            <div
-              style={{
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                fontSize: "10px",
-                color: "#6B6558",
-                fontWeight: 600,
-                marginTop: "6px",
-              }}
-            >
-              NEXT PAYOUT
-            </div>
+            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
+              M-Pesa automatic settlement date.
+            </p>
           </div>
         </div>
 
@@ -335,34 +360,34 @@ export default function FarmerDashboardClient({
                 <div
                   style={{
                     background: "#FFFFFF",
-                    borderRadius: "14px",
+                    borderRadius: "16px",
                     overflow: "hidden",
                     border: "1px solid #EDE6D6",
                   }}
-                  className="shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                  className="shadow-xs hover:shadow-lg hover:border-[#C4922E]/40 transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="relative h-28 w-full bg-stone-200">
+                    <div className="relative h-36 w-full bg-stone-100">
                       <Image
                         src="/images/boran bulls.jpg"
                         alt="Boran East Africa Herd"
                         fill
                         className="object-cover"
                       />
-                      <div className="absolute top-2 left-2 bg-[#14100A]/70 backdrop-blur-xs text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                      <div className="absolute top-2.5 left-2.5 bg-[#14100A]/70 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
                         BEEF CATTLE
                       </div>
-                      <div className="absolute top-2 right-2 bg-[#3F6B3F] text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                      <div className="absolute top-2.5 right-2.5 bg-[#3F6B3F] text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
                         6 HEAD
                       </div>
                     </div>
 
-                    <div className="p-3.5">
+                    <div className="p-4 space-y-1">
                       <div
                         style={{
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           textTransform: "uppercase",
-                          fontSize: "9px",
+                          fontSize: "10px",
                           color: "#C4922E",
                           fontWeight: 700,
                         }}
@@ -372,9 +397,9 @@ export default function FarmerDashboardClient({
                       <div
                         style={{
                           fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "16px",
-                          margin: "2px 0 8px",
+                          fontSize: "17px",
                           color: "#211C15",
+                          lineHeight: 1.25,
                         }}
                       >
                         East Africa herd
@@ -382,13 +407,13 @@ export default function FarmerDashboardClient({
                     </div>
                   </div>
 
-                  <div className="p-3.5 pt-0 flex justify-between items-center border-t border-stone-100 mt-2">
+                  <div className="p-4 pt-2 flex justify-between items-center border-t border-stone-100 mt-2">
                     <div>
                       <div
                         style={{
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           textTransform: "uppercase",
-                          fontSize: "8px",
+                          fontSize: "9px",
                           color: "#6B6558",
                           fontWeight: 600,
                         }}
@@ -398,8 +423,10 @@ export default function FarmerDashboardClient({
                       <div
                         style={{
                           fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "15px",
+                          fontSize: "16px",
                           color: "#211C15",
+                          fontWeight: 500,
+                          marginTop: "2px",
                         }}
                       >
                         KSh 270,000
@@ -411,15 +438,15 @@ export default function FarmerDashboardClient({
                       style={{
                         background: "#211C15",
                         color: "#FFFFFF",
-                        fontSize: "9px",
+                        fontSize: "10px",
                         padding: "6px 12px",
-                        borderRadius: "6px",
+                        borderRadius: "8px",
                         letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         fontWeight: 700,
                         textDecoration: "none",
                       }}
-                      className="hover:bg-[#C4922E] transition-colors"
+                      className="hover:bg-[#C4922E] hover:text-[#211C15] transition-colors"
                     >
                       VIEW →
                     </Link>
@@ -430,34 +457,34 @@ export default function FarmerDashboardClient({
                 <div
                   style={{
                     background: "#FFFFFF",
-                    borderRadius: "14px",
+                    borderRadius: "16px",
                     overflow: "hidden",
                     border: "1px solid #EDE6D6",
                   }}
-                  className="shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                  className="shadow-xs hover:shadow-lg hover:border-[#C4922E]/40 transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="relative h-28 w-full bg-stone-200">
+                    <div className="relative h-36 w-full bg-stone-100">
                       <Image
                         src="/images/boer goat.jpg"
                         alt="Boer and Galla Goats Flock"
                         fill
                         className="object-cover"
                       />
-                      <div className="absolute top-2 left-2 bg-[#14100A]/70 backdrop-blur-xs text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                      <div className="absolute top-2.5 left-2.5 bg-[#14100A]/70 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
                         GOATS
                       </div>
-                      <div className="absolute top-2 right-2 bg-[#3F6B3F] text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                      <div className="absolute top-2.5 right-2.5 bg-[#3F6B3F] text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
                         8 HEAD
                       </div>
                     </div>
 
-                    <div className="p-3.5">
+                    <div className="p-4 space-y-1">
                       <div
                         style={{
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           textTransform: "uppercase",
-                          fontSize: "9px",
+                          fontSize: "10px",
                           color: "#C4922E",
                           fontWeight: 700,
                         }}
@@ -467,9 +494,9 @@ export default function FarmerDashboardClient({
                       <div
                         style={{
                           fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "16px",
-                          margin: "2px 0 8px",
+                          fontSize: "17px",
                           color: "#211C15",
+                          lineHeight: 1.25,
                         }}
                       >
                         Nakuru flock
@@ -477,13 +504,13 @@ export default function FarmerDashboardClient({
                     </div>
                   </div>
 
-                  <div className="p-3.5 pt-0 flex justify-between items-center border-t border-stone-100 mt-2">
+                  <div className="p-4 pt-2 flex justify-between items-center border-t border-stone-100 mt-2">
                     <div>
                       <div
                         style={{
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           textTransform: "uppercase",
-                          fontSize: "8px",
+                          fontSize: "9px",
                           color: "#6B6558",
                           fontWeight: 600,
                         }}
@@ -493,8 +520,10 @@ export default function FarmerDashboardClient({
                       <div
                         style={{
                           fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "15px",
+                          fontSize: "16px",
                           color: "#211C15",
+                          fontWeight: 500,
+                          marginTop: "2px",
                         }}
                       >
                         KSh 210,000
@@ -506,15 +535,15 @@ export default function FarmerDashboardClient({
                       style={{
                         background: "#211C15",
                         color: "#FFFFFF",
-                        fontSize: "9px",
+                        fontSize: "10px",
                         padding: "6px 12px",
-                        borderRadius: "6px",
+                        borderRadius: "8px",
                         letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         fontWeight: 700,
                         textDecoration: "none",
                       }}
-                      className="hover:bg-[#C4922E] transition-colors"
+                      className="hover:bg-[#C4922E] hover:text-[#211C15] transition-colors"
                     >
                       VIEW →
                     </Link>
