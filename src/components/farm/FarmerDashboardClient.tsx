@@ -2,53 +2,34 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 interface DashboardProps {
   coopName?: string
+  userName?: string
   metrics?: {
-    ordersThisWeek: number
-    revenue: number
-    activeListings: number
-    lowStock: number
+    portfolioValue: number
+    headCount: number
+    yieldYtd: string
+    nextPayout: string
   }
-  recentOrders?: Array<{
-    id: string
-    customerName: string
-    itemsDescription: string
-    status: "Delivered" | "Packing" | "Pending" | "Confirmed"
-  }>
-  inventoryItems?: Array<{
-    id: string
-    name: string
-    percentage: number
-    color: "green" | "red" | "amber"
-  }>
   categories?: Array<{ id: string; name: string }>
 }
 
 export default function FarmerDashboardClient({
   coopName = "Kajiado Co-op",
+  userName = "Amina",
   metrics = {
-    ordersThisWeek: 38,
-    revenue: 21400,
-    activeListings: 12,
-    lowStock: 2,
+    portfolioValue: 480000,
+    headCount: 14,
+    yieldYtd: "+8.2%",
+    nextPayout: "Sep 18",
   },
-  recentOrders = [
-    { id: "1", customerName: "Amina W.", itemsDescription: "Sukuma wiki x5", status: "Delivered" },
-    { id: "2", customerName: "Joseph K.", itemsDescription: "Tomatoes x2", status: "Packing" },
-    { id: "3", customerName: "Grace M.", itemsDescription: "Eggs x3 trays", status: "Pending" },
-    { id: "4", customerName: "Peter O.", itemsDescription: "Maize flour x4", status: "Delivered" },
-  ],
-  inventoryItems = [
-    { id: "1", name: "Sukuma wiki", percentage: 80, color: "green" },
-    { id: "2", name: "Tomatoes", percentage: 15, color: "red" },
-    { id: "3", name: "Eggs", percentage: 60, color: "amber" },
-  ],
   categories = [],
 }: DashboardProps) {
   const [showAddModal, setShowAddModal] = useState(false)
   const [adding, setAdding] = useState(false)
+  const [statementModal, setStatementModal] = useState(false)
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -91,232 +72,761 @@ export default function FarmerDashboardClient({
   }
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-24 pb-24 text-[#1C1208]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      style={{
+        background: "#F6F1E6",
+        minHeight: "100vh",
+        color: "#211C15",
+        fontFamily: "var(--font-inter, 'Inter'), sans-serif",
+      }}
+      className="pb-24"
+    >
+      {/* ── 1. PORTAL HEADER BAR ── */}
+      <header
+        style={{
+          background: "#F6F1E6",
+          borderBottom: "1px solid #E4DCC8",
+          padding: "16px 28px",
+        }}
+        className="flex items-center justify-between sticky top-0 z-30 shadow-xs"
+      >
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            className="w-9 h-9 rounded-full bg-[#211C15] flex items-center justify-center text-[#C4922E] text-sm shrink-0 transition-transform hover:scale-105"
+            aria-label="Osotua Farming Home"
+          >
+            ◈
+          </Link>
+          <div>
+            <Link
+              href="/"
+              style={{
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                fontSize: "16px",
+                lineHeight: 1.1,
+                color: "#211C15",
+                textDecoration: "none",
+              }}
+              className="font-normal block hover:text-[#C4922E] transition-colors"
+            >
+              Osotua Farming
+            </Link>
+            <div
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "9px",
+                color: "#C4922E",
+                fontWeight: 700,
+              }}
+            >
+              Partner Portal
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => setShowAddModal(true)}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#211C15] text-[#FFFFFF] hover:bg-[#C4922E] transition-all"
+          >
+            <i className="bi bi-plus-lg text-[#C4922E]" />
+            <span>List Produce</span>
+          </button>
+
+          <div
+            style={{
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              fontSize: "10px",
+              color: "#211C15",
+              fontWeight: 600,
+            }}
+          >
+            Welcome back, {userName}
+          </div>
+        </div>
+      </header>
+
+      {/* ── 2. DASHBOARD BODY ── */}
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-8 pt-8">
         
-        {/* ── TOP HEADER ── */}
-        <div className="bg-gradient-to-r from-[#FFFFFF] via-[#FAF5EB] to-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-10 shadow-lg shadow-[#1C1208]/04 mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Page Title & Subtitle */}
+        <div className="mb-6">
+          <h1
+            style={{
+              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+              fontSize: "clamp(26px, 3.5vw, 34px)",
+              color: "#211C15",
+              fontWeight: 400,
+              lineHeight: 1.15,
+              marginBottom: "4px",
+            }}
+          >
+            Your <span style={{ fontStyle: "italic", color: "#C4922E" }}>portfolio</span>
+          </h1>
+          <p style={{ fontSize: "14px", color: "#6B6558", margin: 0 }}>
+            A snapshot of your livestock holdings and produce shares in the Kajiado herd.
+          </p>
+        </div>
+
+        {/* ── 3. STAT STRIP ── */}
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: "14px",
+            border: "1px solid #EDE6D6",
+          }}
+          className="grid grid-cols-2 lg:grid-cols-4 shadow-sm mb-8 overflow-hidden"
+        >
+          {/* Stat 1: Portfolio Value */}
+          <div className="p-5 sm:p-6 border-b sm:border-b-0 border-r border-[#EDE6D6]">
+            <div style={{ color: "#C4922E", fontSize: "16px", marginBottom: "8px" }}>◆</div>
+            <div
+              style={{
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(22px, 2.5vw, 28px)",
+                color: "#211C15",
+                fontWeight: 400,
+                lineHeight: 1.1,
+              }}
+            >
+              KSh {metrics.portfolioValue.toLocaleString()}
+            </div>
+            <div
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "10px",
+                color: "#6B6558",
+                fontWeight: 600,
+                marginTop: "6px",
+              }}
+            >
+              PORTFOLIO VALUE
+            </div>
+          </div>
+
+          {/* Stat 2: Livestock Owned */}
+          <div className="p-5 sm:p-6 border-b sm:border-b-0 lg:border-r border-[#EDE6D6]">
+            <div style={{ color: "#3F6B3F", fontSize: "16px", marginBottom: "8px" }}>◆</div>
+            <div
+              style={{
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(22px, 2.5vw, 28px)",
+                color: "#211C15",
+                fontWeight: 400,
+                lineHeight: 1.1,
+              }}
+            >
+              {metrics.headCount} head
+            </div>
+            <div
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "10px",
+                color: "#6B6558",
+                fontWeight: 600,
+                marginTop: "6px",
+              }}
+            >
+              LIVESTOCK OWNED
+            </div>
+          </div>
+
+          {/* Stat 3: Yield YTD */}
+          <div className="p-5 sm:p-6 border-r border-[#EDE6D6]">
+            <div style={{ color: "#C4922E", fontSize: "16px", marginBottom: "8px" }}>◆</div>
+            <div
+              style={{
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(22px, 2.5vw, 28px)",
+                color: "#211C15",
+                fontWeight: 400,
+                lineHeight: 1.1,
+              }}
+            >
+              {metrics.yieldYtd}
+            </div>
+            <div
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "10px",
+                color: "#6B6558",
+                fontWeight: 600,
+                marginTop: "6px",
+              }}
+            >
+              YIELD, YTD
+            </div>
+          </div>
+
+          {/* Stat 4: Next Payout */}
+          <div className="p-5 sm:p-6">
+            <div style={{ color: "#3F6B3F", fontSize: "16px", marginBottom: "8px" }}>◆</div>
+            <div
+              style={{
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(22px, 2.5vw, 28px)",
+                color: "#211C15",
+                fontWeight: 400,
+                lineHeight: 1.1,
+              }}
+            >
+              {metrics.nextPayout}
+            </div>
+            <div
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "10px",
+                color: "#6B6558",
+                fontWeight: 600,
+                marginTop: "6px",
+              }}
+            >
+              NEXT PAYOUT
+            </div>
+          </div>
+        </div>
+
+        {/* ── 4. TWO-COLUMN GRID: HOLDINGS + SIDE PANEL ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          {/* LEFT COLUMN: HOLDINGS & ACTIVITY (7 cols) */}
+          <div className="lg:col-span-7 space-y-8">
+            
+            {/* Holdings Section */}
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 border border-[#C4882A]/30 text-[#8E5E16] mb-2">
-                <i className="bi bi-person-check-fill text-[#C4882A]" />
-                Cooperative Producer Portal
+              <div className="flex justify-between items-baseline mb-3">
+                <h2
+                  style={{
+                    fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                    fontSize: "19px",
+                    color: "#211C15",
+                    margin: 0,
+                  }}
+                >
+                  Your holdings
+                </h2>
+                <Link
+                  href="/breeds"
+                  style={{
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontSize: "10px",
+                    color: "#C4922E",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                  }}
+                  className="hover:underline"
+                >
+                  VIEW ALL →
+                </Link>
               </div>
-              <h1
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                {/* Holding Card 1: Boran Herd */}
+                <div
+                  style={{
+                    background: "#FFFFFF",
+                    borderRadius: "14px",
+                    overflow: "hidden",
+                    border: "1px solid #EDE6D6",
+                  }}
+                  className="shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="relative h-28 w-full bg-stone-200">
+                      <Image
+                        src="/images/boran bulls.jpg"
+                        alt="Boran East Africa Herd"
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute top-2 left-2 bg-[#14100A]/70 backdrop-blur-xs text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                        BEEF CATTLE
+                      </div>
+                      <div className="absolute top-2 right-2 bg-[#3F6B3F] text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                        6 HEAD
+                      </div>
+                    </div>
+
+                    <div className="p-3.5">
+                      <div
+                        style={{
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          fontSize: "9px",
+                          color: "#C4922E",
+                          fontWeight: 700,
+                        }}
+                      >
+                        BORAN
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                          fontSize: "16px",
+                          margin: "2px 0 8px",
+                          color: "#211C15",
+                        }}
+                      >
+                        East Africa herd
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 pt-0 flex justify-between items-center border-t border-stone-100 mt-2">
+                    <div>
+                      <div
+                        style={{
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          fontSize: "8px",
+                          color: "#6B6558",
+                          fontWeight: 600,
+                        }}
+                      >
+                        SHARE VALUE
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                          fontSize: "15px",
+                          color: "#211C15",
+                        }}
+                      >
+                        KSh 270,000
+                      </div>
+                    </div>
+
+                    <Link
+                      href="/breeds"
+                      style={{
+                        background: "#211C15",
+                        color: "#FFFFFF",
+                        fontSize: "9px",
+                        padding: "6px 12px",
+                        borderRadius: "6px",
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                      }}
+                      className="hover:bg-[#C4922E] transition-colors"
+                    >
+                      VIEW →
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Holding Card 2: Boer x Galla Flock */}
+                <div
+                  style={{
+                    background: "#FFFFFF",
+                    borderRadius: "14px",
+                    overflow: "hidden",
+                    border: "1px solid #EDE6D6",
+                  }}
+                  className="shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="relative h-28 w-full bg-stone-200">
+                      <Image
+                        src="/images/boer goat.jpg"
+                        alt="Boer and Galla Goats Flock"
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute top-2 left-2 bg-[#14100A]/70 backdrop-blur-xs text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                        GOATS
+                      </div>
+                      <div className="absolute top-2 right-2 bg-[#3F6B3F] text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                        8 HEAD
+                      </div>
+                    </div>
+
+                    <div className="p-3.5">
+                      <div
+                        style={{
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          fontSize: "9px",
+                          color: "#C4922E",
+                          fontWeight: 700,
+                        }}
+                      >
+                        BOER × GALLA
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                          fontSize: "16px",
+                          margin: "2px 0 8px",
+                          color: "#211C15",
+                        }}
+                      >
+                        Nakuru flock
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 pt-0 flex justify-between items-center border-t border-stone-100 mt-2">
+                    <div>
+                      <div
+                        style={{
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          fontSize: "8px",
+                          color: "#6B6558",
+                          fontWeight: 600,
+                        }}
+                      >
+                        SHARE VALUE
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                          fontSize: "15px",
+                          color: "#211C15",
+                        }}
+                      >
+                        KSh 210,000
+                      </div>
+                    </div>
+
+                    <Link
+                      href="/breeds"
+                      style={{
+                        background: "#211C15",
+                        color: "#FFFFFF",
+                        fontSize: "9px",
+                        padding: "6px 12px",
+                        borderRadius: "6px",
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                      }}
+                      className="hover:bg-[#C4922E] transition-colors"
+                    >
+                      VIEW →
+                    </Link>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Recent Activity */}
+            <div>
+              <div
                 style={{
-                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "clamp(2.2rem, 4vw, 3.2rem)",
-                  fontWeight: 400,
-                  lineHeight: 1.1,
-                  color: "#1C1208",
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "19px",
+                  color: "#211C15",
+                  marginBottom: "12px",
                 }}
               >
-                Welcome back, {coopName}
-              </h1>
-              <p className="text-xs text-[#5C4835] font-mono mt-1">
-                Real-time weekly order dispatch, revenue ledger, and rangeland inventory status.
-              </p>
-            </div>
+                Recent activity
+              </div>
 
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="btn-primary py-2.5 px-4 text-xs font-mono uppercase tracking-wider font-bold shadow-sm inline-flex items-center gap-1.5 cursor-pointer"
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: "14px",
+                  border: "1px solid #EDE6D6",
+                  overflow: "hidden",
+                }}
+                className="shadow-xs"
               >
-                <i className="bi bi-plus-lg" />
-                <span>+ Add Listing</span>
-              </button>
-              <Link
-                href="/admin"
-                className="btn-ghost py-2.5 px-4 text-xs font-mono uppercase tracking-wider font-bold bg-[#FFFFFF]"
-                style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
-              >
-                Admin HQ &rarr;
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* ── 4 METRIC CARDS ROW ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          
-          {/* Card 1: Orders this week */}
-          <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-2xl p-5 shadow-sm">
-            <div className="text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-              Orders this week
-            </div>
-            <div className="font-mono text-3xl font-bold text-[#1C1208]">
-              {metrics.ordersThisWeek}
-            </div>
-          </div>
-
-          {/* Card 2: Revenue */}
-          <div className="bg-[#FFFFFF] border border-[#2E7D32]/25 rounded-2xl p-5 shadow-sm">
-            <div className="text-[10px] font-mono uppercase tracking-wider text-[#2E7D32] font-bold mb-1">
-              Revenue
-            </div>
-            <div className="font-mono text-2xl sm:text-3xl font-bold text-[#1C1208]">
-              KES {metrics.revenue.toLocaleString()}
-            </div>
-          </div>
-
-          {/* Card 3: Active listings */}
-          <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-2xl p-5 shadow-sm">
-            <div className="text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-              Active listings
-            </div>
-            <div className="font-mono text-3xl font-bold text-[#1C1208]">
-              {metrics.activeListings}
-            </div>
-          </div>
-
-          {/* Card 4: Low stock */}
-          <div className="bg-[#FFFFFF] border border-[#DC2626]/25 rounded-2xl p-5 shadow-sm">
-            <div className="text-[10px] font-mono uppercase tracking-wider text-[#DC2626] font-bold mb-1">
-              Low stock
-            </div>
-            <div className="font-mono text-3xl font-bold text-[#DC2626]">
-              {metrics.lowStock}
-            </div>
-          </div>
-
-        </div>
-
-        {/* ── 2 COLUMNS: RECENT ORDERS & INVENTORY STATUS ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          
-          {/* Column 1: Recent Orders */}
-          <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 shadow-lg shadow-[#1C1208]/04">
-            <h2 className="font-serif text-2xl text-[#1C1208] font-normal mb-4 pb-3 border-b border-[#C4882A]/15">
-              Recent Customer Orders
-            </h2>
-
-            <div className="space-y-3">
-              {recentOrders.map((order) => (
-                <div
-                  key={order.id}
-                  className="bg-[#FAF6EE] border border-[#C4882A]/15 rounded-xl px-4 py-3.5 flex items-center justify-between gap-4"
-                >
-                  <div className="text-xs font-bold text-[#1C1208] truncate">
-                    {order.customerName} — <span className="font-normal text-[#5C4835]">{order.itemsDescription}</span>
-                  </div>
+                <div className="flex justify-between items-center px-4 py-3.5 border-b border-[#EDE6D6] text-[13px]">
+                  <span>Quarterly payout — Boran herd</span>
                   <span
-                    className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shrink-0 ${
-                      order.status.toLowerCase() === "delivered"
-                        ? "bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30"
-                        : order.status.toLowerCase() === "packing"
-                        ? "bg-[#C4882A]/12 text-[#8E5E16] border border-[#C4882A]/30"
-                        : "bg-zinc-200 text-zinc-700 border border-zinc-300"
-                    }`}
+                    style={{
+                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                      color: "#3F6B3F",
+                      fontWeight: 500,
+                    }}
                   >
-                    {order.status}
+                    +KSh 18,400
                   </span>
                 </div>
-              ))}
+
+                <div className="flex justify-between items-center px-4 py-3.5 border-b border-[#EDE6D6] text-[13px]">
+                  <span>Share purchase — Nakuru flock</span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                      color: "#211C15",
+                      fontWeight: 500,
+                    }}
+                  >
+                    KSh 210,000
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center px-4 py-3.5 text-[13px]">
+                  <span>Produce credit — Ranch Box x4</span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                      color: "#3F6B3F",
+                      fontWeight: 500,
+                    }}
+                  >
+                    +KSh 2,100
+                  </span>
+                </div>
+              </div>
             </div>
+
           </div>
 
-          {/* Column 2: Inventory Status */}
-          <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 shadow-lg shadow-[#1C1208]/04">
-            <h2 className="font-serif text-2xl text-[#1C1208] font-normal mb-4 pb-3 border-b border-[#C4882A]/15">
-              Inventory Stock Levels
-            </h2>
+          {/* RIGHT COLUMN: UPCOMING PAYOUTS & HERD HEALTH (5 cols) */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* Upcoming Payouts Dark Card */}
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "19px",
+                  color: "#211C15",
+                  marginBottom: "12px",
+                }}
+              >
+                Upcoming payouts
+              </div>
 
-            <div className="space-y-5">
-              {inventoryItems.map((item) => (
-                <div key={item.id} className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#1C1208] font-bold">{item.name}</span>
-                    <span className="text-[#786550] font-mono font-bold">{item.percentage}% Available</span>
+              <div
+                style={{
+                  background: "#211C15",
+                  color: "#F6F1E6",
+                  borderRadius: "14px",
+                  padding: "20px",
+                }}
+                className="shadow-md"
+              >
+                <div
+                  style={{
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontSize: "9px",
+                    color: "#C4922E",
+                    fontWeight: 700,
+                    marginBottom: "6px",
+                  }}
+                >
+                  NEXT PAYOUT &bull; SEP 18
+                </div>
+
+                <div
+                  style={{
+                    fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                    fontSize: "26px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  KSh 24,600
+                </div>
+
+                <p style={{ fontSize: "12px", color: "#CFC7B4", margin: "0 0 16px", lineHeight: 1.5 }}>
+                  Quarterly distribution across your Boran and Nakuru shares.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => setStatementModal(true)}
+                  style={{
+                    background: "#C4922E",
+                    color: "#211C15",
+                    width: "100%",
+                    textAlign: "center",
+                    padding: "10px",
+                    borderRadius: "6px",
+                    fontSize: "11px",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontWeight: 700,
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                  className="hover:bg-[#A97B22] transition-colors"
+                >
+                  VIEW STATEMENT →
+                </button>
+              </div>
+            </div>
+
+            {/* Herd Health */}
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "19px",
+                  color: "#211C15",
+                  marginBottom: "12px",
+                }}
+              >
+                Herd health
+              </div>
+
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: "14px",
+                  border: "1px solid #EDE6D6",
+                  padding: "18px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "14px",
+                }}
+                className="shadow-xs"
+              >
+                <div>
+                  <div className="flex justify-between text-xs mb-1.5 font-medium">
+                    <span>Boran herd</span>
+                    <span style={{ color: "#3F6B3F", fontWeight: 700 }}>Healthy</span>
                   </div>
-                  <div className="w-full bg-[#FAF5EB] h-2.5 rounded-full overflow-hidden border border-[#C4882A]/20">
-                    <div
-                      className={`h-full rounded-full transition-all duration-500 ${
-                        item.color === "green"
-                          ? "bg-[#2E7D32]"
-                          : item.color === "red"
-                          ? "bg-[#DC2626]"
-                          : "bg-[#C4882A]"
-                      }`}
-                      style={{ width: `${item.percentage}%` }}
-                    />
+                  <div style={{ height: "6px", background: "#EDE6D6", borderRadius: "3px" }}>
+                    <div style={{ width: "92%", height: "100%", background: "#3F6B3F", borderRadius: "3px" }} />
                   </div>
                 </div>
-              ))}
+
+                <div>
+                  <div className="flex justify-between text-xs mb-1.5 font-medium">
+                    <span>Nakuru flock</span>
+                    <span style={{ color: "#C4922E", fontWeight: 700 }}>Monitoring</span>
+                  </div>
+                  <div style={{ height: "6px", background: "#EDE6D6", borderRadius: "3px" }}>
+                    <div style={{ width: "70%", height: "100%", background: "#C4922E", borderRadius: "3px" }} />
+                  </div>
+                </div>
+              </div>
             </div>
+
+            {/* Quick Action: List Available Produce */}
+            <div
+              style={{
+                background: "#FFFFFF",
+                borderRadius: "14px",
+                border: "1px dashed #C4922E",
+                padding: "16px",
+              }}
+              className="text-center space-y-2"
+            >
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#8E5E16]">
+                Cooperative Produce Hub
+              </div>
+              <p className="text-xs text-[#6B6558]">
+                List available shamba harvests or eggs directly to the online marketplace.
+              </p>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(true)}
+                className="btn-primary py-2 px-5 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2"
+              >
+                <i className="bi bi-plus-circle-fill" />
+                <span>Add Available Product</span>
+              </button>
+            </div>
+
           </div>
 
         </div>
 
       </div>
 
-      {/* ── ADD LISTING MODAL ── */}
+      {/* ── 5. ADD PRODUCE MODAL (For Farmers & Admins) ── */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#FFFFFF] border border-[#C4882A]/30 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl">
-            <div className="flex items-center justify-between mb-5 pb-3 border-b border-[#C4882A]/20">
-              <h3 className="font-serif text-2xl text-[#1C1208] font-normal">Add Produce Listing</h3>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#FFFFFF] border border-[#C4882A]/30 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-5">
+            <div className="flex items-center justify-between border-b border-[#EDE6D6] pb-4">
+              <div>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-fraunces, 'Fraunces'), Georgia, serif",
+                    fontSize: "20px",
+                    color: "#211C15",
+                  }}
+                >
+                  List Available Produce
+                </h3>
+                <p className="text-xs text-[#6B6558]">Add seasonal crops to Osotua Marketplace</p>
+              </div>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="text-[#786550] hover:text-[#1C1208] text-xl cursor-pointer"
+                className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 hover:bg-stone-200"
               >
-                &times;
+                <i className="bi bi-x-lg text-sm" />
               </button>
             </div>
 
-            <form onSubmit={handleAddSubmit} className="space-y-4 text-xs">
+            <form onSubmit={handleAddSubmit} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                  Produce Name *
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
+                  Product / Crop Name
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Sukuma wiki, Tomatoes, Avocados"
+                  placeholder="e.g. Crisp Carrots, Kienyeji Eggs"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-[#1C1208] outline-none focus:border-[#C4882A]"
+                  className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                    Price (KES) *
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
+                    Price (KSh)
                   </label>
                   <input
                     type="number"
                     required
-                    placeholder="e.g. 50"
+                    placeholder="80"
                     value={form.price}
                     onChange={(e) => setForm({ ...form, price: e.target.value })}
-                    className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-[#1C1208] font-mono font-bold outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                    Packaging / Unit *
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
+                    Unit
                   </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. bunch, kg, pc, tray"
+                  <select
                     value={form.unit}
                     onChange={(e) => setForm({ ...form, unit: e.target.value })}
-                    className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-[#1C1208] outline-none focus:border-[#C4882A]"
-                  />
+                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
+                  >
+                    <option value="kg">per kg</option>
+                    <option value="bunch">per bunch</option>
+                    <option value="tray of 30">per tray of 30</option>
+                    <option value="L">per Litre</option>
+                    <option value="pc">per piece</option>
+                    <option value="box">per box</option>
+                  </select>
                 </div>
               </div>
 
-              {categories.length > 0 && (
+              <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                    Category *
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
+                    Category
                   </label>
                   <select
                     value={form.categoryId}
                     onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-                    className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-[#1C1208] outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -325,38 +835,99 @@ export default function FarmerDashboardClient({
                     ))}
                   </select>
                 </div>
-              )}
+
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
+                    Available Qty
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    value={form.stockQty}
+                    onChange={(e) => setForm({ ...form, stockQty: e.target.value })}
+                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
+                  />
+                </div>
+              </div>
 
               <div>
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                  Stock Quantity (Units) *
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
+                  Harvest Description
                 </label>
-                <input
-                  type="number"
-                  required
-                  value={form.stockQty}
-                  onChange={(e) => setForm({ ...form, stockQty: e.target.value })}
-                  className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-[#1C1208] font-mono font-bold outline-none focus:border-[#C4882A]"
+                <textarea
+                  rows={2}
+                  placeholder="Freshly harvested from organic shamba fields..."
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2 text-sm text-[#211C15] focus:outline-[#C4922E]"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#C4882A]/15">
+              <div className="flex gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 rounded-xl text-[#786550] hover:text-[#1C1208]"
+                  className="flex-1 py-2.5 border border-stone-300 rounded-xl text-xs font-bold uppercase tracking-wider text-[#6B6558] hover:bg-stone-100"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={adding}
-                  className="btn-primary py-2.5 px-6 text-xs font-mono uppercase tracking-wider font-bold shadow-sm cursor-pointer"
+                  className="flex-1 py-2.5 bg-[#C4922E] hover:bg-[#A97B22] text-[#211C15] rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm disabled:opacity-50"
                 >
-                  {adding ? "Saving..." : "Save Listing"}
+                  {adding ? "Saving..." : "Publish Produce"}
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── 6. STATEMENT MODAL ── */}
+      {statementModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#FFFFFF] border border-[#C4882A]/30 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-[#EDE6D6] pb-3">
+              <h3
+                style={{
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), Georgia, serif",
+                  fontSize: "18px",
+                  color: "#211C15",
+                }}
+              >
+                Upcoming Payout Statement
+              </h3>
+              <button
+                onClick={() => setStatementModal(false)}
+                className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-stone-600"
+              >
+                <i className="bi bi-x-lg text-sm" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs text-[#211C15]">
+              <div className="flex justify-between py-1.5 border-b border-stone-100">
+                <span className="text-[#6B6558]">Boran Herd Dividend (6 Head)</span>
+                <span className="font-bold">KSh 16,800</span>
+              </div>
+              <div className="flex justify-between py-1.5 border-b border-stone-100">
+                <span className="text-[#6B6558]">Nakuru Flock Dividend (8 Head)</span>
+                <span className="font-bold">KSh 7,800</span>
+              </div>
+              <div className="flex justify-between py-2 font-bold text-sm text-[#211C15] pt-2">
+                <span>Total Expected Distribution</span>
+                <span className="text-[#3F6B3F]">KSh 24,600</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setStatementModal(false)}
+              className="w-full py-2.5 bg-[#211C15] hover:bg-[#C4922E] text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

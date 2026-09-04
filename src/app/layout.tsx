@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Cormorant_Garamond, DM_Sans, Space_Grotesk } from "next/font/google"
+import { Cormorant_Garamond, DM_Sans, Space_Grotesk, Fraunces, Inter } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
@@ -7,6 +7,21 @@ import WhatsAppFAB from "@/components/shared/WhatsAppFAB"
 import PageLoader from "@/components/shared/PageLoader"
 import Providers from "@/components/shared/Providers"
 import ScrollReveal from "@/components/shared/ScrollReveal"
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+  display: "swap",
+})
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+})
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -86,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} ${spaceGrotesk.variable}`}
+      className={`${fraunces.variable} ${inter.variable} ${cormorant.variable} ${dmSans.variable} ${spaceGrotesk.variable}`}
     >
       <head>
         {/* Bootstrap Icons */}

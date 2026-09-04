@@ -137,57 +137,72 @@ export default async function HomePage() {
       ]
 
   return (
-    <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
+    <div style={{ background: "#F6F1E6", color: "#211C15", width: "100%", overflowX: "hidden" }}>
       
       {/* ── 1. CINEMATIC PASTORAL HERO ── */}
       <HeroSection />
 
       {/* ── 2. SHAMBA PRODUCE MARKETPLACE & COMMUNITY HARVEST ── */}
-      <section className="py-20 w-full">
+      <section className="py-16 w-full">
         <div className="os-container">
           <HomeMarketplaceClient harvest={harvestData} />
         </div>
       </section>
 
-      {/* ── 3. RANGELAND IMPACT & HERD ROI CALCULATOR (AACo Style) ── */}
+      {/* ── 3. RANGELAND IMPACT & HERD ROI CALCULATOR ── */}
       <FarmStats />
 
       {/* ── 4. FEATURED PEDIGREE LIVESTOCK & GENETICS ── */}
-      <section className="py-24 w-full">
+      <section className="py-16 w-full">
         <div className="os-container">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-[#EDE6D6] mb-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 text-[#8E5E16] border border-[#C4882A]/30 mb-3">
-                <i className="bi bi-shield-check text-[#C4882A]" />
+              <div
+                style={{
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  fontSize: "9px",
+                  color: "#C4922E",
+                  fontWeight: 700,
+                  background: "rgba(196,146,46,0.12)",
+                  padding: "3px 8px",
+                  borderRadius: "100px",
+                  display: "inline-block",
+                  marginBottom: "6px",
+                }}
+              >
                 Certified Genetics &bull; Kajiado Stud Book
               </div>
               <h2
                 style={{
-                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)",
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(22px, 3.5vw, 30px)",
                   fontWeight: 400,
-                  color: "#1C1208",
-                  lineHeight: 1.05,
+                  color: "#211C15",
+                  margin: 0,
                 }}
               >
                 Pedigree Livestock &amp; Breeding Stock
               </h2>
-              <p className="text-xs sm:text-sm text-[#5C4835] font-mono mt-1 max-w-xl">
-                Acclimatised, disease-resistant genetics bred for arid and semi-arid African rangelands.
-              </p>
             </div>
 
             <Link
               href="/breeds"
-              className="btn-ghost text-xs py-2.5 px-5 flex items-center gap-2 bg-[#FFFFFF] shadow-xs"
-              style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "10px",
+                color: "#C4922E",
+                fontWeight: 700,
+                textDecoration: "none",
+              }}
+              className="hover:underline flex items-center gap-1.5"
             >
-              <span>Explore All Breeds</span>
-              <i className="bi bi-arrow-right" />
+              <span>VIEW ALL BREEDS →</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
             {featuredBreeds.map((breed) => (
               <BreedCard key={breed.id} breed={breed} />
             ))}
@@ -197,48 +212,62 @@ export default async function HomePage() {
 
       {/* ── 5. THE BARN STORE (Beef Cuts, Raw Dairy & Pantry) ── */}
       <section
-        className="w-full"
+        className="py-16 w-full"
         style={{
-          background: "linear-gradient(180deg, #FAF5EB 0%, #FFFFFF 100%)",
-          padding: "6rem 0",
-          borderTop: "1px solid rgba(196,136,42,0.15)",
-          borderBottom: "1px solid rgba(196,136,42,0.15)",
+          background: "#FFFFFF",
+          borderTop: "1px solid #EDE6D6",
+          borderBottom: "1px solid #EDE6D6",
         }}
       >
         <div className="os-container">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-[#EDE6D6] mb-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30 mb-3">
-                <i className="bi bi-basket3-fill text-[#2E7D32]" />
+              <div
+                style={{
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  fontSize: "9px",
+                  color: "#3F6B3F",
+                  fontWeight: 700,
+                  background: "rgba(63,107,63,0.12)",
+                  padding: "3px 8px",
+                  borderRadius: "100px",
+                  display: "inline-block",
+                  marginBottom: "6px",
+                }}
+              >
                 Fresh From The Pasture
               </div>
               <h2
                 style={{
-                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)",
+                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(22px, 3.5vw, 30px)",
                   fontWeight: 400,
-                  color: "#1C1208",
-                  lineHeight: 1.05,
+                  color: "#211C15",
+                  margin: 0,
                 }}
               >
                 The Farm Barn
               </h2>
-              <p className="text-xs sm:text-sm text-[#5C4835] font-mono mt-1 max-w-xl">
-                100% pasture-raised beef cuts, fresh dairy, and organic garden harvests delivered cold-chain.
-              </p>
             </div>
 
             <Link
               href="/barn"
-              className="btn-ghost text-xs py-2.5 px-5 flex items-center gap-2 bg-[#FFFFFF] shadow-xs"
-              style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "10px",
+                color: "#C4922E",
+                fontWeight: 700,
+                textDecoration: "none",
+              }}
+              className="hover:underline flex items-center gap-1.5"
             >
-              <span>View Full Barn Store</span>
-              <i className="bi bi-arrow-right" />
+              <span>VIEW ALL PRODUCE →</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -247,35 +276,50 @@ export default async function HomePage() {
       </section>
 
       {/* ── 6. AGRITOURISM & FARM TOUR INVITATION ── */}
-      <section className="py-24 w-full">
+      <section className="py-16 w-full">
         <div className="os-container">
-          <div className="bg-gradient-to-br from-[#1C1208] via-[#2A1D10] to-[#1C1208] rounded-3xl p-8 sm:p-14 text-[#FFFFFF] shadow-2xl relative overflow-hidden border border-[#C4882A]/30">
-            
-            {/* Subtle gold glow behind */}
-            <div
-              className="absolute -right-20 -top-20 w-96 h-96 rounded-full pointer-events-none"
-              style={{ background: "radial-gradient(circle, rgba(196,136,42,0.25) 0%, transparent 70%)" }}
-            />
-
+          <div
+            style={{
+              background: "#211C15",
+              borderRadius: "14px",
+              overflow: "hidden",
+            }}
+            className="p-8 sm:p-12 text-[#FFFFFF] shadow-xl relative border border-[#C4882A]/30"
+          >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               <div className="lg:col-span-8 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/20 text-[#E59A24] border border-[#C4882A]/40">
-                  <i className="bi bi-geo-alt-fill text-[#E59A24]" />
-                  Ranch Tours &bull; Kajiado County
+                <div
+                  style={{
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontSize: "9px",
+                    color: "#C4922E",
+                    fontWeight: 700,
+                    background: "rgba(196,146,46,0.15)",
+                    padding: "4px 10px",
+                    borderRadius: "100px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}
+                >
+                  <i className="bi bi-geo-alt-fill text-[#C4922E]" />
+                  <span>Ranch Tours &bull; Kajiado County</span>
                 </div>
 
                 <h2
                   style={{
-                    fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "clamp(2.4rem, 4.5vw, 3.6rem)",
+                    fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                    fontSize: "clamp(24px, 3.5vw, 36px)",
                     fontWeight: 400,
-                    lineHeight: 1.05,
+                    lineHeight: 1.1,
+                    margin: 0,
                   }}
                 >
                   Experience Osotua: Visit Our Rangelands
                 </h2>
 
-                <p className="text-xs sm:text-sm text-stone-300 font-sans leading-relaxed max-w-2xl">
+                <p style={{ fontSize: "14px", color: "#CFC7B4", lineHeight: 1.6, maxWidth: "540px", margin: 0 }}>
                   Immerse yourself in authentic Kenyan pastoral life. Tour our Boran herds, inspect purebred breeding stock, learn regenerative rotational grazing practices, and enjoy a farm-to-table bush breakfast.
                 </p>
               </div>
@@ -283,17 +327,40 @@ export default async function HomePage() {
               <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
                 <Link
                   href="/visit"
-                  className="btn-primary py-3.5 px-6 text-xs font-mono uppercase tracking-wider font-bold shadow-lg shadow-[#C4882A]/30 text-center"
+                  style={{
+                    background: "#C4922E",
+                    color: "#211C15",
+                    padding: "10px 20px",
+                    borderRadius: "6px",
+                    fontSize: "11px",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    textAlign: "center",
+                  }}
+                  className="hover:bg-[#A97B22] transition-colors"
                 >
-                  <i className="bi bi-calendar-check" />
-                  <span>Book a Farm Visit</span>
+                  BOOK A FARM VISIT →
                 </Link>
                 <Link
                   href="/invest"
-                  className="btn-ghost py-3.5 px-6 text-xs font-mono uppercase tracking-wider font-bold text-center border-white/20 text-white hover:bg-white/10"
+                  style={{
+                    background: "rgba(255,255,255,0.08)",
+                    color: "#FFFFFF",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    padding: "10px 18px",
+                    borderRadius: "6px",
+                    fontSize: "11px",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    textAlign: "center",
+                  }}
+                  className="hover:bg-white/15 transition-colors"
                 >
-                  <i className="bi bi-graph-up-arrow" />
-                  <span>Ranch Investment</span>
+                  RANCH INVESTMENT →
                 </Link>
               </div>
             </div>
@@ -302,18 +369,18 @@ export default async function HomePage() {
       </section>
 
       {/* ── 7. PHOTO STRIP GALLERY CAROUSEL ── */}
-      <section className="py-8 overflow-hidden w-full">
-        <div className="photo-strip-track flex gap-4">
+      <section className="py-6 overflow-hidden w-full">
+        <div className="photo-strip-track flex gap-3">
           {[...photoStripImages, ...photoStripImages].map((img, i) => (
             <div
               key={i}
-              className="photo-strip-item w-64 sm:w-80 h-52 shrink-0 rounded-2xl overflow-hidden border border-[#C4882A]/20 relative shadow-md"
+              className="photo-strip-item w-56 sm:w-72 h-44 shrink-0 rounded-xl overflow-hidden border border-[#EDE6D6] relative shadow-xs"
             >
               <Image
                 src={img.src}
                 alt={img.alt}
                 fill
-                sizes="320px"
+                sizes="280px"
                 className="object-cover"
               />
             </div>
@@ -322,23 +389,30 @@ export default async function HomePage() {
       </section>
 
       {/* ── 8. NEWSLETTER & TERRAIN WAVE ── */}
-      <section className="pt-16 pb-20 w-full text-center">
-        <div className="os-container max-w-4xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 text-[#8E5E16] border border-[#C4882A]/30">
-            <i className="bi bi-envelope-paper-heart-fill text-[#C4882A]" />
+      <section className="pt-12 pb-16 w-full text-center">
+        <div className="os-container max-w-2xl space-y-3">
+          <div
+            style={{
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              fontSize: "9px",
+              color: "#C4922E",
+              fontWeight: 700,
+            }}
+          >
             Stay Connected
           </div>
           <h2
             style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(2rem, 3.5vw, 3rem)",
+              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+              fontSize: "clamp(22px, 3vw, 28px)",
               fontWeight: 400,
-              color: "#1C1208",
+              color: "#211C15",
             }}
           >
             Subscribe to The Osotua Gazette
           </h2>
-          <p className="text-xs text-[#5C4835] font-mono max-w-md mx-auto">
+          <p style={{ fontSize: "13px", color: "#6B6558", maxWidth: "440px", margin: "0 auto" }}>
             Seasonal harvest announcements, breeding stock availability, and pastoral ranching updates directly to your inbox.
           </p>
 
@@ -350,7 +424,7 @@ export default async function HomePage() {
 
       {/* Terrain wave */}
       <div className="w-full">
-        <TerrainWave fillColor="#FAF5EB" />
+        <TerrainWave fillColor="#EDE6D6" />
       </div>
 
     </div>

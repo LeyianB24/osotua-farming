@@ -244,17 +244,9 @@ export default function HeroSection() {
       >
         <div className="os-container">
           <div
+            className="grid grid-cols-2 lg:grid-cols-4 shadow-xl mb-6 overflow-hidden rounded-2xl border border-[#EDE6D6]"
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "1px",
-              borderRadius: "24px",
-              overflow: "hidden",
-              background: "linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(251, 247, 240, 0.98) 100%)",
-              border: "1px solid rgba(196,136,42,0.3)",
-              boxShadow: "0 24px 60px rgba(196,136,42,0.12), inset 0 1px 0 rgba(255,255,255,1)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
+              background: "#FFFFFF",
             }}
           >
             {floatingStats.map((stat, i) => (
@@ -263,36 +255,34 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.7 + i * 0.1, duration: 0.5 }}
+                className={`p-6 sm:p-7 flex flex-col justify-center border-b sm:border-b-0 border-[#EDE6D6] ${
+                  i < 3 ? "lg:border-r" : ""
+                } ${i % 2 === 0 ? "border-r lg:border-r-[#EDE6D6]" : ""}`}
                 style={{
-                  padding: "1.75rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.35rem",
-                  background: "rgba(255, 255, 255, 0.6)",
-                  borderBottom: i < 2 ? "1px solid rgba(196,136,42,0.15)" : "none",
-                  borderRight: i % 2 === 0 ? "1px solid rgba(196,136,42,0.15)" : "none",
+                  background: "#FFFFFF",
                 }}
               >
-                <i className={`bi ${stat.icon}`} style={{ fontSize: "1.4rem", color: stat.color, marginBottom: "0.25rem" }} />
+                <div style={{ color: stat.color, fontSize: "16px", marginBottom: "8px" }}>◆</div>
                 <div
                   style={{
-                    fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "2.2rem",
+                    fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                    fontSize: "clamp(24px, 2.5vw, 32px)",
                     fontWeight: 400,
-                    color: "#1C1208",
-                    lineHeight: 1,
+                    color: "#211C15",
+                    lineHeight: 1.1,
                   }}
                 >
                   <CountUp target={stat.value} suffix={stat.suffix} />
                 </div>
                 <div
                   style={{
-                    fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                    fontSize: "0.6rem",
+                    fontFamily: "var(--font-inter, 'Inter'), sans-serif",
+                    fontSize: "10px",
                     fontWeight: 700,
-                    letterSpacing: "0.16em",
+                    letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#786550",
+                    color: "#6B6558",
+                    marginTop: "6px",
                   }}
                 >
                   {stat.label}

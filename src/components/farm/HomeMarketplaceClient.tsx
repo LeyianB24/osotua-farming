@@ -108,79 +108,102 @@ export default function HomeMarketplaceClient({
       1
     )
     setAddedId(item.id)
-    setTimeout(() => setAddedId(null), 1400)
+    setTimeout(() => setAddedId(null), 1500)
   }
 
   return (
-    <div className="w-full space-y-20">
+    <div className="w-full space-y-16">
 
-      {/* ── 1. CINEMATIC AACo-STYLE HERO BANNER ── */}
-      <section className="relative overflow-hidden rounded-3xl bg-[#1C1208] text-[#FFFFFF] border border-[#C4882A]/30 shadow-2xl">
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <Image
-            src="/images/grazing.jpg"
-            alt="Osotua pastoral rangelands"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-35 scale-105"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(ellipse 70% 70% at 20% 30%, rgba(196,136,42,0.3) 0%, transparent 70%),
-                linear-gradient(90deg, rgba(28,18,8,0.92) 0%, rgba(28,18,8,0.75) 55%, rgba(28,18,8,0.4) 100%)
-              `,
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 p-8 sm:p-14 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-mono font-bold tracking-[0.2em] uppercase bg-[#C4882A]/25 border border-[#C4882A]/40 text-[#E59A24]">
-              <i className="bi bi-stars" />
+      {/* ── 1. PROMO BANNER (Two-column dark block matching design system) ── */}
+      <section
+        style={{
+          background: "#211C15",
+          borderRadius: "14px",
+          overflow: "hidden",
+        }}
+        className="relative text-[#FFFFFF] border border-[#C4922E]/30 shadow-xl"
+      >
+        <div className="p-8 sm:p-12 lg:p-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-7 space-y-5">
+            <div
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "9px",
+                color: "#C4922E",
+                fontWeight: 700,
+                background: "rgba(196,146,46,0.15)",
+                border: "1px solid rgba(196,146,46,0.35)",
+                padding: "4px 10px",
+                borderRadius: "100px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+              }}
+            >
+              <span>◈</span>
               <span>Fresh From The Shamba &bull; Kajiado, Kenya</span>
             </div>
 
             <h1
               style={{
-                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                fontSize: "clamp(2.4rem, 5vw, 4.4rem)",
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(28px, 4vw, 44px)",
                 fontWeight: 400,
-                lineHeight: 1.05,
+                lineHeight: 1.1,
                 color: "#FFFFFF",
               }}
             >
               Fresh produce, straight from <br className="hidden sm:inline" />
-              <em style={{ color: "#D99A30", fontStyle: "italic" }}>Kenyan farmers</em> to your table
+              <em style={{ color: "#C4922E", fontStyle: "italic" }}>Kenyan farmers</em> to your table
             </h1>
 
-            <p className="text-sm sm:text-base text-stone-300 font-sans leading-relaxed max-w-xl">
+            <p style={{ fontSize: "14px", color: "#CFC7B4", lineHeight: 1.6, maxWidth: "540px" }}>
               Buy seasonal vegetables, organic stone-ground flours, free-range eggs, and pasture dairy from our cooperative of small-scale farmers in Kajiado, Nakuru, and Kiambu.
             </p>
 
-            <div className="flex items-center gap-4 flex-wrap pt-2">
+            <div className="flex items-center gap-3.5 flex-wrap pt-2">
               <Link
                 href="/shop"
-                className="btn-primary py-3.5 px-7 text-xs font-mono uppercase tracking-wider font-bold shadow-lg shadow-[#C4882A]/30 inline-flex items-center gap-2"
+                style={{
+                  background: "#C4922E",
+                  color: "#211C15",
+                  padding: "10px 20px",
+                  borderRadius: "6px",
+                  fontSize: "11px",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  fontWeight: 700,
+                  textDecoration: "none",
+                }}
+                className="hover:bg-[#A97B22] transition-colors inline-flex items-center gap-2 shadow-sm"
               >
-                <i className="bi bi-basket3-fill" />
-                <span>Shop Produce</span>
-                <i className="bi bi-arrow-right" />
+                <span>SHOP PRODUCE</span>
+                <span>→</span>
               </Link>
               <Link
                 href="/partners"
-                className="btn-ghost py-3.5 px-6 text-xs font-mono uppercase tracking-wider font-bold bg-white/10 hover:bg-white/20 border-white/25 text-white inline-flex items-center gap-2"
+                style={{
+                  background: "rgba(255,255,255,0.08)",
+                  color: "#FFFFFF",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  padding: "10px 18px",
+                  borderRadius: "6px",
+                  fontSize: "11px",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  fontWeight: 700,
+                  textDecoration: "none",
+                }}
+                className="hover:bg-white/15 transition-colors inline-flex items-center gap-2"
               >
-                <i className="bi bi-people" />
-                <span>Meet Our Farmers</span>
+                <span>MEET OUR FARMERS</span>
               </Link>
             </div>
           </div>
 
           <div className="lg:col-span-5">
-            <div className="relative w-full h-72 sm:h-80 rounded-2xl overflow-hidden border border-[#C4882A]/35 shadow-2xl group">
+            <div className="relative w-full h-64 sm:h-72 rounded-xl overflow-hidden border border-white/10 shadow-lg group">
               <Image
                 src="/images/vegetables.jpg"
                 alt="Fresh farm harvest from Kajiado and Kiambu"
@@ -188,13 +211,12 @@ export default function HomeMarketplaceClient({
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between text-white">
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
                 <div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#D99A30] font-bold">Daily Shamba Harvest</div>
-                  <div className="font-serif text-xl">100% Pesticide-Free &bull; Cold-Chain</div>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-[#C4882A] text-soil flex items-center justify-center font-bold text-sm shadow-md">
-                  <i className="bi bi-patch-check-fill text-white text-lg" />
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-[#C4922E]">Daily Shamba Harvest</div>
+                  <div style={{ fontFamily: "var(--font-fraunces, 'Fraunces'), serif", fontSize: "17px" }}>
+                    100% Pesticide-Free &bull; Cold-Chain
+                  </div>
                 </div>
               </div>
             </div>
@@ -202,21 +224,33 @@ export default function HomeMarketplaceClient({
         </div>
       </section>
 
-      {/* ── 2. THIS WEEK'S HARVEST (Luxury Editorial Cards) ── */}
-      <section className="space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[#C4882A]/20">
+      {/* ── 2. THIS WEEK'S HARVEST (Unified Card Anatomy) ── */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-[#EDE6D6]">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30 mb-2">
-              <i className="bi bi-flower1 text-[#2E7D32]" />
+            <div
+              style={{
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                fontSize: "9px",
+                color: "#3F6B3F",
+                fontWeight: 700,
+                background: "rgba(63,107,63,0.12)",
+                padding: "3px 8px",
+                borderRadius: "100px",
+                display: "inline-block",
+                marginBottom: "6px",
+              }}
+            >
               Seasonal Harvest Bounty
             </div>
             <h2
               style={{
-                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(22px, 3.5vw, 30px)",
                 fontWeight: 400,
-                color: "#1C1208",
-                lineHeight: 1.1,
+                color: "#211C15",
+                margin: 0,
               }}
             >
               This Week&apos;s Harvest
@@ -225,103 +259,146 @@ export default function HomeMarketplaceClient({
 
           <Link
             href="/shop"
-            className="btn-ghost text-xs py-2.5 px-5 flex items-center gap-2 bg-[#FFFFFF] shadow-xs hover:border-[#C4882A]"
-            style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
+            style={{
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              fontSize: "10px",
+              color: "#C4922E",
+              fontWeight: 700,
+              textDecoration: "none",
+            }}
+            className="hover:underline flex items-center gap-1.5"
           >
-            <span>View Full Produce Store</span>
-            <i className="bi bi-arrow-right" />
+            <span>VIEW ALL →</span>
           </Link>
         </div>
 
-        {/* Luxury Harvest Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        {/* Unified 3-Column Harvest Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
           {harvest.map((item) => {
             const isAdded = addedId === item.id
             return (
               <div
                 key={item.id}
-                className="group bg-[#FFFFFF] rounded-3xl border border-[#C4882A]/20 hover:border-[#C4882A] p-5 shadow-lg shadow-[#1C1208]/04 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-full min-w-0 overflow-hidden"
+                style={{
+                  background: "#FFFFFF",
+                  borderRadius: "14px",
+                  border: "1px solid #EDE6D6",
+                }}
+                className="group overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between h-full"
               >
-                {/* ── TOP MEDIA & CONTENT ── */}
-                <div className="min-w-0 w-full">
-                  {/* Framed Media Window */}
-                  <div className="relative w-full h-56 rounded-2xl bg-[#FAF5EB] overflow-hidden mb-4 border border-[#C4882A]/15">
+                {/* ── IMAGE SECTION WITH BADGES ── */}
+                <div>
+                  <Link
+                    href={`/shop/${item.slug || item.id}`}
+                    className="relative block h-44 w-full bg-stone-200 overflow-hidden"
+                  >
                     {item.image ? (
                       <Image
                         src={item.image}
                         alt={item.name}
                         fill
                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[#C4882A]/40">
-                        <i className="bi bi-basket text-5xl" />
+                      <div className="w-full h-full flex items-center justify-center text-stone-400">
+                        <i className="bi bi-basket text-4xl" />
                       </div>
                     )}
 
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none" />
-
-                    {/* Top Tag Badge */}
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider bg-white/95 backdrop-blur-md text-[#8E5E16] border border-amber-200/70 shadow-xs max-w-[70%] truncate">
-                      {item.tag || "Fresh Harvest"}
+                    {/* Top-left: Category pill */}
+                    <div className="absolute top-2 left-2 bg-[#14100A]/70 backdrop-blur-xs text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">
+                      {item.tag || "FRESH HARVEST"}
                     </div>
 
-                    {/* Cooperative Origin Pill */}
-                    <div className="absolute bottom-3 left-3 text-[10px] font-mono text-white font-bold uppercase tracking-wider flex items-center gap-1 drop-shadow-md bg-black/40 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/15 max-w-[80%] truncate">
-                      <i className="bi bi-geo-alt-fill text-[#D99A30] shrink-0" />
+                    {/* Bottom-left: Origin pill */}
+                    <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white font-medium uppercase tracking-wider flex items-center gap-1 drop-shadow-md bg-[#14100A]/60 backdrop-blur-xs px-2 py-0.5 rounded max-w-[85%] truncate">
+                      <i className="bi bi-geo-alt-fill text-[#C4922E]" />
                       <span className="truncate">{item.farmName}</span>
                     </div>
-                  </div>
+                  </Link>
 
-                  {/* Card Content */}
-                  <div className="space-y-1.5 min-w-0">
-                    <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#C4882A] truncate">
-                      {item.categoryName || "Fresh Shamba Produce"}
+                  {/* ── CARD CONTENT ── */}
+                  <div className="p-3.5 pb-1">
+                    <div
+                      style={{
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        fontSize: "9px",
+                        color: "#C4922E",
+                        fontWeight: 700,
+                      }}
+                    >
+                      {item.categoryName || "VEGETABLES"}
                     </div>
                     <Link
                       href={`/shop/${item.slug || item.id}`}
                       style={{
-                        fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                        fontSize: "1.45rem",
-                        fontWeight: 500,
+                        fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                        fontSize: "17px",
+                        margin: "2px 0 6px",
+                        color: "#211C15",
                         lineHeight: 1.2,
-                        color: "#1C1208",
+                        textDecoration: "none",
                       }}
-                      className="group-hover:text-[#C4882A] transition-colors block truncate"
+                      className="truncate block hover:text-[#C4922E] transition-colors"
                     >
                       {item.name}
                     </Link>
-                    <p className="text-xs text-[#6B5744] line-clamp-2 leading-relaxed min-h-[36px]">
-                      Picked at peak ripeness, carefully graded, and packed cold-chain from our local smallholder cooperatives.
+                    <p style={{ fontSize: "12px", color: "#6B6558", lineHeight: 1.4, margin: 0 }} className="line-clamp-1">
+                      Picked fresh at peak ripeness and packed cold-chain.
                     </p>
                   </div>
                 </div>
 
-                {/* ── FOOTER: PRICE & ADD BUTTON ── */}
-                <div className="pt-4 border-t border-[#C4882A]/15 mt-4 flex items-center justify-between gap-3 w-full">
-                  <div className="min-w-0">
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-[#8A7560] block font-semibold">
-                      Farm Gate Price
-                    </span>
-                    <span className="font-mono text-lg font-bold text-[#1C1208] whitespace-nowrap">
+                {/* ── CARD FOOTER ── */}
+                <div className="p-3.5 pt-0 flex justify-between items-center border-t border-stone-100 mt-3">
+                  <div>
+                    <div
+                      style={{
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        fontSize: "8px",
+                        color: "#6B6558",
+                        fontWeight: 600,
+                      }}
+                    >
+                      FARM GATE PRICE
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+                        fontSize: "16px",
+                        color: "#211C15",
+                        fontWeight: 600,
+                      }}
+                    >
                       KSh {item.price.toLocaleString()}
-                      <span className="text-xs text-[#786550] font-normal ml-1">/{item.unit}</span>
-                    </span>
+                      <span style={{ fontSize: "11px", color: "#6B6558", fontWeight: 400, marginLeft: "3px" }}>
+                        /{item.unit}
+                      </span>
+                    </div>
                   </div>
 
                   <button
                     onClick={() => handleAdd(item)}
                     type="button"
-                    className={`px-4 py-2 rounded-full font-mono text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95 transition-all duration-200 shrink-0 ${
-                      isAdded
-                        ? "bg-[#2E7D32] text-white"
-                        : "bg-[#1C1208] hover:bg-[#C4882A] text-white"
-                    }`}
+                    style={{
+                      background: isAdded ? "#3F6B3F" : "#C4922E",
+                      color: isAdded ? "#FFFFFF" : "#211C15",
+                      fontSize: "9px",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      fontWeight: 700,
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    className="hover:opacity-90 transition-all shrink-0"
                   >
-                    <i className={`bi ${isAdded ? "bi-check-lg" : "bi-plus-lg"}`} />
-                    <span>{isAdded ? "Added" : "Add"}</span>
+                    {isAdded ? "✓ ADDED" : "+ ADD"}
                   </button>
                 </div>
               </div>
@@ -330,35 +407,51 @@ export default function HomeMarketplaceClient({
         </div>
       </section>
 
-      {/* ── 3. TRUST & VALUE PILLARS (AACo Luxury Format) ── */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* ── 3. TRUST & VALUE PILLARS ── */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
         
-        {/* Pillar 1: 40+ Partner Farms */}
-        <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-8 shadow-lg shadow-[#1C1208]/04 flex items-start gap-6 hover:border-[#C4882A] transition-colors">
-          <div className="w-16 h-16 rounded-2xl bg-[#C4882A]/15 border border-[#C4882A]/30 flex items-center justify-center text-[#C4882A] shrink-0 shadow-xs">
-            <i className="bi bi-people-fill text-3xl" />
+        {/* Pillar 1 */}
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: "14px",
+            border: "1px solid #EDE6D6",
+            padding: "24px",
+          }}
+          className="flex items-start gap-4 shadow-xs"
+        >
+          <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-[#C4922E] shrink-0 text-xl">
+            <i className="bi bi-people-fill" />
           </div>
-          <div className="space-y-2">
-            <h3 className="font-serif text-2xl text-[#1C1208] font-normal">
+          <div className="space-y-1">
+            <h3 style={{ fontFamily: "var(--font-fraunces, 'Fraunces'), serif", fontSize: "18px", color: "#211C15", margin: 0 }}>
               40+ Partner Farm Cooperatives
             </h3>
-            <p className="text-xs sm:text-sm text-[#5C4835] font-sans leading-relaxed">
-              Every purchase directly supports a local Kenyan smallholder cooperative with guaranteed fair-market prices, ethical contracts, and community empowerment.
+            <p style={{ fontSize: "13px", color: "#6B6558", margin: 0, lineHeight: 1.5 }}>
+              Every purchase directly supports local Kenyan smallholder cooperatives with guaranteed fair-market prices.
             </p>
           </div>
         </div>
 
-        {/* Pillar 2: Same-day delivery */}
-        <div className="bg-[#FFFFFF] border border-[#2E7D32]/25 rounded-3xl p-8 shadow-lg shadow-[#1C1208]/04 flex items-start gap-6 hover:border-[#2E7D32] transition-colors">
-          <div className="w-16 h-16 rounded-2xl bg-[#2E7D32]/15 border border-[#2E7D32]/30 flex items-center justify-center text-[#2E7D32] shrink-0 shadow-xs">
-            <i className="bi bi-truck text-3xl" />
+        {/* Pillar 2 */}
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: "14px",
+            border: "1px solid #EDE6D6",
+            padding: "24px",
+          }}
+          className="flex items-start gap-4 shadow-xs"
+        >
+          <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-[#3F6B3F] shrink-0 text-xl">
+            <i className="bi bi-truck" />
           </div>
-          <div className="space-y-2">
-            <h3 className="font-serif text-2xl text-[#1C1208] font-normal">
+          <div className="space-y-1">
+            <h3 style={{ fontFamily: "var(--font-fraunces, 'Fraunces'), serif", fontSize: "18px", color: "#211C15", margin: 0 }}>
               Same-Day Express Cold Delivery
             </h3>
-            <p className="text-xs sm:text-sm text-[#5C4835] font-sans leading-relaxed">
-              Ordered by 10:00 AM, harvested from the soil, temperature-controlled packed, and delivered directly to your kitchen the very same day.
+            <p style={{ fontSize: "13px", color: "#6B6558", margin: 0, lineHeight: 1.5 }}>
+              Ordered by 10:00 AM, harvested from the soil, temperature-controlled packed, and delivered the very same day.
             </p>
           </div>
         </div>
