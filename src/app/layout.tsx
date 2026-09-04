@@ -104,10 +104,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fraunces.variable} ${inter.variable} ${cormorant.variable} ${dmSans.variable} ${spaceGrotesk.variable}`}
     >
       <head>
-        {/* Bootstrap Icons */}
+        {/* Bootstrap & Tabler Icons */}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
         />
       </head>
       <body className="antialiased bg-[#FBF7F0] text-[#1C1208] font-sans">

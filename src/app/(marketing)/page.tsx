@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import OsotuaFarmMockup from "@/components/farm/OsotuaFarmMockup"
 import HeroSection from "@/components/farm/HeroSection"
 import FarmStats from "@/components/farm/FarmStats"
 import BreedCard from "@/components/farm/BreedCard"
@@ -9,9 +10,9 @@ import Link from "next/link"
 import Image from "next/image"
 
 export const metadata = {
-  title: "Osotua Farming — Perfecting the Art of Kenyan Pastoral Farming",
+  title: "Osotua Farming — Fresh Produce & Pastoral Livestock from Kenya",
   description:
-    "12,500+ acres of sustainable pastoral ranching in Kajiado, Kenya. Purebred Boran cattle, Sahiwal dairy genetics, Dorper sheep, and organic farm-to-table produce from smallholder cooperatives.",
+    "Fresh seasonal produce, vegetables, fruit, pasture dairy, and purebred Boran cattle straight from Kenyan smallholder farmer cooperatives to your table.",
 }
 
 const photoStripImages = [
@@ -42,13 +43,18 @@ export default async function HomePage() {
   return (
     <div style={{ background: "#F6F1E6", color: "#211C15", width: "100%", overflowX: "hidden" }}>
       
-      {/* ── 1. CINEMATIC PASTORAL HERO ── */}
-      <HeroSection />
+      {/* ── 1. PRIMARY FARM-TO-MARKET LAYOUT EXPERIENCE ── */}
+      <section className="pt-24 pb-8 w-full">
+        <OsotuaFarmMockup />
+      </section>
 
-      {/* ── 2. ESTATES & IMPACT METRICS (4 Stat Cards + Sustainability Calculator) ── */}
-      <FarmStats />
+      {/* ── 2. CINEMATIC PASTORAL HERO & STATS ── */}
+      <section className="w-full">
+        <HeroSection />
+        <FarmStats />
+      </section>
 
-      {/* ── 3. FEATURED PEDIGREE LIVESTOCK & GENETICS ── */}
+      {/* ── 3. CERTIFIED GENETICS & PEDIGREE LIVESTOCK ── */}
       <section className="py-20 sm:py-24 w-full">
         <div className="os-container">
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 pb-4 border-b border-[#EDE6D6] mb-10">
@@ -106,7 +112,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 4. THE FARM BARN & SHAMBA HARVEST ── */}
+      {/* ── 4. FULL FARM BARN & SHAMBA HARVEST ── */}
       <section
         className="py-20 sm:py-24 w-full"
         style={{
@@ -171,7 +177,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 6. AGRITOURISM & FARM TOUR INVITATION ── */}
+      {/* ── 5. AGRITOURISM & FARM TOUR INVITATION ── */}
       <section className="py-16 w-full">
         <div className="os-container">
           <div
@@ -264,7 +270,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 7. PHOTO STRIP GALLERY CAROUSEL ── */}
+      {/* ── 6. PHOTO STRIP GALLERY CAROUSEL ── */}
       <section className="py-6 overflow-hidden w-full">
         <div className="photo-strip-track flex gap-3">
           {[...photoStripImages, ...photoStripImages].map((img, i) => (
@@ -284,7 +290,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 8. NEWSLETTER & TERRAIN WAVE ── */}
+      {/* ── 7. NEWSLETTER & TERRAIN WAVE ── */}
       <section className="pt-12 pb-16 w-full text-center">
         <div className="os-container max-w-2xl space-y-3">
           <div

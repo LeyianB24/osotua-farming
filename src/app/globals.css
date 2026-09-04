@@ -63,7 +63,18 @@
   --color-parchment: #EDE5D8;
   --color-fog: #D4C9B8;
 
-  /* Semantic UI Tokens */
+  /* Semantic UI Tokens & Layout Surface Tokens */
+  --surface-1: #FFFFFF;
+  --surface-2: #FBF7F0;
+  --surface-3: #F4EFE6;
+  --border: rgba(28, 18, 8, 0.12);
+  --text-primary: #1C1208;
+  --text-secondary: #6B6558;
+  --text-muted: #9C9485;
+  --text-accent: #2E7D32;
+  --fill-primary: #2E6B34;
+  --on-primary: #FFFFFF;
+
   --background: var(--color-cream);
   --foreground: var(--color-soil);
   --card: #FFFFFF;
@@ -73,7 +84,6 @@
   --secondary: var(--color-mist);
   --muted: var(--color-parchment);
   --muted-foreground: rgba(28, 18, 8, 0.6);
-  --border: var(--color-parchment);
   --input: var(--color-mist);
   --ring: var(--color-savanna);
   --destructive: var(--color-rust);
@@ -438,6 +448,25 @@ h1, h2, h3, h4, h5, h6 {
 .badge-green { border: 1px solid var(--color-grass); color: var(--color-grass); background: rgba(61, 107, 62, 0.06); }
 .badge-gold  { border: 1px solid var(--color-savanna); color: var(--color-savanna); background: rgba(196, 136, 42, 0.06); }
 .badge-rust  { border: 1px solid var(--color-rust); color: var(--color-rust); background: rgba(160, 67, 30, 0.06); }
+
+/* Layout Color Card Accents */
+.c-green {
+  background: linear-gradient(135deg, #EEF7ED 0%, #E2F0E0 100%);
+  border: 1px solid rgba(46, 125, 50, 0.16);
+  color: #1C1208;
+}
+
+.c-amber {
+  background: linear-gradient(135deg, #FEF7EC 0%, #FDF0DB 100%);
+  border: 1px solid rgba(196, 136, 42, 0.22);
+  color: #5C3806;
+}
+
+.c-teal {
+  background: linear-gradient(135deg, #EBF8F7 0%, #DBF3F1 100%);
+  border: 1px solid rgba(13, 148, 136, 0.22);
+  color: #0F5E58;
+}
 
 .table-head th {
   font-family: var(--font-space-grotesk);
