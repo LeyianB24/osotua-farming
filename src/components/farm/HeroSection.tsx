@@ -4,7 +4,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import TerrainWave from "@/components/shared/TerrainWave"
-import CountUp from "@/components/shared/CountUp"
 import { HERD_FIELD } from "@/lib/images"
 
 const WORD_STAGGER = 0.09
@@ -30,49 +29,6 @@ function WordReveal({ text, className }: { text: string; className?: string }) {
     </span>
   )
 }
-
-const floatingStats = [
-  {
-    icon: "bi-tree-fill",
-    value: 12500,
-    suffix: "+",
-    label: "ACRES OF REGENERATIVE LAND",
-    subcopy: "Chemical-free rotational pastures",
-    iconBg: "#EBF5EB",
-    color: "#3F6B3F",
-    labelColor: "#3F6B3F",
-  },
-  {
-    icon: "bi-award-fill",
-    value: 4800,
-    suffix: "+",
-    label: "PEDIGREE LIVESTOCK HEAD",
-    subcopy: "Dorper, Boran & Dairy Crosses",
-    iconBg: "#FBF3E3",
-    color: "#C4922E",
-    labelColor: "#8E5E16",
-  },
-  {
-    icon: "bi-people-fill",
-    value: 180,
-    suffix: "+",
-    label: "PARTNER PASTORALIST FAMILIES",
-    subcopy: "Direct fair-trade empowerment",
-    iconBg: "#FAF0E1",
-    color: "#8E5E16",
-    labelColor: "#8E5E16",
-  },
-  {
-    icon: "bi-graph-up-arrow",
-    value: 450,
-    suffix: "+ Tons",
-    label: "ANNUAL ORGANIC YIELD",
-    subcopy: "Grass-fed beef, mutton & dairy",
-    iconBg: "#EBF5EB",
-    color: "#3F6B3F",
-    labelColor: "#3F6B3F",
-  },
-]
 
 // Gold & Emerald floating particles
 const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
@@ -256,83 +212,18 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.6 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
           className="anim-chevron"
-          style={{ marginTop: "3.5rem", color: "rgba(196,136,42,0.8)" }}
+          style={{ marginTop: "4rem", marginBottom: "2rem", color: "rgba(196,136,42,0.8)" }}
           aria-hidden="true"
         >
           <i className="bi bi-chevron-down" style={{ fontSize: "1.4rem" }} />
         </motion.div>
       </div>
 
-      {/* ── FLOATING STAT CARDS (4 Spacious, Airy Floating White Cards) ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          position: "relative",
-          zIndex: 10,
-          width: "100%",
-          paddingBottom: "1.5rem",
-          marginTop: "3.5rem",
-        }}
-      >
-        <div className="os-container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-            {floatingStats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.7 + i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="bg-white rounded-[24px] p-7 sm:p-8 border border-[#EDE6D6] shadow-[0_12px_32px_rgba(33,28,21,0.05)] hover:shadow-[0_16px_40px_rgba(33,28,21,0.08)] transition-all flex flex-col justify-between"
-              >
-                <div>
-                  {/* Soft Rounded Icon Badge */}
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6"
-                    style={{ background: stat.iconBg, color: stat.color }}
-                  >
-                    <i className={`bi ${stat.icon} text-xl`} />
-                  </div>
-
-                  {/* Large Serif Number */}
-                  <div
-                    className="text-4xl sm:text-[40px] text-[#211C15] font-normal leading-none"
-                    style={{
-                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                    }}
-                  >
-                    <CountUp target={stat.value} suffix={stat.suffix} />
-                  </div>
-
-                  {/* Tracked Uppercase Label */}
-                  <div
-                    className="text-[10.5px] font-bold tracking-[0.12em] uppercase mt-3"
-                    style={{
-                      fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                      color: stat.labelColor,
-                    }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-
-                {/* Warm Gray Subcopy */}
-                <p className="text-xs sm:text-sm text-[#6B6558] mt-3 leading-relaxed">
-                  {stat.subcopy}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
       {/* Terrain wave */}
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 5 }}>
-        <TerrainWave fillColor="#FBF7F0" />
+        <TerrainWave fillColor="#F6F1E6" />
       </div>
     </section>
   )

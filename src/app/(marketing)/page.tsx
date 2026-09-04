@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma"
 import HeroSection from "@/components/farm/HeroSection"
-import HomeMarketplaceClient, { HarvestProduct } from "@/components/farm/HomeMarketplaceClient"
 import FarmStats from "@/components/farm/FarmStats"
 import BreedCard from "@/components/farm/BreedCard"
 import ProductCard from "@/components/farm/ProductCard"
@@ -27,114 +26,18 @@ const photoStripImages = [
 ]
 
 export default async function HomePage() {
-  const [featuredBreeds, featuredProducts, dbHarvest] = await Promise.all([
+  const [featuredBreeds, featuredProducts] = await Promise.all([
     prisma.breed.findMany({
       where: { featured: true },
       include: { species: true },
-      take: 4,
+      take: 3,
     }),
     prisma.product.findMany({
       where: { featured: true, inStock: true },
       include: { category: true },
       take: 6,
     }),
-    prisma.product.findMany({
-      where: { inStock: true },
-      include: { category: true },
-      take: 6,
-      orderBy: { createdAt: "desc" },
-    }),
   ])
-
-  const harvestData: HarvestProduct[] = dbHarvest.length > 0
-    ? dbHarvest.map((p) => {
-        const lower = p.name.toLowerCase()
-        const farmName = lower.includes("sukuma") || lower.includes("spinach") || lower.includes("maize") || lower.includes("greens")
-          ? "Kiambu Greens"
-          : lower.includes("milk") || lower.includes("avocado") || lower.includes("fruit")
-          ? "Nakuru Farms"
-          : "Kajiado Co-op"
-
-        return {
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          price: p.price,
-          unit: p.unit,
-          image: p.image,
-          farmName,
-          categoryName: p.category.name,
-          tag: p.featured ? "Featured Item" : "Fresh Harvest",
-        }
-      })
-    : [
-        {
-          id: "h1",
-          name: "Carrots",
-          slug: "carrots",
-          price: 80,
-          unit: "kg",
-          image: "/images/carrots.jpg",
-          farmName: "Kiambu Greens",
-          categoryName: "Vegetables",
-          tag: "Daily Harvest",
-        },
-        {
-          id: "h2",
-          name: "Avocados",
-          slug: "avocados",
-          price: 25,
-          unit: "pc",
-          image: "/images/pineapples.jpg",
-          farmName: "Nakuru Farms",
-          categoryName: "Fruit",
-          tag: "Hass Variety",
-        },
-        {
-          id: "h3",
-          name: "Farm Eggs",
-          slug: "farm-eggs",
-          price: 420,
-          unit: "tray",
-          image: "/images/eggs.jpg",
-          farmName: "Kajiado Co-op",
-          categoryName: "Dairy and Eggs",
-          tag: "Pasture Fed",
-        },
-        {
-          id: "h4",
-          name: "Fresh Milk",
-          slug: "fresh-milk",
-          price: 60,
-          unit: "L",
-          image: "/images/sahiwal cow.jpg",
-          farmName: "Nakuru Farms",
-          categoryName: "Dairy and Eggs",
-          tag: "Raw Pasture",
-        },
-        {
-          id: "h5",
-          name: "Sukuma Wiki",
-          slug: "sukuma-wiki",
-          price: 30,
-          unit: "bunch",
-          image: "/images/cabbages.jpeg",
-          farmName: "Kiambu Greens",
-          categoryName: "Vegetables",
-          tag: "Collard Greens",
-        },
-        {
-          id: "h6",
-          name: "Tomatoes",
-          slug: "tomatoes",
-          price: 90,
-          unit: "kg",
-          image: "/images/ripe tomatoes.jpg",
-          farmName: "Kajiado Co-op",
-          categoryName: "Vegetables",
-          tag: "Vine Ripened",
-        },
-      ]
 
   return (
     <div style={{ background: "#F6F1E6", color: "#211C15", width: "100%", overflowX: "hidden" }}>
@@ -142,33 +45,26 @@ export default async function HomePage() {
       {/* ── 1. CINEMATIC PASTORAL HERO ── */}
       <HeroSection />
 
-      {/* ── 2. SHAMBA PRODUCE MARKETPLACE & COMMUNITY HARVEST ── */}
-      <section className="py-16 w-full">
-        <div className="os-container">
-          <HomeMarketplaceClient harvest={harvestData} />
-        </div>
-      </section>
-
-      {/* ── 3. RANGELAND IMPACT & HERD ROI CALCULATOR ── */}
+      {/* ── 2. ESTATES & IMPACT METRICS (4 Stat Cards + Sustainability Calculator) ── */}
       <FarmStats />
 
-      {/* ── 4. FEATURED PEDIGREE LIVESTOCK & GENETICS ── */}
-      <section className="py-16 w-full">
+      {/* ── 3. FEATURED PEDIGREE LIVESTOCK & GENETICS ── */}
+      <section className="py-20 sm:py-24 w-full">
         <div className="os-container">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-[#EDE6D6] mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 pb-4 border-b border-[#EDE6D6] mb-10">
             <div>
               <div
                 style={{
-                  letterSpacing: "0.08em",
+                  letterSpacing: "0.12em",
                   textTransform: "uppercase",
-                  fontSize: "9px",
+                  fontSize: "10px",
                   color: "#C4922E",
                   fontWeight: 700,
                   background: "rgba(196,146,46,0.12)",
-                  padding: "3px 8px",
+                  padding: "4px 12px",
                   borderRadius: "100px",
                   display: "inline-block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                 }}
               >
                 Certified Genetics &bull; Kajiado Stud Book
@@ -176,7 +72,7 @@ export default async function HomePage() {
               <h2
                 style={{
                   fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "clamp(22px, 3.5vw, 30px)",
+                  fontSize: "clamp(24px, 3.5vw, 36px)",
                   fontWeight: 400,
                   color: "#211C15",
                   margin: 0,
@@ -189,9 +85,9 @@ export default async function HomePage() {
             <Link
               href="/breeds"
               style={{
-                letterSpacing: "0.08em",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                fontSize: "10px",
+                fontSize: "11px",
                 color: "#C4922E",
                 fontWeight: 700,
                 textDecoration: "none",
@@ -202,17 +98,17 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
-            {featuredBreeds.map((breed) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            {featuredBreeds.slice(0, 3).map((breed) => (
               <BreedCard key={breed.id} breed={breed} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 5. THE BARN STORE (Beef Cuts, Raw Dairy & Pantry) ── */}
+      {/* ── 4. THE FARM BARN & SHAMBA HARVEST ── */}
       <section
-        className="py-16 w-full"
+        className="py-20 sm:py-24 w-full"
         style={{
           background: "#FFFFFF",
           borderTop: "1px solid #EDE6D6",
@@ -220,20 +116,20 @@ export default async function HomePage() {
         }}
       >
         <div className="os-container">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 pb-3 border-b border-[#EDE6D6] mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 pb-4 border-b border-[#EDE6D6] mb-10">
             <div>
               <div
                 style={{
-                  letterSpacing: "0.08em",
+                  letterSpacing: "0.12em",
                   textTransform: "uppercase",
-                  fontSize: "9px",
+                  fontSize: "10px",
                   color: "#3F6B3F",
                   fontWeight: 700,
                   background: "rgba(63,107,63,0.12)",
-                  padding: "3px 8px",
+                  padding: "4px 12px",
                   borderRadius: "100px",
                   display: "inline-block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                 }}
               >
                 Fresh From The Pasture
@@ -241,22 +137,22 @@ export default async function HomePage() {
               <h2
                 style={{
                   fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "clamp(22px, 3.5vw, 30px)",
+                  fontSize: "clamp(24px, 3.5vw, 36px)",
                   fontWeight: 400,
                   color: "#211C15",
                   margin: 0,
                 }}
               >
-                The Farm Barn
+                The Farm Barn &amp; Harvest Pantry
               </h2>
             </div>
 
             <Link
               href="/barn"
               style={{
-                letterSpacing: "0.08em",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                fontSize: "10px",
+                fontSize: "11px",
                 color: "#C4922E",
                 fontWeight: 700,
                 textDecoration: "none",
@@ -267,8 +163,8 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
-            {featuredProducts.map((product) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            {featuredProducts.slice(0, 6).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
