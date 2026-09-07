@@ -9,12 +9,11 @@ import { useCart } from "./CartContext";
 import { LOGO } from "@/lib/images";
 
 const navLinks = [
-  { label: "Breeds", href: "/breeds" },
-  { label: "Barn Store", href: "/barn" },
-  { label: "About", href: "/about" },
+  { label: "Our Breeds", href: "/breeds" },
+  { label: "The Barn", href: "/barn" },
+  { label: "Invest", href: "/invest" },
   { label: "Partners", href: "/partners" },
-  { label: "Visit", href: "/visit" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/about" },
 ];
 
 export default function Navbar({ cartCount: initialCartCount }: { cartCount?: number }) {
@@ -51,82 +50,53 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
           left: 0,
           right: 0,
           zIndex: 100,
-          backgroundColor: scrolled ? "rgba(22, 13, 5, 0.97)" : "rgba(22, 13, 5, 0.95)",
-          backdropFilter: "blur(20px) saturate(180%)",
-          WebkitBackdropFilter: "blur(20px) saturate(180%)",
-          borderBottom: "1px solid rgba(196, 136, 42, 0.18)",
+          backgroundColor: scrolled ? "rgba(28, 18, 8, 0.98)" : "#1C1208",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(201, 154, 46, 0.15)",
           height: "76px",
           display: "flex",
           alignItems: "center",
           transition: "box-shadow 0.3s ease, background-color 0.3s ease",
-          boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.4)" : "none",
+          boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.5)" : "none",
         }}
       >
         <div className="os-container w-full">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
-            {/* Brand Logo & Wordmark */}
-            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}>
-              <div
+            {/* Brand Logo & Wordmark (Figma Exact) */}
+            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
+              <span
                 style={{
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "12px",
-                  background: "#FFFFFF",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-                  padding: "2px",
-                  flexShrink: 0,
-                  position: "relative",
+                  fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
+                  fontSize: "1.7rem",
+                  fontWeight: 700,
+                  fontStyle: "italic",
+                  color: "#C99A2E",
+                  lineHeight: 1,
+                  display: "inline-block",
                 }}
               >
-                <Image
-                  src={LOGO}
-                  alt="Osotua Farming Logo"
-                  fill
-                  sizes="44px"
-                  priority
-                  style={{ objectFit: "contain" }}
-                />
-              </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <span
-                  style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: "1.2rem",
-                    fontWeight: 400,
-                    letterSpacing: "-0.02em",
-                    color: "#FFFFFF",
-                    lineHeight: 1.1,
-                    display: "block",
-                  }}
-                >
-                  Osotua{" "}
-                  <span style={{ color: "#C4882A" }}>Farming</span>
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                    fontSize: "0.6rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    color: "rgba(196, 136, 42, 0.75)",
-                    marginTop: "2px",
-                  }}
-                >
-                  Kajiado &bull; Kenya
-                </span>
-              </div>
+                Osotua
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.25em",
+                  textTransform: "uppercase",
+                  color: "#D4C9B0",
+                  marginTop: "3px",
+                }}
+              >
+                FARMING
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav
-              style={{ display: "flex", alignItems: "center", gap: "32px" }}
-              className="hidden lg:flex"
+              className="hidden lg:flex items-center gap-8"
               aria-label="Main navigation"
             >
               {navLinks.map((link) => {
@@ -136,15 +106,16 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                     key={link.href}
                     href={link.href}
                     style={{
-                      fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                      fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
                       fontSize: "0.88rem",
                       fontWeight: 600,
-                      color: active ? "#C4882A" : "rgba(255,255,255,0.8)",
+                      color: active ? "#C99A2E" : "rgba(245, 240, 232, 0.85)",
                       textDecoration: "none",
                       transition: "color 0.2s ease",
                       position: "relative",
                       paddingBottom: "2px",
                     }}
+                    className="hover:text-[#C99A2E]"
                   >
                     {link.label}
                     {active && (
@@ -156,7 +127,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                           left: 0,
                           right: 0,
                           height: "1.5px",
-                          background: "#C4882A",
+                          background: "#C99A2E",
                           borderRadius: "2px",
                         }}
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -168,44 +139,37 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             </nav>
 
             {/* Desktop Right Actions */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }} className="hidden lg:flex">
-              {/* WhatsApp */}
-              <a
-                href="https://wa.me/254755758208"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Contact on WhatsApp"
+            <div className="hidden lg:flex items-center gap-6">
+              {/* Visit Us link */}
+              <Link
+                href="/visit"
                 style={{
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#25D366",
+                  fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.88rem",
+                  fontWeight: 600,
+                  color: "rgba(245, 240, 232, 0.85)",
                   textDecoration: "none",
-                  transition: "background 0.2s ease, border-color 0.2s ease",
+                  transition: "color 0.2s ease",
                 }}
+                className="hover:text-[#C99A2E]"
               >
-                <i className="bi bi-whatsapp text-sm" aria-hidden="true" />
-              </a>
+                Visit Us
+              </Link>
 
               {/* Cart */}
               <Link
                 href="/cart"
                 style={{
                   position: "relative",
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.12)",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "2px",
+                  background: "rgba(245,240,232,0.06)",
+                  border: "1px solid rgba(245,240,232,0.15)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#FFFFFF",
+                  color: "#F5F0E8",
                   textDecoration: "none",
                   transition: "border-color 0.2s ease",
                 }}
@@ -221,7 +185,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                       width: "16px",
                       height: "16px",
                       borderRadius: "50%",
-                      background: "#C4882A",
+                      background: "#C99A2E",
                       color: "#1C1208",
                       fontSize: "9px",
                       fontWeight: 800,
@@ -235,51 +199,32 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 )}
               </Link>
 
-              {/* Portal link */}
+              {/* SHOP THE BARN CTA (Figma Gold Fill, rectangular) */}
               <Link
-                href="/login"
+                href="/barn"
+                className="btn-gold"
                 style={{
-                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                  fontSize: "0.78rem",
-                  fontWeight: 600,
-                  color: "rgba(255,255,255,0.75)",
                   textDecoration: "none",
-                  padding: "0.45rem 1rem",
-                  borderRadius: "9999px",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  background: "rgba(255,255,255,0.06)",
-                  transition: "all 0.2s ease",
-                }}
-              >
-                Portal
-              </Link>
-
-              {/* Visit CTA */}
-              <Link
-                href="/visit"
-                style={{
-                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                  fontSize: "0.8rem",
-                  fontWeight: 700,
-                  color: "#1C1208",
-                  background: "#C4882A",
-                  textDecoration: "none",
-                  padding: "0.5rem 1.25rem",
-                  borderRadius: "9999px",
-                  display: "flex",
+                  display: "inline-flex",
                   alignItems: "center",
-                  gap: "6px",
-                  transition: "background 0.2s ease, transform 0.2s ease",
-                  boxShadow: "0 4px 16px rgba(196,136,42,0.3)",
+                  justifyContent: "center",
+                  padding: "0.65rem 1.4rem",
+                  fontSize: "0.78rem",
+                  letterSpacing: "0.14em",
+                  fontWeight: 700,
+                  borderRadius: "2px",
+                  backgroundColor: "#C99A2E",
+                  color: "#1C1208",
+                  transition: "all 0.2s ease",
+                  whiteSpace: "nowrap",
                 }}
               >
-                <span>Visit Us</span>
-                <i className="bi bi-arrow-right text-xs" aria-hidden="true" />
+                SHOP THE BARN
               </Link>
             </div>
 
             {/* Mobile Actions */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }} className="flex lg:hidden">
+            <div className="flex lg:hidden items-center gap-2">
               <Link
                 href="/cart"
                 style={{

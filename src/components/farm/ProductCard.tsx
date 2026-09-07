@@ -20,7 +20,7 @@ interface Props {
   dark?: boolean;
 }
 
-export default function ProductCard({ product, dark = true }: Props) {
+export default function ProductCard({ product }: Props) {
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
   const src = product.image ?? imageForCategory(product.category.name);
@@ -41,19 +41,32 @@ export default function ProductCard({ product, dark = true }: Props) {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  // Standardize badge uppercase naming
+  const catUpper = product.category.name.toUpperCase();
+  const badgeLabel = catUpper.includes("BEEF")
+    ? "BEEF CUTS"
+    : catUpper.includes("DAIRY") || catUpper.includes("MILK")
+    ? "DAIRY PRODUCTS"
+    : catUpper.includes("GOAT")
+    ? "GOAT MEAT"
+    : catUpper.includes("VEGETABLE")
+    ? "VEGETABLES"
+    : catUpper.includes("FRUIT")
+    ? "FRUITS"
+    : catUpper.includes("BOX")
+    ? "RANCH BOX"
+    : catUpper;
+
   return (
     <div
-      className={`bento-cell rounded-3xl overflow-hidden border flex flex-col justify-between h-full transition-all duration-300 ${
-        dark
-          ? "bg-[#2E1C08]/90 border-[#C4882A]/20 text-[#FBF7F0] hover:border-[#C4882A] hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
-          : "bg-[#FBF7F0] border-[#DDD0BE] text-[#1C1208] hover:border-[#C4882A] hover:shadow-[0_12px_36px_rgba(28,18,8,0.08)]"
-      }`}
+      className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-xl group"
+      style={{ borderRadius: "2px" }}
     >
       {/* ── IMAGE SECTION ── */}
       <div>
         <Link
           href={`/barn/${product.slug}`}
-          className="relative block h-56 sm:h-64 w-full bg-[#1C1208] overflow-hidden group"
+          className="relative block aspect-[16/10] w-full overflow-hidden bg-[#1C1208]"
         >
           {src ? (
             <Image
@@ -61,98 +74,105 @@ export default function ProductCard({ product, dark = true }: Props) {
               alt={product.name}
               fill
               sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90 group-hover:opacity-100"
+              className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-[#C4882A]/40">
+            <div className="w-full h-full flex items-center justify-center text-[#C4602A]/40">
               <i className="bi bi-basket text-4xl" aria-hidden="true" />
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
 
-          {/* Top-left: Category */}
-          <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-[#FBF7F0] px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border border-white/10">
-            {product.category.name}
+          {/* Top-left: Category Badge (Dark Ranch Brown) */}
+          <div
+            className="absolute top-3 left-3 text-[#F5F0E8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+            style={{ backgroundColor: "#1C1208", borderRadius: "2px" }}
+          >
+            {badgeLabel}
           </div>
 
-          {/* Top-right: Status */}
+          {/* Top-right: Status Badge (Gold / Mustard) */}
           <div
-            className={`absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider text-white ${
-              product.inStock
-                ? "bg-emerald-950/80 border border-emerald-500/40 text-emerald-300"
-                : "bg-red-950/80 border border-red-500/40 text-red-300"
-            }`}
+            className="absolute top-3 right-3 text-[#1C1208] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+            style={{
+              backgroundColor: product.inStock ? "#C99A2E" : "#D4C9B0",
+              borderRadius: "2px",
+            }}
           >
-            {product.inStock ? "In Stock" : "Sold Out"}
+            {product.inStock ? "IN STOCK" : "OUT OF STOCK"}
           </div>
         </Link>
 
         {/* ── DETAILS AREA ── */}
-        <div className="p-6 pb-2 space-y-1.5">
-          <div className="t-label text-[10px] text-[#C4882A]">
-            {product.category.name} &bull; 6 AM Harvest
+        <div className="p-6">
+          <div
+            className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-1.5"
+            style={{
+              color: "#8E7E70",
+              fontFamily: "var(--font-source-sans), sans-serif",
+            }}
+          >
+            KAJIADO CO-OP
           </div>
 
           <Link
             href={`/barn/${product.slug}`}
-            className={`font-serif text-2xl font-light leading-snug block hover:text-[#C4882A] transition-colors no-underline m-0 ${
-              dark ? "text-[#FBF7F0]" : "text-[#1C1208]"
-            }`}
+            className="font-serif text-2xl md:text-3xl text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A]"
+            style={{
+              fontFamily: "var(--font-playfair), Georgia, serif",
+              fontWeight: 600,
+            }}
           >
             {product.name}
           </Link>
-        </div>
-      </div>
 
-      {/* ── FOOTER ROW ── */}
-      <div
-        className={`p-6 pt-4 flex justify-between items-center border-t mt-auto ${
-          dark ? "border-white/10" : "border-[#DDD0BE]"
-        }`}
-      >
-        <div>
-          <div className="t-label text-[9px] text-[#FBF7F0]/50">
-            Farm Gate Price
-          </div>
-          <div
-            className={`font-serif text-xl sm:text-2xl font-light mt-0.5 ${
-              dark ? "text-[#FBF7F0]" : "text-[#1C1208]"
-            }`}
-          >
-            KES {product.price.toLocaleString()}
-            <span className="text-xs font-mono text-[#C4882A] ml-1">
+          {/* Price */}
+          <div className="mt-4 flex items-baseline gap-1">
+            <span
+              className="text-xl md:text-2xl font-bold"
+              style={{
+                color: "#C4602A",
+                fontFamily: "var(--font-playfair), Georgia, serif",
+              }}
+            >
+              KES {product.price.toLocaleString()}
+            </span>
+            <span
+              className="text-xs font-normal"
+              style={{
+                color: "#8E7E70",
+                fontFamily: "var(--font-source-sans), sans-serif",
+              }}
+            >
               /{product.unit}
             </span>
           </div>
         </div>
+      </div>
 
-        {product.inStock ? (
-          <button
-            type="button"
-            onClick={handleAdd}
-            className={`text-xs font-mono font-semibold py-2 px-4 rounded-full tracking-wider uppercase transition-all duration-200 cursor-pointer shrink-0 flex items-center gap-1.5 shadow-md ${
-              added
-                ? "bg-emerald-600 text-white border-transparent"
-                : "bg-[#C4882A] text-[#1C1208] hover:bg-[#D99A30] hover:scale-105 active:scale-95"
-            }`}
-          >
-            {added ? (
-              <>
-                <i className="bi bi-check-lg" aria-hidden="true" />
-                <span>Added</span>
-              </>
-            ) : (
-              <>
-                <i className="bi bi-plus-lg" aria-hidden="true" />
-                <span>Add</span>
-              </>
-            )}
-          </button>
-        ) : (
-          <span className="text-[10px] font-mono uppercase px-3 py-1 rounded-full bg-white/5 text-white/40 border border-white/10">
-            Sold Out
-          </span>
-        )}
+      {/* ── FOOTER BUTTON ── */}
+      <div className="p-6 pt-0 mt-auto">
+        <button
+          type="button"
+          onClick={handleAdd}
+          disabled={!product.inStock}
+          className="w-full py-3.5 px-4 font-bold text-[12px] tracking-[0.14em] uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+          style={{
+            backgroundColor: added ? "#6B7A3F" : "#1C1208",
+            color: "#F5F0E8",
+            borderRadius: "2px",
+            border: "none",
+            opacity: product.inStock ? 1 : 0.5,
+          }}
+        >
+          {added ? (
+            <>
+              <i className="bi bi-check2" />
+              <span>ADDED TO CART</span>
+            </>
+          ) : (
+            <span>ADD TO CART</span>
+          )}
+        </button>
       </div>
     </div>
   );

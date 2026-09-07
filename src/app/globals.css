@@ -21,122 +21,100 @@
      --bone          #EDE5D8   Card borders
 ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── 1. TAILWIND V4 THEME ──────────────────────────────────────────────── */
+/* ── 1. TAILWIND V4 THEME (Exact Figma Design Tokens) ────────────────────── */
 @theme {
-  --font-serif:   var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-sans:    var(--font-jakarta), var(--font-dm-sans), "Plus Jakarta Sans", "DM Sans", system-ui, sans-serif;
+  --font-serif:   var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-sans:    var(--font-source-sans), var(--font-jakarta), "Source Sans 3", system-ui, sans-serif;
   --font-mono:    var(--font-space-grotesk), "Space Grotesk", monospace;
 
-  /* Earthy Dark Anchor */
-  --color-soil:           #1C1208;
+  /* Figma Palette */
+  --color-soil:           #1C1208;  /* Ranch Brown */
   --color-hide:           #2E1C08;
-  --color-bark:           #6B3E1A;
+  --color-bark:           #4A2E18;  /* Bark */
 
-  /* Warm Terracotta */
-  --color-terracotta:     #C85A32;
-  --color-terracotta-dark:#9E3D1B;
-  --color-terracotta-light:#E07A52;
+  /* Terracotta */
+  --color-terracotta:     #C4602A;  /* Exact Figma Terracotta */
+  --color-terracotta-dark:#A84F1E;
+  --color-terracotta-light:#DC7A44;
 
-  /* Olive & Khaki Green */
-  --color-olive:          #4B5E28;
-  --color-olive-dark:     #384520;
-  --color-olive-light:    #6B843B;
-  --color-khaki:          #827F52;
+  /* Olive Green */
+  --color-olive:          #6B7A3F;  /* Exact Figma Olive Green */
+  --color-olive-dark:     #525F2E;
+  --color-olive-light:    #82934F;
+  --color-khaki:          #7A7848;
 
-  /* Gold & Mustard Accents for CTAs */
-  --color-mustard:        #D49B28;
-  --color-mustard-hover:  #E5A730;
-  --color-mustard-deep:   #B87E18;
-  --color-savanna:        #C4882A;
-  --color-savanna-glow:   #D99A30;
-  --color-savanna-deep:   #A8721F;
+  /* Gold / Mustard */
+  --color-mustard:        #C99A2E;  /* Exact Figma Gold / Mustard */
+  --color-mustard-hover:  #D9AA3E;
+  --color-mustard-deep:   #B0821E;
+  --color-savanna:        #C99A2E;
+  --color-savanna-glow:   #D9AA3E;
+  --color-savanna-deep:   #B0821E;
 
-  /* Savanna Greens & Neutrals */
+  /* Backgrounds & Neutrals */
   --color-grass:          #3D6B3E;
   --color-grass-lt:       #4E8A4F;
-  --color-rust:           #A0431E;
-  --color-cream:          #FBF7F0;
-  --color-mist:           #F0E8DA;
+  --color-rust:           #C4602A;
+  --color-cream:          #F5F0E8;  /* Exact Figma Cream */
+  --color-mist:           #EDE6DA;
+  --color-sand:           #D4C9B0;  /* Exact Figma Sand */
   --color-parchment:      #DDD0BE;
   --color-bone:           #EDE5D8;
 }
 
 /* ── 2. CSS CUSTOM PROPERTIES ──────────────────────────────────────────── */
 :root {
-  /* Earthy Brand Palette */
+  /* Earthy Brand Palette (Figma Exact) */
   --soil:              #1C1208;
   --hide:              #2E1C08;
-  --bark:              #6B3E1A;
+  --bark:              #4A2E18;
 
-  /* Warm Terracotta */
-  --terracotta:        #C85A32;
-  --terracotta-dark:   #9E3D1B;
-  --terracotta-light:  #E07A52;
+  /* Terracotta */
+  --terracotta:        #C4602A;
+  --terracotta-dark:   #A84F1E;
+  --terracotta-light:  #DC7A44;
 
   /* Olive & Khaki Green */
-  --olive:             #4B5E28;
-  --olive-dark:        #384520;
-  --olive-light:       #6B843B;
-  --khaki:             #827F52;
+  --olive:             #6B7A3F;
+  --olive-dark:        #525F2E;
+  --olive-light:       #82934F;
+  --khaki:             #7A7848;
 
   /* Gold & Mustard Accent for CTAs */
-  --mustard:           #D49B28;
-  --mustard-hover:     #E5A730;
-  --mustard-deep:      #B87E18;
-  --savanna:           #C4882A;
-  --savanna-glow:      #D99A30;
-  --savanna-deep:      #A8721F;
+  --mustard:           #C99A2E;
+  --mustard-hover:     #D9AA3E;
+  --mustard-deep:      #B0821E;
+  --savanna:           #C99A2E;
+  --savanna-glow:      #D9AA3E;
+  --savanna-deep:      #B0821E;
 
   /* Savanna Greens & Neutrals */
   --grass:             #3D6B3E;
   --grass-lt:          #4E8A4F;
-  --rust:              #A0431E;
-  --cream:             #FBF7F0;
-  --mist:              #F0E8DA;
+  --rust:              #C4602A;
+  --cream:             #F5F0E8;
+  --mist:              #EDE6DA;
+  --sand:              #D4C9B0;
   --parchment:         #DDD0BE;
   --bone:              #EDE5D8;
 
   /* Semantic */
   --bg-primary:    var(--cream);
   --bg-dark:       var(--soil);
-  --accent:        var(--savanna);
+  --accent:        var(--mustard);
   --text-primary:  var(--soil);
-  --text-muted:    rgba(28, 18, 8, 0.55);
+  --text-muted:    rgba(28, 18, 8, 0.65);
   --text-light:    var(--cream);
-  --text-light-muted: rgba(251, 247, 240, 0.7);
-
-  /* Backward compat */
-  --color-soil:       var(--soil);
-  --color-hide:       var(--hide);
-  --color-bark:       var(--bark);
-  --color-savanna:    var(--savanna);
-  --color-savanna-lt: var(--savanna-glow);
-  --color-savanna-dk: var(--savanna-deep);
-  --color-grass:      var(--grass);
-  --color-grass-lt:   var(--grass-lt);
-  --color-rust:       var(--rust);
-  --color-cream:      var(--cream);
-  --color-mist:       var(--mist);
-  --color-parchment:  var(--parchment);
-  --color-fog:        #D4C9B8;
+  --text-light-muted: rgba(245, 240, 232, 0.75);
 
   --background: var(--cream);
   --foreground: var(--soil);
-  --border: var(--bone);
-
-  /* Glass tokens (for dark sections) */
-  --g-white:   rgba(255, 255, 255, 0.06);
-  --g-gold:    rgba(196, 136, 42, 0.1);
-  --g-dark:    rgba(28, 18, 8, 0.72);
-  --g-nav:     rgba(22, 13, 5, 0.95);
-  --g-blur-sm: blur(12px) saturate(160%);
-  --g-blur:    blur(24px) saturate(180%);
-  --g-blur-lg: blur(40px) saturate(200%);
+  --border: var(--sand);
 
   /* Shadows */
-  --shadow-gold: 0 4px 24px rgba(196, 136, 42, 0.22), 0 1px 4px rgba(196, 136, 42, 0.12);
-  --shadow-card: 0 1px 3px rgba(28, 18, 8, 0.06), 0 6px 24px rgba(28, 18, 8, 0.07);
-  --shadow-card-hover: 0 4px 12px rgba(28, 18, 8, 0.08), 0 16px 40px rgba(28, 18, 8, 0.1);
+  --shadow-gold: 0 4px 20px rgba(201, 154, 46, 0.25);
+  --shadow-card: 0 2px 8px rgba(28, 18, 8, 0.04), 0 8px 24px rgba(28, 18, 8, 0.06);
+  --shadow-card-hover: 0 6px 16px rgba(28, 18, 8, 0.08), 0 20px 48px rgba(28, 18, 8, 0.12);
   --shadow-dark: 0 16px 60px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.2);
 
   /* Motion */
@@ -147,11 +125,6 @@
   --t-base: 220ms;
   --t-slow: 380ms;
   --t-page: 600ms;
-
-  /* Font vars */
-  --font-cormorant:    "Cormorant Garamond", Georgia, serif;
-  --font-dm-sans:      "DM Sans", system-ui, sans-serif;
-  --font-space-grotesk:"Space Grotesk", monospace;
 }
 
 /* ── 3. BASE RESETS ─────────────────────────────────────────────────────── */
@@ -169,9 +142,9 @@ html {
 }
 
 body {
-  font-family: var(--font-jakarta), var(--font-dm-sans), "Plus Jakarta Sans", "DM Sans", system-ui, sans-serif;
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
   font-size: 1rem;
-  line-height: 1.75;
+  line-height: 1.65;
   color: var(--soil);
   background-color: var(--cream);
   -webkit-font-smoothing: antialiased;
@@ -180,8 +153,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-weight: 300;
+  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
+  font-weight: 700;
   line-height: 1.1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -189,65 +162,52 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 em, h2 em, h3 em, h4 em {
   font-style: italic;
-  color: var(--savanna);
+  color: var(--mustard);
 }
 
-/* ── 4. TYPOGRAPHY SYSTEM ────────────────────────────────────────────────── */
+/* ── 4. TYPOGRAPHY SYSTEM (Exact Figma Type Scale) ───────────────────────── */
 
-/* DISPLAY */
-.t-display {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(4rem, 10vw, 10rem);
-  font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-}
-
-/* HERO H1 */
-.t-hero {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(3rem, 7vw, 7rem);
-  font-weight: 300;
-  line-height: 0.97;
+/* H1 · HERO · PLAYFAIR DISPLAY 700 */
+.t-hero, h1 {
+  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  line-height: 1.02;
   letter-spacing: -0.02em;
 }
 
-/* SECTION H2 */
-.t-section {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(2.2rem, 4.5vw, 4.5rem);
-  font-weight: 300;
-  line-height: 1.08;
-  letter-spacing: -0.018em;
-}
-
-/* CARD H3 */
-.t-card {
-  font-family: var(--font-cormorant), Georgia, serif;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-weight: 400;
-  line-height: 1.2;
-}
-
-/* BODY — clean Jakarta Sans */
-.t-body {
-  font-family: var(--font-jakarta), var(--font-dm-sans), system-ui, sans-serif;
-  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-  font-weight: 400;
-  line-height: 1.75;
-}
-
-/* EYEBROW — section badge pills */
-.t-eye {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-jakarta), var(--font-dm-sans), system-ui, sans-serif;
-  font-size: 0.72rem;
+/* H2 · SECTION · PLAYFAIR DISPLAY 700 */
+.t-section, h2 {
+  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+/* H3 · CARD · PLAYFAIR DISPLAY 600 */
+.t-card, h3 {
+  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 1.15;
+}
+
+/* BODY · 16PX · SOURCE SANS 3 400 */
+.t-body, p {
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* SMALL · 11PX · SOURCE SANS 3 600 ALL CAPS */
+.t-small-caps, .eyebrow-pill, .t-eye {
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--savanna);
 }
 .t-eye::before {
   content: '';
@@ -426,110 +386,141 @@ h1 em, h2 em, h3 em, h4 em {
   color: var(--text-muted);
 }
 
-/* ── 7. BUTTONS ─────────────────────────────────────────────────────────── */
+/* ── 7. BUTTON SYSTEM (Exact Figma Specifications) ───────────────────────── */
 
-/* Primary — gold pill */
+/* PRIMARY · GOLD FILL */
 .btn-primary, .btn-gold {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: var(--savanna);
-  color: var(--soil);
-  font-family: var(--font-jakarta), system-ui, sans-serif;
-  font-size: 0.85rem;
+  background: #C99A2E;
+  color: #1C1208;
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   text-decoration: none;
-  padding: 0.75rem 1.75rem;
-  border-radius: 9999px;
-  border: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: 2px;
+  border: 1px solid #C99A2E;
   cursor: pointer;
-  transition: all var(--t-base) var(--smooth);
+  transition: all var(--t-base) ease;
   white-space: nowrap;
-  box-shadow: var(--shadow-gold);
 }
 .btn-primary:hover, .btn-gold:hover {
-  background: var(--savanna-glow);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(196, 136, 42, 0.38);
+  background: #D9AA3E;
+  border-color: #D9AA3E;
+  transform: translateY(-1px);
 }
-.btn-primary:active, .btn-gold:active { transform: scale(0.97); }
+.btn-primary:active, .btn-gold:active { transform: translateY(0); }
 
-/* Ghost — outline on dark bg */
-.btn-ghost {
+/* SECONDARY · TERRACOTTA OUTLINE */
+.btn-secondary, .btn-terracotta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   background: transparent;
-  color: var(--cream);
-  font-family: var(--font-jakarta), system-ui, sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 0.75rem 1.75rem;
-  border-radius: 9999px;
-  border: 1.5px solid rgba(251, 247, 240, 0.3);
-  cursor: pointer;
-  transition: all var(--t-base) var(--smooth);
-  white-space: nowrap;
-}
-.btn-ghost:hover {
-  border-color: var(--savanna);
-  color: var(--savanna);
-  background: rgba(196, 136, 42, 0.08);
-  transform: translateY(-2px);
-}
-.btn-ghost:active { transform: scale(0.97); }
-
-/* Outline on light bg */
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: transparent;
-  color: var(--soil);
-  font-family: var(--font-jakarta), system-ui, sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 0.75rem 1.75rem;
-  border-radius: 9999px;
-  border: 1.5px solid var(--parchment);
-  cursor: pointer;
-  transition: all var(--t-base) var(--smooth);
-  white-space: nowrap;
-}
-.btn-outline:hover {
-  border-color: var(--savanna);
-  color: var(--savanna);
-  transform: translateY(-2px);
-}
-
-/* Emerald */
-.btn-emerald {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: var(--grass);
-  color: #FFFFFF;
-  font-family: var(--font-jakarta), system-ui, sans-serif;
-  font-size: 0.85rem;
+  color: #C4602A;
+  border: 1.5px solid #C4602A;
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.78rem;
   font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   text-decoration: none;
-  padding: 0.75rem 1.75rem;
-  border-radius: 9999px;
-  border: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: 2px;
   cursor: pointer;
-  transition: all var(--t-base) var(--smooth);
+  transition: all var(--t-base) ease;
   white-space: nowrap;
 }
-.btn-emerald:hover {
-  background: var(--grass-lt);
-  transform: translateY(-2px);
+.btn-secondary:hover, .btn-terracotta:hover {
+  background: rgba(196, 96, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+/* GHOST · DARK OUTLINE */
+.btn-outline, .btn-ghost-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #1C1208;
+  border: 1.5px solid #1C1208;
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--t-base) ease;
+  white-space: nowrap;
+}
+.btn-outline:hover, .btn-ghost-dark:hover {
+  background: #1C1208;
+  color: #F5F0E8;
+  transform: translateY(-1px);
+}
+
+/* ON DARK · CREAM GHOST */
+.btn-ghost, .btn-on-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #F5F0E8;
+  border: 1.5px solid rgba(245, 240, 232, 0.4);
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--t-base) ease;
+  white-space: nowrap;
+}
+.btn-ghost:hover, .btn-on-dark:hover {
+  border-color: #F5F0E8;
+  background: rgba(245, 240, 232, 0.1);
+  color: #F5F0E8;
+  transform: translateY(-1px);
+}
+
+/* DESTRUCTIVE / CTA · RANCH BROWN FILL (e.g. ADD TO CART) */
+.btn-dark-fill, .btn-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #1C1208;
+  color: #F5F0E8;
+  border: 1px solid #1C1208;
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--t-base) ease;
+  white-space: nowrap;
+}
+.btn-dark-fill:hover, .btn-cart:hover {
+  background: #2E1C08;
+  border-color: #2E1C08;
 }
 
 /* ── 8. FORM INPUTS (Umoja Sacco clean style) ────────────────────────── */

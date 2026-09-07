@@ -12,16 +12,26 @@ interface Props {
 
 export default function BreedCard({ breed, onInspectGenetics }: Props) {
   const src = breed.image ?? imageForBreed(breed.name, breed.species.name);
-  const isAvailable = breed.inStock > 0;
+  const categoryLabel = breed.species.name.toUpperCase().includes("BEEF")
+    ? "BEEF CATTLE"
+    : breed.species.name.toUpperCase().includes("DAIRY")
+    ? "DAIRY CATTLE"
+    : breed.species.name.toUpperCase().includes("GOAT")
+    ? "PEDIGREE GOAT"
+    : breed.species.name.toUpperCase().includes("SHEEP")
+    ? "SAVANNA SHEEP"
+    : `${breed.species.name.toUpperCase()} CATTLE`;
 
   return (
-    <div className="bento-cell cell-dark rounded-3xl overflow-hidden border border-[#C4882A]/20 flex flex-col justify-between h-full bg-[#2E1C08]/90 hover:border-[#C4882A] hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-all duration-300">
-      
+    <div
+      className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-xl group"
+      style={{ borderRadius: "2px" }}
+    >
       {/* ── IMAGE SECTION ── */}
       <div>
         <Link
           href={`/breeds/${breed.id}`}
-          className="relative block h-60 sm:h-68 w-full bg-[#1C1208] overflow-hidden group"
+          className="relative block aspect-[16/10] w-full overflow-hidden bg-[#1C1208]"
         >
           {src ? (
             <Image
@@ -29,85 +39,140 @@ export default function BreedCard({ breed, onInspectGenetics }: Props) {
               alt={breed.name}
               fill
               sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90 group-hover:opacity-100"
+              className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-[#C4882A]/40">
+            <div className="w-full h-full flex items-center justify-center text-[#C4602A]/40">
               <i className="bi bi-award text-4xl" aria-hidden="true" />
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#2E1C08] via-transparent to-transparent opacity-80" />
 
-          {/* Top-left: Category Badge */}
-          <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-[#FBF7F0] px-3.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border border-white/10">
-            {breed.species.name}
-          </div>
-
-          {/* Top-right: Stock Status */}
+          {/* Top-left: Category Badge (Olive Green fill) */}
           <div
-            className={`absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider text-white ${
-              isAvailable
-                ? "bg-emerald-950/80 border border-emerald-500/40 text-emerald-300"
-                : "bg-red-950/80 border border-red-500/40 text-red-300"
-            }`}
+            className="absolute top-3 left-3 text-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+            style={{ backgroundColor: "#6B7A3F", borderRadius: "2px" }}
           >
-            {isAvailable ? `${breed.inStock} Head Available` : "Waitlist"}
+            {categoryLabel}
           </div>
         </Link>
 
         {/* ── DETAILS AREA ── */}
-        <div className="p-6 sm:p-7 space-y-2">
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#C4882A]">
-            <span>{breed.purpose || breed.species.name}</span>
-            <span className="text-white/30">&bull;</span>
-            <span className="text-[#FBF7F0]/60 flex items-center gap-1">
-              <i className="bi bi-geo-alt-fill text-[#C4882A] text-xs" aria-hidden="true" />
-              {breed.origin}
-            </span>
-          </div>
-
+        <div className="p-6">
           <Link
             href={`/breeds/${breed.id}`}
-            className="font-serif text-2xl sm:text-3xl font-light text-[#FBF7F0] leading-snug group-hover:text-[#C4882A] transition-colors m-0 block no-underline"
+            className="font-serif text-2xl md:text-3xl text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A]"
+            style={{
+              fontFamily: "var(--font-playfair), Georgia, serif",
+              fontWeight: 600,
+            }}
           >
             {breed.name}
           </Link>
+
+          {/* Metadata Specs Table */}
+          <div className="mt-5 space-y-2.5 text-xs">
+            <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
+              <span
+                className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{
+                  color: "#8E7E70",
+                  fontFamily: "var(--font-source-sans), sans-serif",
+                }}
+              >
+                HEAD COUNT
+              </span>
+              <span
+                className="font-semibold text-[#1C1208]"
+                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+              >
+                {breed.inStock > 0 ? `${breed.inStock} head` : "Waitlist"}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
+              <span
+                className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{
+                  color: "#8E7E70",
+                  fontFamily: "var(--font-source-sans), sans-serif",
+                }}
+              >
+                ORIGIN
+              </span>
+              <span
+                className="font-semibold text-[#1C1208]"
+                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+              >
+                {breed.origin || "Kenya"}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
+              <span
+                className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+                style={{
+                  color: "#8E7E70",
+                  fontFamily: "var(--font-source-sans), sans-serif",
+                }}
+              >
+                PURPOSE
+              </span>
+              <span
+                className="font-semibold text-[#1C1208]"
+                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+              >
+                {breed.purpose || "Breeding & Beef"}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── FOOTER ROW ── */}
-      <div className="p-6 sm:p-7 pt-4 flex justify-between items-center border-t border-white/10 mt-auto">
-        <div>
-          <div className="t-label text-[9px] text-[#FBF7F0]/50">
-            Price Per Head
-          </div>
-          <div className="font-serif text-xl sm:text-2xl text-[#FBF7F0] font-light mt-0.5">
-            KES {breed.pricePerHead.toLocaleString()}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {onInspectGenetics && (
-            <button
-              type="button"
-              onClick={() => onInspectGenetics(breed)}
-              className="text-xs font-mono font-semibold py-2 px-3 rounded-full tracking-wider uppercase transition-all duration-200 bg-white/10 text-[#FBF7F0] hover:bg-[#C4882A] hover:text-[#1C1208] border border-white/15"
-              aria-label={`Inspect DNA genetics for ${breed.name}`}
-            >
-              <i className="bi bi-dna" aria-hidden="true" />
-            </button>
-          )}
-
-          <Link
-            href={`/breeds/${breed.id}`}
-            className="text-xs font-mono font-semibold py-2 px-4 rounded-full tracking-wider uppercase transition-all duration-200 bg-[#C4882A] text-[#1C1208] hover:bg-[#D99A30] flex items-center gap-1.5 shadow-md no-underline"
+      <div className="p-6 pt-0 flex justify-between items-center mt-auto">
+        <div className="flex items-baseline gap-1">
+          <span
+            className="text-xl md:text-2xl font-bold"
+            style={{
+              color: "#C4602A",
+              fontFamily: "var(--font-playfair), Georgia, serif",
+            }}
           >
-            <span>View</span>
-            <i className="bi bi-arrow-right text-xs" aria-hidden="true" />
-          </Link>
+            KES {breed.pricePerHead.toLocaleString()}
+          </span>
+          <span
+            className="text-xs font-normal"
+            style={{
+              color: "#8E7E70",
+              fontFamily: "var(--font-source-sans), sans-serif",
+            }}
+          >
+            /head
+          </span>
         </div>
-      </div>
 
+        <Link
+          href={`/breeds/${breed.id}`}
+          className="btn-outline"
+          style={{
+            borderRadius: "2px",
+            padding: "0.55rem 1.4rem",
+            fontSize: "0.75rem",
+            letterSpacing: "0.14em",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            border: "1px solid #1C1208",
+            color: "#1C1208",
+            textDecoration: "none",
+            transition: "all 0.2s ease",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          ENQUIRE
+        </Link>
+      </div>
     </div>
   );
 }

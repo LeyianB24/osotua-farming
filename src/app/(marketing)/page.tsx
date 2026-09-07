@@ -1,10 +1,8 @@
 import HeroMaster from "@/components/farm/HeroMaster";
-import MarqueeStrip from "@/components/farm/MarqueeStrip";
 import WhatWeAreBento from "@/components/farm/WhatWeAreBento";
 import BarnStoreBento from "@/components/farm/BarnStoreBento";
-import ScrollytellingSection from "@/components/farm/ScrollytellingSection";
-import TrustBento from "@/components/farm/TrustBento";
-import GetInvolvedBento from "@/components/farm/GetInvolvedBento";
+import ExperienceBannerSection from "@/components/farm/ExperienceBannerSection";
+import RangelandsGallerySection from "@/components/farm/RangelandsGallerySection";
 import SocialShowcaseSection from "@/components/farm/SocialShowcaseSection";
 import BrandQuoteSection from "@/components/farm/BrandQuoteSection";
 import NewsletterSection from "@/components/farm/NewsletterSection";
@@ -12,49 +10,39 @@ import NewsletterSection from "@/components/farm/NewsletterSection";
 export const metadata = {
   title: "Osotua Farming — From Our Land, To Your Table",
   description:
-    "A world-class Kenyan agribusiness platform raising purebred indigenous livestock, cold-pressing artisanal dairy, and harvesting organic provisions across 3,200 acres in Kajiado County.",
+    "A world-class Kenyan agribusiness platform raising purebred indigenous livestock, cold-pressing artisanal dairy, and harvesting organic provisions across 4,200 acres in Kajiado County.",
 };
 
 export default function HomePage() {
   return (
-    <div className="w-full overflow-x-hidden" style={{ background: "#FBF7F0" }}>
-      <h2 className="sr-only">
+    <div className="w-full overflow-x-hidden" style={{ background: "#F5F0E8" }}>
+      <h1 className="sr-only">
         Osotua Farming — Premium Kenyan Agribusiness and Pastoral Rangelands Platform
-      </h2>
+      </h1>
 
-      {/* ── 02. HERO: Dark Soil · Full Viewport · Type-First ── */}
+      {/* ── 01. HERO MASTER: Dark Pastoral · Left Scrim · 4 Stats Strip ── */}
       <HeroMaster />
 
-      {/* ── 03. MARQUEE STRIP: Gold Text · Scrolling Breed Names ── */}
-      <MarqueeStrip theme="gold" />
-
-      {/* ── 04. WHAT WE ARE: Dark Soil · 12-Column Bento Grid ── */}
+      {/* ── 02. PEDIGREE LIVESTOCK: 3 Cards (Boran, Bonsmara, Sahiwal) · Certified Genetics ── */}
       <WhatWeAreBento />
 
-      {/* ── 05. THE BARN STORE: Cream Background (#FBF7F0) · Product Bento ── */}
+      {/* ── 03. THE FARM BARN & HARVEST PANTRY: 6 Provisions Grid · Add to Cart ── */}
       <BarnStoreBento />
 
-      {/* ── 06. MARQUEE STRIP: Green Text · Pasture & Provision Names (Reverse) ── */}
-      <MarqueeStrip theme="green" reverse />
+      {/* ── 04. EXPERIENCE OSOTUA: Visit Our Rangelands Pastoral Banner ── */}
+      <ExperienceBannerSection />
 
-      {/* ── 07. SCROLLYTELLING: Dark Soil · Sticky 3-Chapter Narrative ── */}
-      <ScrollytellingSection />
+      {/* ── 05. EXPERIENCE OUR RANGELANDS: Dark Savanna Photo Gallery ── */}
+      <RangelandsGallerySection />
 
-      {/* ── 08. TRUST BENTO: Three Architectural Pillars ── */}
-      <TrustBento />
-
-      {/* ── 09. SOCIAL SHOWCASE: Instagram & TikTok Rangeland Feed ── */}
+      {/* ── 06. OFFICIAL SOCIAL SHOWCASE: Instagram & TikTok Feed ── */}
       <SocialShowcaseSection />
 
-      {/* ── 10. GET INVOLVED: Hide Brown · 6-Cell Bento ── */}
-      <GetInvolvedBento />
-
-      {/* ── 11. BRAND QUOTE: Cream · Pure Editorial Typography Moment ── */}
+      {/* ── 07. BRAND COVENANT QUOTE ── */}
       <BrandQuoteSection />
 
-      {/* ── 11. NEWSLETTER: Savanna Gold (#C4882A) · Split Layout Gazette ── */}
+      {/* ── 08. NEWSLETTER DISPATCH ── */}
       <NewsletterSection />
-
     </div>
   );
 }
