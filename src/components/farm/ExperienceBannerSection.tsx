@@ -8,8 +8,8 @@ export default function ExperienceBannerSection() {
     <section className="relative w-full py-32 md:py-44 overflow-hidden">
       {/* Background Image */}
       <Image
-        src="/images/hero-rangeland.jpg"
-        alt="Osotua pastoral rangelands with cattle"
+        src="/images/brahman cows.jpg"
+        alt="Osotua pastoral Brahman cattle herd in Kajiado"
         fill
         sizes="100vw"
         priority

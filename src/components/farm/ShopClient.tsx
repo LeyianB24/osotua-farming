@@ -95,28 +95,23 @@ export default function ShopClient({
   }
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-28 pb-24 text-[#1C1208]">
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Header */}
-        <div className="bg-gradient-to-r from-[#FFFFFF] via-[#FAF5EB] to-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-10 shadow-lg shadow-[#1C1208]/04 mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 border border-[#C4882A]/30 text-[#8E5E16] mb-2">
-            <i className="bi bi-basket3-fill text-[#C4882A]" />
-            Farm-to-Table Marketplace
+        <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-10 shadow-sm mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px] mb-3">
+            <i className="bi bi-basket3-fill" />
+            <span>FARM-TO-TABLE MARKETPLACE</span>
           </div>
           <h1
-            style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
-              fontWeight: 400,
-              lineHeight: 1.1,
-              color: "#1C1208",
-            }}
+            className="text-3xl sm:text-5xl font-bold text-[#1C1208] leading-tight m-0"
+            style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
           >
             Direct Cooperative Produce Store
           </h1>
-          <p className="text-xs text-[#5C4835] font-mono mt-1 max-w-xl">
-            Sourced daily from smallholder farmers in Kajiado, Nakuru, and Kiambu. Pesticide-free, organic, and cold-chain dispatched.
+          <p className="text-sm text-[#5C4A2A] mt-2 max-w-xl font-normal">
+            Sourced daily from smallholder pastoralists and growers in Kajiado, Nakuru, and Kiambu. Cold-chain dispatched.
           </p>
         </div>
 
@@ -126,8 +121,8 @@ export default function ShopClient({
           <aside className="lg:col-span-3 space-y-6">
             
             {/* Category Pills Card */}
-            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-2xl p-5 shadow-sm">
-              <h3 className="text-[10px] font-mono tracking-widest uppercase text-[#8E5E16] font-bold mb-3 pb-2 border-b border-[#C4882A]/15">
+            <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-5 shadow-sm">
+              <h3 className="text-[10px] font-mono tracking-widest uppercase text-[#5C4A2A] font-bold mb-3 pb-2 border-b border-[#D4C9B0]">
                 Categories
               </h3>
               <div className="flex flex-col space-y-1">
@@ -143,10 +138,10 @@ export default function ShopClient({
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`text-left px-3.5 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                      className={`text-left px-3.5 py-2 rounded-[2px] text-xs font-semibold uppercase tracking-wider font-mono transition-all cursor-pointer ${
                         active
-                          ? "bg-[#C4882A] text-white font-bold shadow-xs"
-                          : "text-[#5C4835] hover:text-[#1C1208] hover:bg-[#FAF5EB]"
+                          ? "bg-[#C99A2E] text-[#1C1208] shadow-xs"
+                          : "text-[#5C4A2A] hover:text-[#1C1208] hover:bg-[#EDE6DA]"
                       }`}
                     >
                       {cat}
@@ -157,8 +152,8 @@ export default function ShopClient({
             </div>
 
             {/* Farm Cooperative Filters */}
-            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-2xl p-5 shadow-sm">
-              <h3 className="text-[10px] font-mono tracking-widest uppercase text-[#8E5E16] font-bold mb-3 pb-2 border-b border-[#C4882A]/15">
+            <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-5 shadow-sm">
+              <h3 className="text-[10px] font-mono tracking-widest uppercase text-[#5C4A2A] font-bold mb-3 pb-2 border-b border-[#D4C9B0]">
                 Partner Cooperatives
               </h3>
               <div className="flex flex-col space-y-2.5">
@@ -167,15 +162,15 @@ export default function ShopClient({
                   return (
                     <label
                       key={farm}
-                      className="flex items-center gap-2.5 text-xs text-[#1C1208] hover:text-[#C4882A] cursor-pointer select-none"
+                      className="flex items-center gap-2.5 text-xs text-[#1C1208] hover:text-[#C99A2E] cursor-pointer select-none font-mono uppercase tracking-wider"
                     >
                       <input
                         type="checkbox"
                         checked={checked}
                         onChange={() => handleFarmToggle(farm)}
-                        className="w-4 h-4 rounded border-[#C4882A]/40 bg-[#FAF5EB] text-[#C4882A] focus:ring-0 cursor-pointer accent-[#C4882A]"
+                        className="w-4 h-4 rounded-[2px] border-[#D4C9B0] bg-white text-[#C99A2E] focus:ring-0 cursor-pointer accent-[#C99A2E]"
                       />
-                      <span className="font-medium">{farm}</span>
+                      <span>{farm}</span>
                     </label>
                   )
                 })}
@@ -187,15 +182,15 @@ export default function ShopClient({
           <main className="lg:col-span-9 space-y-6">
             
             {/* Top Toolbar */}
-            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="relative w-full sm:max-w-md">
-                <i className="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8E5E16] text-xs" />
+                <i className="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8E7E70] text-xs" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search harvest by name or variety..."
-                  className="w-full bg-[#FAF5EB] border border-[#C4882A]/25 rounded-xl pl-9 pr-4 py-2.5 text-xs text-[#1C1208] placeholder-[#786550] outline-none focus:border-[#C4882A]"
+                  className="w-full bg-[#FFFFFF] border border-[#D4C9B0] rounded-[2px] pl-9 pr-4 py-2 text-xs text-[#1C1208] placeholder-[#8E7E70] outline-none focus:border-[#C99A2E]"
                 />
               </div>
 
@@ -203,7 +198,7 @@ export default function ShopClient({
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-[#FAF5EB] border border-[#C4882A]/25 rounded-xl px-3.5 py-2.5 text-xs text-[#1C1208] font-medium outline-none focus:border-[#C4882A] cursor-pointer"
+                  className="bg-[#FFFFFF] border border-[#D4C9B0] rounded-[2px] px-3.5 py-2 text-xs text-[#1C1208] font-mono uppercase tracking-wider outline-none focus:border-[#C99A2E] cursor-pointer"
                 >
                   <option value="freshest">Sort: Freshest Harvest</option>
                   <option value="price-asc">Price: Low to High</option>
@@ -214,7 +209,7 @@ export default function ShopClient({
 
             {/* Product Cards */}
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => {
                   const farm = getProductFarm(product)
                   const isAdded = addedId === product.id
@@ -222,13 +217,13 @@ export default function ShopClient({
                   return (
                     <div
                       key={product.id}
-                      className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-5 shadow-lg shadow-[#1C1208]/04 hover:border-[#C4882A] hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                      className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-5 shadow-sm hover:border-[#C99A2E] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
                     >
                       <div>
                         {/* Media container */}
                         <Link
                           href={`/shop/${product.slug || product.id}`}
-                          className="w-full h-44 rounded-2xl bg-[#FAF5EB] border border-[#C4882A]/15 relative overflow-hidden mb-3.5 block"
+                          className="w-full h-44 rounded-[2px] bg-[#1C1208] border border-[#D4C9B0] relative overflow-hidden mb-3.5 block"
                         >
                           {product.image ? (
                             <Image
@@ -238,43 +233,46 @@ export default function ShopClient({
                               className="object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-[#C4882A]">
+                            <div className="w-full h-full flex items-center justify-center text-[#C99A2E]">
                               <i className="bi bi-basket text-4xl" />
                             </div>
                           )}
+                          <div className="absolute top-2.5 left-2.5">
+                            <span className="text-[9px] font-mono font-bold tracking-[0.14em] uppercase px-2 py-0.5 bg-[#6B7A3F] text-white rounded-[2px]">
+                              {farm}
+                            </span>
+                          </div>
                         </Link>
-
-                        {/* Farm name badge */}
-                        <div className="text-[10px] font-mono text-[#2E7D32] font-bold uppercase tracking-wider mb-1">
-                          <i className="bi bi-geo-alt-fill mr-1" />
-                          {farm}
-                        </div>
 
                         {/* Title */}
                         <Link
                           href={`/shop/${product.slug || product.id}`}
-                          className="font-serif text-lg font-normal text-[#1C1208] hover:text-[#C4882A] transition-colors block leading-tight mb-2 truncate"
+                          className="font-serif text-xl font-semibold text-[#1C1208] hover:text-[#C4602A] transition-colors block leading-tight mb-2 truncate"
+                          style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                         >
                           {product.name}
                         </Link>
                       </div>
 
                       {/* Price & Add to Cart */}
-                      <div className="flex items-center justify-between pt-3 border-t border-[#C4882A]/15 mt-2">
+                      <div className="flex items-center justify-between pt-3 border-t border-[#D4C9B0]/70 mt-3">
                         <div>
-                          <span className="font-mono text-sm font-bold text-[#1C1208]">
+                          <span
+                            className="text-lg font-bold text-[#C4602A]"
+                            style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                          >
                             KES {product.price}
-                            <span className="text-[11px] text-[#786550] font-normal ml-1">/{product.unit}</span>
                           </span>
+                          <span className="text-xs text-[#8E7E70] font-mono ml-1">/{product.unit}</span>
                         </div>
 
                         <button
                           onClick={() => handleAddToCart(product)}
                           aria-label={`Add ${product.name} to cart`}
-                          className={`btn-primary py-1.5 px-3 text-xs font-mono font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+                          className={`btn-cart py-1.5 px-3 text-[11px] font-mono font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
                             isAdded
-                              ? "bg-[#2E7D32] border-[#2E7D32] text-white"
-                              : "shadow-xs"
+                              ? "bg-[#6B7A3F] border-[#6B7A3F] text-white"
+                              : ""
                           }`}
                         >
                           {isAdded ? (
@@ -295,8 +293,8 @@ export default function ShopClient({
                 })}
               </div>
             ) : (
-              <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-12 text-center text-[#786550] text-xs font-mono">
-                <i className="bi bi-basket text-4xl text-[#C4882A]/40 block mb-2" />
+              <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-12 text-center text-[#8E7E70] text-xs font-mono uppercase tracking-wider">
+                <i className="bi bi-basket text-4xl text-[#C99A2E]/40 block mb-2" />
                 No produce items found matching your filters.
               </div>
             )}

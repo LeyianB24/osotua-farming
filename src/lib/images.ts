@@ -6,22 +6,22 @@ export const LOGO = "/logo.png"
 
 const img = (p: string) => `/images/${p}`
 
-// ── Background / hero / section imagery (anonymous ranch shots) ──
-export const HERO_IMAGE = img("WhatsApp Image 2026-08-10 at 11.56.51.jpeg")
-export const RANCH_WIDE = img("R.jpg")
-export const RANCH_PANO = img("2400x0.jpg")
+// ── Background / hero / section imagery (authentic ranch shots) ──
+export const HERO_IMAGE = img("brahman cows.jpg")
+export const RANCH_WIDE = img("brahman cows.jpg")
+export const RANCH_PANO = img("brahman cows.jpg")
 export const FIELD_DAY = img("WhatsApp Image 2026-08-10 at 11.56.50.jpeg")
 export const HERD_FIELD = img("WhatsApp Image 2026-08-10 at 11.55.21.jpeg")
 export const RANGELANDS_HERD = img("osotua-rangelands-herd.jpg")
 
-// Anonymous WhatsApp ranch photos — used only in slideshows/galleries.
+// Authentic ranch photos — used in slideshows/galleries.
 export const RANCH_GALLERY: string[] = [
   img("WhatsApp Image 2026-08-10 at 11.55.21.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.22.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.23.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.56.42.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.56.43.jpeg"),
-  img("WhatsApp Image 2026-08-10 at 11.56.44.jpeg"),
+  img("WhatsApp Image 2026-08-10 at 11.56.44 (1).jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.24.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.25.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.26.jpeg"),
@@ -32,8 +32,8 @@ export const RANCH_GALLERY: string[] = [
   img("WhatsApp Image 2026-08-10 at 11.56.45.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.56.48.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.56.49.jpeg"),
-  img("WhatsApp Image 2026-08-10 at 11.56.52.jpeg"),
-  img("WhatsApp Image 2026-08-10 at 11.55.12.jpeg"),
+  img("WhatsApp Image 2026-08-10 at 11.56.52 (1).jpeg"),
+  img("WhatsApp Image 2026-08-10 at 11.55.12 (1).jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.13.jpeg"),
 ]
 

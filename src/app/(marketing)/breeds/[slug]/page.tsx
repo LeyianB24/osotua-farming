@@ -20,35 +20,21 @@ export default async function BreedDetailPage({
   const src = breed.image ?? imageForBreed(breed.name, breed.species.name)
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-24">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Breadcrumb */}
-        <div className="font-mono text-[11px] text-[#786550] tracking-wide mb-8 flex items-center gap-2">
-          <Link href="/breeds" className="hover:text-[#C4882A] transition-colors font-bold">Breeds</Link>
+        <div className="font-mono text-[11px] text-[#8E7E70] tracking-wider uppercase mb-8 flex items-center gap-2">
+          <Link href="/breeds" className="hover:text-[#C99A2E] transition-colors font-bold">
+            Breeds
+          </Link>
           <span>/</span>
-          <span className="text-[#1C1208]">{breed.name}</span>
+          <span className="text-[#1C1208] font-semibold">{breed.name}</span>
         </div>
 
-        <div
-          style={{
-            background: "#FFFFFF",
-            border: "1px solid rgba(196, 136, 42, 0.25)",
-            borderRadius: "28px",
-            boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
-          }}
-          className="p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12"
-        >
+        <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 shadow-sm">
           {/* Image */}
-          <div
-            style={{
-              borderRadius: "20px",
-              overflow: "hidden",
-              border: "1px solid rgba(196, 136, 42, 0.2)",
-              boxShadow: "0 10px 30px rgba(196, 136, 42, 0.1)",
-            }}
-            className="relative bg-gradient-to-br from-[#FAF5EB] to-[#F5EFE4] h-80 lg:h-[28rem] flex items-center justify-center"
-          >
+          <div className="relative bg-[#1C1208] border border-[#D4C9B0] rounded-[2px] overflow-hidden h-80 lg:h-[28rem] flex items-center justify-center">
             {src ? (
               <Image
                 src={src}
@@ -59,20 +45,34 @@ export default async function BreedDetailPage({
                 className="object-cover"
               />
             ) : (
-              <span className="text-[#C4882A]/40 text-7xl flex items-center justify-center">
+              <span className="text-[#C99A2E]/40 text-7xl flex items-center justify-center">
                 <i className="bi bi-shield-check" />
               </span>
             )}
+            <div className="absolute top-3 left-3">
+              <span className="text-[10px] font-mono font-bold tracking-[0.14em] uppercase px-2.5 py-1 bg-[#6B7A3F] text-white rounded-[2px]">
+                {breed.species.name}
+              </span>
+            </div>
           </div>
 
           {/* Details */}
           <div className="flex flex-col justify-between">
             <div>
-              <span className="font-mono text-[10px] text-[#8E5E16] font-bold tracking-widest uppercase">
-                {breed.species.name} · {breed.purpose}
-              </span>
-              <h1 className="font-serif text-4xl sm:text-5xl font-normal text-[#1C1208] mt-2 mb-4">{breed.name}</h1>
-              <p className="text-[#5C4835] leading-relaxed mb-8 text-base">{breed.description}</p>
+              <div className="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px] mb-3">
+                <span>{breed.purpose} LIVESTOCK</span>
+              </div>
+
+              <h1
+                className="text-4xl sm:text-5xl font-bold text-[#1C1208] mb-4"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
+                {breed.name}
+              </h1>
+
+              <p className="text-[#5C4A2A] leading-relaxed mb-8 text-base font-normal">
+                {breed.description}
+              </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {[
@@ -83,47 +83,61 @@ export default async function BreedDetailPage({
                 ].map((item) => (
                   <div
                     key={item.label}
-                    style={{
-                      background: "#FAF8F5",
-                      border: "1px solid rgba(196, 136, 42, 0.18)",
-                      borderRadius: "14px",
-                    }}
-                    className="p-4"
+                    className="bg-[#FFFFFF] border border-[#D4C9B0] rounded-[2px] p-4"
                   >
-                    <div className="font-mono text-[9px] text-[#8E5E16] font-bold tracking-widest uppercase mb-1">{item.label}</div>
-                    <div className="font-serif text-base text-[#1C1208] font-medium">{item.value}</div>
+                    <div className="font-mono text-[9px] text-[#8E7E70] font-bold tracking-widest uppercase mb-1">
+                      {item.label}
+                    </div>
+                    <div
+                      className="text-base text-[#1C1208] font-bold"
+                      style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                    >
+                      {item.value}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
             <div>
-              <div className="border-t border-[#C4882A]/20 pt-6 flex items-center justify-between mb-6">
+              <div className="border-t border-[#D4C9B0] pt-6 flex items-center justify-between mb-6">
                 <div>
-                  <div className="font-mono text-[9px] text-[#786550] font-bold tracking-widest uppercase mb-1">Price Per Head</div>
-                  <div className="font-serif text-3xl text-[#C4882A] font-bold">
+                  <div className="font-mono text-[9px] text-[#8E7E70] font-bold tracking-widest uppercase mb-1">
+                    Price Per Head
+                  </div>
+                  <div
+                    className="text-3xl text-[#C4602A] font-bold"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                  >
                     KES {breed.pricePerHead.toLocaleString()}
                   </div>
                 </div>
                 <div>
-                  <div className="font-mono text-[9px] text-[#786550] font-bold tracking-widest uppercase mb-1">Available</div>
-                  <div className="font-serif text-3xl text-[#2E7D32] font-bold">{breed.inStock}</div>
+                  <div className="font-mono text-[9px] text-[#8E7E70] font-bold tracking-widest uppercase mb-1 text-right">
+                    Available
+                  </div>
+                  <div
+                    className="text-3xl text-[#6B7A3F] font-bold text-right"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                  >
+                    {breed.inStock} Head
+                  </div>
                 </div>
               </div>
 
               <div className="flex gap-4">
                 <Link
                   href={`/checkout?breed=${breed.id}`}
-                  className="btn-primary flex-1 justify-center py-3.5 text-center text-sm"
+                  className="btn-gold flex-1 justify-center"
                 >
-                  Place Order
+                  <span>Order Breeding Stock</span>
+                  <i className="bi bi-arrow-right" />
                 </Link>
                 <Link
                   href="/contact"
-                  className="btn-ghost py-3.5 px-6 text-sm"
-                  style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
+                  className="btn-outline"
                 >
-                  Enquire
+                  <span>Enquire</span>
                 </Link>
               </div>
             </div>

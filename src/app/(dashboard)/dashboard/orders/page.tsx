@@ -16,88 +16,60 @@ export default async function CustomerOrdersPage() {
   })
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }}>
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208]">
       {/* ── HERO ── */}
-      <div
-        className="bg-mesh-earth noise"
-        style={{ paddingTop: "6rem", paddingBottom: "3rem", position: "relative", overflow: "hidden" }}
-      >
-        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
-            Member Portal
+      <section className="relative pt-32 pb-16 overflow-hidden bg-[#1C1208]">
+        <div className="os-container relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[2px] text-[11px] font-mono font-bold uppercase tracking-[0.16em] bg-[#6B7A3F] text-white mb-4">
+            <i className="bi bi-clock-history text-xs" />
+            <span>MEMBER PORTAL</span>
           </div>
           <h1
-            style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(2.5rem, 5vw, 3.8rem)",
-              fontWeight: 400,
-              color: "#1C1208",
-              lineHeight: 1.05,
-            }}
+            className="text-4xl sm:text-6xl font-bold text-[#F5F0E8] leading-tight m-0"
+            style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
           >
-            My <em style={{ color: "#C4882A", fontStyle: "italic" }}>Order History</em>
+            My <em className="font-normal italic text-[#C99A2E]">Order History</em>
           </h1>
-          <p style={{ color: "#5C4835", maxWidth: "520px", marginTop: "0.75rem", fontSize: "0.95rem" }}>
+          <p className="text-sm text-[#F5F0E8]/80 max-w-lg mt-2 font-normal">
             Complete audit ledger of your livestock purchases, Barn Store orders, and live delivery tracking.
           </p>
         </div>
-      </div>
+      </section>
 
       {/* ── CONTENT ── */}
-      <section style={{ padding: "3rem 0 6rem" }}>
-        <div className="os-container" style={{ position: "relative", zIndex: 1, maxWidth: "960px" }}>
+      <section className="py-16 sm:py-24 bg-[#F5F0E8]">
+        <div className="os-container max-w-4xl">
           {orders.length > 0 ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <div className="space-y-6">
               {orders.map((order) => (
                 <div
                   key={order.id}
-                  style={{
-                    borderRadius: "24px",
-                    overflow: "hidden",
-                    background: "#FFFFFF",
-                    border: "1px solid rgba(196, 136, 42, 0.22)",
-                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
-                  }}
+                  className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] overflow-hidden shadow-sm"
                 >
                   {/* Order header row */}
-                  <div
-                    style={{
-                      padding: "1.25rem 1.75rem",
-                      background: "rgba(250, 245, 235, 0.85)",
-                      borderBottom: "1px solid rgba(196, 136, 42, 0.15)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                      gap: "1rem",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                      <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.85rem", fontWeight: 700, color: "#C4882A" }}>
+                  <div className="p-5 sm:p-6 bg-white border-b border-[#D4C9B0] flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-sm font-bold text-[#C4602A]">
                         #{order.id.slice(-8).toUpperCase()}
                       </span>
-                      <span style={{ color: "#786550", fontSize: "0.8rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
-                        {new Date(order.createdAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
+                      <span className="text-xs font-mono text-[#8E7E70]">
+                        &bull; {new Date(order.createdAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
                       </span>
                     </div>
 
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                      <span style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif", fontSize: "1.6rem", fontWeight: 600, color: "#1C1208" }}>
+                    <div className="flex items-center gap-4">
+                      <span
+                        className="text-xl font-bold text-[#1C1208]"
+                        style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                      >
                         KES {order.totalAmount.toLocaleString()}
                       </span>
                       <span
-                        style={{
-                          fontFamily: "var(--font-space-grotesk), monospace",
-                          fontSize: "0.6rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.14em",
-                          textTransform: "uppercase",
-                          padding: "0.3rem 0.75rem",
-                          borderRadius: "100px",
-                          background: order.status === "DELIVERED" ? "rgba(46,125,50,0.12)" : "rgba(196,136,42,0.12)",
-                          border: order.status === "DELIVERED" ? "1px solid rgba(46,125,50,0.35)" : "1px solid rgba(196,136,42,0.35)",
-                          color: order.status === "DELIVERED" ? "#2E7D32" : "#8E5E16",
-                        }}
+                        className={`font-mono text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-[2px] ${
+                          order.status === "DELIVERED"
+                            ? "bg-[#6B7A3F] text-white"
+                            : "bg-[#C99A2E] text-[#1C1208]"
+                        }`}
                       >
                         {order.status}
                       </span>
@@ -105,35 +77,29 @@ export default async function CustomerOrdersPage() {
                   </div>
 
                   {/* Order items */}
-                  <div style={{ padding: "1.25rem 1.75rem" }}>
+                  <div className="p-5 sm:p-6 space-y-3">
                     {order.items.map((item) => (
                       <div
                         key={item.id}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          padding: "0.65rem 0",
-                          borderBottom: "1px solid rgba(196, 136, 42, 0.1)",
-                        }}
+                        className="flex justify-between items-center py-2 border-b border-[#D4C9B0]/50 text-xs"
                       >
-                        <span style={{ color: "#1C1208", fontSize: "0.9rem", fontWeight: 500 }}>
+                        <span className="font-semibold text-[#1C1208]">
                           {item.breed?.name || item.product?.name || "Farm Item"}
                         </span>
-                        <span style={{ fontFamily: "var(--font-space-grotesk), monospace", color: "#786550", fontSize: "0.85rem", fontWeight: 600 }}>
+                        <span className="font-mono text-[#5C4A2A]">
                           {item.quantity} × KES {item.unitPrice.toLocaleString()}
                         </span>
                       </div>
                     ))}
 
-                    <div className="pt-4 flex items-center justify-between flex-wrap gap-3">
-                      <div className="text-xs text-[#5C4835]">
-                        <i className="bi bi-geo-alt-fill text-[#C4882A] mr-1" />
+                    <div className="pt-4 flex items-center justify-between flex-wrap gap-4">
+                      <div className="text-xs text-[#5C4A2A]">
+                        <i className="bi bi-geo-alt-fill text-[#C99A2E] mr-1.5" />
                         {order.deliveryAddress || "Ranch Collection Depot"}
                       </div>
                       <Link
                         href={`/orders/${order.id}`}
-                        className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5 shadow-xs"
+                        className="btn-gold text-xs"
                       >
                         <i className="bi bi-eye-fill" />
                         <span>View Order Details &amp; Tracking</span>
@@ -144,31 +110,20 @@ export default async function CustomerOrdersPage() {
               ))}
             </div>
           ) : (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "5rem 2rem",
-                borderRadius: "24px",
-                background: "#FFFFFF",
-                border: "1px solid rgba(196, 136, 42, 0.22)",
-                boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
-              }}
-            >
-              <i className="bi bi-box-seam" style={{ fontSize: "3rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1.25rem" }} />
+            <div className="text-center py-20 px-6 bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] shadow-sm">
+              <i className="bi bi-box-seam text-5xl text-[#C99A2E]/40 block mb-4" />
               <h2
-                style={{
-                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "2.4rem", fontWeight: 400, color: "#1C1208", marginBottom: "0.75rem",
-                }}
+                className="text-3xl font-bold text-[#1C1208] mb-2"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
               >
                 No Orders Yet
               </h2>
-              <p style={{ color: "#5C4835", fontSize: "0.9rem", marginBottom: "2rem" }}>
+              <p className="text-sm text-[#5C4A2A] mb-8 max-w-sm mx-auto">
                 You haven&apos;t placed any orders yet. Visit the Barn Store or explore our livestock catalog.
               </p>
-              <Link href="/barn" className="btn-primary">
+              <Link href="/barn" className="btn-gold">
                 <i className="bi bi-shop" />
-                Shop Barn Store
+                <span>Shop Barn Store</span>
               </Link>
             </div>
           )}

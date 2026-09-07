@@ -17,8 +17,8 @@ export default function HeroMaster() {
         {/* Photographic Savanna Background */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/hero-rangeland.jpg"
-            alt="Osotua rangeland pastures with cattle"
+            src="/images/brahman cows.jpg"
+            alt="Osotua pastoral Brahman cattle herd in Kajiado"
             fill
             priority
             sizes="100vw"

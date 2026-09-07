@@ -70,41 +70,35 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
   );
 
   return (
-    <div
-      style={{
-        background: "linear-gradient(180deg, #FAF6EE 0%, #F5EFE4 100%)",
-        minHeight: "100vh",
-      }}
-      className="pt-28 pb-24 text-[#1C1208]"
-    >
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Control Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-          <div className="flex items-center gap-2 text-xs font-mono text-[#786550]">
-            <Link href="/" className="hover:text-[#C4882A] transition-colors font-bold flex items-center gap-1">
+          <div className="flex items-center gap-2 text-[11px] font-mono text-[#8E7E70] uppercase tracking-wider">
+            <Link href="/" className="hover:text-[#C99A2E] transition-colors font-bold flex items-center gap-1">
               <i className="bi bi-house-door" /> Home
             </Link>
-            <span className="text-[#C4882A]/50">/</span>
-            <Link href="/dashboard/orders" className="hover:text-[#C4882A] transition-colors font-bold">
+            <span>/</span>
+            <Link href="/dashboard/orders" className="hover:text-[#C99A2E] transition-colors font-bold">
               Orders
             </Link>
-            <span className="text-[#C4882A]/50">/</span>
+            <span>/</span>
             <span className="text-[#1C1208] font-bold font-mono tracking-wider">#{shortId}</span>
           </div>
 
           <div className="flex items-center gap-3 print:hidden">
             <button
               onClick={handlePrint}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-[#FFFFFF] hover:bg-[#FAF6EE] text-[#1C1208] border border-[#C4882A]/30 shadow-xs transition-all cursor-pointer"
+              className="btn-outline text-xs cursor-pointer"
             >
-              <i className="bi bi-printer text-sm text-[#C4882A]" />
+              <i className="bi bi-printer text-sm" />
               <span>Print Invoice</span>
             </button>
             <a
               href={`https://wa.me/254755758208?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-[#2E7D32] hover:bg-[#256327] text-[#FFFFFF] shadow-sm transition-all"
+              className="btn-gold text-xs"
             >
               <i className="bi bi-whatsapp text-sm" />
               <span>Ranch Concierge</span>
@@ -113,26 +107,21 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
         </div>
 
         {/* ── HERO INVOICE HEADER CARD ── */}
-        <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-10 shadow-lg shadow-[#1C1208]/04 mb-8 relative overflow-hidden">
-          {/* Subtle background glow */}
-          <div
-            className="absolute top-0 right-0 w-96 h-96 pointer-events-none"
-            style={{
-              background: "radial-gradient(circle at top right, rgba(196, 136, 42, 0.12) 0%, transparent 70%)",
-            }}
-          />
-
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-[#C4882A]/15 relative z-10">
+        <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-10 shadow-sm mb-8 relative overflow-hidden">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-[#D4C9B0] relative z-10">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 border border-[#C4882A]/30 text-[#8E5E16] mb-3">
-                <i className="bi bi-patch-check-fill text-[#C4882A]" />
-                Official Ranch Invoice &amp; Live Tracking
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] text-[10px] font-mono font-bold uppercase tracking-widest bg-[#6B7A3F] text-white mb-3">
+                <i className="bi bi-patch-check-fill text-xs" />
+                <span>OFFICIAL RANCH INVOICE &bull; DISPATCH TRACKING</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#1C1208] font-normal tracking-tight">
-                Order <span className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-[#C4882A] tracking-wider ml-1">#{shortId}</span>
+              <h1
+                className="text-3xl sm:text-5xl font-bold text-[#1C1208] leading-tight"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
+                Order <span className="font-mono text-[#C4602A] ml-1">#{shortId}</span>
               </h1>
               <p className="text-xs text-[#5C4835] mt-2 font-mono flex items-center gap-2">
-                <i className="bi bi-calendar3 text-[#C4882A]" />
+                <i className="bi bi-calendar3 text-[#C99A2E]" />
                 <span>
                   Placed on {new Date(order.createdAt).toLocaleDateString("en-KE", {
                     day: "numeric",
@@ -146,27 +135,18 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
             </div>
 
             <div className="flex flex-col sm:items-end shrink-0">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold mb-1.5">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#5C4A2A] font-bold mb-1.5">
                 Current Fulfillment State
               </span>
               <div
-                className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-mono font-bold uppercase tracking-wider ${
+                className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider ${
                   isCancelled
                     ? "bg-[#FEF2F2] border border-[#FCA5A5] text-[#DC2626]"
                     : order.status === "DELIVERED"
-                    ? "bg-[#2E7D32]/15 border border-[#2E7D32]/35 text-[#2E7D32]"
-                    : "bg-[#C4882A]/15 border border-[#C4882A]/35 text-[#8E5E16]"
+                    ? "bg-[#6B7A3F] text-white"
+                    : "bg-[#C99A2E] text-[#1C1208]"
                 }`}
               >
-                <span
-                  className={`w-2.5 h-2.5 rounded-full ${
-                    isCancelled
-                      ? "bg-[#DC2626]"
-                      : order.status === "DELIVERED"
-                      ? "bg-[#2E7D32]"
-                      : "bg-[#C4882A] animate-pulse"
-                  }`}
-                />
                 <span>{order.status.replace("_", " ")}</span>
               </div>
             </div>
@@ -182,22 +162,22 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
                   return (
                     <div
                       key={step.key}
-                      className={`relative p-4 rounded-2xl border transition-all ${
+                      className={`relative p-4 rounded-[2px] border transition-all ${
                         isCurrent
-                          ? "bg-[#FAF5EB] border-[#C4882A] ring-2 ring-[#C4882A]/25 shadow-xs"
+                          ? "bg-white border-[#C99A2E] shadow-sm"
                           : isDone
-                          ? "bg-[#F3F9F3] border-[#2E7D32]/30 text-[#1C1208]"
-                          : "bg-[#FAF8F5]/60 border-[#C4882A]/15 opacity-70"
+                          ? "bg-[#F3F9F3] border-[#6B7A3F]/40 text-[#1C1208]"
+                          : "bg-white/60 border-[#D4C9B0] opacity-60"
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2 mb-2">
                         <div
-                          className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold font-mono ${
+                          className={`w-7 h-7 rounded-[2px] flex items-center justify-center text-xs font-bold font-mono ${
                             isCurrent
-                              ? "bg-[#C4882A] text-[#FFFFFF] shadow-sm shadow-[#C4882A]/40"
+                              ? "bg-[#C99A2E] text-[#1C1208]"
                               : isDone
-                              ? "bg-[#2E7D32] text-[#FFFFFF]"
-                              : "bg-[#EAE4D7] text-[#786550]"
+                              ? "bg-[#6B7A3F] text-white"
+                              : "bg-[#D4C9B0] text-[#1C1208]"
                           }`}
                         >
                           {isDone && !isCurrent ? (
@@ -208,18 +188,18 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
                         </div>
                         <i
                           className={`bi ${step.icon} text-sm ${
-                            isCurrent ? "text-[#C4882A]" : isDone ? "text-[#2E7D32]" : "text-[#786550]/60"
+                            isCurrent ? "text-[#C99A2E]" : isDone ? "text-[#6B7A3F]" : "text-[#8E7E70]"
                           }`}
                         />
                       </div>
                       <div
                         className={`text-xs font-bold uppercase tracking-wider font-mono ${
-                          isCurrent ? "text-[#C4882A]" : isDone ? "text-[#1C1208]" : "text-[#786550]"
+                          isCurrent ? "text-[#C99A2E]" : isDone ? "text-[#1C1208]" : "text-[#8E7E70]"
                         }`}
                       >
                         {step.label}
                       </div>
-                      <div className="text-[11px] text-[#5C4835] mt-1 leading-tight">{step.desc}</div>
+                      <div className="text-[11px] text-[#5C4835] mt-1 leading-tight font-normal">{step.desc}</div>
                     </div>
                   );
                 })}
@@ -228,11 +208,11 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
           )}
 
           {isCancelled && (
-            <div className="mt-6 p-5 rounded-2xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-3">
+            <div className="mt-6 p-5 rounded-[2px] bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-3">
               <i className="bi bi-x-circle-fill text-[#DC2626] text-2xl shrink-0" />
               <div>
                 <p className="font-bold text-sm">This order has been cancelled.</p>
-                <p className="text-[11px] text-[#7F1D1D] mt-0.5">
+                <p className="text-xs text-[#7F1D1D] mt-0.5 font-normal">
                   If payment was initiated, our treasury concierge will issue a full automated refund or ranch store credit.
                 </p>
               </div>
@@ -244,15 +224,18 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left 7 cols: Items Table & Totals */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04">
-              <div className="flex items-center justify-between pb-4 border-b border-[#C4882A]/15 mb-4">
-                <h2 className="font-serif text-2xl text-[#1C1208] font-normal">
-                  Ranch Harvested Items <span className="text-sm font-mono text-[#8E5E16] font-bold">({order.items.length})</span>
+            <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center justify-between pb-4 border-b border-[#D4C9B0] mb-4">
+                <h2
+                  className="text-2xl font-bold text-[#1C1208]"
+                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                >
+                  Ranch Harvested Items <span className="text-sm font-mono text-[#6B7A3F] font-bold">({order.items.length})</span>
                 </h2>
-                <span className="text-[11px] font-mono uppercase text-[#786550]">Cold-Packed</span>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E7E70]">Cold-Packed</span>
               </div>
 
-              <div className="divide-y divide-[#C4882A]/12">
+              <div className="divide-y divide-[#D4C9B0]/60">
                 {order.items.map((item) => {
                   const title = item.product?.name || item.breed?.name || "Ranch Product";
                   const image = item.product?.image || item.breed?.image;
@@ -261,7 +244,7 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
                   return (
                     <div key={item.id} className="py-4 flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3.5 min-w-0">
-                        <div className="w-14 h-14 rounded-2xl bg-[#FAF5EB] border border-[#C4882A]/20 relative overflow-hidden shrink-0 flex items-center justify-center text-[#C4882A]">
+                        <div className="w-14 h-14 rounded-[2px] bg-[#1C1208] border border-[#D4C9B0] relative overflow-hidden shrink-0 flex items-center justify-center text-[#C99A2E]">
                           {image ? (
                             <Image src={image} alt={title} fill className="object-cover" />
                           ) : (
@@ -270,17 +253,19 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
                         </div>
 
                         <div className="min-w-0">
-                          <h4 className="text-sm font-bold text-[#1C1208] truncate hover:text-[#C4882A] transition-colors">
+                          <h4 className="text-sm font-bold text-[#1C1208] truncate">
                             {title}
                           </h4>
-                          <div className="font-mono text-xs text-[#786550] mt-0.5">
+                          <div className="font-mono text-xs text-[#8E7E70] mt-0.5">
                             {item.quantity} × KES {item.unitPrice.toLocaleString()} <span className="text-[10px]">/{unit}</span>
                           </div>
                         </div>
                       </div>
 
                       <div className="text-right shrink-0">
-                        <div className="font-mono text-sm sm:text-base font-bold text-[#1C1208]">
+                        <div
+                          className="font-mono text-sm sm:text-base font-bold text-[#C4602A]"
+                        >
                           KES {item.totalPrice.toLocaleString()}
                         </div>
                       </div>
@@ -290,7 +275,7 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
               </div>
 
               {/* Financial Calculation Breakdown */}
-              <div className="mt-6 pt-6 border-t border-[#C4882A]/20 space-y-2.5">
+              <div className="mt-6 pt-6 border-t border-[#D4C9B0] space-y-2.5">
                 <div className="flex justify-between text-xs text-[#5C4835]">
                   <span>Items Subtotal</span>
                   <span className="font-mono font-bold text-[#1C1208]">
@@ -299,11 +284,16 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
                 </div>
                 <div className="flex justify-between text-xs text-[#5C4835]">
                   <span>Refrigerated Cold-Chain Dispatch</span>
-                  <span className="font-mono text-[#2E7D32] font-bold">Complimentary</span>
+                  <span className="font-mono text-[#6B7A3F] font-bold">Complimentary</span>
                 </div>
-                <div className="flex justify-between items-center text-base pt-4 border-t border-[#C4882A]/20">
-                  <span className="font-serif text-lg font-bold text-[#1C1208]">Grand Total Amount</span>
-                  <span className="font-mono text-xl sm:text-2xl font-bold text-[#C4882A]">
+                <div className="flex justify-between items-center text-base pt-4 border-t border-[#D4C9B0]">
+                  <span
+                    className="font-bold text-[#1C1208]"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                  >
+                    Grand Total Amount
+                  </span>
+                  <span className="font-mono text-2xl font-bold text-[#C4602A]">
                     KES {order.totalAmount.toLocaleString()}
                   </span>
                 </div>
@@ -314,28 +304,28 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
           {/* Right 5 cols: Destination, Payment & Guarantee */}
           <div className="lg:col-span-5 space-y-6">
             {/* Fulfillment Destination Card */}
-            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 shadow-lg shadow-[#1C1208]/04">
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold mb-3">
-                <i className="bi bi-geo-alt-fill text-[#C4882A]" />
+            <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 shadow-sm">
+              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#5C4A2A] font-bold mb-3">
+                <i className="bi bi-geo-alt-fill text-[#C99A2E]" />
                 Fulfillment Destination
               </div>
               <h3 className="font-bold text-sm text-[#1C1208] mb-3">{order.customerName}</h3>
 
               <div className="space-y-3 text-xs text-[#5C4835]">
-                <div className="flex items-start gap-2.5 bg-[#FAF6EE] p-3 rounded-xl border border-[#C4882A]/15">
-                  <i className="bi bi-pin-map-fill text-[#C4882A] text-sm shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2.5 bg-white p-3 rounded-[2px] border border-[#D4C9B0]">
+                  <i className="bi bi-pin-map-fill text-[#C99A2E] text-sm shrink-0 mt-0.5" />
                   <span className="leading-relaxed">{order.deliveryAddress || "Ranch Collection Depot (Kajiado Hub)"}</span>
                 </div>
                 <div className="flex items-center gap-2.5 pl-1">
-                  <i className="bi bi-telephone-fill text-[#C4882A] text-xs shrink-0" />
+                  <i className="bi bi-telephone-fill text-[#C99A2E] text-xs shrink-0" />
                   <span className="font-mono font-medium text-[#1C1208]">{order.customerPhone}</span>
                 </div>
                 <div className="flex items-center gap-2.5 pl-1">
-                  <i className="bi bi-envelope-fill text-[#C4882A] text-xs shrink-0" />
+                  <i className="bi bi-envelope-fill text-[#C99A2E] text-xs shrink-0" />
                   <span className="font-mono text-[#1C1208]">{order.customerEmail}</span>
                 </div>
                 {order.notes && (
-                  <div className="pt-2 border-t border-[#C4882A]/15 text-[11px] text-[#786550] italic">
+                  <div className="pt-2 border-t border-[#D4C9B0] text-[11px] text-[#8E7E70] italic">
                     Special Note: &ldquo;{order.notes}&rdquo;
                   </div>
                 )}
@@ -343,48 +333,53 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
             </div>
 
             {/* Payment Ledger Card */}
-            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 shadow-lg shadow-[#1C1208]/04">
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold mb-3">
-                <i className="bi bi-credit-card-2-front-fill text-[#C4882A]" />
+            <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 shadow-sm">
+              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[#5C4A2A] font-bold mb-3">
+                <i className="bi bi-credit-card-2-front-fill text-[#C99A2E]" />
                 Payment Settlement Ledger
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-xl bg-[#FAF6EE] border border-[#C4882A]/15 mb-3">
+              <div className="flex items-center justify-between p-3 rounded-[2px] bg-white border border-[#D4C9B0] mb-3">
                 <span className="font-bold text-xs text-[#1C1208]">
                   {order.paymentMethod ? order.paymentMethod.toUpperCase() : "M-PESA"}
                 </span>
-                <span className="font-mono text-[11px] font-bold text-[#2E7D32] bg-[#2E7D32]/12 px-2.5 py-1 rounded-full border border-[#2E7D32]/30">
+                <span className="font-mono text-[11px] font-bold text-[#6B7A3F] bg-[#6B7A3F]/10 px-2.5 py-1 rounded-[2px] border border-[#6B7A3F]/30">
                   Paid KES {order.totalAmount.toLocaleString()}
                 </span>
               </div>
 
               <div className="space-y-2 text-xs font-mono text-[#5C4835]">
-                <div className="flex justify-between items-center py-1 border-b border-[#C4882A]/10">
-                  <span className="text-[#786550]">Payment Ref:</span>
+                <div className="flex justify-between items-center py-1 border-b border-[#D4C9B0]/60">
+                  <span className="text-[#8E7E70]">Payment Ref:</span>
                   <span className="font-bold text-[#1C1208]">{orderRef}</span>
                 </div>
                 <div className="flex justify-between items-center py-1">
-                  <span className="text-[#786550]">Ranch Ledger ID:</span>
-                  <span className="text-[#786550] text-[11px]">{order.id}</span>
+                  <span className="text-[#8E7E70]">Ranch Ledger ID:</span>
+                  <span className="text-[#8E7E70] text-[11px]">{order.id}</span>
                 </div>
               </div>
             </div>
 
             {/* Cold-Chain Promise Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-[#FAF5EB] to-[#F5EFE4] border border-[#C4882A]/30 text-center shadow-xs">
-              <div className="w-12 h-12 rounded-2xl bg-[#C4882A]/15 border border-[#C4882A]/30 flex items-center justify-center text-[#C4882A] mx-auto mb-3">
+            <div className="p-6 rounded-[2px] bg-white border border-[#D4C9B0] text-center shadow-sm">
+              <div className="w-12 h-12 rounded-[2px] bg-[#C99A2E]/10 border border-[#C99A2E]/30 flex items-center justify-center text-[#C99A2E] mx-auto mb-3">
                 <i className="bi bi-shield-check text-2xl" />
               </div>
-              <h4 className="font-serif text-lg font-bold text-[#1C1208] mb-1">Ranch Cold-Chain Certified</h4>
-              <p className="text-[11px] text-[#5C4835] leading-relaxed mb-4">
+              <h4
+                className="text-lg font-bold text-[#1C1208] mb-1"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
+                Ranch Cold-Chain Certified
+              </h4>
+              <p className="text-xs text-[#5C4835] leading-relaxed mb-4">
                 100% pasture-fed Angus/Boran beef &amp; purebred breeding pedigree guaranteed by Osotua Farming Kajiado.
               </p>
               <Link
                 href="/barn"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-[#C4882A] hover:bg-[#A8721F] text-[#FFFFFF] shadow-sm transition-all"
+                className="w-full btn-gold text-xs justify-center"
               >
-                <i className="bi bi-bag" />
-                <span>Explore Barn Store</span>
+                <i className="bi bi-shop" />
+                <span>Explore Farm Barn</span>
               </Link>
             </div>
           </div>

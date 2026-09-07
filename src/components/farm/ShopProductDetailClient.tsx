@@ -50,24 +50,24 @@ export default function ShopProductDetailClient({ product }: ProductDetailProps)
     : "Kajiado Smallholder Cooperative"
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-28 pb-24 text-[#1C1208]">
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-xs text-[#786550] mb-8 font-mono">
-          <Link href="/shop" className="hover:text-[#C4882A] transition-colors">
+        <div className="flex items-center gap-2 text-[11px] text-[#8E7E70] mb-8 font-mono tracking-wider uppercase">
+          <Link href="/shop" className="hover:text-[#C99A2E] transition-colors font-bold">
             Shop
           </Link>
           <span>/</span>
           <span>{product.category.name}</span>
           <span>/</span>
-          <span className="text-[#1C1208] font-bold">{product.name}</span>
+          <span className="text-[#1C1208] font-semibold">{product.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-10 shadow-xl shadow-[#1C1208]/04">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-10 shadow-sm">
           
           {/* Left: Product Media */}
-          <div className="w-full h-80 sm:h-96 bg-[#FAF5EB] border border-[#C4882A]/20 rounded-2xl relative overflow-hidden flex items-center justify-center">
+          <div className="w-full h-80 sm:h-96 bg-[#1C1208] border border-[#D4C9B0] rounded-[2px] relative overflow-hidden flex items-center justify-center">
             {product.image ? (
               <Image
                 src={product.image}
@@ -77,35 +77,46 @@ export default function ShopProductDetailClient({ product }: ProductDetailProps)
                 className="object-cover"
               />
             ) : (
-              <i className="bi bi-box-seam text-6xl text-[#C4882A]/40" />
+              <i className="bi bi-box-seam text-6xl text-[#C99A2E]/40" />
             )}
+            <div className="absolute top-3 left-3">
+              <span className="text-[10px] font-mono font-bold tracking-[0.14em] uppercase px-2.5 py-1 bg-[#6B7A3F] text-white rounded-[2px]">
+                {product.category.name}
+              </span>
+            </div>
           </div>
 
           {/* Right: Info & Purchase Controls */}
           <div className="flex flex-col justify-between space-y-6">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold text-[#2E7D32] bg-[#2E7D32]/12 border border-[#2E7D32]/30 mb-3 uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] text-[10px] font-mono font-bold text-[#6B7A3F] bg-[#6B7A3F]/12 border border-[#6B7A3F]/30 mb-3 uppercase tracking-wider">
                 <i className="bi bi-check-circle-fill text-[10px]" />
-                Fresh Harvest — {product.inStock ? "Available" : "Sold Out"} ({product.stockQty || 25} {product.unit} on hand)
+                Fresh Harvest &bull; {product.inStock ? "Available" : "Sold Out"} ({product.stockQty || 25} {product.unit} on hand)
               </div>
 
-              <h1 className="font-serif text-3xl sm:text-4xl text-[#1C1208] font-normal mb-1">
+              <h1
+                className="text-3xl sm:text-4xl text-[#1C1208] font-bold mb-2"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
                 {product.name}
               </h1>
 
-              <div className="text-xs font-mono text-[#8E5E16] mb-4">
+              <div className="text-xs font-mono text-[#C99A2E] font-bold uppercase tracking-wider mb-4">
                 Sourced &amp; Packed by{" "}
-                <span className="font-bold underline">{farmName}</span>
+                <span className="underline">{farmName}</span>
               </div>
 
-              <div className="font-mono text-2xl font-bold text-[#1C1208] mb-6">
+              <div
+                className="text-3xl font-bold text-[#C4602A] mb-6"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
                 KES {product.price.toLocaleString()}
-                <span className="text-xs text-[#786550] font-normal ml-1.5 font-sans">
+                <span className="text-xs text-[#8E7E70] font-normal ml-1.5 font-mono">
                   /{product.unit}
                 </span>
               </div>
 
-              <p className="text-xs text-[#5C4835] leading-relaxed border-t border-b border-[#C4882A]/15 py-4">
+              <p className="text-sm text-[#5C4A2A] leading-relaxed border-t border-b border-[#D4C9B0] py-4 font-normal">
                 {product.description ||
                   "Sourced directly from partner smallholder cooperatives. Freshly harvested, sorted, and packed under rigorous hygiene and temperature-controlled standards."}
               </p>
@@ -114,11 +125,13 @@ export default function ShopProductDetailClient({ product }: ProductDetailProps)
             {/* Quantity & CTA */}
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-xs font-mono text-[#8E5E16] uppercase font-bold">Quantity:</span>
-                <div className="flex items-center border border-[#C4882A]/30 rounded-xl bg-[#FAF5EB] overflow-hidden">
+                <span className="text-xs font-mono text-[#5C4A2A] uppercase font-bold tracking-wider">
+                  Quantity:
+                </span>
+                <div className="flex items-center border border-[#D4C9B0] rounded-[2px] bg-white overflow-hidden">
                   <button
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
-                    className="w-9 h-9 flex items-center justify-center text-[#1C1208] font-bold hover:bg-[#C4882A]/20 cursor-pointer"
+                    className="w-9 h-9 flex items-center justify-center text-[#1C1208] font-bold hover:bg-[#EDE6DA] cursor-pointer"
                   >
                     -
                   </button>
@@ -127,7 +140,7 @@ export default function ShopProductDetailClient({ product }: ProductDetailProps)
                   </span>
                   <button
                     onClick={() => setQty((q) => q + 1)}
-                    className="w-9 h-9 flex items-center justify-center text-[#1C1208] font-bold hover:bg-[#C4882A]/20 cursor-pointer"
+                    className="w-9 h-9 flex items-center justify-center text-[#1C1208] font-bold hover:bg-[#EDE6DA] cursor-pointer"
                   >
                     +
                   </button>
@@ -136,31 +149,31 @@ export default function ShopProductDetailClient({ product }: ProductDetailProps)
 
               <button
                 onClick={handleAddToCart}
-                className={`btn-primary w-full py-3.5 text-xs font-mono uppercase tracking-wider font-bold shadow-lg shadow-[#C4882A]/25 cursor-pointer flex items-center justify-center gap-2 ${
-                  added ? "bg-[#2E7D32] border-[#2E7D32] text-white" : ""
+                className={`w-full btn-cart py-3.5 text-xs font-mono uppercase tracking-wider font-bold cursor-pointer flex items-center justify-center gap-2 ${
+                  added ? "bg-[#6B7A3F] border-[#6B7A3F] text-white" : ""
                 }`}
               >
                 {added ? (
                   <>
                     <i className="bi bi-check-lg" />
-                    <span>Added to Cart</span>
+                    <span>Added to Basket</span>
                   </>
                 ) : (
                   <>
                     <i className="bi bi-bag-plus-fill" />
-                    <span>Add to Cart &bull; KES {(product.price * qty).toLocaleString()}</span>
+                    <span>Add to Basket &bull; KES {(product.price * qty).toLocaleString()}</span>
                   </>
                 )}
               </button>
 
-              <div className="grid grid-cols-2 gap-3 pt-2 text-[11px] font-mono text-[#786550]">
+              <div className="grid grid-cols-2 gap-3 pt-2 text-[11px] font-mono text-[#8E7E70] uppercase tracking-wider">
                 <div className="flex items-center gap-1.5">
-                  <i className="bi bi-truck text-[#2E7D32]" />
-                  <span>Same-Day Cold Delivery</span>
+                  <i className="bi bi-truck text-[#6B7A3F]" />
+                  <span>Cold-Chain Transit</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <i className="bi bi-shield-check text-[#C4882A]" />
-                  <span>100% Farmer Guaranteed</span>
+                  <i className="bi bi-shield-check text-[#C99A2E]" />
+                  <span>100% Ranch Guaranteed</span>
                 </div>
               </div>
             </div>

@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/components/shared/CartContext";
-import { LOGO } from "@/lib/images";
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
@@ -153,24 +152,27 @@ function CheckoutContent() {
 
   if (cart.length === 0 && step !== "confirmed") {
     return (
-      <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-36 pb-24 text-[#1C1208]">
+      <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-36 pb-24">
         <div className="max-w-lg mx-auto px-4 text-center">
-          <div className="p-8 sm:p-12 rounded-3xl bg-[#FFFFFF] border border-[#C4882A]/25 shadow-xl shadow-[#1C1208]/04">
-            <div className="w-16 h-16 rounded-2xl bg-[#C4882A]/12 border border-[#C4882A]/30 flex items-center justify-center text-[#C4882A] text-2xl mx-auto mb-4">
+          <div className="p-8 sm:p-12 bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] shadow-sm">
+            <div className="w-16 h-16 rounded-[2px] bg-[#C99A2E]/10 border border-[#C99A2E]/30 flex items-center justify-center text-[#C99A2E] text-2xl mx-auto mb-4">
               <i className="bi bi-basket3" />
             </div>
-            <h2 className="font-serif text-3xl font-normal text-[#1C1208] mb-2">
+            <h2
+              className="text-3xl font-bold text-[#1C1208] mb-2"
+              style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+            >
               Your Basket is Empty
             </h2>
-            <p className="text-xs text-[#5C4835] leading-relaxed mb-6">
+            <p className="text-sm text-[#5C4A2A] leading-relaxed mb-6">
               Select premium cold-pack cuts, dairy jars, or purebred livestock from the Barn Store to proceed to checkout.
             </p>
             <div className="flex gap-3 justify-center flex-wrap">
-              <Link href="/barn" className="btn-primary text-xs py-2.5 px-5">
+              <Link href="/barn" className="btn-gold text-xs">
                 <i className="bi bi-shop" />
-                <span>Visit Barn Store</span>
+                <span>Visit Farm Barn</span>
               </Link>
-              <Link href="/breeds" className="btn-ghost text-xs py-2.5 px-5" style={{ color: "#1C1208" }}>
+              <Link href="/breeds" className="btn-outline text-xs">
                 <span>Browse Breeds</span>
               </Link>
             </div>
@@ -181,18 +183,21 @@ function CheckoutContent() {
   }
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-28 pb-24 text-[#1C1208]">
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Header */}
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 border border-[#C4882A]/30 text-[#8E5E16] mb-2">
-            <i className="bi bi-shield-lock-fill text-[#C4882A]" />
-            Encrypted Ranch Checkout
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] text-[10px] font-mono font-bold uppercase tracking-widest bg-[#6B7A3F] text-white mb-3">
+            <i className="bi bi-shield-lock-fill text-xs" />
+            <span>ENCRYPTED RANCH CHECKOUT</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#1C1208] font-normal tracking-tight">
-            Complete Your <em className="text-[#C4882A] italic">Osotua Order</em>
+          <h1
+            className="text-3xl sm:text-5xl font-bold text-[#1C1208] leading-tight"
+            style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+          >
+            Complete Your <em className="text-[#C99A2E] italic">Osotua Order</em>
           </h1>
-          <p className="text-xs text-[#5C4835] mt-1 font-mono">
+          <p className="text-xs font-mono text-[#5C4A2A] mt-1">
             Direct cold-chain delivery and purebred livestock allocation from Kajiado County.
           </p>
 
@@ -211,15 +216,15 @@ function CheckoutContent() {
               return (
                 <div
                   key={s.id}
-                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider transition-all ${
                     active
-                      ? "bg-[#C4882A] text-[#FFFFFF] shadow-sm shadow-[#C4882A]/30"
+                      ? "bg-[#C99A2E] text-[#1C1208] shadow-xs"
                       : passed
-                      ? "bg-[#2E7D32]/15 text-[#2E7D32] border border-[#2E7D32]/30"
-                      : "bg-[#FAF5EB] text-[#786550] border border-[#C4882A]/20"
+                      ? "bg-[#6B7A3F] text-white"
+                      : "bg-[#FAF7F2] text-[#8E7E70] border border-[#D4C9B0]"
                   }`}
                 >
-                  <span className="w-4 h-4 rounded-full bg-[#FFFFFF]/25 flex items-center justify-center text-[10px]">
+                  <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">
                     {passed ? <i className="bi bi-check-lg" /> : idx + 1}
                   </span>
                   <span>{s.label}</span>
@@ -230,7 +235,7 @@ function CheckoutContent() {
         </div>
 
         {errorMsg && (
-          <div className="mb-6 p-4 rounded-2xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-3">
+          <div className="mb-6 p-4 rounded-[2px] bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-3">
             <i className="bi bi-exclamation-triangle-fill text-[#DC2626] text-lg shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -242,17 +247,20 @@ function CheckoutContent() {
           <div className="lg:col-span-7">
             {/* STEP 1: DESTINATION DETAILS */}
             {step === "details" && (
-              <form onSubmit={handleNextToPayment} className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04 space-y-5">
-                <div className="pb-4 border-b border-[#C4882A]/15 flex items-center justify-between">
-                  <h2 className="font-serif text-2xl text-[#1C1208] font-normal">
+              <form onSubmit={handleNextToPayment} className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-8 shadow-sm space-y-5">
+                <div className="pb-4 border-b border-[#D4C9B0] flex items-center justify-between">
+                  <h2
+                    className="text-2xl font-bold text-[#1C1208]"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                  >
                     Recipient &amp; Delivery Destination
                   </h2>
-                  <span className="text-[10px] font-mono uppercase text-[#8E5E16] font-bold">Step 1 of 2</span>
+                  <span className="text-[10px] font-mono uppercase text-[#6B7A3F] font-bold">Step 1 of 2</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Full Name *
                     </label>
                     <input
@@ -261,12 +269,12 @@ function CheckoutContent() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Moses Ole Sironka"
-                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                      className="os-input"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Email Address *
                     </label>
                     <input
@@ -275,14 +283,14 @@ function CheckoutContent() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="moses@example.co.ke"
-                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                      className="os-input"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Phone / WhatsApp *
                     </label>
                     <input
@@ -291,12 +299,12 @@ function CheckoutContent() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+254 700 000 000"
-                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                      className="os-input"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Physical Delivery Address *
                     </label>
                     <input
@@ -305,16 +313,16 @@ function CheckoutContent() {
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="e.g. Karen Plains, House 4B, Nairobi"
-                      className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                      className="os-input"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-6 border-t border-[#C4882A]/15">
-                  <Link href="/cart" className="text-xs font-mono font-bold text-[#786550] hover:text-[#C4882A] flex items-center gap-1.5">
-                    <i className="bi bi-arrow-left" /> Return to Cart
+                <div className="flex items-center justify-between pt-6 border-t border-[#D4C9B0]">
+                  <Link href="/cart" className="text-xs font-mono font-bold text-[#8E7E70] hover:text-[#C99A2E] flex items-center gap-1.5 uppercase tracking-wider">
+                    <i className="bi bi-arrow-left" /> Return to Basket
                   </Link>
-                  <button type="submit" className="btn-primary py-2.5 px-6 text-xs shadow-sm">
+                  <button type="submit" className="btn-gold text-xs">
                     <span>Continue to Payment</span>
                     <i className="bi bi-arrow-right ml-1" />
                   </button>
@@ -324,12 +332,15 @@ function CheckoutContent() {
 
             {/* STEP 2: PAYMENT SELECTION */}
             {step === "payment" && (
-              <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04 space-y-6">
-                <div className="pb-4 border-b border-[#C4882A]/15 flex items-center justify-between">
-                  <h2 className="font-serif text-2xl text-[#1C1208] font-normal">
+              <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-8 shadow-sm space-y-6">
+                <div className="pb-4 border-b border-[#D4C9B0] flex items-center justify-between">
+                  <h2
+                    className="text-2xl font-bold text-[#1C1208]"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                  >
                     Select Payment Instrument
                   </h2>
-                  <span className="text-[10px] font-mono uppercase text-[#8E5E16] font-bold">Step 2 of 2</span>
+                  <span className="text-[10px] font-mono uppercase text-[#6B7A3F] font-bold">Step 2 of 2</span>
                 </div>
 
                 {/* Instrument Grid */}
@@ -345,15 +356,15 @@ function CheckoutContent() {
                         key={m.id}
                         type="button"
                         onClick={() => setPaymentMethod(m.id as "mpesa" | "card" | "bank")}
-                        className={`p-4 rounded-2xl text-left border transition-all cursor-pointer ${
+                        className={`p-4 rounded-[2px] text-left border transition-all cursor-pointer ${
                           active
-                            ? "bg-[#C4882A] text-[#FFFFFF] border-[#C4882A] shadow-md shadow-[#C4882A]/30"
-                            : "bg-[#FAF6EE] text-[#1C1208] border-[#C4882A]/20 hover:border-[#C4882A]/50"
+                            ? "bg-[#C99A2E] text-[#1C1208] border-[#C99A2E] shadow-xs"
+                            : "bg-white text-[#1C1208] border-[#D4C9B0] hover:border-[#C99A2E]"
                         }`}
                       >
-                        <i className={`bi ${m.icon} text-xl block mb-2 ${active ? "text-[#FFFFFF]" : "text-[#C4882A]"}`} />
+                        <i className={`bi ${m.icon} text-xl block mb-2 ${active ? "text-[#1C1208]" : "text-[#C99A2E]"}`} />
                         <div className="text-xs font-bold font-mono uppercase tracking-wider">{m.title}</div>
-                        <div className={`text-[10px] mt-0.5 ${active ? "text-[#FFFFFF]/80" : "text-[#786550]"}`}>{m.desc}</div>
+                        <div className={`text-[10px] mt-0.5 ${active ? "text-[#1C1208]/80" : "text-[#8E7E70]"}`}>{m.desc}</div>
                       </button>
                     );
                   })}
@@ -361,8 +372,8 @@ function CheckoutContent() {
 
                 {/* M-PESA STK INPUT */}
                 {paymentMethod === "mpesa" && (
-                  <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#2E7D32]/35 space-y-2">
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#2E7D32] font-bold">
+                  <div className="p-4 rounded-[2px] bg-white border border-[#6B7A3F]/35 space-y-2">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#6B7A3F] font-bold">
                       M-Pesa Registered Mobile Number
                     </label>
                     <input
@@ -370,46 +381,46 @@ function CheckoutContent() {
                       value={mpesaPhone || phone}
                       onChange={(e) => setMpesaPhone(e.target.value)}
                       placeholder="0712345678"
-                      className="w-full bg-[#FFFFFF] border border-[#2E7D32]/40 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#2E7D32]"
+                      className="os-input"
                     />
-                    <p className="text-[11px] text-[#5C4835] leading-relaxed">
-                      You will receive an automatic PIN authorization on this mobile number for <strong>KES {grandTotal.toLocaleString()}</strong>.
+                    <p className="text-xs text-[#5C4835] leading-relaxed">
+                      You will receive an automatic PIN prompt on this mobile number for <strong>KES {grandTotal.toLocaleString()}</strong>.
                     </p>
                   </div>
                 )}
 
                 {/* BANK TRANSFER INSTRUCTIONS */}
                 {paymentMethod === "bank" && (
-                  <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#C4882A]/35 space-y-3">
-                    <div className="text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold">
+                  <div className="p-4 rounded-[2px] bg-white border border-[#D4C9B0] space-y-3">
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-[#5C4A2A] font-bold">
                       Ranch Banking Settlement Details
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-xs font-mono">
                       <div>
-                        <span className="text-[#786550] block text-[10px]">Bank</span>
+                        <span className="text-[#8E7E70] block text-[10px]">Bank</span>
                         <strong className="text-[#1C1208]">KCB Bank Kenya</strong>
                       </div>
                       <div>
-                        <span className="text-[#786550] block text-[10px]">Account Name</span>
+                        <span className="text-[#8E7E70] block text-[10px]">Account Name</span>
                         <strong className="text-[#1C1208]">Osotua Farming Ltd</strong>
                       </div>
                       <div>
-                        <span className="text-[#786550] block text-[10px]">Account No</span>
+                        <span className="text-[#8E7E70] block text-[10px]">Account No</span>
                         <strong className="text-[#1C1208]">1289 3847 2901</strong>
                       </div>
                       <div>
-                        <span className="text-[#786550] block text-[10px]">Branch / Swift</span>
+                        <span className="text-[#8E7E70] block text-[10px]">Branch / Swift</span>
                         <strong className="text-[#1C1208]">Kajiado / KCBLKENX</strong>
                       </div>
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center justify-between pt-6 border-t border-[#C4882A]/15">
+                <div className="flex items-center justify-between pt-6 border-t border-[#D4C9B0]">
                   <button
                     type="button"
                     onClick={() => setStep("details")}
-                    className="text-xs font-mono font-bold text-[#786550] hover:text-[#C4882A] flex items-center gap-1.5 cursor-pointer"
+                    className="text-xs font-mono font-bold text-[#8E7E70] hover:text-[#C99A2E] flex items-center gap-1.5 cursor-pointer uppercase tracking-wider"
                   >
                     <i className="bi bi-arrow-left" /> Edit Details
                   </button>
@@ -417,7 +428,7 @@ function CheckoutContent() {
                     type="button"
                     onClick={handleCompleteOrder}
                     disabled={isProcessing}
-                    className="btn-primary py-2.5 px-8 text-xs shadow-sm cursor-pointer"
+                    className="btn-gold text-xs cursor-pointer"
                   >
                     {isProcessing ? (
                       <>
@@ -437,27 +448,30 @@ function CheckoutContent() {
 
             {/* STEP 3: ORDER CONFIRMED */}
             {step === "confirmed" && (
-              <div className="bg-[#FFFFFF] border border-[#2E7D32]/35 rounded-3xl p-8 sm:p-12 text-center shadow-xl shadow-[#2E7D32]/05 space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-[#2E7D32]/15 border border-[#2E7D32]/35 flex items-center justify-center text-[#2E7D32] text-3xl mx-auto mb-2">
+              <div className="bg-[#FAF7F2] border border-[#6B7A3F]/35 rounded-[2px] p-8 sm:p-12 text-center shadow-sm space-y-4">
+                <div className="w-16 h-16 rounded-[2px] bg-[#6B7A3F]/15 border border-[#6B7A3F]/35 flex items-center justify-center text-[#6B7A3F] text-3xl mx-auto mb-2">
                   <i className="bi bi-check2-circle" />
                 </div>
-                <div className="text-[10px] font-mono uppercase tracking-widest text-[#2E7D32] font-bold">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-[#6B7A3F] font-bold">
                   Order Successfully Placed
                 </div>
-                <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1208] font-normal">
+                <h2
+                  className="text-3xl sm:text-4xl font-bold text-[#1C1208]"
+                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                >
                   Thank You for Your Order
                 </h2>
                 <p className="text-xs text-[#5C4835] font-mono">
-                  Official Reference: <strong className="text-[#C4882A]">{orderRef}</strong>
+                  Official Reference: <strong className="text-[#C4602A]">{orderRef}</strong>
                 </p>
 
                 {paymentMethod === "mpesa" && (
-                  <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#2E7D32]/30 text-xs max-w-md mx-auto text-left flex items-center gap-3 my-4">
+                  <div className="p-4 rounded-[2px] bg-white border border-[#6B7A3F]/30 text-xs max-w-md mx-auto text-left flex items-center gap-3 my-4">
                     <i
                       className={`bi ${
                         mpesaPollingStatus === "confirmed"
-                          ? "bi-patch-check-fill text-[#2E7D32]"
-                          : "bi-arrow-repeat animate-spin text-[#C4882A]"
+                          ? "bi-patch-check-fill text-[#6B7A3F]"
+                          : "bi-arrow-repeat animate-spin text-[#C99A2E]"
                       } text-2xl shrink-0`}
                     />
                     <div>
@@ -466,7 +480,7 @@ function CheckoutContent() {
                           ? "M-Pesa Payment Confirmed"
                           : "STK Prompt Dispatched"}
                       </span>
-                      <span className="text-[#5C4835] text-[11px] leading-tight block mt-0.5">
+                      <span className="text-[#5C4835] text-[11px] leading-tight block mt-0.5 font-normal">
                         {mpesaPollingStatus === "confirmed"
                           ? "Your payment is verified and recorded in the cold-packing schedule."
                           : `Please check your phone (${mpesaPhone || phone}) to enter your PIN.`}
@@ -478,12 +492,12 @@ function CheckoutContent() {
                 <div className="flex gap-3 justify-center pt-4 flex-wrap">
                   <Link
                     href={orderId ? `/orders/${orderId}` : "/dashboard/orders"}
-                    className="btn-primary text-xs py-3 px-6 shadow-sm"
+                    className="btn-gold text-xs"
                   >
                     <i className="bi bi-speedometer2" />
                     <span>Track Live Dispatch Status</span>
                   </Link>
-                  <Link href="/barn" className="btn-ghost text-xs py-3 px-6" style={{ color: "#1C1208" }}>
+                  <Link href="/barn" className="btn-outline text-xs">
                     <span>Return to Store</span>
                   </Link>
                 </div>
@@ -493,20 +507,23 @@ function CheckoutContent() {
 
           {/* Right Summary Sidebar (5 cols) */}
           <div className="lg:col-span-5">
-            <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04 sticky top-28 space-y-5">
-              <div className="flex items-center justify-between pb-4 border-b border-[#C4882A]/15">
-                <h3 className="font-serif text-xl text-[#1C1208] font-normal">
+            <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-8 shadow-sm sticky top-28 space-y-5">
+              <div className="flex items-center justify-between pb-4 border-b border-[#D4C9B0]">
+                <h3
+                  className="text-xl font-bold text-[#1C1208]"
+                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                >
                   Order Summary
                 </h3>
-                <span className="font-mono text-xs text-[#8E5E16] font-bold">{cart.length} items</span>
+                <span className="font-mono text-xs text-[#6B7A3F] font-bold">{cart.length} items</span>
               </div>
 
               {/* Cart List */}
-              <div className="divide-y divide-[#C4882A]/10 max-h-72 overflow-y-auto pr-1">
+              <div className="divide-y divide-[#D4C9B0]/60 max-h-72 overflow-y-auto pr-1">
                 {cart.map((item) => (
                   <div key={item.id} className="py-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-xl bg-[#FAF5EB] border border-[#C4882A]/20 relative overflow-hidden shrink-0 flex items-center justify-center text-[#C4882A]">
+                      <div className="w-10 h-10 rounded-[2px] bg-[#1C1208] border border-[#D4C9B0] relative overflow-hidden shrink-0 flex items-center justify-center text-[#C99A2E]">
                         {item.image ? (
                           <Image src={item.image} alt={item.name} fill className="object-cover" />
                         ) : (
@@ -515,12 +532,12 @@ function CheckoutContent() {
                       </div>
                       <div className="min-w-0">
                         <div className="text-xs font-bold text-[#1C1208] truncate">{item.name}</div>
-                        <div className="text-[10px] font-mono text-[#786550]">
+                        <div className="text-[10px] font-mono text-[#8E7E70]">
                           {item.quantity} × KES {item.price.toLocaleString()}
                         </div>
                       </div>
                     </div>
-                    <div className="font-mono text-xs font-bold text-[#1C1208] shrink-0">
+                    <div className="font-mono text-xs font-bold text-[#C4602A] shrink-0">
                       KES {(item.price * item.quantity).toLocaleString()}
                     </div>
                   </div>
@@ -528,18 +545,23 @@ function CheckoutContent() {
               </div>
 
               {/* Totals */}
-              <div className="pt-4 border-t border-[#C4882A]/15 space-y-2 text-xs">
-                <div className="flex justify-between text-[#5C4835]">
+              <div className="pt-4 border-t border-[#D4C9B0] space-y-2 text-xs">
+                <div className="flex justify-between text-[#5C4A2A]">
                   <span>Subtotal</span>
                   <span className="font-mono font-bold text-[#1C1208]">KES {cartTotal.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-[#5C4835]">
+                <div className="flex justify-between text-[#5C4A2A]">
                   <span>Refrigerated Delivery</span>
-                  <span className="font-mono text-[#2E7D32] font-bold">Complimentary</span>
+                  <span className="font-mono text-[#6B7A3F] font-bold">Complimentary</span>
                 </div>
-                <div className="flex justify-between items-center text-sm pt-3 border-t border-[#C4882A]/15">
-                  <span className="font-serif text-base font-bold text-[#1C1208]">Total Amount</span>
-                  <span className="font-mono text-lg font-bold text-[#C4882A]">
+                <div className="flex justify-between items-center text-sm pt-3 border-t border-[#D4C9B0]">
+                  <span
+                    className="font-bold text-[#1C1208]"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                  >
+                    Total Amount
+                  </span>
+                  <span className="font-mono text-xl font-bold text-[#C4602A]">
                     KES {grandTotal.toLocaleString()}
                   </span>
                 </div>
@@ -556,7 +578,7 @@ export default function CheckoutClient() {
   return (
     <Suspense
       fallback={
-        <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-36 text-center text-xs font-mono text-[#8E5E16]">
+        <div className="w-full min-h-screen bg-[#F5F0E8] pt-36 text-center text-xs font-mono text-[#5C4A2A]">
           Loading Osotua Checkout...
         </div>
       }

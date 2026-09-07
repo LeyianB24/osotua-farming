@@ -40,43 +40,52 @@ export default async function BlogPostPage({
   const paragraphs = !isHtml ? post.content.split("\n\n").filter(Boolean) : []
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-24">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <div className="font-mono text-[11px] text-[#786550] tracking-wide mb-8 flex items-center gap-2">
-          <Link href="/blog" className="hover:text-[#C4882A] transition-colors font-bold">Blog</Link>
+        <div className="font-mono text-[11px] text-[#8E7E70] tracking-wider uppercase mb-8 flex items-center gap-2">
+          <Link href="/blog" className="hover:text-[#C99A2E] transition-colors font-bold">
+            Blog
+          </Link>
           <span>/</span>
-          <span className="truncate text-[#1C1208]">{post.title}</span>
+          <span className="truncate text-[#1C1208] font-semibold">{post.title}</span>
         </div>
 
-        <div
-          style={{
-            background: "#FFFFFF",
-            border: "1px solid rgba(196, 136, 42, 0.22)",
-            borderRadius: "28px",
-            boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
-          }}
-          className="p-8 sm:p-12"
-        >
+        <article className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-8 sm:p-14 shadow-sm">
           {/* Header */}
-          <div className="mb-10">
-            <span className="font-mono text-[10px] text-[#8E5E16] font-bold tracking-widest uppercase">{post.category}</span>
-            <h1 className="font-serif text-4xl sm:text-5xl font-normal text-[#1C1208] mt-2 mb-4 leading-tight">
+          <div className="mb-8">
+            <span className="inline-block text-[10px] font-mono font-bold tracking-[0.16em] uppercase px-3 py-1 bg-[#6B7A3F] text-white rounded-[2px] mb-4">
+              {post.category || "Ranch Story"}
+            </span>
+
+            <h1
+              className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#1C1208] leading-[1.08] mb-6"
+              style={{
+                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
+              }}
+            >
               {post.title}
             </h1>
-            <p className="text-[#5C4835] text-lg leading-relaxed border-l-2 border-[#C4882A] pl-4 italic">
+
+            <p className="text-base sm:text-xl text-[#5C4A2A] leading-relaxed border-l-4 border-[#C99A2E] pl-5 italic mb-6">
               {post.excerpt}
             </p>
+
             {post.publishedAt && (
-              <div className="font-mono text-[11px] text-[#786550] tracking-wide mt-4">
-                Published {new Date(post.publishedAt).toLocaleDateString("en-KE", { day: "numeric", month: "long", year: "numeric" })}
+              <div className="font-mono text-xs text-[#8E7E70] tracking-wider uppercase">
+                Published on{" "}
+                {new Date(post.publishedAt).toLocaleDateString("en-KE", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
               </div>
             )}
           </div>
 
           {/* Cover image */}
           {post.coverImage ? (
-            <div className="relative mb-10 h-72 sm:h-96 w-full overflow-hidden rounded-2xl border border-[#C4882A]/20 shadow-sm">
+            <div className="relative mb-10 h-72 sm:h-96 w-full overflow-hidden rounded-[2px] border border-[#D4C9B0]">
               <Image
                 src={post.coverImage}
                 alt={post.title}
@@ -85,33 +94,29 @@ export default async function BlogPostPage({
                 className="object-cover"
               />
             </div>
-          ) : (
-            <div className="w-full h-56 bg-gradient-to-br from-[#FAF5EB] to-[#F5EFE4] border border-[#C4882A]/20 rounded-2xl mb-10 flex items-center justify-center text-5xl text-[#C4882A]/50">
-              <i className="bi bi-newspaper" />
-            </div>
-          )}
+          ) : null}
 
           {/* Content */}
           {isHtml ? (
             <div
-              className="prose prose-lg max-w-none text-[#1C1208] leading-relaxed"
+              className="prose prose-lg max-w-none text-[#1C1208] leading-relaxed font-sans"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           ) : (
             <div className="space-y-6 text-[#1C1208] text-base sm:text-lg leading-relaxed font-sans">
               {paragraphs.map((p, idx) => (
-                <p key={idx} className="leading-relaxed">
+                <p key={idx} className="leading-relaxed text-[#1C1208]">
                   {p}
                 </p>
               ))}
             </div>
           )}
 
-          {/* Back */}
-          <div className="mt-16 pt-8 border-t border-[#C4882A]/15 flex items-center justify-between flex-wrap gap-4">
+          {/* Back & CTA Footer */}
+          <div className="mt-14 pt-8 border-t border-[#D4C9B0] flex items-center justify-between flex-wrap gap-4">
             <Link
               href="/blog"
-              className="font-mono text-[11px] text-[#8E5E16] font-bold tracking-widest uppercase hover:text-[#C4882A] inline-flex items-center gap-1.5"
+              className="btn-outline"
             >
               <i className="bi bi-arrow-left" />
               <span>Back to Stories</span>
@@ -119,13 +124,13 @@ export default async function BlogPostPage({
 
             <Link
               href="/barn"
-              className="btn-primary text-xs py-2 px-4 shadow-xs"
+              className="btn-gold"
             >
-              <span>Visit Barn Store</span>
+              <span>Visit Farm Barn</span>
               <i className="bi bi-arrow-right" />
             </Link>
           </div>
-        </div>
+        </article>
 
       </div>
     </div>

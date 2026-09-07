@@ -52,33 +52,20 @@ export default async function ProductDetailPage({
   const iconClass = categoryIcons[product.category.name] || "bi-flower1"
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="pt-24">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="font-mono text-[11px] text-[#786550] tracking-wide mb-8 flex items-center gap-2">
-          <Link href="/barn" className="hover:text-[#C4882A] transition-colors font-bold">Barn Store</Link>
+    <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="font-mono text-[11px] text-[#8E7E70] tracking-wider uppercase mb-8 flex items-center gap-2">
+          <Link href="/barn" className="hover:text-[#C99A2E] transition-colors font-bold">
+            Barn Store
+          </Link>
           <span>/</span>
-          <span className="text-[#1C1208]">{product.name}</span>
+          <span className="text-[#1C1208] font-semibold">{product.name}</span>
         </div>
 
-        <div
-          style={{
-            background: "#FFFFFF",
-            border: "1px solid rgba(196, 136, 42, 0.25)",
-            borderRadius: "28px",
-            boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
-          }}
-          className="p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12"
-        >
+        <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 shadow-sm">
+          {/* Media */}
           {product.image ? (
-            <div
-              style={{
-                borderRadius: "20px",
-                overflow: "hidden",
-                border: "1px solid rgba(196, 136, 42, 0.2)",
-                boxShadow: "0 10px 30px rgba(196, 136, 42, 0.08)",
-              }}
-              className="relative h-80 lg:h-[26rem] bg-[#FAF8F5]"
-            >
+            <div className="relative h-80 lg:h-[26rem] bg-[#1C1208] border border-[#D4C9B0] rounded-[2px] overflow-hidden">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -86,46 +73,61 @@ export default async function ProductDetailPage({
                 sizes="(min-width: 1024px) 480px, 100vw"
                 className="object-cover"
               />
+              <div className="absolute top-3 left-3">
+                <span className="text-[10px] font-mono font-bold tracking-[0.14em] uppercase px-2.5 py-1 bg-[#6B7A3F] text-white rounded-[2px]">
+                  {product.category.name}
+                </span>
+              </div>
             </div>
           ) : (
-            <div
-              style={{
-                borderRadius: "20px",
-                background: "linear-gradient(135deg, #FAF5EB 0%, #F5EFE4 100%)",
-                border: "1px solid rgba(196, 136, 42, 0.2)",
-              }}
-              className="h-80 lg:h-[26rem] flex items-center justify-center text-[#C4882A]"
-            >
+            <div className="h-80 lg:h-[26rem] bg-[#1C1208] border border-[#D4C9B0] rounded-[2px] flex items-center justify-center text-[#C99A2E]">
               <i className={`bi ${iconClass} text-7xl`} />
             </div>
           )}
 
+          {/* Details */}
           <div className="flex flex-col justify-between">
             <div>
-              <span className="font-mono text-[10px] text-[#8E5E16] font-bold tracking-widest uppercase">{product.category.name}</span>
-              <h1 className="font-serif text-4xl sm:text-5xl font-normal text-[#1C1208] mt-2 mb-4">{product.name}</h1>
-              <p className="text-[#5C4835] leading-relaxed mb-8 text-sm">{product.description}</p>
+              <div className="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px] mb-3">
+                <span>{product.category.name}</span>
+              </div>
+
+              <h1
+                className="text-3xl sm:text-5xl font-bold text-[#1C1208] mb-4"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
+                {product.name}
+              </h1>
+
+              <p className="text-[#5C4A2A] leading-relaxed mb-8 text-base font-normal">
+                {product.description}
+              </p>
             </div>
 
             <div>
-              <div className="border-t border-[#C4882A]/20 pt-6 mb-6">
-                <div className="font-mono text-[9px] text-[#786550] font-bold tracking-widest uppercase mb-1">Price</div>
-                <div className="font-serif text-4xl text-[#C4882A] font-bold">
+              <div className="border-t border-[#D4C9B0] pt-6 mb-6">
+                <div className="font-mono text-[9px] text-[#8E7E70] font-bold tracking-widest uppercase mb-1">
+                  Price
+                </div>
+                <div
+                  className="text-4xl text-[#C4602A] font-bold"
+                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                >
                   KES {product.price.toLocaleString()}
-                  <span className="text-[#786550] font-normal text-base ml-1">/{product.unit}</span>
+                  <span className="text-[#8E7E70] font-normal text-base ml-1 font-mono">/{product.unit}</span>
                 </div>
               </div>
 
               {product.inStock ? (
                 <Link
                   href={`/checkout?product=${product.id}`}
-                  className="btn-primary w-full justify-center py-3.5 text-sm text-center shadow-sm"
+                  className="btn-cart w-full justify-center"
                 >
                   <i className="bi bi-cart-plus" />
-                  <span>Order Now</span>
+                  <span>Order Now &bull; Cold-Chain Dispatched</span>
                 </Link>
               ) : (
-                <div className="bg-[#FAF6EE] border border-[#C4882A]/25 text-[#786550] px-6 py-3.5 text-center rounded-xl font-mono text-xs font-bold">
+                <div className="bg-[#FAF7F2] border border-[#D4C9B0] text-[#8E7E70] px-6 py-3.5 text-center rounded-[2px] font-mono text-xs font-bold uppercase tracking-wider">
                   Currently Out of Stock
                 </div>
               )}
