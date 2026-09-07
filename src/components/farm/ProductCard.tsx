@@ -41,7 +41,6 @@ export default function ProductCard({ product }: Props) {
     setTimeout(() => setAdded(false), 2000);
   };
 
-  // Standardize badge uppercase naming
   const catUpper = product.category.name.toUpperCase();
   const badgeLabel = catUpper.includes("BEEF")
     ? "BEEF CUTS"
@@ -59,10 +58,10 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div
-      className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-xl group"
+      className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-lg group"
       style={{ borderRadius: "2px" }}
     >
-      {/* ── IMAGE SECTION ── */}
+      {/* ── IMAGE CONTAINER ── */}
       <div>
         <Link
           href={`/barn/${product.slug}`}
@@ -84,7 +83,7 @@ export default function ProductCard({ product }: Props) {
 
           {/* Top-left: Category Badge (Dark Ranch Brown) */}
           <div
-            className="absolute top-3 left-3 text-[#F5F0E8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+            className="absolute top-3.5 left-3.5 text-[#F5F0E8] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em]"
             style={{ backgroundColor: "#1C1208", borderRadius: "2px" }}
           >
             {badgeLabel}
@@ -92,7 +91,7 @@ export default function ProductCard({ product }: Props) {
 
           {/* Top-right: Status Badge (Gold / Mustard) */}
           <div
-            className="absolute top-3 right-3 text-[#1C1208] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
+            className="absolute top-3.5 right-3.5 text-[#1C1208] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em]"
             style={{
               backgroundColor: product.inStock ? "#C99A2E" : "#D4C9B0",
               borderRadius: "2px",
@@ -102,10 +101,10 @@ export default function ProductCard({ product }: Props) {
           </div>
         </Link>
 
-        {/* ── DETAILS AREA ── */}
-        <div className="p-6">
+        {/* ── CARD CONTENT (Generous editorial spacing matching Screenshot 1) ── */}
+        <div className="px-7 pt-7 pb-2 space-y-2">
           <div
-            className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-1.5"
+            className="text-[11px] font-semibold uppercase tracking-[0.16em]"
             style={{
               color: "#8E7E70",
               fontFamily: "var(--font-source-sans), sans-serif",
@@ -116,7 +115,7 @@ export default function ProductCard({ product }: Props) {
 
           <Link
             href={`/barn/${product.slug}`}
-            className="font-serif text-2xl md:text-3xl text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A]"
+            className="font-serif text-2xl lg:text-[1.65rem] text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A] pt-1"
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
               fontWeight: 600,
@@ -125,10 +124,10 @@ export default function ProductCard({ product }: Props) {
             {product.name}
           </Link>
 
-          {/* Price */}
-          <div className="mt-4 flex items-baseline gap-1">
+          {/* Price with terracotta accent */}
+          <div className="pt-2 flex items-baseline gap-1.5">
             <span
-              className="text-xl md:text-2xl font-bold"
+              className="text-2xl lg:text-[1.65rem] font-bold"
               style={{
                 color: "#C4602A",
                 fontFamily: "var(--font-playfair), Georgia, serif",
@@ -149,24 +148,25 @@ export default function ProductCard({ product }: Props) {
         </div>
       </div>
 
-      {/* ── FOOTER BUTTON ── */}
-      <div className="p-6 pt-0 mt-auto">
+      {/* ── FOOTER BUTTON (Padded inside card matching Screenshot 1) ── */}
+      <div className="px-7 pb-7 pt-5 mt-auto">
         <button
           type="button"
           onClick={handleAdd}
           disabled={!product.inStock}
-          className="w-full py-3.5 px-4 font-bold text-[12px] tracking-[0.14em] uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+          className="w-full py-3.5 px-4 font-bold text-[12px] tracking-[0.16em] uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
           style={{
             backgroundColor: added ? "#6B7A3F" : "#1C1208",
             color: "#F5F0E8",
             borderRadius: "2px",
             border: "none",
             opacity: product.inStock ? 1 : 0.5,
+            fontFamily: "var(--font-source-sans), sans-serif",
           }}
         >
           {added ? (
             <>
-              <i className="bi bi-check2" />
+              <i className="bi bi-check2 text-sm" />
               <span>ADDED TO CART</span>
             </>
           ) : (

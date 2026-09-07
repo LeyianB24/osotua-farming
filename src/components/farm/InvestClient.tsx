@@ -118,44 +118,56 @@ export default function InvestClient() {
     <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
 
       {/* ── HERO BANNER ── */}
-      <section className="bg-mesh-earth noise relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
+      <section className="relative pt-32 sm:pt-40 pb-20 sm:pb-24 overflow-hidden" style={{ backgroundColor: "#F5F0E8" }}>
         <div className="os-container relative z-10">
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-amber-500/10 text-[#8E5E16] border border-amber-500/25 shadow-md">
-            <div className="relative w-5 h-5 rounded-full overflow-hidden ring-1 ring-amber-400 shrink-0 bg-white">
-              <Image src={LOGO} alt="Osotua Seal" fill sizes="20px" className="object-cover" />
-            </div>
-            <span>INVESTOR RELATIONS &bull; IMPACT AGRIBUSINESS</span>
+          <div className="flex items-center gap-3 mb-4">
+            <span
+              className="text-[11px] font-bold uppercase tracking-[0.2em]"
+              style={{
+                color: "#C99A2E",
+                fontFamily: "var(--font-source-sans), sans-serif",
+              }}
+            >
+              INVESTOR RELATIONS · IMPACT AGRIBUSINESS
+            </span>
+            <div className="h-[1px] w-12 bg-[#C99A2E]/50" />
           </div>
 
           <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-8"
+            className="text-4xl sm:text-6xl md:text-7xl font-bold text-[#1C1208] leading-[1.08] max-w-5xl mb-6"
             style={{
-              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+              fontFamily: "var(--font-playfair), Georgia, serif",
             }}
           >
             Invest in <br />
-            <em className="font-normal italic text-gradient-gold">Africa&apos;s food security</em>
+            <span style={{ color: "#C99A2E" }}>Africa&apos;s Pastoral Future</span>
           </h1>
 
-          <p className="text-base sm:text-xl text-[#5C4835] max-w-2xl leading-relaxed mb-10 font-normal">
+          <p
+            className="text-base sm:text-lg text-[#1C1208]/80 max-w-2xl leading-relaxed mb-10 font-normal"
+            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+          >
             Osotua Farming offers a tangible, asset-backed agribusiness opportunity uniting climate-resilient livestock genetics, organic supply chains, and modern precision logistics from a titled estate in Kajiado.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-8 border-t border-amber-900/15">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-8 border-t border-[#D4C9B0]">
             {[
               { value: "16%", label: "Livestock ROI p.a." },
               { value: "KES 2B+", label: "Herd Asset Value" },
               { value: "3,200", label: "Titled Acres" },
               { value: "4", label: "Purebred Species" },
             ].map((s) => (
-              <div key={s.label}>
+              <div key={s.label} className="border-l-2 border-[#C99A2E]/40 pl-4">
                 <div
-                  className="text-3xl sm:text-4xl font-bold text-[#C4882A]"
-                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                  className="text-3xl sm:text-4xl font-bold text-[#C99A2E]"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                 >
                   {s.value}
                 </div>
-                <div className="text-xs font-mono font-semibold uppercase tracking-wider text-[#6B6558] mt-1">
+                <div
+                  className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1C1208]/70 mt-1"
+                  style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                >
                   {s.label}
                 </div>
               </div>
@@ -165,60 +177,79 @@ export default function InvestClient() {
       </section>
 
       {/* ── PILLARS SECTION WITH IMAGES ── */}
-      <section className="bg-mesh-green noise py-24 sm:py-36">
-        <div className="os-container relative z-10 space-y-16">
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E6B34] bg-emerald-500/10 border border-emerald-500/20">
-              <span>INVESTMENT THESIS</span>
+      <section className="py-20 sm:py-28" style={{ backgroundColor: "#FAF7F2", borderTop: "1px solid #D4C9B0" }}>
+        <div className="os-container relative z-10 space-y-12">
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <span
+                className="text-[11px] font-bold uppercase tracking-[0.2em]"
+                style={{
+                  color: "#C99A2E",
+                  fontFamily: "var(--font-source-sans), sans-serif",
+                }}
+              >
+                INVESTMENT THESIS
+              </span>
+              <div className="h-[1px] w-12 bg-[#C99A2E]/50" />
             </div>
             <h2
-              className="text-3xl sm:text-5xl font-normal text-[#1C1208] m-0"
-              style={{
-                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-              }}
+              className="text-3xl sm:text-5xl font-bold text-[#1C1208] m-0"
+              style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
             >
-              Why Invest in <span className="text-gradient-gold font-semibold">Osotua</span>
+              Why Invest in <span style={{ color: "#C4602A" }}>Osotua</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {PILLARS.map((p) => (
-              <div key={p.label} className="card-luxury overflow-hidden flex flex-col justify-between bg-white shadow-xl group">
+              <div
+                key={p.label}
+                className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-lg group"
+                style={{ borderRadius: "2px" }}
+              >
                 {/* Visual Header Image */}
-                <div className="relative aspect-[16/10] overflow-hidden border-b border-amber-900/10">
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#1C1208]">
                   <Image
                     src={p.image}
                     alt={p.label}
                     fill
                     sizes="(min-width: 768px) 33vw, 100vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-4 flex items-center gap-2 text-white">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500/30 backdrop-blur-md border border-amber-400/50 flex items-center justify-center text-amber-300">
-                      <i className={`ti ${p.icon}`} />
-                    </div>
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider">{p.statLabel}: {p.stat}</span>
+                  <div
+                    className="absolute top-3.5 left-3.5 text-[#F5F0E8] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em]"
+                    style={{ backgroundColor: "#1C1208", borderRadius: "2px" }}
+                  >
+                    {p.statLabel}: {p.stat}
                   </div>
                 </div>
 
-                <div className="p-8 space-y-4">
+                <div className="px-7 pt-7 pb-4 space-y-3">
                   <h3
                     className="text-2xl font-bold text-[#1C1208] m-0"
-                    style={{ fontFamily: "var(--font-fraunces), serif" }}
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                   >
                     {p.label}
                   </h3>
-                  <p className="text-sm text-[#5C4835] leading-relaxed m-0">
+                  <p
+                    className="text-sm text-[#1C1208]/75 leading-relaxed m-0 font-normal"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     {p.desc}
                   </p>
                 </div>
 
-                <div className="p-8 pt-0 mt-auto flex items-center justify-between border-t border-stone-100">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#8E5E16]">
+                <div className="px-7 pb-7 pt-4 mt-auto flex items-center justify-between border-t border-[#E8E0D2]">
+                  <span
+                    className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E7E70]"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     Audited Yield
                   </span>
-                  <span className="font-serif text-2xl font-bold text-[#C4882A]">
+                  <span
+                    className="text-2xl font-bold"
+                    style={{ color: "#C4602A", fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
                     {p.stat}
                   </span>
                 </div>
@@ -229,55 +260,79 @@ export default function InvestClient() {
       </section>
 
       {/* ── CALCULATOR & TIERS SECTION ── */}
-      <section className="py-24 sm:py-36 bg-gradient-to-b from-transparent via-[#F5EFE4]/50 to-transparent">
+      <section className="py-20 sm:py-28" style={{ backgroundColor: "#F5F0E8" }}>
         <div className="os-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
             {/* Left Column: Interactive Calculator */}
             <div className="lg:col-span-6 space-y-8">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#8E5E16] bg-amber-500/10 border border-amber-500/20">
-                  <span>FINANCIAL MODEL</span>
+                <div className="flex items-center gap-3">
+                  <span
+                    className="text-[11px] font-bold uppercase tracking-[0.2em]"
+                    style={{
+                      color: "#C99A2E",
+                      fontFamily: "var(--font-source-sans), sans-serif",
+                    }}
+                  >
+                    FINANCIAL MODEL
+                  </span>
+                  <div className="h-[1px] w-12 bg-[#C99A2E]/50" />
                 </div>
                 <h2
-                  className="text-3xl sm:text-5xl font-normal text-[#1C1208] leading-tight m-0"
-                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                  className="text-3xl sm:text-5xl font-bold text-[#1C1208] leading-tight m-0"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                 >
                   Yield Calculator
                 </h2>
-                <p className="text-base text-[#5C4835] leading-relaxed">
+                <p
+                  className="text-base text-[#1C1208]/75 leading-relaxed font-normal"
+                  style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                >
                   Project your returns based on historical compounding rates across our pedigree breeding and direct farm store dispatch networks.
                 </p>
               </div>
 
-              <div className="card-luxury p-8 sm:p-10 space-y-8 bg-white shadow-xl">
+              <div
+                className="p-8 sm:p-10 space-y-8 bg-[#FAF7F2] border border-[#D4C9B0] shadow-sm"
+                style={{ borderRadius: "2px" }}
+              >
                 {/* Investment Type Selector */}
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-3">
+                  <label
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-3"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     Investment Focus
                   </label>
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
                       onClick={() => setInvestmentType("breeding")}
-                      className={`py-3.5 px-4 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all border ${
-                        investmentType === "breeding"
-                          ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white border-[#C4882A] shadow-md"
-                          : "bg-[#FAF6EE] text-[#5C4835] border-amber-900/15 hover:border-amber-900/30"
-                      }`}
+                      className="py-3 px-4 text-xs font-bold uppercase tracking-[0.14em] transition-all cursor-pointer"
+                      style={{
+                        borderRadius: "2px",
+                        backgroundColor: investmentType === "breeding" ? "#1C1208" : "transparent",
+                        color: investmentType === "breeding" ? "#F5F0E8" : "#1C1208",
+                        border: "1px solid #1C1208",
+                        fontFamily: "var(--font-source-sans), sans-serif",
+                      }}
                     >
-                      Pedigree Livestock (16% p.a.)
+                      Pedigree (16% p.a.)
                     </button>
                     <button
                       type="button"
                       onClick={() => setInvestmentType("barn")}
-                      className={`py-3.5 px-4 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all border ${
-                        investmentType === "barn"
-                          ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white border-[#C4882A] shadow-md"
-                          : "bg-[#FAF6EE] text-[#5C4835] border-amber-900/15 hover:border-amber-900/30"
-                      }`}
+                      className="py-3 px-4 text-xs font-bold uppercase tracking-[0.14em] transition-all cursor-pointer"
+                      style={{
+                        borderRadius: "2px",
+                        backgroundColor: investmentType === "barn" ? "#1C1208" : "transparent",
+                        color: investmentType === "barn" ? "#F5F0E8" : "#1C1208",
+                        border: "1px solid #1C1208",
+                        fontFamily: "var(--font-source-sans), sans-serif",
+                      }}
                     >
-                      Barn Network (14% p.a.)
+                      Barn (14% p.a.)
                     </button>
                   </div>
                 </div>
@@ -285,10 +340,16 @@ export default function InvestClient() {
                 {/* Amount Slider */}
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className="text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold">
+                    <label
+                      className="text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold"
+                      style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                    >
                       Principal Capital (KES)
                     </label>
-                    <span className="font-serif text-xl font-bold text-[#C4882A]">
+                    <span
+                      className="text-xl font-bold"
+                      style={{ color: "#C4602A", fontFamily: "var(--font-playfair), Georgia, serif" }}
+                    >
                       KES {amount.toLocaleString()}
                     </span>
                   </div>
@@ -299,9 +360,12 @@ export default function InvestClient() {
                     step={100000}
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
-                    className="w-full accent-[#C4882A] cursor-pointer"
+                    className="w-full accent-[#C99A2E] cursor-pointer"
                   />
-                  <div className="flex justify-between text-[10px] font-mono text-[#786550] mt-1">
+                  <div
+                    className="flex justify-between text-[11px] text-[#8E7E70] mt-1"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     <span>KES 100K</span>
                     <span>KES 5M</span>
                     <span>KES 10M+</span>
@@ -311,10 +375,16 @@ export default function InvestClient() {
                 {/* Duration Slider */}
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className="text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold">
+                    <label
+                      className="text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold"
+                      style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                    >
                       Investment Tenor (Years)
                     </label>
-                    <span className="font-serif text-xl font-bold text-[#C4882A]">
+                    <span
+                      className="text-xl font-bold"
+                      style={{ color: "#C4602A", fontFamily: "var(--font-playfair), Georgia, serif" }}
+                    >
                       {duration} Years
                     </span>
                   </div>
@@ -325,9 +395,12 @@ export default function InvestClient() {
                     step={1}
                     value={duration}
                     onChange={(e) => setDuration(Number(e.target.value))}
-                    className="w-full accent-[#C4882A] cursor-pointer"
+                    className="w-full accent-[#C99A2E] cursor-pointer"
                   />
-                  <div className="flex justify-between text-[10px] font-mono text-[#786550] mt-1">
+                  <div
+                    className="flex justify-between text-[11px] text-[#8E7E70] mt-1"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     <span>1 Year</span>
                     <span>5 Years</span>
                     <span>10 Years</span>
@@ -335,16 +408,25 @@ export default function InvestClient() {
                 </div>
 
                 {/* Yield Output Box */}
-                <div className="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-3">
-                  <div className="flex justify-between items-center text-xs text-[#5C4835]">
+                <div
+                  className="p-6 bg-[#F5F0E8] border border-[#D4C9B0] space-y-3"
+                  style={{ borderRadius: "2px" }}
+                >
+                  <div className="flex justify-between items-center text-xs text-[#1C1208]/75">
                     <span>Projected Total Value:</span>
-                    <strong className="text-lg font-serif text-[#1C1208]">
+                    <strong
+                      className="text-xl font-bold text-[#1C1208]"
+                      style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                    >
                       KES {Math.round(estimatedReturn).toLocaleString()}
                     </strong>
                   </div>
-                  <div className="flex justify-between items-center text-xs text-[#5C4835] pt-2 border-t border-amber-900/10">
+                  <div className="flex justify-between items-center text-xs text-[#1C1208]/75 pt-2 border-t border-[#D4C9B0]">
                     <span>Total Estimated Gain:</span>
-                    <strong className="text-xl font-serif text-[#2E6B34]">
+                    <strong
+                      className="text-2xl font-bold text-[#6B7A3F]"
+                      style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                    >
                       + KES {Math.round(profit).toLocaleString()}
                     </strong>
                   </div>
@@ -352,9 +434,10 @@ export default function InvestClient() {
 
                 <button
                   onClick={() => setShowModal(true)}
-                  className="w-full btn-primary py-4 text-xs tracking-widest justify-center shadow-xl"
+                  className="w-full btn-gold py-4 cursor-pointer"
+                  style={{ borderRadius: "2px" }}
                 >
-                  <i className="ti ti-mail" />
+                  <i className="bi bi-envelope" />
                   <span>REQUEST DETAILED INVESTOR PROSPECTUS</span>
                 </button>
               </div>
@@ -363,12 +446,21 @@ export default function InvestClient() {
             {/* Right Column: Investor Tiers */}
             <div className="lg:col-span-6 space-y-6">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E6B34] bg-emerald-500/10 border border-emerald-500/20">
-                  <span>PORTFOLIO TIERS</span>
+                <div className="flex items-center gap-3">
+                  <span
+                    className="text-[11px] font-bold uppercase tracking-[0.2em]"
+                    style={{
+                      color: "#6B7A3F",
+                      fontFamily: "var(--font-source-sans), sans-serif",
+                    }}
+                  >
+                    PORTFOLIO TIERS
+                  </span>
+                  <div className="h-[1px] w-12 bg-[#6B7A3F]/50" />
                 </div>
                 <h2
-                  className="text-3xl sm:text-5xl font-normal text-[#1C1208] leading-tight m-0"
-                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                  className="text-3xl sm:text-5xl font-bold text-[#1C1208] leading-tight m-0"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                 >
                   Investor Benefits
                 </h2>
@@ -380,41 +472,64 @@ export default function InvestClient() {
                   return (
                     <div
                       key={tier.label}
-                      className={`card-luxury p-7 space-y-4 transition-all duration-300 ${
-                        isCurrent
-                          ? "ring-2 ring-[#C4882A] border-[#C4882A] bg-amber-50/40 shadow-xl"
-                          : "bg-white"
-                      }`}
+                      className="p-7 space-y-4 transition-all duration-300 bg-[#FAF7F2] border"
+                      style={{
+                        borderRadius: "2px",
+                        borderColor: isCurrent ? "#C99A2E" : "#D4C9B0",
+                        boxShadow: isCurrent ? "0 4px 20px rgba(201, 154, 46, 0.15)" : "none",
+                      }}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-[#C4882A] flex items-center justify-center text-xl">
-                            <i className={`ti ${tier.icon}`} />
+                          <div
+                            className="w-10 h-10 flex items-center justify-center text-lg"
+                            style={{
+                              backgroundColor: "#F5F0E8",
+                              color: "#C99A2E",
+                              border: "1px solid #D4C9B0",
+                              borderRadius: "2px",
+                            }}
+                          >
+                            <i className="bi bi-shield-check" />
                           </div>
                           <div>
                             <h3
                               className="text-xl font-bold text-[#1C1208] m-0"
-                              style={{ fontFamily: "var(--font-fraunces), serif" }}
+                              style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                             >
                               {tier.label} Tier
                             </h3>
-                            <div className="text-[11px] font-mono text-[#8E5E16]">
+                            <div
+                              className="text-[11px] uppercase tracking-[0.14em] text-[#8E7E70]"
+                              style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                            >
                               From KES {tier.min.toLocaleString()}{tier.max ? ` to KES ${tier.max.toLocaleString()}` : "+"}
                             </div>
                           </div>
                         </div>
 
                         {isCurrent && (
-                          <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-500/20 text-[#8E5E16] border border-amber-500/30">
+                          <span
+                            className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em]"
+                            style={{
+                              backgroundColor: "#C99A2E",
+                              color: "#1C1208",
+                              borderRadius: "2px",
+                            }}
+                          >
                             Active Match
                           </span>
                         )}
                       </div>
 
-                      <div className="space-y-2 pt-2 border-t border-stone-100">
+                      <div className="space-y-2 pt-2 border-t border-[#E8E0D2]">
                         {tier.perks.map((p) => (
-                          <div key={p} className="flex items-center gap-2 text-xs text-[#5C4835]">
-                            <i className="ti ti-check text-[#2E6B34]" />
+                          <div
+                            key={p}
+                            className="flex items-center gap-2 text-xs text-[#1C1208]/80 font-normal"
+                            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                          >
+                            <i className="bi bi-check2 text-[#6B7A3F] font-bold" />
                             <span>{p}</span>
                           </div>
                         ))}
@@ -431,39 +546,72 @@ export default function InvestClient() {
 
       {/* ── MODAL PROSPECTUS FORM ── */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="card-luxury p-8 sm:p-10 max-w-lg w-full bg-white shadow-2xl relative">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div
+            className="p-8 sm:p-10 max-w-lg w-full bg-[#FAF7F2] border border-[#D4C9B0] shadow-2xl relative"
+            style={{ borderRadius: "2px" }}
+          >
             <button
               onClick={() => setShowModal(false)}
-              className="absolute right-6 top-6 text-stone-400 hover:text-stone-700 p-1"
+              className="absolute right-6 top-6 text-[#1C1208]/60 hover:text-[#1C1208] p-1 cursor-pointer text-xl"
             >
-              <i className="ti ti-x text-lg" />
+              <i className="bi bi-x" />
             </button>
 
             {formSuccess ? (
               <div className="text-center py-8 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-[#2E6B34] flex items-center justify-center mx-auto text-3xl">
-                  <i className="ti ti-circle-check" />
+                <div
+                  className="w-16 h-16 flex items-center justify-center mx-auto text-3xl"
+                  style={{
+                    backgroundColor: "#F5F0E8",
+                    color: "#6B7A3F",
+                    border: "1px solid #D4C9B0",
+                    borderRadius: "2px",
+                  }}
+                >
+                  <i className="bi bi-check-circle" />
                 </div>
-                <h3 className="text-2xl font-serif text-[#1C1208]">Prospectus Request Received</h3>
-                <p className="text-xs text-[#5C4835]">
+                <h3
+                  className="text-2xl font-bold text-[#1C1208]"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                >
+                  Prospectus Request Received
+                </h3>
+                <p
+                  className="text-sm text-[#1C1208]/75"
+                  style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                >
                   Our managing partner will dispatch the investment documentation and audited financials to your email.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmitInquiry} className="space-y-4">
                 <div className="space-y-1">
-                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#8E5E16]">
+                  <div
+                    className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C99A2E]"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     INVESTOR BRIEFING
                   </div>
-                  <h3 className="text-2xl font-serif text-[#1C1208]">Request Term Sheet</h3>
-                  <p className="text-xs text-[#5C4835]">
-                    Estimated allocation: <strong className="text-[#C4882A]">KES {amount.toLocaleString()}</strong> ({duration} Years)
+                  <h3
+                    className="text-2xl font-bold text-[#1C1208]"
+                    style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+                  >
+                    Request Term Sheet
+                  </h3>
+                  <p
+                    className="text-xs text-[#1C1208]/75"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
+                    Estimated allocation: <strong style={{ color: "#C4602A" }}>KES {amount.toLocaleString()}</strong> ({duration} Years)
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                  <label
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     Full Name *
                   </label>
                   <input
@@ -472,12 +620,16 @@ export default function InvestClient() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="e.g. Moses Ole Sironka"
-                    className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                  <label
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     Email Address *
                   </label>
                   <input
@@ -486,12 +638,16 @@ export default function InvestClient() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="moses@example.com"
-                    className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                  <label
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     Phone Number
                   </label>
                   <input
@@ -499,12 +655,16 @@ export default function InvestClient() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+254 700 000 000"
-                    className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                  <label
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
                     Notes / Portfolio Objectives
                   </label>
                   <textarea
@@ -512,25 +672,21 @@ export default function InvestClient() {
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Individual investor, institutional fund, or family office..."
-                    className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full btn-primary py-3.5 text-xs tracking-widest justify-center shadow-lg"
+                  className="w-full btn-dark-fill py-3.5 text-xs tracking-widest justify-center cursor-pointer"
+                  style={{ borderRadius: "2px" }}
                 >
                   {isSubmitting ? (
-                    <>
-                      <i className="ti ti-loader animate-spin" />
-                      <span>Transmitting Request...</span>
-                    </>
+                    <span>Transmitting Request...</span>
                   ) : (
-                    <>
-                      <i className="ti ti-send" />
-                      <span>SUBMIT PROSPECTUS REQUEST</span>
-                    </>
+                    <span>SUBMIT PROSPECTUS REQUEST</span>
                   )}
                 </button>
               </form>

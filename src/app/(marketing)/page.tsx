@@ -5,7 +5,6 @@ import ExperienceBannerSection from "@/components/farm/ExperienceBannerSection";
 import RangelandsGallerySection from "@/components/farm/RangelandsGallerySection";
 import SocialShowcaseSection from "@/components/farm/SocialShowcaseSection";
 import BrandQuoteSection from "@/components/farm/BrandQuoteSection";
-import NewsletterSection from "@/components/farm/NewsletterSection";
 
 export const metadata = {
   title: "Osotua Farming — From Our Land, To Your Table",
@@ -40,9 +39,6 @@ export default function HomePage() {
 
       {/* ── 07. BRAND COVENANT QUOTE ── */}
       <BrandQuoteSection />
-
-      {/* ── 08. NEWSLETTER DISPATCH ── */}
-      <NewsletterSection />
     </div>
   );
 }

@@ -23,16 +23,6 @@ interface CategoryItem {
   slug: string;
 }
 
-const categoryIcons: Record<string, string> = {
-  "Beef Cuts": "ti-meat",
-  "Dairy Products": "ti-cup",
-  "Vegetables": "ti-plant",
-  "Fruits": "ti-apple",
-  "Ranch Box": "ti-box",
-  "Goat Meat": "ti-meat",
-  "Sheep Meat": "ti-meat",
-};
-
 interface Props {
   initialProducts: ProductItem[];
   categories: CategoryItem[];
@@ -40,7 +30,7 @@ interface Props {
 
 export default function BarnClient({ initialProducts, categories }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState<string>(" ");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const { cartCount, cartTotal } = useCart();
 
   const queryTrimmed = searchQuery.trim().toLowerCase();
@@ -60,88 +50,138 @@ export default function BarnClient({ initialProducts, categories }: Props) {
   const hasFilters = selectedCategory !== "all" || queryTrimmed !== "";
 
   return (
-    <section className="bg-[#FBF7F0] pb-28 pt-6 relative">
+    <section className="bg-[#F5F0E8] text-[#1C1208] pb-32 pt-8 relative">
       <div className="os-container relative z-10 space-y-12">
 
         {/* ── CART ACTIVE BANNER ── */}
         {cartCount > 0 && (
-          <div className="card-luxury p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 bg-gradient-to-r from-white via-[#FAF6EE] to-white border-amber-500/40 shadow-xl">
+          <div
+            className="p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 bg-[#FAF7F2] border border-[#C99A2E] shadow-lg"
+            style={{ borderRadius: "2px" }}
+          >
             <div className="flex items-center gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#C4882A] to-[#D99A30] text-white flex items-center justify-center shrink-0 text-2xl shadow-lg shadow-amber-900/20">
-                <i className="ti ti-shopping-bag-check" />
+              <div
+                className="w-12 h-12 text-[#1C1208] flex items-center justify-center shrink-0 text-2xl shadow-sm"
+                style={{ backgroundColor: "#C99A2E", borderRadius: "2px" }}
+              >
+                <i className="bi bi-bag-check-fill" />
               </div>
               <div>
-                <div className="font-mono text-xs font-bold uppercase tracking-widest text-[#8E5E16]">
+                <div
+                  className="text-xs font-bold uppercase tracking-[0.16em]"
+                  style={{ color: "#8E7E70", fontFamily: "var(--font-source-sans), sans-serif" }}
+                >
                   {cartCount} {cartCount === 1 ? "Item" : "Items"} in Your Basket
                 </div>
-                <div className="text-base text-[#5C4835] mt-0.5">
-                  Subtotal: <strong className="text-xl text-[#1C1208] font-serif font-bold">KES {cartTotal.toLocaleString()}</strong>
+                <div className="text-base text-[#1C1208] mt-0.5">
+                  Subtotal:{" "}
+                  <strong
+                    className="text-xl font-bold"
+                    style={{
+                      color: "#C4602A",
+                      fontFamily: "var(--font-playfair), Georgia, serif",
+                    }}
+                  >
+                    KES {cartTotal.toLocaleString()}
+                  </strong>
                 </div>
               </div>
             </div>
 
-            <Link href="/cart" className="btn-primary py-3.5 px-8 text-xs tracking-widest shadow-xl">
-              <i className="ti ti-shopping-bag" />
+            <Link
+              href="/cart"
+              className="btn-gold"
+              style={{
+                borderRadius: "2px",
+                padding: "0.85rem 2rem",
+                fontSize: "0.78rem",
+                letterSpacing: "0.14em",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                backgroundColor: "#C99A2E",
+                color: "#1C1208",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <i className="bi bi-bag" />
               <span>VIEW BASKET &amp; CHECKOUT</span>
-              <i className="ti ti-arrow-right" />
+              <i className="bi bi-arrow-right text-xs" />
             </Link>
           </div>
         )}
 
         {/* ── CONTROL BAR ── */}
-        <div className="card-luxury p-6 sm:p-8 space-y-6">
+        <div
+          className="bg-[#FAF7F2] p-6 sm:p-8 border border-[#D4C9B0] space-y-6 shadow-sm"
+          style={{ borderRadius: "2px" }}
+        >
           {/* Search row */}
           <div className="relative">
-            <i className="ti ti-search absolute left-4 top-1/2 -translate-y-1/2 text-[#8E5E16] text-lg pointer-events-none" />
+            <i
+              className="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-[#8E7E70] text-sm pointer-events-none"
+              aria-hidden="true"
+            />
             <input
               type="text"
-              value={searchQuery === " " ? "" : searchQuery}
+              value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search beef cuts, fresh dairy, organic vegetables..."
-              className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl py-3.5 pl-12 pr-10 text-sm text-[#1C1208] outline-none focus:border-[#C4882A] focus:ring-2 focus:ring-[#C4882A]/20 transition-all placeholder:text-stone-400"
+              className="w-full bg-white border border-[#D4C9B0] rounded-[2px] py-3 pl-11 pr-10 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E] transition-all placeholder:text-[#8E7E70]"
+              style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
             />
             {searchQuery.trim() !== "" && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-1"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8E7E70] hover:text-[#1C1208] p-1"
+                aria-label="Clear search"
               >
-                <i className="ti ti-x text-sm" />
+                <i className="bi bi-x text-base" aria-hidden="true" />
               </button>
             )}
           </div>
 
           {/* Category filter pills */}
-          <div className="flex flex-wrap gap-2.5 items-center pt-2 border-t border-stone-100">
+          <div className="flex flex-wrap gap-2.5 items-center pt-2 border-t border-[#E8E0D2]">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 ${
+              className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-bold uppercase tracking-[0.14em] transition-all duration-200 cursor-pointer ${
                 selectedCategory === "all"
-                  ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white shadow-lg shadow-amber-900/20"
-                  : "bg-[#FAF6EE] text-[#5C4835] border border-amber-900/15 hover:border-amber-900/30"
+                  ? "bg-[#1C1208] text-[#F5F0E8] border border-[#1C1208]"
+                  : "bg-white text-[#1C1208] border border-[#D4C9B0] hover:border-[#C99A2E]"
               }`}
+              style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
             >
-              <i className="ti ti-layout-grid text-sm" />
-              <span>All Products</span>
-              <span className="opacity-70 font-normal">({initialProducts.length})</span>
+              <span>All Provisions</span>
+              <span className={`text-[10px] ${selectedCategory === "all" ? "text-[#C99A2E]" : "text-[#8E7E70]"}`}>
+                ({initialProducts.length})
+              </span>
             </button>
 
             {categories.map((cat) => {
-              const count = initialProducts.filter((p) => p.category.id === cat.id).length;
-              const active = selectedCategory.toLowerCase() === cat.name.toLowerCase();
-              const icon = categoryIcons[cat.name] || "ti-circle";
+              const count = initialProducts.filter(
+                (p) => p.category.name.toLowerCase() === cat.name.toLowerCase() || p.category.id === cat.id
+              ).length;
+              const active =
+                selectedCategory.toLowerCase() === cat.name.toLowerCase() || selectedCategory === cat.id;
+
               return (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.name)}
-                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 ${
+                  className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-bold uppercase tracking-[0.14em] transition-all duration-200 cursor-pointer ${
                     active
-                      ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white shadow-lg shadow-amber-900/20"
-                      : "bg-[#FAF6EE] text-[#5C4835] border border-amber-900/15 hover:border-amber-900/30"
+                      ? "bg-[#1C1208] text-[#F5F0E8] border border-[#1C1208]"
+                      : "bg-white text-[#1C1208] border border-[#D4C9B0] hover:border-[#C99A2E]"
                   }`}
+                  style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                 >
-                  <i className={`ti ${icon} text-sm`} />
                   <span>{cat.name}</span>
-                  <span className="opacity-70 font-normal">({count})</span>
+                  <span className={`text-[10px] ${active ? "text-[#C99A2E]" : "text-[#8E7E70]"}`}>
+                    ({count})
+                  </span>
                 </button>
               );
             })}
@@ -152,58 +192,58 @@ export default function BarnClient({ initialProducts, categories }: Props) {
                   setSelectedCategory("all");
                   setSearchQuery("");
                 }}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 transition-colors ml-auto"
+                className="text-xs text-[#C4602A] hover:underline ml-auto font-semibold cursor-pointer"
+                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
-                <i className="ti ti-x text-xs" />
-                <span>Clear Filters</span>
+                Reset Filters
               </button>
             )}
           </div>
-
-          {/* Results count text */}
-          <div className="flex items-center justify-between text-xs text-[#786550] font-mono pt-1">
-            <span>
-              Showing <strong className="text-[#C4882A] font-bold">{filtered.length}</strong> of {initialProducts.length} items
-              {selectedCategory !== "all" && <span> &bull; <strong className="text-[#8E5E16]">{selectedCategory}</strong></span>}
-            </span>
-          </div>
         </div>
 
-        {/* ── PRODUCT GRID (Spacious 3-column) ── */}
+        {/* ── RESULTS SUMMARY ── */}
+        <div className="flex items-center justify-between text-xs text-[#8E7E70] px-1 font-semibold uppercase tracking-[0.14em]">
+          <span>
+            Showing <strong className="text-[#1C1208]">{filtered.length}</strong> farm provisions
+          </span>
+          <span>100% Traceable · Kajiado Pastures</span>
+        </div>
+
+        {/* ── PRODUCT GRID ── */}
         {filtered.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filtered.map((product) => (
-              <ProductCard key={product.id} product={product} dark={false} />
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="card-luxury text-center py-20 px-8 space-y-4 max-w-lg mx-auto">
-            <div className="w-16 h-16 rounded-full bg-amber-500/10 text-[#C4882A] flex items-center justify-center mx-auto text-2xl">
-              <i className="ti ti-basket-off" />
-            </div>
+          <div
+            className="text-center py-20 bg-[#FAF7F2] border border-[#D4C9B0] space-y-4"
+            style={{ borderRadius: "2px" }}
+          >
+            <i className="bi bi-basket text-4xl text-[#C99A2E]" aria-hidden="true" />
             <h3
-              className="text-3xl font-light text-[#1C1208]"
-              style={{ fontFamily: "var(--font-fraunces), serif" }}
+              className="font-serif text-2xl text-[#1C1208] font-semibold"
+              style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
             >
-              No Products Found
+              No harvest provisions found
             </h3>
-            <p className="text-sm text-[#5C4835]">
-              Try adjusting your search query or product category filter.
+            <p className="text-sm text-[#8E7E70] max-w-md mx-auto">
+              We could not find any products matching your current filters. Try selecting another category or resetting filters.
             </p>
-            <div className="pt-2">
-              <button
-                onClick={() => {
-                  setSelectedCategory("all");
-                  setSearchQuery("");
-                }}
-                className="btn-primary py-3 px-6 text-xs tracking-wider"
-              >
-                <i className="ti ti-refresh" />
-                <span>Show All Items</span>
-              </button>
-            </div>
+            <button
+              onClick={() => {
+                setSelectedCategory("all");
+                setSearchQuery("");
+              }}
+              className="btn-gold"
+              style={{ borderRadius: "2px" }}
+            >
+              Clear Filters
+            </button>
           </div>
         )}
+
       </div>
     </section>
   );

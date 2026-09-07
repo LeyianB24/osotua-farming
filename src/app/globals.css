@@ -30,7 +30,7 @@
   /* Figma Palette */
   --color-soil:           #1C1208;  /* Ranch Brown */
   --color-hide:           #2E1C08;
-  --color-bark:           #4A2E18;  /* Bark */
+  --color-bark:           #5C4A2A;  /* Exact Figma Bark */
 
   /* Terracotta */
   --color-terracotta:     #C4602A;  /* Exact Figma Terracotta */
@@ -67,7 +67,7 @@
   /* Earthy Brand Palette (Figma Exact) */
   --soil:              #1C1208;
   --hide:              #2E1C08;
-  --bark:              #4A2E18;
+  --bark:              #5C4A2A;
 
   /* Terracotta */
   --terracotta:        #C4602A;
@@ -523,40 +523,62 @@ h1 em, h2 em, h3 em, h4 em {
   border-color: #2E1C08;
 }
 
-/* ── 8. FORM INPUTS (Umoja Sacco clean style) ────────────────────────── */
-.os-input {
+/* ── 8. FORM INPUTS (Exact Figma clean style) ────────────────────────── */
+.os-input,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="password"],
+select,
+textarea {
   width: 100%;
-  font-family: var(--font-jakarta), system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.92rem;
   font-weight: 400;
-  color: var(--soil);
-  background: #FFFFFF;
-  border: 1.5px solid var(--bone);
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  transition: border-color var(--t-base) ease, box-shadow var(--t-base) ease;
+  color: #1C1208;
+  background-color: #FAF7F2;
+  border: 1px solid #D4C9B0;
+  border-radius: 2px;
+  padding: 0.85rem 1.15rem;
+  transition: border-color var(--t-base) ease, box-shadow var(--t-base) ease, background-color var(--t-base) ease;
   outline: none;
 }
-.os-input:focus {
-  border-color: var(--savanna);
-  box-shadow: 0 0 0 3px rgba(196, 136, 42, 0.12);
+.os-input:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #C99A2E;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(201, 154, 46, 0.25);
 }
-.os-input::placeholder {
-  color: rgba(28, 18, 8, 0.35);
+.os-input::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: #8E7E70;
+  font-size: 0.9rem;
 }
 
 /* Dark input (for dark sections) */
 .os-input-dark {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: var(--cream);
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  border-radius: 2px;
+  color: #F5F0E8;
 }
 .os-input-dark:focus {
-  border-color: var(--savanna);
-  box-shadow: 0 0 0 3px rgba(196, 136, 42, 0.15);
+  border-color: #C99A2E;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 2px rgba(201, 154, 46, 0.25);
 }
 .os-input-dark::placeholder {
-  color: rgba(251, 247, 240, 0.35);
+  color: rgba(245, 240, 232, 0.4);
 }
 
 /* ── 9. BENTO GRID (simplified, kept for legacy usage) ───────────────── */

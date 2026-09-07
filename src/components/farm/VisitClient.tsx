@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { FIELD_DAY, RANCH_GALLERY, LOGO } from "@/lib/images"
+import { useState } from "react";
+import Image from "next/image";
+import { FIELD_DAY, LOGO } from "@/lib/images";
 
 const TOUR_TYPES = [
   {
@@ -10,7 +10,7 @@ const TOUR_TYPES = [
     title: "General Ranch Tour",
     pricePerPerson: 1000,
     desc: "Explore rangeland pastures, livestock paddocks, water harvesting swales, and enjoy a Barn Store sampling session.",
-    icon: "ti-compass",
+    icon: "bi-compass",
     image: "/images/WhatsApp Image 2026-08-10 at 11.55.21.jpeg",
   },
   {
@@ -18,15 +18,15 @@ const TOUR_TYPES = [
     title: "Breeding & Cattle Consultation",
     pricePerPerson: 2500,
     desc: "Detailed genetic selection walkthrough, stud registry examination, and 1-on-1 session with our head livestock specialist.",
-    icon: "ti-dna-2",
-    image: "/images/boran bulls.jpg",
+    icon: "bi-shield-check",
+    image: "/images/boran-bull.jpg",
   },
   {
     id: "school",
     title: "School / Student Delegation",
     pricePerPerson: 500,
     desc: "Educational field workshop focusing on sustainable arid agriculture, solar borehole tech, and climate resilience.",
-    icon: "ti-school",
+    icon: "bi-mortarboard",
     image: "/images/WhatsApp Image 2026-08-10 at 11.56.50.jpeg",
   },
   {
@@ -34,31 +34,31 @@ const TOUR_TYPES = [
     title: "Farm-to-Table Ranch Dining",
     pricePerPerson: 3500,
     desc: "Full ranch guided walkthrough followed by an artisanal 3-course open-air bush lunch prepared with sunrise ingredients.",
-    icon: "ti-soup",
+    icon: "bi-cup-hot",
     image: "/images/grilled lamb chops.jpg",
   },
-]
+];
 
 export default function VisitClient() {
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [tourType, setTourType] = useState("general")
-  const [groupSize, setGroupSize] = useState(2)
-  const [visitDate, setVisitDate] = useState("")
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-  const [timeSlot, setTimeSlot] = useState("morning")
-  const [notes, setNotes] = useState("")
-  const [errorMsg, setErrorMsg] = useState("")
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [tourType, setTourType] = useState("general");
+  const [groupSize, setGroupSize] = useState(2);
+  const [visitDate, setVisitDate] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [timeSlot, setTimeSlot] = useState("morning");
+  const [notes, setNotes] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const activeTour = TOUR_TYPES.find((t) => t.id === tourType) || TOUR_TYPES[0]
-  const estimatedCost = activeTour.pricePerPerson * groupSize
+  const activeTour = TOUR_TYPES.find((t) => t.id === tourType) || TOUR_TYPES[0];
+  const estimatedCost = activeTour.pricePerPerson * groupSize;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
-    setErrorMsg("")
+    e.preventDefault();
+    setLoading(true);
+    setErrorMsg("");
 
     try {
       const payload = {
@@ -68,206 +68,259 @@ export default function VisitClient() {
         groupSize: Number(groupSize),
         visitDate: new Date(visitDate).toISOString(),
         purpose: `${activeTour.title} [${timeSlot === "morning" ? "Morning 9:30 AM" : "Afternoon 2:00 PM"}] (KES ${estimatedCost.toLocaleString()})${notes ? ` - ${notes}` : ""}`,
-      }
+      };
 
       const res = await fetch("/api/visits", {
         method: "POST",
         body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" },
-      })
+      });
 
       if (!res.ok) {
-        throw new Error("Visit booking failed")
+        throw new Error("Visit booking failed");
       }
 
-      setSubmitted(true)
+      setSubmitted(true);
     } catch (err) {
-      console.error(err)
-      setErrorMsg("Unable to complete reservation. Please verify that all required fields and dates are selected.")
+      console.error(err);
+      setErrorMsg("Unable to complete reservation. Please verify that all required fields and dates are selected.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   return (
-    <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
+    <div style={{ background: "#F5F0E8", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
 
       {/* ── HERO BANNER ── */}
-      <section className="bg-mesh-earth noise relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
+      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
         {/* Pastoral background overlay */}
         <div className="absolute inset-0 z-0">
           <Image
             src={FIELD_DAY}
-            alt="Field day at Osotua ranch"
+            alt="Osotua rangeland pastures"
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-20 scale-105"
+            className="object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FBF7F0]/95 via-[#FBF7F0]/85 to-[#FBF7F0]/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FBF7F0] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F0E8]/95 via-[#F5F0E8]/85 to-[#F5F0E8]/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F5F0E8] via-transparent to-transparent" />
         </div>
 
         <div className="os-container relative z-10">
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-amber-500/10 text-[#8E5E16] border border-amber-500/25 shadow-md">
-            <div className="relative w-5 h-5 rounded-full overflow-hidden ring-1 ring-amber-400 shrink-0 bg-white">
-              <Image src={LOGO} alt="Osotua Seal" fill sizes="20px" className="object-cover" />
+          <div className="flex items-center gap-3 mb-6">
+            <div
+              className="relative w-9 h-9 rounded-full overflow-hidden border border-[#C99A2E]/50 shrink-0 bg-white"
+            >
+              <Image
+                src={LOGO}
+                alt="Osotua Farming Emblem"
+                fill
+                sizes="36px"
+                className="object-cover"
+              />
             </div>
-            <span>GUIDED RANGELAND TOURS &bull; AGRITOURISM</span>
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white"
+              style={{ backgroundColor: "#6B7A3F", borderRadius: "2px" }}
+            >
+              <i className="bi bi-geo-alt text-xs" />
+              <span>KAJIADO RANGELANDS · 90 MIN FROM NAIROBI</span>
+            </div>
           </div>
 
           <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-8"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-6"
             style={{
-              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
+              fontFamily: "var(--font-playfair), Georgia, serif",
             }}
           >
-            Come see the <br />
-            <em className="font-normal italic text-gradient-gold">living ranch</em>
+            Visit Osotua, <br />
+            <span style={{ color: "#C99A2E" }}>Walk the Living Pastures</span>
           </h1>
 
-          <p className="text-base sm:text-xl text-[#5C4835] max-w-2xl leading-relaxed font-normal">
-            Book a private or group guided tour of Osotua Farming in Kajiado County. Inspect our purebred herds, review water management infrastructure, visit the Barn Store, and taste ranch-fresh produce.
+          <p
+            className="text-base sm:text-xl text-[#8E7E70] max-w-2xl leading-relaxed mb-10 font-normal"
+            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+          >
+            Experience purebred Kenyan livestock breeding, explore solar irrigation and water harvesting swales, and enjoy an authentic bush breakfast under our acacia canopies.
           </p>
-        </div>
-      </section>
 
-      {/* ── GALLERY STRIP ── */}
-      <section className="bg-[#FBF7F0] pb-12 relative z-10">
-        <div className="os-container -translate-y-8 sm:-translate-y-12">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
-            {RANCH_GALLERY.slice(0, 4).map((src, i) => (
-              <div
-                key={i}
-                className="relative aspect-video rounded-3xl overflow-hidden border border-amber-900/15 shadow-md group"
+          <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-[#D4C9B0]">
+            <a
+              href="https://wa.me/254755758208"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+              style={{ borderRadius: "2px" }}
+            >
+              <i className="bi bi-whatsapp" />
+              <span>WHATSAPP CONCIERGE (+254 755 758 208)</span>
+            </a>
+
+            <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70]">
+              <span>Follow our ranch journey:</span>
+              <a
+                href="https://www.instagram.com/osotua_ranches_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1C1208] hover:text-[#C99A2E] transition-colors"
               >
-                <Image
-                  src={src}
-                  alt={`Osotua ranch tour photo ${i + 1}`}
-                  fill
-                  sizes="(min-width: 640px) 25vw, 50vw"
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-            ))}
+                @osotua_ranches_
+              </a>
+              <span>·</span>
+              <a
+                href="https://www.tiktok.com/@osotua.ranches"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#1C1208] hover:text-[#C99A2E] transition-colors"
+              >
+                @osotua.ranches
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── BOOKING & TOUR TYPES SECTION ── */}
-      <section className="py-24 sm:py-36 bg-gradient-to-b from-transparent via-[#F5EFE4]/50 to-transparent">
+      {/* ── TOURS SELECTION & BOOKING SECTION ── */}
+      <section className="py-16 md:py-24 bg-[#F5F0E8]">
         <div className="os-container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Column: Visual Tour Selection */}
-            <div className="lg:col-span-6 space-y-10">
-              <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#8E5E16] bg-amber-500/10 border border-amber-500/20">
-                  <span>EXPERIENCE TIERS</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+
+            {/* Left Column: Tour Packages */}
+            <div className="lg:col-span-6 space-y-6">
+              <div>
+                <div
+                  className="text-xs font-bold uppercase tracking-[0.16em] mb-2"
+                  style={{ color: "#C4602A", fontFamily: "var(--font-source-sans), sans-serif" }}
+                >
+                  STEP 1: SELECT YOUR EXPERIENCE
                 </div>
                 <h2
-                  className="text-3xl sm:text-5xl font-normal text-[#1C1208] leading-tight m-0"
-                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                  className="text-3xl sm:text-4xl text-[#1C1208] leading-tight"
+                  style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontWeight: 700 }}
                 >
-                  Choose Your Tour
+                  Curated Rangeland Tours
                 </h2>
-                <p className="text-base text-[#5C4835] leading-relaxed">
-                  Located in the scenic savanna plains of Kajiado, just 90 minutes from Nairobi. Open Wednesday through Sunday for scheduled delegations.
-                </p>
               </div>
 
-              {/* Visual Tour Type Cards */}
-              <div className="space-y-5">
+              <div className="space-y-4">
                 {TOUR_TYPES.map((t) => {
-                  const active = tourType === t.id
+                  const active = t.id === tourType;
                   return (
                     <div
                       key={t.id}
                       onClick={() => setTourType(t.id)}
-                      className={`card-luxury p-5 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6 cursor-pointer transition-all duration-300 ${
+                      className={`p-6 border transition-all cursor-pointer flex flex-col sm:flex-row items-start gap-5 ${
                         active
-                          ? "ring-2 ring-[#C4882A] border-[#C4882A] bg-amber-50/40 shadow-xl"
-                          : "hover:border-amber-900/30 bg-white"
+                          ? "bg-[#FAF7F2] border-[#C99A2E] shadow-md"
+                          : "bg-white border-[#D4C9B0] hover:border-[#C99A2E]"
                       }`}
+                      style={{ borderRadius: "2px" }}
                     >
-                      {/* Tour Photo Thumbnail */}
-                      <div className="relative w-full sm:w-28 h-28 rounded-2xl overflow-hidden shrink-0 border border-amber-900/10 shadow-sm">
+                      <div className="relative w-full sm:w-28 h-24 shrink-0 overflow-hidden" style={{ borderRadius: "2px" }}>
                         <Image
                           src={t.image}
                           alt={t.title}
                           fill
-                          sizes="112px"
+                          sizes="120px"
                           className="object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                        <div className="absolute bottom-2 left-2 text-white text-base">
-                          <i className={`ti ${t.icon}`} />
-                        </div>
                       </div>
 
-                      <div className="flex-1 w-full">
+                      <div className="flex-1 w-full space-y-1.5">
                         <div className="flex items-center justify-between gap-2 flex-wrap">
                           <h3
-                            className="text-xl font-bold text-[#1C1208] m-0"
-                            style={{ fontFamily: "var(--font-fraunces), serif" }}
+                            className="text-xl text-[#1C1208] m-0"
+                            style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontWeight: 600 }}
                           >
                             {t.title}
                           </h3>
-                          <span className="font-mono text-xs font-bold text-[#C4882A] uppercase">
+                          <span
+                            className="text-sm font-bold"
+                            style={{ color: "#C4602A", fontFamily: "var(--font-playfair), Georgia, serif" }}
+                          >
                             KES {t.pricePerPerson.toLocaleString()} / person
                           </span>
                         </div>
-                        <p className="text-sm text-[#5C4835] mt-2 leading-relaxed m-0">
+                        <p
+                          className="text-xs text-[#8E7E70] leading-relaxed m-0"
+                          style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                        >
                           {t.desc}
                         </p>
                       </div>
                     </div>
-                  )
+                  );
                 })}
               </div>
 
-              {/* Location & Quick Info */}
-              <div className="card-luxury p-7 flex items-start gap-4 bg-white">
-                <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-[#C4882A] flex items-center justify-center shrink-0 text-xl">
-                  <i className="ti ti-map-pin" />
+              {/* Location Card */}
+              <div
+                className="p-6 bg-[#FAF7F2] border border-[#D4C9B0] flex items-start gap-4"
+                style={{ borderRadius: "2px" }}
+              >
+                <div
+                  className="w-10 h-10 flex items-center justify-center shrink-0 text-white"
+                  style={{ backgroundColor: "#1C1208", borderRadius: "2px" }}
+                >
+                  <i className="bi bi-geo-alt" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-[#1C1208]">Ranch Location</h4>
-                  <p className="text-xs text-[#5C4835] mt-1 leading-relaxed">Off Magadi Road, Kajiado County, Kenya (90 min from Nairobi CBD)</p>
+                  <h4
+                    className="text-base text-[#1C1208] font-bold"
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                  >
+                    Ranch Coordinates
+                  </h4>
+                  <p className="text-xs text-[#8E7E70] mt-1 leading-relaxed">
+                    Off Magadi Road, Kajiado County, Kenya (Approx. 90 mins from Nairobi CBD).
+                  </p>
                   <a
-                    href="https://maps.google.com"
+                    href="https://wa.me/254755758208"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-mono text-[#8E5E16] font-bold mt-2 hover:underline"
+                    className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.14em] text-[#C4602A] mt-2 hover:underline"
                   >
-                    <span>Get Directions via Google Maps</span>
-                    <i className="ti ti-external-link" />
+                    <span>Request Live Pin via WhatsApp (+254 755 758 208)</span>
+                    <i className="bi bi-arrow-right" />
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Booking Form */}
+            {/* Right Column: Reservation Form */}
             <div className="lg:col-span-6">
-              <div className="card-luxury p-8 sm:p-12 shadow-2xl">
+              <div
+                className="p-8 sm:p-10 bg-[#FAF7F2] border border-[#D4C9B0] shadow-xl"
+                style={{ borderRadius: "2px" }}
+              >
                 {submitted ? (
                   <div className="text-center py-12 space-y-5">
-                    <div className="w-20 h-20 rounded-full bg-emerald-500/10 text-[#2E6B34] flex items-center justify-center mx-auto text-4xl border border-emerald-500/30 shadow-lg">
-                      <i className="ti ti-circle-check" />
+                    <div
+                      className="w-16 h-16 flex items-center justify-center mx-auto text-3xl text-white shadow-md"
+                      style={{ backgroundColor: "#6B7A3F", borderRadius: "2px" }}
+                    >
+                      <i className="bi bi-check-lg" />
                     </div>
                     <h3
-                      className="text-3xl font-light text-[#1C1208]"
-                      style={{ fontFamily: "var(--font-fraunces), serif" }}
+                      className="text-3xl font-bold text-[#1C1208]"
+                      style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                     >
                       Tour Booking Requested
                     </h3>
-                    <p className="text-sm text-[#5C4835] max-w-md mx-auto leading-relaxed">
-                      Thank you, <strong className="text-[#1C1208]">{fullName}</strong>. Our ranch concierge has received your request for the <strong className="text-[#8E5E16]">{activeTour.title}</strong> on <strong className="text-[#1C1208]">{visitDate}</strong>. We will confirm your schedule within 24 hours.
+                    <p
+                      className="text-sm text-[#8E7E70] max-w-md mx-auto leading-relaxed"
+                      style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                    >
+                      Thank you, <strong className="text-[#1C1208]">{fullName}</strong>. Our ranch concierge has received your request for the <strong className="text-[#C4602A]">{activeTour.title}</strong> on <strong className="text-[#1C1208]">{visitDate}</strong>. We will confirm your schedule via WhatsApp/phone shortly.
                     </p>
                     <div className="pt-4">
                       <button
                         onClick={() => setSubmitted(false)}
-                        className="btn-primary py-3 px-8 text-xs tracking-wider"
+                        className="btn-gold"
+                        style={{ borderRadius: "2px" }}
                       >
                         Book Another Visit
                       </button>
@@ -276,27 +329,33 @@ export default function VisitClient() {
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-[#2E6B34] bg-emerald-500/10 border border-emerald-500/20 mb-2">
-                        <span>RESERVATION FORM</span>
+                      <div
+                        className="text-xs font-bold uppercase tracking-[0.16em] mb-2"
+                        style={{ color: "#6B7A3F", fontFamily: "var(--font-source-sans), sans-serif" }}
+                      >
+                        STEP 2: GUEST DETAILS
                       </div>
                       <h3
-                        className="text-2xl sm:text-3xl font-light text-[#1C1208]"
-                        style={{ fontFamily: "var(--font-fraunces), serif" }}
+                        className="text-2xl sm:text-3xl font-bold text-[#1C1208]"
+                        style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
                       >
                         Reserve Your Date
                       </h3>
                     </div>
 
                     {errorMsg && (
-                      <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
-                        <i className="ti ti-alert-triangle text-base" />
+                      <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2 rounded-[2px]">
+                        <i className="bi bi-exclamation-triangle-fill" />
                         <span>{errorMsg}</span>
                       </div>
                     )}
 
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                        <label
+                          className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70] mb-2"
+                          style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                        >
                           Full Name *
                         </label>
                         <input
@@ -305,13 +364,16 @@ export default function VisitClient() {
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="e.g. David Ntimama"
-                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          className="w-full bg-white border border-[#D4C9B0] rounded-[2px] p-3 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E]"
                         />
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          <label
+                            className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70] mb-2"
+                            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                          >
                             Email Address *
                           </label>
                           <input
@@ -320,13 +382,16 @@ export default function VisitClient() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="david@example.com"
-                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                            className="w-full bg-white border border-[#D4C9B0] rounded-[2px] p-3 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E]"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
-                            Phone Number *
+                          <label
+                            className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70] mb-2"
+                            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                          >
+                            Phone Number (WhatsApp) *
                           </label>
                           <input
                             type="tel"
@@ -334,14 +399,17 @@ export default function VisitClient() {
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                             placeholder="+254 700 000 000"
-                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                            className="w-full bg-white border border-[#D4C9B0] rounded-[2px] p-3 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E]"
                           />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          <label
+                            className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70] mb-2"
+                            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                          >
                             Preferred Date *
                           </label>
                           <input
@@ -349,12 +417,15 @@ export default function VisitClient() {
                             required
                             value={visitDate}
                             onChange={(e) => setVisitDate(e.target.value)}
-                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                            className="w-full bg-white border border-[#D4C9B0] rounded-[2px] p-3 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E]"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          <label
+                            className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70] mb-2"
+                            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                          >
                             Group Size *
                           </label>
                           <input
@@ -364,35 +435,40 @@ export default function VisitClient() {
                             max={50}
                             value={groupSize}
                             onChange={(e) => setGroupSize(Number(e.target.value))}
-                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                            className="w-full bg-white border border-[#D4C9B0] rounded-[2px] p-3 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E]"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
-                          Time Slot *
+                        <label
+                          className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70] mb-2"
+                          style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                        >
+                          Preferred Time Slot *
                         </label>
                         <div className="grid grid-cols-2 gap-3">
                           <button
                             type="button"
                             onClick={() => setTimeSlot("morning")}
-                            className={`py-3 px-4 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all border ${
+                            className={`py-3 px-4 font-bold text-xs uppercase tracking-[0.14em] transition-all cursor-pointer ${
                               timeSlot === "morning"
-                                ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white border-[#C4882A] shadow-md"
-                                : "bg-[#FAF6EE] text-[#5C4835] border-amber-900/15 hover:border-amber-900/30"
+                                ? "bg-[#1C1208] text-[#F5F0E8] border border-[#1C1208]"
+                                : "bg-white text-[#1C1208] border border-[#D4C9B0]"
                             }`}
+                            style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                           >
                             Morning (9:30 AM)
                           </button>
                           <button
                             type="button"
                             onClick={() => setTimeSlot("afternoon")}
-                            className={`py-3 px-4 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all border ${
+                            className={`py-3 px-4 font-bold text-xs uppercase tracking-[0.14em] transition-all cursor-pointer ${
                               timeSlot === "afternoon"
-                                ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white border-[#C4882A] shadow-md"
-                                : "bg-[#FAF6EE] text-[#5C4835] border-amber-900/15 hover:border-amber-900/30"
+                                ? "bg-[#1C1208] text-[#F5F0E8] border border-[#1C1208]"
+                                : "bg-white text-[#1C1208] border border-[#D4C9B0]"
                             }`}
+                            style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                           >
                             Afternoon (2:00 PM)
                           </button>
@@ -400,30 +476,42 @@ export default function VisitClient() {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                        <label
+                          className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70] mb-2"
+                          style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                        >
                           Special Requests / Dietary Notes
                         </label>
                         <textarea
                           rows={3}
                           value={notes}
                           onChange={(e) => setNotes(e.target.value)}
-                          placeholder="Tell us about any specific livestock interests, student delegations, or dietary preferences..."
-                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          placeholder="Tell us about specific livestock interests, student delegations, or dietary requirements..."
+                          className="w-full bg-white border border-[#D4C9B0] rounded-[2px] p-3 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E]"
                         />
                       </div>
                     </div>
 
                     {/* Estimated cost box */}
-                    <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between">
+                    <div
+                      className="p-5 bg-white border border-[#D4C9B0] flex items-center justify-between"
+                      style={{ borderRadius: "2px" }}
+                    >
                       <div>
-                        <div className="text-xs font-mono font-bold uppercase text-[#8E5E16]">
-                          Estimated Experience Total
+                        <div
+                          className="text-xs font-bold uppercase tracking-[0.14em]"
+                          style={{ color: "#8E7E70", fontFamily: "var(--font-source-sans), sans-serif" }}
+                        >
+                          ESTIMATED EXPERIENCE TOTAL
                         </div>
-                        <div className="text-xs text-[#5C4835]">
-                          {groupSize} {groupSize === 1 ? "person" : "people"} &times; KES {activeTour.pricePerPerson.toLocaleString()}
+                        <div className="text-xs text-[#8E7E70] mt-0.5">
+                          {groupSize} {groupSize === 1 ? "guest" : "guests"} &times; KES {activeTour.pricePerPerson.toLocaleString()}
                         </div>
                       </div>
-                      <div className="font-serif text-2xl font-bold text-[#C4882A]">
+                      <div
+                        className="text-2xl font-bold"
+                        style={{ color: "#C4602A", fontFamily: "var(--font-playfair), Georgia, serif" }}
+                      >
                         KES {estimatedCost.toLocaleString()}
                       </div>
                     </div>
@@ -431,18 +519,13 @@ export default function VisitClient() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full btn-primary py-4 text-xs tracking-widest justify-center shadow-xl"
+                      className="w-full btn-gold py-4 text-xs tracking-[0.16em] uppercase font-bold justify-center cursor-pointer"
+                      style={{ borderRadius: "2px" }}
                     >
                       {loading ? (
-                        <>
-                          <i className="ti ti-loader animate-spin" />
-                          <span>Processing Reservation...</span>
-                        </>
+                        <span>Processing Reservation...</span>
                       ) : (
-                        <>
-                          <i className="ti ti-calendar-check" />
-                          <span>CONFIRM RANCH RESERVATION</span>
-                        </>
+                        <span>CONFIRM RANCH RESERVATION</span>
                       )}
                     </button>
                   </form>
@@ -455,5 +538,5 @@ export default function VisitClient() {
       </section>
 
     </div>
-  )
+  );
 }

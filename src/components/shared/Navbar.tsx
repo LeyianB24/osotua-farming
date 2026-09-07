@@ -64,8 +64,30 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
         <div className="os-container w-full">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
-            {/* Brand Logo & Wordmark (Figma Exact) */}
-            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
+            {/* Brand Logo & Wordmark (Figma Exact + Official Emblem) */}
+            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }} className="group">
+              <div
+                style={{
+                  position: "relative",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  border: "1px solid rgba(201, 154, 46, 0.4)",
+                  backgroundColor: "#FAF7F2",
+                  flexShrink: 0,
+                }}
+                className="group-hover:border-[#C99A2E] transition-colors"
+              >
+                <Image
+                  src={LOGO}
+                  alt="Osotua Farming Official Logo"
+                  fill
+                  sizes="36px"
+                  priority
+                  className="object-cover"
+                />
+              </div>
               <span
                 style={{
                   fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
