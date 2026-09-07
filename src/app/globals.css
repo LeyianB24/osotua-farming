@@ -470,13 +470,18 @@ h1 em, h2 em, h3 em, h4 em {
 
 /* ── 7. ANIMATION SYSTEM & SPRING PHYSICS ────────────────────────────────── */
 [data-reveal] {
-  opacity: 0;
-  transform: translateY(40px) scale(0.97);
-  filter: blur(6px);
+  opacity: 1;
+  transform: none;
+  filter: none;
   transition:
     opacity    var(--t-page) var(--smooth),
     transform  var(--t-page) var(--smooth),
     filter     var(--t-page) var(--smooth);
+}
+[data-reveal].revealing:not(.visible) {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+  filter: blur(4px);
 }
 [data-reveal].visible {
   opacity: 1;

@@ -4,7 +4,6 @@ import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
 import WhatsAppFAB from "@/components/shared/WhatsAppFAB"
-import PageLoader from "@/components/shared/PageLoader"
 import Providers from "@/components/shared/Providers"
 import ScrollReveal from "@/components/shared/ScrollReveal"
 
@@ -105,17 +104,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fraunces.variable} ${inter.variable} ${cormorant.variable} ${dmSans.variable} ${spaceGrotesk.variable}`}
     >
       <head>
-        {/* Bootstrap & Tabler Icons */}
+        {/* Bootstrap Icons */}
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
-        />
       </head>
-      <body className="antialiased bg-[#FBF7F0] text-[#1C1208] font-sans">
+      <body className="antialiased bg-[#1C1208] text-[#FBF7F0] font-sans">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#C4882A] focus:text-[#1C1208] focus:px-4 focus:py-2 focus:rounded focus:font-medium focus:text-sm"
@@ -125,7 +120,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Providers>
           <CartProvider>
-            <PageLoader />
             <div id="main-content">{children}</div>
             <ToastContainer />
             <WhatsAppFAB />
