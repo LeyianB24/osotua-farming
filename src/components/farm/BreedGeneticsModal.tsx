@@ -137,7 +137,7 @@ export default function BreedGeneticsModal({ breed, onClose }: Props) {
 
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <a
-                href={`https://wa.me/254700000000?text=Hello%20Osotua%20Farming,%20I%20am%20interested%20in%20reserving%20${encodeURIComponent(breed.name)}%20livestock%20genetics.`}
+                href={`https://wa.me/254755758208?text=Hello%20Osotua%20Farming,%20I%20am%20interested%20in%20reserving%20${encodeURIComponent(breed.name)}%20livestock%20genetics.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-md no-underline"

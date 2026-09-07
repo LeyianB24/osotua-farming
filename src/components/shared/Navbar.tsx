@@ -171,7 +171,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }} className="hidden lg:flex">
               {/* WhatsApp */}
               <a
-                href="https://wa.me/254700000000"
+                href="https://wa.me/254755758208"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Contact on WhatsApp"
@@ -431,7 +431,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 <i className="bi bi-calendar-check" />
               </Link>
               <a
-                href="https://wa.me/254700000000"
+                href="https://wa.me/254755758208"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-ghost justify-center"

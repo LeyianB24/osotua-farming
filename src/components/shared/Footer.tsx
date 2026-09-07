@@ -102,7 +102,7 @@ export default function Footer() {
                 {[
                   { icon: "bi-instagram", href: "https://www.instagram.com/osotua_ranches_/", label: "Instagram (@osotua_ranches_)" },
                   { icon: "bi-tiktok", href: "https://www.tiktok.com/@osotua.ranches", label: "TikTok (@osotua.ranches)" },
-                  { icon: "bi-whatsapp", href: "https://wa.me/254700000000", label: "WhatsApp" },
+                  { icon: "bi-whatsapp", href: "https://wa.me/254755758208", label: "WhatsApp (+254 755 758 208)" },
                   { icon: "bi-facebook", href: "https://facebook.com", label: "Facebook" },
                   { icon: "bi-youtube", href: "https://youtube.com", label: "YouTube" },
                   { icon: "bi-twitter-x", href: "https://twitter.com", label: "Twitter / X" },
@@ -188,8 +188,8 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2.5">
                 <i className="bi bi-telephone-fill text-[#C4882A] text-sm shrink-0" aria-hidden="true" />
-                <a href="tel:+254700000000" className="text-[#FBF7F0]/75 hover:text-[#C4882A] no-underline">
-                  +254 700 000 000
+                <a href="tel:+254755758208" className="text-[#FBF7F0]/75 hover:text-[#C4882A] no-underline">
+                  +254 755 758 208
                 </a>
               </div>
               <div className="flex items-center gap-2.5">

@@ -7,7 +7,7 @@ import { LOGO } from "@/lib/images"
 const CONTACT_ITEMS = [
   { icon: "ti-map-pin", label: "Location", value: "Kajiado County, Kenya", sub: "Off Namanga Highway, 2 km from Kajiado Town" },
   { icon: "ti-mail", label: "Email", value: "info@osotuafarming.co.ke", href: "mailto:info@osotuafarming.co.ke" },
-  { icon: "ti-phone", label: "Phone", value: "+254 700 000 000", href: "tel:+254700000000" },
+  { icon: "ti-phone", label: "Phone", value: "+254 755 758 208", href: "tel:+254755758208" },
   { icon: "ti-clock", label: "Hours", value: "Mon–Sat, 8:00 AM – 5:00 PM EAT", sub: "Closed Sundays & Public Holidays" },
 ]
 

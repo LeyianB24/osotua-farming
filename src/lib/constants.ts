@@ -14,8 +14,8 @@ export const SOCIAL_LINKS = {
     label: "TikTok",
   },
   whatsapp: {
-    number: "+254 700 000 000",
-    url: "https://wa.me/254700000000",
+    number: "+254 755 758 208",
+    url: "https://wa.me/254755758208",
     label: "WhatsApp",
   },
   facebook: {
@@ -33,7 +33,7 @@ export const SOCIAL_LINKS = {
 };
 
 export const CONTACT_INFO = {
-  phone: "+254 700 000 000",
+  phone: "+254 755 758 208",
   email: "info@osotuafarming.co.ke",
   location: "Kajiado County, Kenya",
   subLocation: "Off Namanga Highway, 2 km from Kajiado Town",

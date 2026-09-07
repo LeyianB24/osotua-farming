@@ -101,7 +101,7 @@ export default function OrderDetailClient({ order }: { order: OrderData }) {
               <span>Print Invoice</span>
             </button>
             <a
-              href={`https://wa.me/254700000000?text=${whatsappMessage}`}
+              href={`https://wa.me/254755758208?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-[#2E7D32] hover:bg-[#256327] text-[#FFFFFF] shadow-sm transition-all"
