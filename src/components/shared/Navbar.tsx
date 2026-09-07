@@ -9,10 +9,11 @@ import { useCart } from "./CartContext";
 import { LOGO } from "@/lib/images";
 
 const navLinks = [
-  { label: "Shop", href: "/barn" },
-  { label: "Our Farmers", href: "/partners" },
-  { label: "Our Breeds", href: "/breeds" },
+  { label: "Breeds", href: "/breeds" },
+  { label: "Barn Store", href: "/barn" },
   { label: "About", href: "/about" },
+  { label: "Partners", href: "/partners" },
+  { label: "Visit", href: "/visit" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -24,7 +25,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   const cartCount = ctxCartCount ?? initialCartCount ?? 0;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -46,39 +47,46 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   return (
     <>
       <header
-        className={`os-navbar transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#FAF7F0]/95 backdrop-blur-xl border-b border-[#C4882A]/25 shadow-md py-2.5"
-            : "bg-[#FAF7F0]/80 backdrop-blur-lg border-b border-[#C4882A]/15 py-3.5"
+            ? "py-3 border-b border-[#C4882A]/20 shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+            : "py-5 bg-transparent border-b border-transparent"
         }`}
-        style={{ top: 0, left: 0, right: 0, position: "fixed", zIndex: 100 }}
+        style={{
+          backgroundColor: scrolled ? "var(--g-nav)" : "transparent",
+          backdropFilter: scrolled ? "blur(40px) saturate(200%)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(40px) saturate(200%)" : "none",
+        }}
       >
         <div className="os-container">
           <div className="flex items-center justify-between">
 
-            {/* Official Brand Logo */}
-            <Link href="/" className="flex items-center gap-3 no-underline group">
-              <div className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-[#C4882A]/60 shadow-md group-hover:scale-105 group-hover:ring-[#C4882A] transition-all bg-white shrink-0">
+            {/* Brand Logo & Wordmark */}
+            <Link href="/" className="flex items-center gap-3.5 no-underline group">
+              <div className="relative w-10 h-10 rounded-full overflow-hidden ring-1 ring-[#C4882A]/50 group-hover:ring-[#C4882A] transition-all bg-[#1C1208] shrink-0 shadow-lg group-hover:scale-105">
                 <Image
                   src={LOGO}
-                  alt="Osotua Farming Logo"
+                  alt="Osotua Farming Logo Emblem"
                   fill
-                  sizes="44px"
+                  sizes="40px"
                   priority
                   className="object-cover"
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-[17px] tracking-tight text-[#1C1208] leading-tight group-hover:text-[#2E6B34] transition-colors" style={{ fontFamily: "var(--font-fraunces), serif" }}>
+                <span
+                  className="font-light text-xl tracking-tight text-[#FBF7F0] leading-none group-hover:text-[#C4882A] transition-colors"
+                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                >
                   Osotua Farming
                 </span>
-                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[#8E5E16]">
-                  Pastoral Smart Farm &bull; Kenya
+                <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.22em] text-[#C4882A] mt-1">
+                  Kajiado &bull; Kenya
                 </span>
               </div>
             </Link>
 
-            {/* Desktop nav — center */}
+            {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
               {navLinks.map((link) => {
                 const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`));
@@ -86,16 +94,17 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative font-sans text-[14px] transition-colors duration-200 py-1 no-underline ${
-                      active ? "text-[#2E6B34] font-bold" : "text-[#1C1208]/80 font-medium hover:text-[#2E6B34]"
+                    className={`relative text-[13px] tracking-wide transition-colors duration-200 py-1 no-underline uppercase font-medium ${
+                      active ? "text-[#C4882A]" : "text-[#FBF7F0]/75 hover:text-[#FBF7F0]"
                     }`}
+                    style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
                   >
                     {link.label}
                     {active && (
                       <motion.span
-                        layoutId="nav-underline"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2E6B34] to-[#C4882A] rounded-full"
-                        transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                        layoutId="nav-pill-active"
+                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#C4882A] rounded-full"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
                   </Link>
@@ -103,232 +112,183 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
               })}
             </nav>
 
-            {/* Desktop right actions */}
-            <div className="hidden lg:flex items-center gap-3">
-              {/* WhatsApp */}
+            {/* Desktop Right Actions */}
+            <div className="hidden lg:flex items-center gap-3.5">
+              {/* WhatsApp Icon Button */}
               <a
                 href="https://wa.me/254700000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] flex items-center justify-center text-[#25D366] hover:bg-[#25D366]/10 hover:border-[#25D366]/40 transition-all shadow-2xs"
+                aria-label="Contact Osotua on WhatsApp"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#25D366] hover:bg-[#25D366]/15 hover:border-[#25D366]/40 transition-all hover:scale-105"
               >
-                <i className="bi bi-whatsapp text-base leading-none" />
+                <i className="bi bi-whatsapp text-sm" aria-hidden="true" />
               </a>
 
               {/* Cart Button */}
               <Link
                 href="/cart"
-                className="relative w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] flex items-center justify-center text-[#1C1208] hover:text-[#2E6B34] hover:border-[#2E6B34]/30 transition-all shadow-2xs no-underline"
-                aria-label={`Cart (${cartCount} items)`}
+                className="relative w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FBF7F0] hover:text-[#C4882A] hover:border-[#C4882A]/40 transition-all no-underline hover:scale-105"
+                aria-label={`Cart with ${cartCount} items`}
               >
-                <i className="bi bi-bag text-base leading-none" />
+                <i className="bi bi-bag text-sm" aria-hidden="true" />
                 {cartCount > 0 && (
-                  <span
-                    className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-white text-[10px] font-bold flex items-center justify-center shadow-xs"
-                    style={{ background: "#2E6B34" }}
-                  >
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-[#1C1208] text-[9px] font-bold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
               </Link>
 
-              {/* Sign in Button */}
+              {/* Portal link */}
               <Link
                 href="/login"
-                className="text-[13px] font-semibold px-4 py-2 rounded-xl border border-[var(--border)] bg-white hover:bg-stone-50 text-[#1C1208] transition-all shadow-2xs no-underline inline-flex items-center gap-1.5"
+                className="text-[11px] font-medium uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 text-[#FBF7F0]/80 hover:text-[#FBF7F0] hover:border-white/25 transition-all no-underline"
+                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
               >
-                <i className="bi bi-person text-sm" />
-                <span>Portal</span>
+                Portal
               </Link>
 
-              {/* CTA Visit Button */}
+              {/* Gold Pill Button: Visit Us */}
               <Link
                 href="/visit"
-                className="btn-emerald text-[12px] font-bold py-2 px-4 shadow-sm"
+                className="btn-primary text-[11px] py-2 px-5 shadow-[0_8px_24px_rgba(196,136,42,0.25)]"
+                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
               >
-                <i className="bi bi-geo-alt-fill text-xs" />
-                <span>Visit Shamba</span>
+                <span>Visit Us</span>
+                <i className="bi bi-arrow-right text-xs" aria-hidden="true" />
               </Link>
             </div>
 
-            {/* Mobile controls */}
-            <div className="flex items-center gap-2 lg:hidden">
+            {/* Mobile Actions */}
+            <div className="flex items-center gap-2.5 lg:hidden">
               <Link
                 href="/cart"
-                className="relative w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] flex items-center justify-center text-[#1C1208] shadow-2xs"
-                aria-label={`Cart (${cartCount} items)`}
+                className="relative w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FBF7F0]"
+                aria-label={`Shopping Cart (${cartCount} items)`}
               >
-                <i className="bi bi-bag text-lg" />
+                <i className="bi bi-bag text-base" aria-hidden="true" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-white text-[9px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-[#1C1208] text-[9px] font-bold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
               </Link>
               <button
                 onClick={() => setOpen(!open)}
-                className="w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] text-[#1C1208] hover:text-[#C4882A] transition-colors flex items-center justify-center shadow-2xs focus-visible:outline-none"
+                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-[#FBF7F0] hover:text-[#C4882A] transition-colors flex items-center justify-center focus-visible:outline-none"
                 aria-expanded={open}
-                aria-label="Toggle menu"
+                aria-label="Toggle navigation menu"
               >
-                <i className={`bi text-xl ${open ? "bi-x-lg" : "bi-list"}`} />
+                <i className={`bi text-lg ${open ? "bi-x-lg" : "bi-list"}`} aria-hidden="true" />
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile full-screen drawer menu — rendered outside header to prevent stacking/clipping issues */}
+      {/* Mobile Full-Screen Glass Overlay */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden fixed left-0 right-0 bottom-0"
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
+            className="lg:hidden fixed inset-0 z-40 flex flex-col justify-between pt-24 pb-10 px-6 overflow-y-auto"
             style={{
-              top: "72px",
-              height: "calc(100dvh - 72px)",
-              background: "#FBF7F0",
-              zIndex: 99,
-              overflowY: "auto",
-              overflowX: "hidden",
-              WebkitOverflowScrolling: "touch",
-              borderTop: "1px solid rgba(196,136,42,0.15)",
-              boxShadow: "0 20px 40px rgba(28, 18, 8, 0.08)",
+              backgroundColor: "rgba(22, 13, 5, 0.96)",
+              backdropFilter: "blur(40px) saturate(200%)",
+              WebkitBackdropFilter: "blur(40px) saturate(200%)",
             }}
           >
-            <div
-              className="os-container"
-              style={{
-                minHeight: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                paddingTop: "1.5rem",
-                paddingBottom: "2.5rem",
-              }}
-            >
-              {/* Navigation links */}
-              <nav className="flex flex-col gap-1 w-full" aria-label="Mobile navigation">
-                {navLinks.map((link, i) => {
-                  const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
-                  return (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, x: -16 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.04, duration: 0.25 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={() => setOpen(false)}
-                        className="group flex items-center justify-between py-3.5 transition-colors"
-                        style={{
-                          borderBottom: "1px solid rgba(196,136,42,0.12)",
-                          textDecoration: "none",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                            fontSize: "1.75rem",
-                            fontWeight: active ? 600 : 400,
-                            color: active ? "#C4882A" : "#1C1208",
-                            letterSpacing: "-0.01em",
-                            lineHeight: 1.2,
-                          }}
-                        >
-                          {link.label}
-                        </span>
-                        <i
-                          className="bi bi-arrow-right text-base transition-transform group-hover:translate-x-1"
-                          style={{ color: "#C4882A", opacity: active ? 1 : 0.4 }}
-                        />
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-
-                {/* Dashboard Portal Link */}
-                <motion.div
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navLinks.length * 0.04, duration: 0.25 }}
-                >
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setOpen(false)}
-                    className="group flex items-center justify-between py-3.5 transition-colors"
-                    style={{
-                      borderBottom: "1px solid rgba(196,136,42,0.12)",
-                      textDecoration: "none",
-                    }}
+            <nav className="flex flex-col gap-2 mt-4" aria-label="Mobile navigation menu">
+              {navLinks.map((link, i) => {
+                const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+                return (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.3 }}
                   >
-                    <span
-                      className="flex items-center gap-2.5"
-                      style={{
-                        fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                        fontSize: "1.75rem",
-                        fontWeight: pathname.startsWith("/dashboard") ? 600 : 400,
-                        color: pathname.startsWith("/dashboard") ? "#C4882A" : "#1C1208",
-                        letterSpacing: "-0.01em",
-                        lineHeight: 1.2,
-                      }}
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="group flex items-center justify-between py-4 border-b border-white/10 no-underline"
                     >
-                      <i className="bi bi-person-circle text-xl text-[#C4882A]" />
-                      Customer Portal
-                    </span>
-                    <i
-                      className="bi bi-arrow-right text-base transition-transform group-hover:translate-x-1"
-                      style={{ color: "#C4882A", opacity: pathname.startsWith("/dashboard") ? 1 : 0.4 }}
-                    />
-                  </Link>
-                </motion.div>
-              </nav>
+                      <span
+                        className={`text-3xl font-light tracking-tight transition-colors ${
+                          active ? "text-[#C4882A]" : "text-[#FBF7F0] group-hover:text-[#C4882A]"
+                        }`}
+                        style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                      >
+                        {link.label}
+                      </span>
+                      <i
+                        className="bi bi-arrow-right text-lg text-[#C4882A] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </motion.div>
+                );
+              })}
 
-              {/* Bottom Quick Action CTAs */}
               <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: (navLinks.length + 1) * 0.04, duration: 0.25 }}
-                className="mt-8 flex flex-col gap-3 w-full"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: navLinks.length * 0.05, duration: 0.3 }}
               >
                 <Link
-                  href="/visit"
+                  href="/dashboard"
                   onClick={() => setOpen(false)}
-                  className="btn-primary justify-center text-center py-3.5 text-xs tracking-wider"
-                  style={{ width: "100%" }}
+                  className="group flex items-center justify-between py-4 border-b border-white/10 no-underline"
                 >
-                  <i className="bi bi-geo-alt-fill" />
-                  VISIT THE RANCH
+                  <span
+                    className="text-3xl font-light tracking-tight text-[#FBF7F0] group-hover:text-[#C4882A] transition-colors"
+                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                  >
+                    Customer Portal
+                  </span>
+                  <i
+                    className="bi bi-arrow-right text-lg text-[#C4882A] opacity-60 group-hover:opacity-100 transition-opacity"
+                    aria-hidden="true"
+                  />
                 </Link>
-
-                <a
-                  href="https://wa.me/254700000000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-ghost justify-center text-center py-3 text-xs tracking-wider font-bold"
-                  style={{
-                    width: "100%",
-                    color: "#1C1208",
-                    borderColor: "rgba(196,136,42,0.35)",
-                    background: "rgba(255,255,255,0.7)",
-                  }}
-                >
-                  <i className="bi bi-whatsapp text-[#25D366] text-base" />
-                  WHATSAPP US
-                </a>
-
-                <div className="text-center mt-3">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8E5E16]/80">
-                    Kajiado, Kenya &bull; Ethical Breeding &amp; Artisanal Produce
-                  </p>
-                </div>
               </motion.div>
-            </div>
+            </nav>
+
+            {/* Mobile Footer CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
+              className="flex flex-col gap-3 mt-8"
+            >
+              <Link
+                href="/visit"
+                onClick={() => setOpen(false)}
+                className="btn-primary text-center justify-center py-3.5"
+                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
+              >
+                <span>Book Farm Visit</span>
+                <i className="bi bi-calendar-check" aria-hidden="true" />
+              </Link>
+
+              <a
+                href="https://wa.me/254700000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost text-center justify-center py-3.5"
+                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
+              >
+                <i className="bi bi-whatsapp text-[#25D366]" aria-hidden="true" />
+                <span>WhatsApp Concierge</span>
+              </a>
+
+              <p className="text-center text-[10px] uppercase font-mono tracking-[0.2em] text-[#C4882A]/70 mt-3">
+                Osotua &bull; Kajiado County, Kenya &bull; Est. 2026
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

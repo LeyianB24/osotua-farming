@@ -15,11 +15,11 @@ export default function ScrollReveal() {
           }
         })
       },
-      { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     )
 
     function observeElements() {
-      document.querySelectorAll(".reveal:not(.visible)").forEach((el) => {
+      document.querySelectorAll("[data-reveal]:not(.visible), .reveal:not(.visible)").forEach((el) => {
         observer.observe(el)
       })
     }
