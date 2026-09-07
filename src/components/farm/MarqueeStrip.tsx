@@ -41,22 +41,38 @@ export default function MarqueeStrip({
 
   return (
     <div
-      className={`w-full py-4 sm:py-5 overflow-hidden border-y select-none relative ${
-        isGold
-          ? "bg-[#1C1208] border-[#C4882A]/20 text-[#C4882A]"
-          : "bg-[#172415] border-emerald-900/40 text-emerald-300"
-      }`}
+      className="w-full py-3.5 overflow-hidden select-none"
+      style={{
+        background: isGold ? "#1C1208" : "#F0E8DA",
+        borderTop: isGold ? "1px solid rgba(196,136,42,0.15)" : "1px solid rgba(28,18,8,0.08)",
+        borderBottom: isGold ? "1px solid rgba(196,136,42,0.15)" : "1px solid rgba(28,18,8,0.08)",
+      }}
     >
       <div className={reverse ? "marquee-track-right" : "marquee-track-left"}>
         {repeated.map((item, idx) => (
-          <div key={idx} className="flex items-center gap-6 sm:gap-10 px-4 sm:px-6">
+          <div key={idx} className="flex items-center gap-8 px-5">
             <span
-              className="text-lg sm:text-2xl font-light italic tracking-wide whitespace-nowrap opacity-75 hover:opacity-100 transition-opacity"
-              style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+              className="whitespace-nowrap"
+              style={{
+                fontFamily: "var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(1rem, 1.8vw, 1.3rem)",
+                fontWeight: 400,
+                fontStyle: "italic",
+                letterSpacing: "0.01em",
+                color: isGold ? "rgba(196,136,42,0.8)" : "rgba(28,18,8,0.5)",
+              }}
             >
               {item}
             </span>
-            <span className="text-xs opacity-40 font-mono">&bull;</span>
+            <span
+              style={{
+                fontSize: "0.4rem",
+                opacity: 0.4,
+                color: isGold ? "#C4882A" : "#6B3E1A",
+              }}
+            >
+              ●
+            </span>
           </div>
         ))}
       </div>

@@ -16,7 +16,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div className="w-full overflow-x-hidden bg-[#1C1208] text-[#FBF7F0]">
+    <div className="w-full overflow-x-hidden" style={{ background: "#FBF7F0" }}>
       <h2 className="sr-only">
         Osotua Farming — Premium Kenyan Agribusiness and Pastoral Rangelands Platform
       </h2>

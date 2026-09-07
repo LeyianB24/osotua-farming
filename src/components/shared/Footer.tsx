@@ -56,7 +56,16 @@ export default function Footer() {
               </div>
             </Link>
 
-            <p className="text-sm text-[#FBF7F0]/70 leading-relaxed max-w-sm m-0 font-light">
+            <p
+              style={{
+                fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                fontSize: "0.88rem",
+                color: "rgba(251,247,240,0.65)",
+                lineHeight: 1.75,
+                maxWidth: "320px",
+                margin: 0,
+              }}
+            >
               Rooted in centuries of Maa pastoral intuition, nurtured by regenerative savanna ecology, and delivered directly to your doorstep with total digital traceability.
             </p>
 

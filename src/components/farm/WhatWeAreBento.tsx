@@ -6,239 +6,340 @@ import { useCountUp } from "@/hooks/use-count-up";
 export default function WhatWeAreBento() {
   const { count: animalCount, ref: animalRef } = useCountUp(150, 1600);
 
-  return (
-    <section className="section-dark relative overflow-hidden bg-[#1C1208]">
-      {/* Background ambient radial glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-[#C4882A]/5 rounded-full blur-[160px] pointer-events-none" />
+  const categories = [
+    {
+      icon: "bi-award",
+      label: "Beef Cattle",
+      breeds: ["Boran", "Bonsmara", "Sahiwal"],
+      href: "/breeds?category=beef",
+      accent: "#C4882A",
+      accentBg: "rgba(196,136,42,0.08)",
+      accentBorder: "rgba(196,136,42,0.2)",
+    },
+    {
+      icon: "bi-droplet-fill",
+      label: "Dairy Champions",
+      breeds: ["Sahiwal A2", "Simmental", "Jersey"],
+      href: "/breeds?category=dairy",
+      accent: "#3D6B3E",
+      accentBg: "rgba(61,107,62,0.08)",
+      accentBorder: "rgba(61,107,62,0.2)",
+    },
+    {
+      icon: "bi-heart-pulse",
+      label: "Pedigree Goats",
+      breeds: ["Boer Stud", "Galla Desert", "Kalahari"],
+      href: "/breeds?category=goats",
+      accent: "#C4882A",
+      accentBg: "rgba(196,136,42,0.08)",
+      accentBorder: "rgba(196,136,42,0.2)",
+    },
+    {
+      icon: "bi-flower1",
+      label: "Dorper & Red Maasai",
+      breeds: ["Dorper Ram", "Red Maasai ewe", "Blackhead"],
+      href: "/breeds?category=sheep",
+      accent: "#3D6B3E",
+      accentBg: "rgba(61,107,62,0.08)",
+      accentBorder: "rgba(61,107,62,0.2)",
+    },
+  ];
 
-      <div className="os-container relative z-10 space-y-10">
-        
+  return (
+    <section className="section-light" style={{ background: "#FBF7F0" }}>
+      <div className="os-container">
+
         {/* Section Header */}
-        <div className="max-w-2xl space-y-3" data-reveal data-delay="1">
-          <div className="t-eye">
-            <span>What We Are</span>
-          </div>
-          <h2 className="t-section text-[#FBF7F0] m-0">
-            A Living Covenant With <br />
-            <em className="text-[#C4882A] font-normal italic">Kenya’s Ancient Land</em>
+        <div className="max-w-2xl mb-12" data-reveal data-delay="1">
+          <div className="eyebrow-pill mb-4">What We Are</div>
+          <h2
+            className="m-0"
+            style={{
+              fontFamily: "var(--font-cormorant), Georgia, serif",
+              fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
+              fontWeight: 300,
+              lineHeight: 1.08,
+              letterSpacing: "-0.018em",
+              color: "#1C1208",
+            }}
+          >
+            A Living Covenant With{" "}
+            <em
+              style={{
+                fontStyle: "italic",
+                color: "#C4882A",
+                WebkitTextFillColor: "#C4882A",
+              }}
+            >
+              Kenya&apos;s Ancient Land
+            </em>
           </h2>
         </div>
 
-        {/* 12-Column Bento Grid */}
-        <div className="bento" data-reveal data-delay="2">
-          
-          {/* 1. Large Headline Cell (8 cols) */}
-          <div className="bento-4 bento-cell cell-dark p-8 sm:p-12 flex flex-col justify-between relative overflow-hidden group">
-            {/* Watermark */}
-            <div className="t-overflow absolute -right-6 -bottom-10 select-none pointer-events-none opacity-5 text-[#C4882A]">
-              OSOTUA
-            </div>
-
-            <div className="space-y-4 relative z-10 max-w-xl">
-              <div className="t-label text-xs text-[#C4882A]">
+        {/* Main Grid */}
+        <div
+          className="grid gap-5"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))" }}
+          data-reveal
+          data-delay="2"
+        >
+          {/* Hero Text Card — spans 2 cols on larger screens */}
+          <div
+            className="os-card p-8 md:p-10 flex flex-col justify-between"
+            style={{ gridColumn: "span 1" }}
+          >
+            <div className="space-y-4">
+              <p
+                className="m-0"
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "#C4882A",
+                }}
+              >
                 The Pastoral Synthesis
-              </div>
-              <h3 className="font-serif text-2xl sm:text-4xl text-[#FBF7F0] font-light leading-snug">
-                Where generations of Maasai stewardship merge with modern genetics and veterinary excellence.
+              </p>
+              <h3
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)",
+                  fontWeight: 300,
+                  lineHeight: 1.2,
+                  color: "#1C1208",
+                  margin: 0,
+                }}
+              >
+                Where generations of Maasai stewardship merge with modern genetics
+                and veterinary excellence.
               </h3>
             </div>
-
-            <div className="pt-8 relative z-10">
-              <p className="t-body text-sm sm:text-base text-[#FBF7F0]/65 max-w-lg m-0">
-                Osotua is not an industrial factory. We are a cooperative pastoral platform in Kajiado County dedicated to preserving indigenous vigor, soil regeneration, and fair value for pastoral families.
-              </p>
-            </div>
+            <p
+              style={{
+                fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                fontSize: "0.92rem",
+                lineHeight: 1.75,
+                color: "rgba(28,18,8,0.6)",
+                margin: "1.5rem 0 0 0",
+              }}
+            >
+              Osotua is a cooperative pastoral platform in Kajiado County dedicated
+              to preserving indigenous vigor, soil regeneration, and fair value for
+              pastoral families.
+            </p>
           </div>
 
-          {/* 2. Stat Cell (4 cols, Gold Accent) */}
-          <div className="bento-2 bento-cell cell-accent p-8 sm:p-10 flex flex-col justify-between text-[#1C1208]">
+          {/* Stat Card — Gold accent */}
+          <div
+            className="rounded-[20px] p-8 md:p-10 flex flex-col justify-between"
+            style={{
+              background: "linear-gradient(145deg, #C4882A, #A8721F)",
+              gridColumn: "span 1",
+            }}
+          >
             <div className="flex items-center justify-between">
-              <span className="t-label text-xs tracking-widest text-[#1C1208]/70">
+              <span
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "rgba(28,18,8,0.65)",
+                }}
+              >
                 Herd Strength
               </span>
-              <i className="bi bi-shield-check text-2xl text-[#1C1208]" aria-hidden="true" />
+              <i className="bi bi-shield-check text-2xl" style={{ color: "rgba(28,18,8,0.5)" }} />
             </div>
 
             <div className="my-6">
-              <div className="font-serif text-6xl sm:text-7xl font-light leading-none tracking-tight">
+              <div
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(4rem, 8vw, 6rem)",
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  letterSpacing: "-0.02em",
+                  color: "#1C1208",
+                }}
+              >
                 <span ref={animalRef}>{animalCount}</span>+
               </div>
-              <div className="font-sans text-sm font-semibold uppercase tracking-wider mt-2 text-[#1C1208]/80">
+              <div
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.85rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  color: "rgba(28,18,8,0.7)",
+                  marginTop: "0.5rem",
+                }}
+              >
                 Livestock Animals
               </div>
             </div>
 
-            <div className="text-xs font-medium text-[#1C1208]/70 border-t border-[#1C1208]/15 pt-3">
+            <div
+              style={{
+                fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                color: "rgba(28,18,8,0.6)",
+                borderTop: "1px solid rgba(28,18,8,0.12)",
+                paddingTop: "0.75rem",
+              }}
+            >
               Kenya Stud Book &bull; DNA Verified
             </div>
           </div>
 
-          {/* 3. Beef Cell (3 cols, Green) */}
-          <Link
-            href="/breeds?category=beef"
-            className="bento-1 bento-cell cell-green p-6 sm:p-8 flex flex-col justify-between group no-underline"
-          >
-            <div className="flex items-center justify-between text-emerald-300">
-              <i className="bi bi-award text-3xl group-hover:scale-110 transition-transform" aria-hidden="true" />
-              <span className="t-label text-[10px] text-emerald-300/70">Category</span>
-            </div>
+          {/* Category Cards */}
+          {categories.map((cat) => (
+            <Link
+              key={cat.label}
+              href={cat.href}
+              className="os-card p-6 md:p-8 flex flex-col justify-between group no-underline"
+            >
+              {/* Icon */}
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+                style={{
+                  background: cat.accentBg,
+                  border: `1px solid ${cat.accentBorder}`,
+                  color: cat.accent,
+                  fontSize: "1.4rem",
+                  transition: "transform 0.2s ease, background 0.2s ease",
+                }}
+              >
+                <i className={`bi ${cat.icon}`} aria-hidden="true" />
+              </div>
 
-            <div className="my-4">
-              <h4 className="font-serif text-2xl text-[#FBF7F0] m-0 font-light">
-                Beef Cattle
+              {/* Label */}
+              <h4
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(1.3rem, 2vw, 1.7rem)",
+                  fontWeight: 400,
+                  color: "#1C1208",
+                  margin: "0 0 0.5rem 0",
+                  lineHeight: 1.2,
+                }}
+              >
+                {cat.label}
               </h4>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {["Boran", "Bonsmara", "Sahiwal"].map((b) => (
-                  <span key={b} className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/20 text-emerald-200">
+
+              {/* Breed tags */}
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                {cat.breeds.map((b) => (
+                  <span
+                    key={b}
+                    style={{
+                      fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                      fontSize: "0.68rem",
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      color: cat.accent,
+                      background: cat.accentBg,
+                      border: `1px solid ${cat.accentBorder}`,
+                      padding: "0.2rem 0.6rem",
+                      borderRadius: "9999px",
+                    }}
+                  >
                     {b}
                   </span>
                 ))}
               </div>
-            </div>
 
-            <div className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-emerald-300 group-hover:translate-x-1 transition-transform">
-              <span>Browse</span>
-              <i className="bi bi-arrow-right text-sm" aria-hidden="true" />
-            </div>
-          </Link>
-
-          {/* 4. Dairy Cell (3 cols, Dark) */}
-          <Link
-            href="/breeds?category=dairy"
-            className="bento-1 bento-cell cell-dark p-6 sm:p-8 flex flex-col justify-between group no-underline"
-          >
-            <div className="flex items-center justify-between text-[#C4882A]">
-              <i className="bi bi-droplet-fill text-3xl group-hover:scale-110 transition-transform" aria-hidden="true" />
-              <span className="t-label text-[10px] text-[#C4882A]/70">Category</span>
-            </div>
-
-            <div className="my-4">
-              <h4 className="font-serif text-2xl text-[#FBF7F0] m-0 font-light">
-                Dairy Champions
-              </h4>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {["Sahiwal A2", "Simmental", "Jersey"].map((b) => (
-                  <span key={b} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-[#C4882A]">
-                    {b}
-                  </span>
-                ))}
+              {/* Browse link */}
+              <div
+                className="flex items-center gap-1.5 transition-transform group-hover:translate-x-1"
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: cat.accent,
+                }}
+              >
+                <span>Browse</span>
+                <i className="bi bi-arrow-right" aria-hidden="true" />
               </div>
-            </div>
+            </Link>
+          ))}
 
-            <div className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#C4882A] group-hover:translate-x-1 transition-transform">
-              <span>Browse</span>
-              <i className="bi bi-arrow-right text-sm" aria-hidden="true" />
-            </div>
-          </Link>
-
-          {/* 5. Quote Cell (6 cols) */}
-          <div className="bento-3 bento-cell cell-dark p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden" style={{ background: "linear-gradient(135deg, #1C1208 0%, #2A1D10 100%)" }}>
-            <div className="text-[#C4882A] text-6xl font-serif leading-none select-none opacity-40">
-              “
-            </div>
-
-            <blockquote className="my-2">
-              <p className="font-serif italic text-xl sm:text-2xl text-[#FBF7F0] font-light leading-relaxed m-0">
-                A bond of friendship and mutual respect that endures across generations.
-              </p>
-            </blockquote>
-
-            <div className="pt-4 border-t border-[#C4882A]/20 flex items-center justify-between">
-              <span className="t-label text-[10px] text-[#C4882A]">
-                The Maa Word &mdash; Osotua
-              </span>
-              <span className="text-[10px] font-mono text-[#FBF7F0]/40">
-                Kajiado Heritage
-              </span>
-            </div>
-          </div>
-
-          {/* 6. Goats Cell (4 cols, Green) */}
-          <Link
-            href="/breeds?category=goats"
-            className="bento-2 bento-cell cell-green p-6 sm:p-8 flex flex-col justify-between group no-underline"
-          >
-            <div className="flex items-center justify-between text-emerald-300">
-              <i className="bi bi-heart-pulse text-3xl group-hover:scale-110 transition-transform" aria-hidden="true" />
-              <span className="t-label text-[10px] text-emerald-300/70">Hardy</span>
-            </div>
-
-            <div className="my-4">
-              <h4 className="font-serif text-2xl text-[#FBF7F0] m-0 font-light">
-                Pedigree Goats
-              </h4>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {["Boer Stud", "Galla Desert", "Kalahari"].map((b) => (
-                  <span key={b} className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/20 text-emerald-200">
-                    {b}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-emerald-300 group-hover:translate-x-1 transition-transform">
-              <span>View Genetics</span>
-              <i className="bi bi-arrow-right text-sm" aria-hidden="true" />
-            </div>
-          </Link>
-
-          {/* 7. Sheep Cell (4 cols, Dark) */}
-          <Link
-            href="/breeds?category=sheep"
-            className="bento-2 bento-cell cell-dark p-6 sm:p-8 flex flex-col justify-between group no-underline"
-          >
-            <div className="flex items-center justify-between text-[#C4882A]">
-              <i className="bi bi-flower1 text-3xl group-hover:scale-110 transition-transform" aria-hidden="true" />
-              <span className="t-label text-[10px] text-[#C4882A]/70">Flock</span>
-            </div>
-
-            <div className="my-4">
-              <h4 className="font-serif text-2xl text-[#FBF7F0] m-0 font-light">
-                Dorper &amp; Red Maasai
-              </h4>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {["Dorper Ram", "Red Maasai ewe", "Blackhead"].map((b) => (
-                  <span key={b} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-[#C4882A]">
-                    {b}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#C4882A] group-hover:translate-x-1 transition-transform">
-              <span>View Genetics</span>
-              <i className="bi bi-arrow-right text-sm" aria-hidden="true" />
-            </div>
-          </Link>
-
-          {/* 8. CTA Cell (4 cols, Gold) */}
+          {/* Barn Store CTA */}
           <Link
             href="/barn"
-            className="bento-2 bento-cell cell-gold p-6 sm:p-8 flex flex-col justify-between group no-underline text-[#FBF7F0]"
+            className="rounded-[20px] p-8 md:p-10 flex flex-col justify-between group no-underline"
+            style={{
+              background: "#1C1208",
+              color: "#FBF7F0",
+            }}
           >
-            <div className="flex items-center justify-between text-[#F5C76D]">
-              <span className="t-label text-[10px] tracking-widest text-[#F5C76D]">
+            <div className="flex items-center justify-between mb-4">
+              <span
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.12em",
+                  color: "#D99A30",
+                }}
+              >
                 Fresh Harvest
               </span>
-              <i className="bi bi-basket3 text-3xl group-hover:scale-110 transition-transform" aria-hidden="true" />
+              <i className="bi bi-basket3 text-2xl" style={{ color: "#D99A30" }} />
             </div>
 
-            <div className="my-4">
-              <h4 className="font-serif text-2xl sm:text-3xl text-[#FBF7F0] m-0 font-light">
-                Visit The Barn Store
-              </h4>
-              <p className="text-xs text-[#FBF7F0]/80 mt-1 m-0">
-                Weekly pantry boxes, cold-pressed oils, pasture honey, and aged grass-fed beef.
-              </p>
-            </div>
+            <h4
+              style={{
+                fontFamily: "var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
+                fontWeight: 300,
+                color: "#FBF7F0",
+                lineHeight: 1.2,
+                margin: "0 0 0.75rem 0",
+              }}
+            >
+              Visit The Barn Store
+            </h4>
+            <p
+              style={{
+                fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                fontSize: "0.85rem",
+                color: "rgba(251,247,240,0.65)",
+                margin: "0 0 1.5rem 0",
+                lineHeight: 1.65,
+              }}
+            >
+              Weekly pantry boxes, cold-pressed oils, pasture honey, and aged
+              grass-fed beef.
+            </p>
 
-            <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-widest text-[#F5C76D] group-hover:translate-x-1.5 transition-transform">
+            <div
+              className="flex items-center gap-2 transition-transform group-hover:translate-x-1.5"
+              style={{
+                fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+                color: "#D99A30",
+              }}
+            >
               <span>Enter Store</span>
-              <i className="bi bi-arrow-right text-base" aria-hidden="true" />
+              <i className="bi bi-arrow-right" aria-hidden="true" />
             </div>
           </Link>
-
         </div>
+
       </div>
     </section>
   );

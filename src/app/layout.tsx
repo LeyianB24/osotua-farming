@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Cormorant_Garamond, DM_Sans, Space_Grotesk, Fraunces, Inter } from "next/font/google"
+import { Cormorant_Garamond, DM_Sans, Space_Grotesk, Fraunces, Inter, Plus_Jakarta_Sans } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
@@ -19,6 +19,14 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
+  display: "swap",
+})
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  variable: "--font-jakarta",
   display: "swap",
 })
 
@@ -101,7 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${cormorant.variable} ${dmSans.variable} ${spaceGrotesk.variable}`}
+      className={`${fraunces.variable} ${inter.variable} ${plusJakartaSans.variable} ${cormorant.variable} ${dmSans.variable} ${spaceGrotesk.variable}`}
     >
       <head>
         {/* Bootstrap Icons */}
@@ -110,7 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         />
       </head>
-      <body className="antialiased bg-[#1C1208] text-[#FBF7F0] font-sans">
+      <body className="antialiased bg-[#FBF7F0] text-[#1C1208] font-sans">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#C4882A] focus:text-[#1C1208] focus:px-4 focus:py-2 focus:rounded focus:font-medium focus:text-sm"

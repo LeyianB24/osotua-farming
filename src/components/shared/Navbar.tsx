@@ -25,7 +25,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   const cartCount = ctxCartCount ?? initialCartCount ?? 0;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -33,9 +33,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [open]);
 
   const [prevPath, setPrevPath] = useState(pathname);
@@ -47,63 +45,120 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "py-3 border-b border-[#C4882A]/20 shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
-            : "py-5 bg-transparent border-b border-transparent"
-        }`}
         style={{
-          backgroundColor: scrolled ? "var(--g-nav)" : "transparent",
-          backdropFilter: scrolled ? "blur(40px) saturate(200%)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(40px) saturate(200%)" : "none",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          backgroundColor: scrolled ? "rgba(22, 13, 5, 0.97)" : "rgba(22, 13, 5, 0.95)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: "1px solid rgba(196, 136, 42, 0.18)",
+          height: "76px",
+          display: "flex",
+          alignItems: "center",
+          transition: "box-shadow 0.3s ease, background-color 0.3s ease",
+          boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.4)" : "none",
         }}
       >
-        <div className="os-container">
-          <div className="flex items-center justify-between">
+        <div className="os-container w-full">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
             {/* Brand Logo & Wordmark */}
-            <Link href="/" className="flex items-center gap-3.5 no-underline group">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden ring-1 ring-[#C4882A]/50 group-hover:ring-[#C4882A] transition-all bg-[#1C1208] shrink-0 shadow-lg group-hover:scale-105">
+            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}>
+              <div
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "12px",
+                  background: "#FFFFFF",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                  padding: "2px",
+                  flexShrink: 0,
+                  position: "relative",
+                }}
+              >
                 <Image
                   src={LOGO}
-                  alt="Osotua Farming Logo Emblem"
+                  alt="Osotua Farming Logo"
                   fill
-                  sizes="40px"
+                  sizes="44px"
                   priority
-                  className="object-cover"
+                  style={{ objectFit: "contain" }}
                 />
               </div>
-              <div className="flex flex-col">
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <span
-                  className="font-light text-xl tracking-tight text-[#FBF7F0] leading-none group-hover:text-[#C4882A] transition-colors"
-                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                  style={{
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
+                    fontSize: "1.2rem",
+                    fontWeight: 400,
+                    letterSpacing: "-0.02em",
+                    color: "#FFFFFF",
+                    lineHeight: 1.1,
+                    display: "block",
+                  }}
                 >
-                  Osotua Farming
+                  Osotua{" "}
+                  <span style={{ color: "#C4882A" }}>Farming</span>
                 </span>
-                <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.22em] text-[#C4882A] mt-1">
+                <span
+                  style={{
+                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                    fontSize: "0.6rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "rgba(196, 136, 42, 0.75)",
+                    marginTop: "2px",
+                  }}
+                >
                   Kajiado &bull; Kenya
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
+            {/* Desktop Navigation */}
+            <nav
+              style={{ display: "flex", alignItems: "center", gap: "32px" }}
+              className="hidden lg:flex"
+              aria-label="Main navigation"
+            >
               {navLinks.map((link) => {
                 const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`));
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative text-[13px] tracking-wide transition-colors duration-200 py-1 no-underline uppercase font-medium ${
-                      active ? "text-[#C4882A]" : "text-[#FBF7F0]/75 hover:text-[#FBF7F0]"
-                    }`}
-                    style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
+                    style={{
+                      fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                      fontSize: "0.88rem",
+                      fontWeight: 600,
+                      color: active ? "#C4882A" : "rgba(255,255,255,0.8)",
+                      textDecoration: "none",
+                      transition: "color 0.2s ease",
+                      position: "relative",
+                      paddingBottom: "2px",
+                    }}
                   >
                     {link.label}
                     {active && (
                       <motion.span
-                        layoutId="nav-pill-active"
-                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#C4882A] rounded-full"
+                        layoutId="nav-active-underline"
+                        style={{
+                          position: "absolute",
+                          bottom: "-2px",
+                          left: 0,
+                          right: 0,
+                          height: "1.5px",
+                          background: "#C4882A",
+                          borderRadius: "2px",
+                        }}
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
@@ -113,27 +168,68 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             </nav>
 
             {/* Desktop Right Actions */}
-            <div className="hidden lg:flex items-center gap-3.5">
-              {/* WhatsApp Icon Button */}
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }} className="hidden lg:flex">
+              {/* WhatsApp */}
               <a
                 href="https://wa.me/254700000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Contact Osotua on WhatsApp"
-                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#25D366] hover:bg-[#25D366]/15 hover:border-[#25D366]/40 transition-all hover:scale-105"
+                aria-label="Contact on WhatsApp"
+                style={{
+                  width: "38px",
+                  height: "38px",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#25D366",
+                  textDecoration: "none",
+                  transition: "background 0.2s ease, border-color 0.2s ease",
+                }}
               >
                 <i className="bi bi-whatsapp text-sm" aria-hidden="true" />
               </a>
 
-              {/* Cart Button */}
+              {/* Cart */}
               <Link
                 href="/cart"
-                className="relative w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FBF7F0] hover:text-[#C4882A] hover:border-[#C4882A]/40 transition-all no-underline hover:scale-105"
+                style={{
+                  position: "relative",
+                  width: "38px",
+                  height: "38px",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#FFFFFF",
+                  textDecoration: "none",
+                  transition: "border-color 0.2s ease",
+                }}
                 aria-label={`Cart with ${cartCount} items`}
               >
                 <i className="bi bi-bag text-sm" aria-hidden="true" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-[#1C1208] text-[9px] font-bold flex items-center justify-center">
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-4px",
+                      right: "-4px",
+                      width: "16px",
+                      height: "16px",
+                      borderRadius: "50%",
+                      background: "#C4882A",
+                      color: "#1C1208",
+                      fontSize: "9px",
+                      fontWeight: 800,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
                     {cartCount}
                   </span>
                 )}
@@ -142,17 +238,40 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
               {/* Portal link */}
               <Link
                 href="/login"
-                className="text-[11px] font-medium uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 text-[#FBF7F0]/80 hover:text-[#FBF7F0] hover:border-white/25 transition-all no-underline"
-                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.78rem",
+                  fontWeight: 600,
+                  color: "rgba(255,255,255,0.75)",
+                  textDecoration: "none",
+                  padding: "0.45rem 1rem",
+                  borderRadius: "9999px",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: "rgba(255,255,255,0.06)",
+                  transition: "all 0.2s ease",
+                }}
               >
                 Portal
               </Link>
 
-              {/* Gold Pill Button: Visit Us */}
+              {/* Visit CTA */}
               <Link
                 href="/visit"
-                className="btn-primary text-[11px] py-2 px-5 shadow-[0_8px_24px_rgba(196,136,42,0.25)]"
-                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: "#1C1208",
+                  background: "#C4882A",
+                  textDecoration: "none",
+                  padding: "0.5rem 1.25rem",
+                  borderRadius: "9999px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "background 0.2s ease, transform 0.2s ease",
+                  boxShadow: "0 4px 16px rgba(196,136,42,0.3)",
+                }}
               >
                 <span>Visit Us</span>
                 <i className="bi bi-arrow-right text-xs" aria-hidden="true" />
@@ -160,22 +279,61 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             </div>
 
             {/* Mobile Actions */}
-            <div className="flex items-center gap-2.5 lg:hidden">
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }} className="flex lg:hidden">
               <Link
                 href="/cart"
-                className="relative w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FBF7F0]"
+                style={{
+                  position: "relative",
+                  width: "38px",
+                  height: "38px",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#FFFFFF",
+                  textDecoration: "none",
+                }}
                 aria-label={`Shopping Cart (${cartCount} items)`}
               >
                 <i className="bi bi-bag text-base" aria-hidden="true" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-[#1C1208] text-[9px] font-bold flex items-center justify-center">
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-4px",
+                      right: "-4px",
+                      width: "16px",
+                      height: "16px",
+                      borderRadius: "50%",
+                      background: "#C4882A",
+                      color: "#1C1208",
+                      fontSize: "9px",
+                      fontWeight: 800,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
                     {cartCount}
                   </span>
                 )}
               </Link>
               <button
                 onClick={() => setOpen(!open)}
-                className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-[#FBF7F0] hover:text-[#C4882A] transition-colors flex items-center justify-center focus-visible:outline-none"
+                style={{
+                  width: "38px",
+                  height: "38px",
+                  borderRadius: "10px",
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  color: "#FFFFFF",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
                 aria-expanded={open}
                 aria-label="Toggle navigation menu"
               >
@@ -186,106 +344,117 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
         </div>
       </header>
 
-      {/* Mobile Full-Screen Glass Overlay */}
+      {/* Mobile Full-Screen Menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -16 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-            className="lg:hidden fixed inset-0 z-40 flex flex-col justify-between pt-24 pb-10 px-6 overflow-y-auto"
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.28, ease: [0.34, 1.56, 0.64, 1] }}
             style={{
-              backgroundColor: "rgba(22, 13, 5, 0.96)",
-              backdropFilter: "blur(40px) saturate(200%)",
-              WebkitBackdropFilter: "blur(40px) saturate(200%)",
+              position: "fixed",
+              inset: 0,
+              zIndex: 40,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              paddingTop: "88px",
+              paddingBottom: "2.5rem",
+              paddingLeft: "1.5rem",
+              paddingRight: "1.5rem",
+              backgroundColor: "rgba(22, 13, 5, 0.98)",
+              backdropFilter: "blur(24px) saturate(180%)",
+              WebkitBackdropFilter: "blur(24px) saturate(180%)",
+              overflowY: "auto",
             }}
+            className="lg:hidden"
           >
-            <nav className="flex flex-col gap-2 mt-4" aria-label="Mobile navigation menu">
-              {navLinks.map((link, i) => {
-                const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            <nav style={{ display: "flex", flexDirection: "column", gap: "4px" }} aria-label="Mobile navigation">
+              {[...navLinks, { label: "Customer Portal", href: "/dashboard" }].map((link, i) => {
+                const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`));
                 return (
                   <motion.div
                     key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05, duration: 0.3 }}
+                    transition={{ delay: i * 0.04, duration: 0.25 }}
                   >
                     <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="group flex items-center justify-between py-4 border-b border-white/10 no-underline"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "1rem 0",
+                        borderBottom: "1px solid rgba(255,255,255,0.07)",
+                        textDecoration: "none",
+                      }}
                     >
                       <span
-                        className={`text-3xl font-light tracking-tight transition-colors ${
-                          active ? "text-[#C4882A]" : "text-[#FBF7F0] group-hover:text-[#C4882A]"
-                        }`}
-                        style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+                        style={{
+                          fontFamily: "var(--font-cormorant), Georgia, serif",
+                          fontSize: "2rem",
+                          fontWeight: 300,
+                          letterSpacing: "-0.01em",
+                          color: active ? "#C4882A" : "#FFFFFF",
+                          transition: "color 0.2s ease",
+                        }}
                       >
                         {link.label}
                       </span>
-                      <i
-                        className="bi bi-arrow-right text-lg text-[#C4882A] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
-                        aria-hidden="true"
-                      />
+                      <i className="bi bi-arrow-right" style={{ color: "#C4882A", opacity: 0.7, fontSize: "1rem" }} />
                     </Link>
                   </motion.div>
                 );
               })}
-
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: navLinks.length * 0.05, duration: 0.3 }}
-              >
-                <Link
-                  href="/dashboard"
-                  onClick={() => setOpen(false)}
-                  className="group flex items-center justify-between py-4 border-b border-white/10 no-underline"
-                >
-                  <span
-                    className="text-3xl font-light tracking-tight text-[#FBF7F0] group-hover:text-[#C4882A] transition-colors"
-                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
-                  >
-                    Customer Portal
-                  </span>
-                  <i
-                    className="bi bi-arrow-right text-lg text-[#C4882A] opacity-60 group-hover:opacity-100 transition-opacity"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </motion.div>
             </nav>
 
             {/* Mobile Footer CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.3 }}
-              className="flex flex-col gap-3 mt-8"
+              transition={{ delay: 0.28, duration: 0.25 }}
+              style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "2rem" }}
             >
               <Link
                 href="/visit"
                 onClick={() => setOpen(false)}
-                className="btn-primary text-center justify-center py-3.5"
-                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
+                className="btn-primary justify-center"
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  padding: "0.875rem",
+                }}
               >
                 <span>Book Farm Visit</span>
-                <i className="bi bi-calendar-check" aria-hidden="true" />
+                <i className="bi bi-calendar-check" />
               </Link>
-
               <a
                 href="https://wa.me/254700000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-ghost text-center justify-center py-3.5"
-                style={{ fontFamily: "var(--font-space-grotesk), monospace" }}
+                className="btn-ghost justify-center"
+                style={{
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  padding: "0.875rem",
+                }}
               >
-                <i className="bi bi-whatsapp text-[#25D366]" aria-hidden="true" />
+                <i className="bi bi-whatsapp" style={{ color: "#25D366" }} />
                 <span>WhatsApp Concierge</span>
               </a>
-
-              <p className="text-center text-[10px] uppercase font-mono tracking-[0.2em] text-[#C4882A]/70 mt-3">
+              <p
+                style={{
+                  textAlign: "center",
+                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.18em",
+                  color: "rgba(196,136,42,0.6)",
+                  marginTop: "0.75rem",
+                }}
+              >
                 Osotua &bull; Kajiado County, Kenya &bull; Est. 2026
               </p>
             </motion.div>
