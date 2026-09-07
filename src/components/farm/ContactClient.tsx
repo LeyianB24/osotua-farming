@@ -141,6 +141,50 @@ export default function ContactClient() {
                   </div>
                 ))}
               </div>
+
+              {/* Official Social Channels */}
+              <div className="card-luxury p-6 bg-gradient-to-br from-[#FAF5EE] to-[#F3EADB] border border-[#C4882A]/30">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold mb-2">
+                  OFFICIAL CHANNELS &amp; MEDIA
+                </div>
+                <h4
+                  className="text-xl font-light text-[#1C1208] mb-4"
+                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                >
+                  Follow Our Ranches Daily
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a
+                    href="https://www.instagram.com/osotua_ranches_/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-2xl bg-white/80 hover:bg-white border border-[#C4882A]/25 transition-all shadow-sm group no-underline"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[#C4882A]/10 flex items-center justify-center text-[#C4882A] text-lg group-hover:bg-[#C4882A] group-hover:text-white transition-colors">
+                      <i className="bi bi-instagram" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-[#8E5E16] font-bold uppercase">Instagram</div>
+                      <div className="text-xs font-bold text-[#1C1208] group-hover:text-[#C4882A]">@osotua_ranches_</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://www.tiktok.com/@osotua.ranches"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-2xl bg-white/80 hover:bg-white border border-[#C4882A]/25 transition-all shadow-sm group no-underline"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[#C4882A]/10 flex items-center justify-center text-[#C4882A] text-lg group-hover:bg-[#C4882A] group-hover:text-white transition-colors">
+                      <i className="bi bi-tiktok" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono text-[#8E5E16] font-bold uppercase">TikTok</div>
+                      <div className="text-xs font-bold text-[#1C1208] group-hover:text-[#C4882A]">@osotua.ranches</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
 
             {/* Right: Contact Form */}

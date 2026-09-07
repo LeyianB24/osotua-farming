@@ -443,6 +443,52 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 <i className="bi bi-whatsapp" style={{ color: "#25D366" }} />
                 <span>WhatsApp Concierge</span>
               </a>
+
+              {/* Official Social Links */}
+              <div style={{ display: "flex", gap: "8px", justifyContent: "center", paddingTop: "0.5rem" }}>
+                <a
+                  href="https://www.instagram.com/osotua_ranches_/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "6px 12px",
+                    borderRadius: "9999px",
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(196,136,42,0.3)",
+                    color: "#FBF7F0",
+                    fontSize: "0.75rem",
+                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                    textDecoration: "none",
+                  }}
+                >
+                  <i className="bi bi-instagram" style={{ color: "#C4882A" }} />
+                  <span>@osotua_ranches_</span>
+                </a>
+                <a
+                  href="https://www.tiktok.com/@osotua.ranches"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "6px 12px",
+                    borderRadius: "9999px",
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(196,136,42,0.3)",
+                    color: "#FBF7F0",
+                    fontSize: "0.75rem",
+                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
+                    textDecoration: "none",
+                  }}
+                >
+                  <i className="bi bi-tiktok" style={{ color: "#C4882A" }} />
+                  <span>@osotua.ranches</span>
+                </a>
+              </div>
               <p
                 style={{
                   textAlign: "center",

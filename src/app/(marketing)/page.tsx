@@ -5,6 +5,7 @@ import BarnStoreBento from "@/components/farm/BarnStoreBento";
 import ScrollytellingSection from "@/components/farm/ScrollytellingSection";
 import TrustBento from "@/components/farm/TrustBento";
 import GetInvolvedBento from "@/components/farm/GetInvolvedBento";
+import SocialShowcaseSection from "@/components/farm/SocialShowcaseSection";
 import BrandQuoteSection from "@/components/farm/BrandQuoteSection";
 import NewsletterSection from "@/components/farm/NewsletterSection";
 
@@ -39,13 +40,16 @@ export default function HomePage() {
       {/* ── 07. SCROLLYTELLING: Dark Soil · Sticky 3-Chapter Narrative ── */}
       <ScrollytellingSection />
 
-      {/* ── 08. TRUST BENTO: Dark Soil · Three Architectural Pillars ── */}
+      {/* ── 08. TRUST BENTO: Three Architectural Pillars ── */}
       <TrustBento />
 
-      {/* ── 09. GET INVOLVED: Hide Brown (#2E1C08) · 6-Cell Bento ── */}
+      {/* ── 09. SOCIAL SHOWCASE: Instagram & TikTok Rangeland Feed ── */}
+      <SocialShowcaseSection />
+
+      {/* ── 10. GET INVOLVED: Hide Brown · 6-Cell Bento ── */}
       <GetInvolvedBento />
 
-      {/* ── 10. BRAND QUOTE: Cream (#FBF7F0) · Pure Editorial Typography Moment ── */}
+      {/* ── 11. BRAND QUOTE: Cream · Pure Editorial Typography Moment ── */}
       <BrandQuoteSection />
 
       {/* ── 11. NEWSLETTER: Savanna Gold (#C4882A) · Split Layout Gazette ── */}

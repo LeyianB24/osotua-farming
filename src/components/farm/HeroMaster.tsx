@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCountUp } from "@/hooks/use-count-up";
 
 export default function HeroMaster() {
@@ -217,173 +218,85 @@ export default function HeroMaster() {
             </div>
           </div>
 
-          {/* Right — Floating Breed Pill Cards (Desktop) */}
+          {/* Right — Ranch Visual Showcase Card */}
           <div
-            className="hidden lg:flex lg:col-span-5 xl:col-span-5 flex-col gap-4 items-end justify-center"
+            className="hidden lg:flex lg:col-span-5 xl:col-span-5 flex-col items-center justify-center relative"
             data-reveal
             data-delay="2"
           >
-            {/* Pill 1 */}
+            {/* Main Showcase Card */}
             <div
-              className="anim-tag-float-1 flex items-center gap-3 px-5 py-3.5 rounded-2xl"
+              className="relative w-full max-w-md rounded-[32px] overflow-hidden p-3 shadow-2xl"
               style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(196,136,42,0.3)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
+                background: "rgba(255, 255, 255, 0.05)",
+                border: "1px solid rgba(196, 136, 42, 0.35)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
               }}
             >
-              <div
-                className="w-2.5 h-2.5 rounded-full shrink-0"
-                style={{ background: "#C4882A" }}
-              />
-              <div className="flex flex-col text-right">
-                <span
-                  style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: "1.15rem",
-                    fontWeight: 400,
-                    color: "#FBF7F0",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Boran Stud Bull
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    color: "#D99A30",
-                  }}
-                >
-                  Tag #408 &bull; 920kg Prime
-                </span>
-              </div>
-            </div>
+              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden border border-white/10">
+                <Image
+                  src="/images/hero-rangeland.jpg"
+                  alt="Osotua rangeland cattle grazing at golden hour"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-            {/* Pill 2 */}
-            <div
-              className="anim-tag-float-2 flex items-center gap-3 px-5 py-3.5 rounded-2xl mr-6"
-              style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(61,107,62,0.35)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-              }}
-            >
-              <div
-                className="w-2.5 h-2.5 rounded-full shrink-0"
-                style={{ background: "#3D6B3E" }}
-              />
-              <div className="flex flex-col text-right">
-                <span
-                  style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: "1.15rem",
-                    fontWeight: 400,
-                    color: "#FBF7F0",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Red Maasai Sheep
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    color: "#4E8A4F",
-                  }}
-                >
-                  Pedigree Flock F-22
-                </span>
-              </div>
-            </div>
+                {/* Top Badge: Verified Ranches & Socials */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[10px] font-mono uppercase tracking-wider font-bold">
+                    <span className="live-dot" />
+                    <span>Live Savanna Feed</span>
+                  </div>
 
-            {/* Pill 3 */}
-            <div
-              className="anim-tag-float-3 flex items-center gap-3 px-5 py-3.5 rounded-2xl"
-              style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(196,136,42,0.3)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-              }}
-            >
-              <div
-                className="w-2.5 h-2.5 rounded-full shrink-0"
-                style={{ background: "#C4882A" }}
-              />
-              <div className="flex flex-col text-right">
-                <span
-                  style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: "1.15rem",
-                    fontWeight: 400,
-                    color: "#FBF7F0",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Sahiwal Dairy Cow
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    color: "#D99A30",
-                  }}
-                >
-                  18L/Day Pasture Yield
-                </span>
-              </div>
-            </div>
+                  <a
+                    href="https://www.instagram.com/osotua_ranches_/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C4882A]/90 hover:bg-[#C4882A] text-[#1C1208] text-[10px] font-mono font-bold transition-all no-underline shadow-md"
+                  >
+                    <i className="bi bi-instagram" />
+                    <span>@osotua_ranches_</span>
+                  </a>
+                </div>
 
-            {/* Pill 4 */}
-            <div
-              className="anim-tag-float-4 flex items-center gap-3 px-5 py-3.5 rounded-2xl mr-4"
-              style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(196,136,42,0.25)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-              }}
-            >
-              <div
-                className="w-2.5 h-2.5 rounded-full shrink-0"
-                style={{ background: "#D99A30" }}
-              />
-              <div className="flex flex-col text-right">
-                <span
-                  style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: "1.15rem",
-                    fontWeight: 400,
-                    color: "#FBF7F0",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Purebred Galla Goat
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    color: "#D99A30",
-                  }}
-                >
-                  Drought Hardy G-09
-                </span>
+                {/* Floating telemetry pills overlaid on image */}
+                <div className="absolute bottom-4 left-4 right-4 space-y-2">
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 text-white">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#C4882A]" />
+                      <div>
+                        <div className="text-xs font-bold text-white leading-tight">Kenya Boran Stud Sire</div>
+                        <div className="text-[10px] text-amber-300 font-mono">Pedigree Tag #408 &bull; 920kg</div>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      Active Herd
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-black/65 backdrop-blur-md border border-white/15 text-white">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#3D6B3E]" />
+                      <div>
+                        <div className="text-xs font-bold text-white leading-tight">Sahiwal A2 &bull; Red Maasai</div>
+                        <div className="text-[10px] text-emerald-300 font-mono">100% Savanna Grass Foraged</div>
+                      </div>
+                    </div>
+                    <a
+                      href="https://www.tiktok.com/@osotua.ranches"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-mono font-bold text-white hover:text-[#C4882A] flex items-center gap-1 no-underline"
+                    >
+                      <i className="bi bi-tiktok text-[#00f2fe]" />
+                      <span>@osotua.ranches</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

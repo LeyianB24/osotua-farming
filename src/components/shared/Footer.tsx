@@ -74,27 +74,51 @@ export default function Footer() {
               <span>Kenya Stud Book &bull; Verified Purebred</span>
             </div>
 
-            {/* Circular Gold Social Row */}
-            <div className="flex items-center gap-3 pt-2">
-              {[
-                { icon: "bi-instagram", href: "https://instagram.com", label: "Instagram" },
-                { icon: "bi-facebook", href: "https://facebook.com", label: "Facebook" },
-                { icon: "bi-tiktok", href: "https://tiktok.com", label: "TikTok" },
-                { icon: "bi-youtube", href: "https://youtube.com", label: "YouTube" },
-                { icon: "bi-twitter-x", href: "https://twitter.com", label: "Twitter / X" },
-                { icon: "bi-whatsapp", href: "https://wa.me/254700000000", label: "WhatsApp" },
-              ].map((s) => (
+            {/* Official Social Links & Badges */}
+            <div className="flex flex-col gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <a
-                  key={s.label}
-                  href={s.href}
+                  href="https://www.instagram.com/osotua_ranches_/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="w-9 h-9 rounded-full bg-transparent border border-[#C4882A]/40 hover:bg-[#C4882A] text-[#C4882A] hover:text-[#1C1208] flex items-center justify-center text-sm transition-all duration-200 hover:scale-110"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-[#C4882A]/20 border border-[#C4882A]/35 text-[#FBF7F0] hover:text-[#C4882A] text-xs font-mono transition-all no-underline"
                 >
-                  <i className={`bi ${s.icon}`} aria-hidden="true" />
+                  <i className="bi bi-instagram text-[#C4882A]" aria-hidden="true" />
+                  <span>@osotua_ranches_</span>
                 </a>
-              ))}
+                <a
+                  href="https://www.tiktok.com/@osotua.ranches"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-[#C4882A]/20 border border-[#C4882A]/35 text-[#FBF7F0] hover:text-[#C4882A] text-xs font-mono transition-all no-underline"
+                >
+                  <i className="bi bi-tiktok text-[#C4882A]" aria-hidden="true" />
+                  <span>@osotua.ranches</span>
+                </a>
+              </div>
+
+              {/* Circular Social Row */}
+              <div className="flex items-center gap-2.5">
+                {[
+                  { icon: "bi-instagram", href: "https://www.instagram.com/osotua_ranches_/", label: "Instagram (@osotua_ranches_)" },
+                  { icon: "bi-tiktok", href: "https://www.tiktok.com/@osotua.ranches", label: "TikTok (@osotua.ranches)" },
+                  { icon: "bi-whatsapp", href: "https://wa.me/254700000000", label: "WhatsApp" },
+                  { icon: "bi-facebook", href: "https://facebook.com", label: "Facebook" },
+                  { icon: "bi-youtube", href: "https://youtube.com", label: "YouTube" },
+                  { icon: "bi-twitter-x", href: "https://twitter.com", label: "Twitter / X" },
+                ].map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="w-9 h-9 rounded-full bg-transparent border border-[#C4882A]/40 hover:bg-[#C4882A] text-[#C4882A] hover:text-[#1C1208] flex items-center justify-center text-sm transition-all duration-200 hover:scale-110"
+                  >
+                    <i className={`bi ${s.icon}`} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
