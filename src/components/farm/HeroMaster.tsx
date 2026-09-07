@@ -21,12 +21,17 @@ export default function HeroMaster() {
             alt="Osotua pastoral Brahman cattle herd in Kajiado"
             fill
             priority
+          <Image
+            src="/images/brahman cows.jpg"
+            alt="Osotua pastoral Brahman cattle herd in Kajiado"
+            fill
+            priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-right"
           />
-          {/* Exact Figma Gradient Scrim: Dark on Left, translucent on Right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1208] via-[#1C1208]/85 md:via-[#1C1208]/70 to-[#1C1208]/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-[#1C1208]/40" />
+          {/* Subtle gradient scrim: protects text readability on the left without obscuring 4K Brahman cows */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1208] via-[#1C1208]/60 md:via-[#1C1208]/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-black/20" />
         </div>
 
         {/* Hero Content */}
