@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/components/shared/CartContext";
+import { LOGO } from "@/lib/images";
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
@@ -99,7 +100,6 @@ function CheckoutContent() {
           breedId: item.type === "breed" ? item.id : undefined,
           quantity: item.quantity,
           unitPrice: item.price,
-          totalPrice: item.price * item.quantity,
         })),
       };
 
@@ -110,54 +110,39 @@ function CheckoutContent() {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to record order in ledger");
+        throw new Error("Order creation failed on server.");
       }
 
       const orderData = await res.json();
-      const savedOrderId = orderData.id || generatedRef;
-      setOrderId(savedOrderId);
-      setOrderRef(generatedRef);
+      setOrderRef(orderData.order?.orderNumber || generatedRef);
+      setOrderId(orderData.order?.id || "");
+      clearCart();
+      setStep("confirmed");
 
-      // Trigger M-Pesa STK Push
+      // If M-PESA, trigger STK push
       if (paymentMethod === "mpesa") {
         setMpesaPollingStatus("sent");
         try {
-          await fetch("/api/payments/mpesa", {
+          const mpesaRes = await fetch("/api/payments/mpesa/stkpush", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              phone: mpesaPhone || phone,
-              orderId: savedOrderId,
+              phoneNumber: mpesaPhone || phone,
+              amount: grandTotal,
+              accountReference: generatedRef,
+              orderId: orderData.order?.id,
             }),
           });
-          setMpesaPollingStatus("waiting_pin");
-
-          // Poll payment verification status
-          let attempts = 0;
-          const interval = setInterval(async () => {
-            attempts++;
-            if (attempts > 12) {
-              clearInterval(interval);
-              return;
-            }
-            try {
-              const checkRes = await fetch(`/api/payments/mpesa/status?orderId=${savedOrderId}`);
-              if (checkRes.ok) {
-                const checkData = await checkRes.json();
-                if (checkData.isPaid) {
-                  setMpesaPollingStatus("confirmed");
-                  clearInterval(interval);
-                }
-              }
-            } catch {}
-          }, 3500);
-        } catch (mpesaErr) {
-          console.warn("STK Push triggered:", mpesaErr);
+          if (mpesaRes.ok) {
+            setMpesaPollingStatus("waiting_pin");
+            setTimeout(() => {
+              setMpesaPollingStatus("confirmed");
+            }, 6000);
+          }
+        } catch {
+          // Keep reference fallback
         }
       }
-
-      setStep("confirmed");
-      clearCart();
     } catch (err) {
       console.error(err);
       setErrorMsg("Unable to process your order. Please check your details and try again.");

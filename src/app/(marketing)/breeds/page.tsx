@@ -4,7 +4,10 @@ import BreedsClient from "@/components/farm/BreedsClient"
 import Slideshow from "@/components/shared/Slideshow"
 import { HERD_FIELD, LIVESTOCK_SLIDESHOW } from "@/lib/images"
 
-export const metadata = { title: "Our Breeds — Osotua Farming" }
+export const metadata = {
+  title: "Our Breeds — Osotua Farming",
+  description: "Explore Kenya Stud Book registered pedigree Boran cattle, Sahiwal dairy cows, Boer goats, and Dorper sheep from Osotua Farming.",
+}
 
 async function getBreeds() {
   try {
@@ -29,91 +32,68 @@ export default async function BreedsPage() {
   const [breeds, species] = await Promise.all([getBreeds(), getSpecies()])
 
   return (
-    <div style={{ background: "#FBF7F0" }}>
+    <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
 
       {/* ── HERO BANNER ── */}
-      <div
-        className="bg-mesh-green noise"
-        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
-      >
+      <section className="bg-mesh-green noise relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
         {/* Pastoral background overlay */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <div className="absolute inset-0 z-0">
           <Image
             src={HERD_FIELD}
             alt="Osotua herd at pasture"
             fill
             priority
             sizes="100vw"
-            className="object-cover"
-            style={{ opacity: 0.18, scale: "1.05" }}
+            className="object-cover opacity-20 scale-105"
           />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(251,247,240,0.95) 0%, rgba(251,247,240,0.8) 60%, rgba(251,247,240,0.5) 100%)" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #FBF7F0 0%, transparent 60%)" }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FBF7F0]/95 via-[#FBF7F0]/85 to-[#FBF7F0]/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FBF7F0] via-transparent to-transparent" />
         </div>
 
-        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
-            Certified Purebred Livestock &amp; Superior Genetics
+        <div className="os-container relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-amber-500/10 text-[#8E5E16] border border-amber-500/25">
+            <span>CERTIFIED PUREBRED LIVESTOCK &bull; SUPERIOR GENETICS</span>
           </div>
+
           <h1
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-8"
             style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 400,
-              color: "#1C1208",
-              lineHeight: 0.95,
-              letterSpacing: "-0.02em",
-              marginBottom: "1.5rem",
+              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
             }}
           >
-            Premium breeds,
-            <br />
-            <em style={{ color: "#C4882A", fontStyle: "italic" }}>bred for Africa</em>
+            Premium breeds, <br />
+            <em className="font-normal italic text-gradient-gold">bred for Africa</em>
           </h1>
-          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem", marginBottom: "2.5rem" }}>
+
+          <p className="text-base sm:text-xl text-[#5C4835] max-w-2xl leading-relaxed mb-10 font-normal">
             Every bull, cow, ram, and buck in our herd is rigorously selected for genetic superiority, tick &amp; drought tolerance, rapid weight gain, and long-term commercial yield.
           </p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2rem", paddingTop: "1.75rem", borderTop: "1px solid rgba(196,136,42,0.2)" }}>
+          <div className="flex flex-wrap items-center gap-8 pt-8 border-t border-amber-900/15">
             {[
-              { icon: "bi-patch-check-fill", label: "Veterinary Certified &amp; Vaccinated" },
-              { icon: "bi-clipboard2-check", label: "Movement Permits Coordinated" },
-              { icon: "bi-geo-alt-fill", label: "Kajiado Rangeland Adapted" },
+              { icon: "ti-certificate", label: "Veterinary Certified & Vaccinated" },
+              { icon: "ti-clipboard-check", label: "Movement Permits Coordinated" },
+              { icon: "ti-map-pin", label: "Kajiado Rangeland Adapted" },
             ].map((item) => (
-              <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                <i className={`bi ${item.icon}`} style={{ color: "#C4882A", fontSize: "0.95rem" }} />
-                <span
-                  style={{
-                    fontFamily: "var(--font-space-grotesk), monospace",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.16em",
-                    textTransform: "uppercase",
-                    color: "#8E5E16",
-                  }}
-                  dangerouslySetInnerHTML={{ __html: item.label }}
-                />
+              <div key={item.label} className="flex items-center gap-2.5">
+                <i className={`ti ${item.icon} text-[#C4882A] text-lg`} />
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#8E5E16]">
+                  {item.label}
+                </span>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ── LIVESTOCK SLIDESHOW ── */}
-      <div
-        style={{
-          background: "#FBF7F0",
-          paddingBottom: "2rem",
-          position: "relative",
-          zIndex: 10,
-        }}
-      >
-        <div className="os-container" style={{ transform: "translateY(-2rem)" }}>
-          <div style={{ borderRadius: "24px", overflow: "hidden", border: "1px solid rgba(196, 136, 42, 0.25)", boxShadow: "0 20px 60px rgba(196,136,42,0.12)" }}>
+      <section className="bg-[#FBF7F0] pb-12 relative z-10">
+        <div className="os-container -translate-y-8 sm:-translate-y-12">
+          <div className="rounded-3xl overflow-hidden border border-amber-900/15 shadow-2xl">
             <Slideshow slides={LIVESTOCK_SLIDESHOW} heightClass="h-72 sm:h-96" interval={3500} />
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ── BREEDS CATALOG (client) ── */}
       <BreedsClient initialBreeds={breeds} speciesList={species} />

@@ -1,20 +1,19 @@
 "use client";
 
 import Link from "next/link";
-
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Logo from "./Logo";
 import { useCart } from "./CartContext";
+import { LOGO } from "@/lib/images";
 
 const navLinks = [
+  { label: "Shop", href: "/barn" },
+  { label: "Our Farmers", href: "/partners" },
   { label: "Our Breeds", href: "/breeds" },
-  { label: "The Barn", href: "/barn" },
-  { label: "Invest", href: "/invest" },
-  { label: "Partners", href: "/partners" },
-  { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar({ cartCount: initialCartCount }: { cartCount?: number }) {
@@ -48,15 +47,36 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
     <>
       <header
         className={`os-navbar transition-all duration-300 ${
-          scrolled ? "glass-nav-scrolled" : "glass-nav"
+          scrolled
+            ? "bg-[#FAF7F0]/95 backdrop-blur-xl border-b border-[#C4882A]/25 shadow-md py-2.5"
+            : "bg-[#FAF7F0]/80 backdrop-blur-lg border-b border-[#C4882A]/15 py-3.5"
         }`}
         style={{ top: 0, left: 0, right: 0, position: "fixed", zIndex: 100 }}
       >
         <div className="os-container">
-          <div className="flex items-center justify-between" style={{ height: "72px" }}>
+          <div className="flex items-center justify-between">
 
-            {/* Logo */}
-            <Logo size="md" textColor="dark" />
+            {/* Official Brand Logo */}
+            <Link href="/" className="flex items-center gap-3 no-underline group">
+              <div className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-[#C4882A]/60 shadow-md group-hover:scale-105 group-hover:ring-[#C4882A] transition-all bg-white shrink-0">
+                <Image
+                  src={LOGO}
+                  alt="Osotua Farming Logo"
+                  fill
+                  sizes="44px"
+                  priority
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-[17px] tracking-tight text-[#1C1208] leading-tight group-hover:text-[#2E6B34] transition-colors" style={{ fontFamily: "var(--font-fraunces), serif" }}>
+                  Osotua Farming
+                </span>
+                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-[#8E5E16]">
+                  Pastoral Smart Farm &bull; Kenya
+                </span>
+              </div>
+            </Link>
 
             {/* Desktop nav — center */}
             <nav className="hidden lg:flex items-center gap-8" aria-label="Main navigation">
@@ -66,15 +86,15 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative font-mono text-[0.68rem] tracking-[0.2em] uppercase transition-colors duration-200 pb-0.5 ${
-                      active ? "text-[#C4882A] font-bold" : "text-[#1C1208]/75 hover:text-[#C4882A]"
+                    className={`relative font-sans text-[14px] transition-colors duration-200 py-1 no-underline ${
+                      active ? "text-[#2E6B34] font-bold" : "text-[#1C1208]/80 font-medium hover:text-[#2E6B34]"
                     }`}
                   >
                     {link.label}
                     {active && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-[#C4882A]"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2E6B34] to-[#C4882A] rounded-full"
                         transition={{ type: "spring", stiffness: 400, damping: 32 }}
                       />
                     )}
@@ -91,41 +111,44 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="text-[#1C1208]/75 hover:text-[#25D366] transition-colors p-1.5"
+                className="w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] flex items-center justify-center text-[#25D366] hover:bg-[#25D366]/10 hover:border-[#25D366]/40 transition-all shadow-2xs"
               >
-                <i className="bi bi-whatsapp text-lg leading-none" />
+                <i className="bi bi-whatsapp text-base leading-none" />
               </a>
 
-              {/* Portal */}
-              <Link
-                href="/dashboard"
-                className="text-[#1C1208]/75 hover:text-[#C4882A] transition-colors font-mono text-[0.65rem] tracking-wider uppercase flex items-center gap-1.5 font-bold"
-              >
-                <i className="bi bi-person-circle text-base leading-none text-[#C4882A]" />
-                Portal
-              </Link>
-
-              {/* Cart */}
+              {/* Cart Button */}
               <Link
                 href="/cart"
-                className="relative text-[#1C1208]/75 hover:text-[#C4882A] transition-colors p-1.5"
+                className="relative w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] flex items-center justify-center text-[#1C1208] hover:text-[#2E6B34] hover:border-[#2E6B34]/30 transition-all shadow-2xs no-underline"
                 aria-label={`Cart (${cartCount} items)`}
               >
-                <i className="bi bi-bag text-lg leading-none" />
+                <i className="bi bi-bag text-base leading-none" />
                 {cartCount > 0 && (
                   <span
-                    className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[#FFFFFF] text-[9px] font-bold flex items-center justify-center leading-none"
-                    style={{ background: "linear-gradient(135deg, #C4882A, #D99A30)" }}
+                    className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-white text-[10px] font-bold flex items-center justify-center shadow-xs"
+                    style={{ background: "#2E6B34" }}
                   >
                     {cartCount}
                   </span>
                 )}
               </Link>
 
-              {/* CTA */}
-              <Link href="/visit" className="btn-primary text-[0.7rem] py-2.5 px-5 shadow-sm">
-                Visit Us
-                <i className="bi bi-arrow-right" />
+              {/* Sign in Button */}
+              <Link
+                href="/login"
+                className="text-[13px] font-semibold px-4 py-2 rounded-xl border border-[var(--border)] bg-white hover:bg-stone-50 text-[#1C1208] transition-all shadow-2xs no-underline inline-flex items-center gap-1.5"
+              >
+                <i className="bi bi-person text-sm" />
+                <span>Portal</span>
+              </Link>
+
+              {/* CTA Visit Button */}
+              <Link
+                href="/visit"
+                className="btn-emerald text-[12px] font-bold py-2 px-4 shadow-sm"
+              >
+                <i className="bi bi-geo-alt-fill text-xs" />
+                <span>Visit Shamba</span>
               </Link>
             </div>
 
@@ -133,23 +156,23 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             <div className="flex items-center gap-2 lg:hidden">
               <Link
                 href="/cart"
-                className="relative text-[#1C1208]/80 p-2"
+                className="relative w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] flex items-center justify-center text-[#1C1208] shadow-2xs"
                 aria-label={`Cart (${cartCount} items)`}
               >
-                <i className="bi bi-bag text-xl" />
+                <i className="bi bi-bag text-lg" />
                 {cartCount > 0 && (
-                  <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#C4882A] text-[#FFFFFF] text-[9px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C4882A] text-white text-[9px] font-bold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
               </Link>
               <button
                 onClick={() => setOpen(!open)}
-                className="text-[#1C1208] hover:text-[#C4882A] transition-colors p-2 focus-visible:outline-none flex items-center justify-center"
+                className="w-9 h-9 rounded-xl bg-white border border-[#EDE5D8] text-[#1C1208] hover:text-[#C4882A] transition-colors flex items-center justify-center shadow-2xs focus-visible:outline-none"
                 aria-expanded={open}
                 aria-label="Toggle menu"
               >
-                <i className={`bi text-2xl ${open ? "bi-x-lg" : "bi-list"}`} />
+                <i className={`bi text-xl ${open ? "bi-x-lg" : "bi-list"}`} />
               </button>
             </div>
           </div>

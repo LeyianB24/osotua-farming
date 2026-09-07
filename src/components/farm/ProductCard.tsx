@@ -43,18 +43,13 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div
-      style={{
-        background: "#FFFFFF",
-        borderRadius: "16px",
-        border: "1px solid #EDE6D6",
-      }}
-      className="group overflow-hidden shadow-xs hover:shadow-lg hover:border-[#C4922E]/40 transition-all flex flex-col justify-between h-full"
+      className="group bg-white rounded-3xl border border-[#EDE6D6] overflow-hidden shadow-xs hover:shadow-xl hover:border-emerald-700/30 transition-all duration-500 flex flex-col justify-between h-full"
     >
-      {/* ── IMAGE SECTION WITH BADGES ── */}
+      {/* ── IMAGE SECTION WITH MINIMALIST LUXURY BADGES ── */}
       <div>
         <Link
           href={`/barn/${product.slug}`}
-          className="relative block h-48 sm:h-52 w-full bg-stone-100 overflow-hidden"
+          className="relative block h-60 sm:h-68 w-full bg-stone-100 overflow-hidden"
         >
           {src ? (
             <Image
@@ -62,58 +57,41 @@ export default function ProductCard({ product }: Props) {
               alt={product.name}
               fill
               sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-stone-400">
               <i className="bi bi-basket text-4xl" />
             </div>
           )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-          {/* Top-left: Category pill */}
-          <div className="absolute top-3 left-3 bg-[#14100A]/70 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-[9.5px] font-bold uppercase tracking-wider">
+          {/* Top-left: Category */}
+          <div className="absolute top-4 left-4 bg-[#14100A]/80 backdrop-blur-md text-white px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/15 shadow-sm">
             {product.category.name}
           </div>
 
-          {/* Top-right: Status pill */}
+          {/* Top-right: Status */}
           <div
-            className={`absolute top-3 right-3 px-2.5 py-1 rounded-md text-[9.5px] font-bold uppercase tracking-wider text-white ${
-              product.inStock ? "bg-[#3F6B3F]" : "bg-red-800"
+            className={`absolute top-4 right-4 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-white shadow-sm ${
+              product.inStock ? "bg-[#2E6B34]/95 backdrop-blur-md" : "bg-red-800/90 backdrop-blur-md"
             }`}
           >
-            {product.inStock ? "IN STOCK" : "SOLD OUT"}
-          </div>
-
-          {/* Bottom-left: Origin pill */}
-          <div className="absolute bottom-3 left-3 text-[10px] font-mono text-white font-medium uppercase tracking-wider flex items-center gap-1.5 drop-shadow-md bg-[#14100A]/60 backdrop-blur-xs px-2.5 py-1 rounded-md max-w-[85%] truncate">
-            <i className="bi bi-geo-alt-fill text-[#C4922E]" />
-            <span>Kajiado Co-op</span>
+            {product.inStock ? "In Stock" : "Sold Out"}
           </div>
         </Link>
 
         {/* ── CARD CONTENT ── */}
-        <div className="p-5 pb-2 space-y-1">
-          <div
-            style={{
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              fontSize: "10px",
-              color: "#C4922E",
-              fontWeight: 700,
-            }}
-          >
-            {product.category.name}
+        <div className="p-7 pb-3 space-y-2">
+          <div className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#8E5E16]">
+            {product.category.name} &bull; Farm Fresh
           </div>
           <Link
             href={`/barn/${product.slug}`}
+            className="text-2xl font-normal text-[#1C1208] leading-tight block hover:text-[#2E6B34] transition-colors no-underline m-0"
             style={{
               fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-              fontSize: "18px",
-              color: "#211C15",
-              lineHeight: 1.25,
-              textDecoration: "none",
             }}
-            className="truncate block hover:text-[#C4922E] transition-colors"
           >
             {product.name}
           </Link>
@@ -121,30 +99,19 @@ export default function ProductCard({ product }: Props) {
       </div>
 
       {/* ── CARD FOOTER ── */}
-      <div className="p-5 pt-3 flex justify-between items-center border-t border-stone-100 mt-2">
+      <div className="p-7 pt-4 flex justify-between items-center border-t border-stone-100 mt-3">
         <div>
-          <div
-            style={{
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              fontSize: "9px",
-              color: "#6B6558",
-              fontWeight: 600,
-            }}
-          >
+          <div className="text-[10px] font-bold uppercase tracking-widest text-[#8C8475]">
             FARM GATE PRICE
           </div>
           <div
+            className="text-xl font-bold text-[#1C1208] mt-0.5"
             style={{
-              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-              fontSize: "17px",
-              color: "#211C15",
-              fontWeight: 500,
-              marginTop: "2px",
+              fontFamily: "var(--font-fraunces, 'Fraunces'), serif",
             }}
           >
             KES {product.price.toLocaleString()}
-            <span style={{ fontSize: "12px", color: "#6B6558", fontWeight: 400, marginLeft: "4px" }}>
+            <span className="text-xs font-semibold text-[#8C8475] ml-1">
               /{product.unit}
             </span>
           </div>
@@ -154,33 +121,17 @@ export default function ProductCard({ product }: Props) {
           <button
             type="button"
             onClick={handleAdd}
-            style={{
-              background: added ? "#3F6B3F" : "#C4922E",
-              color: added ? "#FFFFFF" : "#211C15",
-              fontSize: "10px",
-              padding: "7px 14px",
-              borderRadius: "8px",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              border: "none",
-              cursor: "pointer",
-            }}
-            className="hover:opacity-90 transition-all shrink-0"
+            className={`text-[11px] font-bold py-2.5 px-5 rounded-xl tracking-wider uppercase transition-all duration-300 border cursor-pointer shrink-0 ${
+              added
+                ? "bg-[#2E6B34] text-white border-[#2E6B34] shadow-sm"
+                : "bg-[#FBF7F0] hover:bg-[#2E6B34] text-[#1C1208] hover:text-white border-[#EDE6D6] hover:border-[#2E6B34]"
+            }`}
           >
-            {added ? "✓ ADDED" : "+ ADD"}
+            {added ? "✓ ADDED" : "+ ADD TO BASKET"}
           </button>
         ) : (
           <span
-            style={{
-              background: "#EDE6D6",
-              color: "#8A7560",
-              fontSize: "9px",
-              padding: "5px 10px",
-              borderRadius: "6px",
-              fontWeight: 700,
-              textTransform: "uppercase",
-            }}
+            className="bg-stone-100 text-stone-500 text-[10px] font-bold py-2 px-4 rounded-xl uppercase tracking-wider"
           >
             Sold Out
           </span>

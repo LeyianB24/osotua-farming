@@ -2,13 +2,41 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { FIELD_DAY, RANCH_GALLERY } from "@/lib/images"
+import { FIELD_DAY, RANCH_GALLERY, LOGO } from "@/lib/images"
 
 const TOUR_TYPES = [
-  { id: "general", title: "General Ranch Tour", pricePerPerson: 1000, desc: "Explore pastures, livestock pens, water harvesting, and Barn Store sampling." },
-  { id: "breeding", title: "Breeding & Cattle Consultation", pricePerPerson: 2500, desc: "Detailed genetic selection walkthrough with our head livestock specialist." },
-  { id: "school", title: "School / Student Delegation", pricePerPerson: 500, desc: "Educational field trip on sustainable arid farming and climate resilience." },
-  { id: "dining", title: "Farm-to-Table Ranch Dining", pricePerPerson: 3500, desc: "Full ranch tour followed by an organic 3-course open-air ranch lunch." },
+  {
+    id: "general",
+    title: "General Ranch Tour",
+    pricePerPerson: 1000,
+    desc: "Explore rangeland pastures, livestock paddocks, water harvesting swales, and enjoy a Barn Store sampling session.",
+    icon: "ti-compass",
+    image: "/images/WhatsApp Image 2026-08-10 at 11.55.21.jpeg",
+  },
+  {
+    id: "breeding",
+    title: "Breeding & Cattle Consultation",
+    pricePerPerson: 2500,
+    desc: "Detailed genetic selection walkthrough, stud registry examination, and 1-on-1 session with our head livestock specialist.",
+    icon: "ti-dna-2",
+    image: "/images/boran bulls.jpg",
+  },
+  {
+    id: "school",
+    title: "School / Student Delegation",
+    pricePerPerson: 500,
+    desc: "Educational field workshop focusing on sustainable arid agriculture, solar borehole tech, and climate resilience.",
+    icon: "ti-school",
+    image: "/images/WhatsApp Image 2026-08-10 at 11.56.50.jpeg",
+  },
+  {
+    id: "dining",
+    title: "Farm-to-Table Ranch Dining",
+    pricePerPerson: 3500,
+    desc: "Full ranch guided walkthrough followed by an artisanal 3-course open-air bush lunch prepared with sunrise ingredients.",
+    icon: "ti-soup",
+    image: "/images/grilled lamb chops.jpg",
+  },
 ]
 
 export default function VisitClient() {
@@ -55,406 +83,377 @@ export default function VisitClient() {
       setSubmitted(true)
     } catch (err) {
       console.error(err)
-      setErrorMsg("Unable to complete reservation. Please verify that all fields and dates are selected.")
+      setErrorMsg("Unable to complete reservation. Please verify that all required fields and dates are selected.")
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div style={{ background: "#FBF7F0" }}>
+    <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
+
       {/* ── HERO BANNER ── */}
-      <div
-        className="bg-mesh-earth noise"
-        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
-      >
-        {/* Pastoral Background Overlay */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+      <section className="bg-mesh-earth noise relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
+        {/* Pastoral background overlay */}
+        <div className="absolute inset-0 z-0">
           <Image
             src={FIELD_DAY}
             alt="Field day at Osotua ranch"
             fill
             priority
             sizes="100vw"
-            className="object-cover"
-            style={{ opacity: 0.18, scale: "1.05" }}
+            className="object-cover opacity-20 scale-105"
           />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(251,247,240,0.95) 0%, rgba(251,247,240,0.8) 60%, rgba(251,247,240,0.5) 100%)" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #FBF7F0 0%, transparent 60%)" }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FBF7F0]/95 via-[#FBF7F0]/85 to-[#FBF7F0]/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FBF7F0] via-transparent to-transparent" />
         </div>
 
-        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
-            Guided Rangeland Tours
+        <div className="os-container relative z-10">
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-amber-500/10 text-[#8E5E16] border border-amber-500/25 shadow-md">
+            <div className="relative w-5 h-5 rounded-full overflow-hidden ring-1 ring-amber-400 shrink-0 bg-white">
+              <Image src={LOGO} alt="Osotua Seal" fill sizes="20px" className="object-cover" />
+            </div>
+            <span>GUIDED RANGELAND TOURS &bull; AGRITOURISM</span>
           </div>
+
           <h1
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-8"
             style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 400,
-              color: "#1C1208",
-              lineHeight: 0.95,
-              letterSpacing: "-0.02em",
-              marginBottom: "1.5rem",
+              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
             }}
           >
-            Come see the
-            <br />
-            <em style={{ color: "#C4882A", fontStyle: "italic" }}>ranch</em>
+            Come see the <br />
+            <em className="font-normal italic text-gradient-gold">living ranch</em>
           </h1>
-          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem" }}>
-            Book a guided tour of Osotua Farming in Kajiado County. Inspect our purebred herds, review water management infrastructure, visit the Barn Store, and taste ranch-fresh produce.
+
+          <p className="text-base sm:text-xl text-[#5C4835] max-w-2xl leading-relaxed font-normal">
+            Book a private or group guided tour of Osotua Farming in Kajiado County. Inspect our purebred herds, review water management infrastructure, visit the Barn Store, and taste ranch-fresh produce.
           </p>
         </div>
-      </div>
+      </section>
 
       {/* ── GALLERY STRIP ── */}
-      <div style={{ background: "#FBF7F0", paddingBottom: "2rem", position: "relative", zIndex: 10 }}>
-        <div className="os-container" style={{ transform: "translateY(-2rem)" }}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <section className="bg-[#FBF7F0] pb-12 relative z-10">
+        <div className="os-container -translate-y-8 sm:-translate-y-12">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
             {RANCH_GALLERY.slice(0, 4).map((src, i) => (
               <div
                 key={i}
-                style={{
-                  borderRadius: "20px",
-                  overflow: "hidden",
-                  border: "1px solid rgba(196, 136, 42, 0.25)",
-                  boxShadow: "0 10px 30px rgba(196,136,42,0.08)",
-                }}
-                className="relative aspect-video group"
+                className="relative aspect-video rounded-3xl overflow-hidden border border-amber-900/15 shadow-md group"
               >
                 <Image
                   src={src}
-                  alt={`Osotua ranch photo ${i + 1}`}
+                  alt={`Osotua ranch tour photo ${i + 1}`}
                   fill
+                  sizes="(min-width: 640px) 25vw, 50vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ── BOOKING SECTION ── */}
-      <section style={{ padding: "3rem 0 7rem" }}>
+      {/* ── BOOKING & TOUR TYPES SECTION ── */}
+      <section className="py-24 sm:py-36 bg-gradient-to-b from-transparent via-[#F5EFE4]/50 to-transparent">
         <div className="os-container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            {/* Left: Info */}
-            <div className="lg:col-span-5 space-y-8">
-              <div>
-                <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
-                  Visit Osotua
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            
+            {/* Left Column: Visual Tour Selection */}
+            <div className="lg:col-span-6 space-y-10">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#8E5E16] bg-amber-500/10 border border-amber-500/20">
+                  <span>EXPERIENCE TIERS</span>
                 </div>
-                <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1208] font-normal">
-                  Plan Your Ranch Experience
+                <h2
+                  className="text-3xl sm:text-5xl font-normal text-[#1C1208] leading-tight m-0"
+                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                >
+                  Choose Your Tour
                 </h2>
-                <p className="text-sm text-[#5C4835] mt-3 leading-relaxed">
-                  Located in the scenic savanna plains of Kajiado, just 90 minutes from Nairobi. Open Wednesday to Sunday for scheduled private and group visits.
+                <p className="text-base text-[#5C4835] leading-relaxed">
+                  Located in the scenic savanna plains of Kajiado, just 90 minutes from Nairobi. Open Wednesday through Sunday for scheduled delegations.
                 </p>
               </div>
 
-              {/* Practical details cards */}
-              <div className="space-y-4">
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    border: "1px solid rgba(196, 136, 42, 0.22)",
-                    borderRadius: "20px",
-                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
-                  }}
-                  className="p-5 flex items-start gap-4"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-[#C4882A]/12 text-[#C4882A] flex items-center justify-center shrink-0">
-                    <i className="bi bi-geo-alt-fill text-lg" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-xs text-[#1C1208]">Location</h4>
-                    <p className="text-xs text-[#5C4835] mt-0.5">Off Magadi Road, Kajiado County, Kenya</p>
-                    <a
-                      href="https://maps.google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[11px] font-mono text-[#8E5E16] font-bold mt-1 hover:underline"
+              {/* Visual Tour Type Cards */}
+              <div className="space-y-5">
+                {TOUR_TYPES.map((t) => {
+                  const active = tourType === t.id
+                  return (
+                    <div
+                      key={t.id}
+                      onClick={() => setTourType(t.id)}
+                      className={`card-luxury p-5 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6 cursor-pointer transition-all duration-300 ${
+                        active
+                          ? "ring-2 ring-[#C4882A] border-[#C4882A] bg-amber-50/40 shadow-xl"
+                          : "hover:border-amber-900/30 bg-white"
+                      }`}
                     >
-                      <i className="bi bi-box-arrow-up-right" />
-                      Get Directions via Google Maps
-                    </a>
-                  </div>
-                </div>
+                      {/* Tour Photo Thumbnail */}
+                      <div className="relative w-full sm:w-28 h-28 rounded-2xl overflow-hidden shrink-0 border border-amber-900/10 shadow-sm">
+                        <Image
+                          src={t.image}
+                          alt={t.title}
+                          fill
+                          sizes="112px"
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                        <div className="absolute bottom-2 left-2 text-white text-base">
+                          <i className={`ti ${t.icon}`} />
+                        </div>
+                      </div>
 
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    border: "1px solid rgba(196, 136, 42, 0.22)",
-                    borderRadius: "20px",
-                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
-                  }}
-                  className="p-5 flex items-start gap-4"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-[#2E7D32]/12 text-[#2E7D32] flex items-center justify-center shrink-0">
-                    <i className="bi bi-clock text-lg" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-xs text-[#1C1208]">Visiting Hours</h4>
-                    <p className="text-xs text-[#5C4835] mt-0.5">Wednesday – Sunday: 9:00 AM – 4:30 PM</p>
-                    <p className="text-[11px] text-[#786550]">Prior reservation required at least 24 hours in advance.</p>
-                  </div>
-                </div>
+                      <div className="flex-1 w-full">
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <h3
+                            className="text-xl font-bold text-[#1C1208] m-0"
+                            style={{ fontFamily: "var(--font-fraunces), serif" }}
+                          >
+                            {t.title}
+                          </h3>
+                          <span className="font-mono text-xs font-bold text-[#C4882A] uppercase">
+                            KES {t.pricePerPerson.toLocaleString()} / person
+                          </span>
+                        </div>
+                        <p className="text-sm text-[#5C4835] mt-2 leading-relaxed m-0">
+                          {t.desc}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
 
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    border: "1px solid rgba(196, 136, 42, 0.22)",
-                    borderRadius: "20px",
-                    boxShadow: "0 8px 24px rgba(196, 136, 42, 0.06)",
-                  }}
-                  className="p-5 flex items-start gap-4"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-[#C4882A]/12 text-[#C4882A] flex items-center justify-center shrink-0">
-                    <i className="bi bi-shield-check text-lg" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-xs text-[#1C1208]">Biosecurity &amp; Dress Code</h4>
-                    <p className="text-xs text-[#5C4835] mt-0.5">Sturdy closed shoes/boots recommended. Footwear sanitizing footbath at estate gates.</p>
-                  </div>
+              {/* Location & Quick Info */}
+              <div className="card-luxury p-7 flex items-start gap-4 bg-white">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-[#C4882A] flex items-center justify-center shrink-0 text-xl">
+                  <i className="ti ti-map-pin" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-[#1C1208]">Ranch Location</h4>
+                  <p className="text-xs text-[#5C4835] mt-1 leading-relaxed">Off Magadi Road, Kajiado County, Kenya (90 min from Nairobi CBD)</p>
+                  <a
+                    href="https://maps.google.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-mono text-[#8E5E16] font-bold mt-2 hover:underline"
+                  >
+                    <span>Get Directions via Google Maps</span>
+                    <i className="ti ti-external-link" />
+                  </a>
                 </div>
               </div>
             </div>
 
-            {/* Right: Booking Form */}
-            <div className="lg:col-span-7">
-              <div
-                style={{
-                  background: "#FFFFFF",
-                  border: "1px solid rgba(196, 136, 42, 0.25)",
-                  borderRadius: "28px",
-                  boxShadow: "0 16px 48px rgba(196, 136, 42, 0.08)",
-                }}
-                className="p-6 sm:p-10 relative overflow-hidden"
-              >
-                {errorMsg && (
-                  <div className="mb-6 p-4 rounded-xl bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B] text-xs flex items-center gap-2">
-                    <i className="bi bi-exclamation-triangle-fill text-[#DC2626]" />
-                    <span>{errorMsg}</span>
-                  </div>
-                )}
-
+            {/* Right Column: Booking Form */}
+            <div className="lg:col-span-6">
+              <div className="card-luxury p-8 sm:p-12 shadow-2xl">
                 {submitted ? (
-                  <div className="text-center py-12 space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-[#2E7D32]/12 text-[#2E7D32] flex items-center justify-center mx-auto text-3xl">
-                      <i className="bi bi-calendar-check" />
+                  <div className="text-center py-12 space-y-5">
+                    <div className="w-20 h-20 rounded-full bg-emerald-500/10 text-[#2E6B34] flex items-center justify-center mx-auto text-4xl border border-emerald-500/30 shadow-lg">
+                      <i className="ti ti-circle-check" />
                     </div>
-                    <h3 className="font-serif text-3xl text-[#1C1208] font-medium">Reservation Request Received</h3>
-                    <p className="text-xs text-[#5C4835] max-w-md mx-auto leading-relaxed">
-                      Thank you, {fullName}! Our estate management team will review your requested date ({visitDate}) and dispatch confirmation instructions and gate coordinates to your email ({email}).
+                    <h3
+                      className="text-3xl font-light text-[#1C1208]"
+                      style={{ fontFamily: "var(--font-fraunces), serif" }}
+                    >
+                      Tour Booking Requested
+                    </h3>
+                    <p className="text-sm text-[#5C4835] max-w-md mx-auto leading-relaxed">
+                      Thank you, <strong className="text-[#1C1208]">{fullName}</strong>. Our ranch concierge has received your request for the <strong className="text-[#8E5E16]">{activeTour.title}</strong> on <strong className="text-[#1C1208]">{visitDate}</strong>. We will confirm your schedule within 24 hours.
                     </p>
                     <div className="pt-4">
                       <button
-                        onClick={() => { setSubmitted(false); }}
-                        className="btn-primary py-2.5 px-6 text-xs"
+                        onClick={() => setSubmitted(false)}
+                        className="btn-primary py-3 px-8 text-xs tracking-wider"
                       >
-                        Book Another Tour
+                        Book Another Visit
                       </button>
                     </div>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <span className="eyebrow text-[#8E5E16] mb-1 font-bold">Step 1</span>
-                      <h3 className="font-serif text-2xl text-[#1C1208] font-normal">Select Tour Experience</h3>
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-[#2E6B34] bg-emerald-500/10 border border-emerald-500/20 mb-2">
+                        <span>RESERVATION FORM</span>
+                      </div>
+                      <h3
+                        className="text-2xl sm:text-3xl font-light text-[#1C1208]"
+                        style={{ fontFamily: "var(--font-fraunces), serif" }}
+                      >
+                        Reserve Your Date
+                      </h3>
                     </div>
 
-                    {/* Tour Type selection */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {TOUR_TYPES.map((t) => (
-                        <button
-                          key={t.id}
-                          type="button"
-                          onClick={() => setTourType(t.id)}
-                          style={{
-                            background: tourType === t.id ? "rgba(196, 136, 42, 0.08)" : "#FAF8F5",
-                            borderColor: tourType === t.id ? "#C4882A" : "rgba(196, 136, 42, 0.2)",
-                          }}
-                          className={`p-4 rounded-xl text-left border transition-all ${
-                            tourType === t.id ? "ring-2 ring-[#C4882A]/30" : "hover:border-[#C4882A]/50"
-                          }`}
-                        >
-                          <div className="flex justify-between items-start mb-1">
-                            <span className="font-bold text-xs text-[#1C1208]">{t.title}</span>
-                            <span className="font-mono text-[10px] text-[#C4882A] font-bold">
-                              KES {t.pricePerPerson.toLocaleString()}
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-[#5C4835] leading-relaxed">{t.desc}</p>
-                        </button>
-                      ))}
-                    </div>
+                    {errorMsg && (
+                      <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                        <i className="ti ti-alert-triangle text-base" />
+                        <span>{errorMsg}</span>
+                      </div>
+                    )}
 
-                    {/* Contact & Date details */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#C4882A]/15">
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
                           Full Name *
                         </label>
                         <input
                           type="text"
-                          name="fullName"
                           required
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
-                          placeholder="e.g. Joy Wanjiku"
-                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          placeholder="e.g. David Ntimama"
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
                         />
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                            Email Address *
+                          </label>
+                          <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="david@example.com"
+                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                            Phone Number *
+                          </label>
+                          <input
+                            type="tel"
+                            required
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="+254 700 000 000"
+                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                            Preferred Date *
+                          </label>
+                          <input
+                            type="date"
+                            required
+                            value={visitDate}
+                            onChange={(e) => setVisitDate(e.target.value)}
+                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                            Group Size *
+                          </label>
+                          <input
+                            type="number"
+                            required
+                            min={1}
+                            max={50}
+                            value={groupSize}
+                            onChange={(e) => setGroupSize(Number(e.target.value))}
+                            className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          />
+                        </div>
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="joy@example.co.ke"
-                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                          Phone / WhatsApp *
-                        </label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="+254 700 000000"
-                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                          Group Size
-                        </label>
-                        <input
-                          type="number"
-                          name="groupSize"
-                          min={1}
-                          max={50}
-                          value={groupSize}
-                          onChange={(e) => setGroupSize(Math.max(1, parseInt(e.target.value) || 1))}
-                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
-                        />
-                      </div>
-
-                      <div className="sm:col-span-2">
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                          Preferred Visit Date *
-                        </label>
-                        <input
-                          type="date"
-                          name="visitDate"
-                          required
-                          min={new Date().toISOString().split("T")[0]}
-                          value={visitDate}
-                          onChange={(e) => setVisitDate(e.target.value)}
-                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
-                        />
-                      </div>
-
-                      <div className="sm:col-span-2">
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-2">
-                          Arrival Time Slot *
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          Time Slot *
                         </label>
                         <div className="grid grid-cols-2 gap-3">
-                          {[
-                            { id: "morning", label: "Morning Session", time: "09:30 AM – 12:30 PM", icon: "bi-sun-fill" },
-                            { id: "afternoon", label: "Afternoon Session", time: "02:00 PM – 05:00 PM", icon: "bi-sunset-fill" },
-                          ].map((slot) => {
-                            const active = timeSlot === slot.id
-                            return (
-                              <button
-                                key={slot.id}
-                                type="button"
-                                onClick={() => setTimeSlot(slot.id)}
-                                className={`p-3 rounded-xl text-left border transition-all ${
-                                  active
-                                    ? "bg-[#C4882A]/15 border-[#C4882A] ring-1 ring-[#C4882A]"
-                                    : "bg-[#FAF6EE] border-[#C4882A]/25"
-                                }`}
-                              >
-                                <div className="flex items-center gap-2 text-xs font-bold text-[#1C1208]">
-                                  <i className={`bi ${slot.icon} text-[#C4882A]`} />
-                                  <span>{slot.label}</span>
-                                </div>
-                                <div className="text-[10px] text-[#5C4835] mt-0.5 font-mono">{slot.time}</div>
-                              </button>
-                            )
-                          })}
+                          <button
+                            type="button"
+                            onClick={() => setTimeSlot("morning")}
+                            className={`py-3 px-4 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all border ${
+                              timeSlot === "morning"
+                                ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white border-[#C4882A] shadow-md"
+                                : "bg-[#FAF6EE] text-[#5C4835] border-amber-900/15 hover:border-amber-900/30"
+                            }`}
+                          >
+                            Morning (9:30 AM)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setTimeSlot("afternoon")}
+                            className={`py-3 px-4 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider transition-all border ${
+                              timeSlot === "afternoon"
+                                ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white border-[#C4882A] shadow-md"
+                                : "bg-[#FAF6EE] text-[#5C4835] border-amber-900/15 hover:border-amber-900/30"
+                            }`}
+                          >
+                            Afternoon (2:00 PM)
+                          </button>
                         </div>
                       </div>
 
-                      <div className="sm:col-span-2">
-                        <label className="block text-[10px] font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1">
-                          Special Requests / Dietary Notes (Optional)
+                      <div>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          Special Requests / Dietary Notes
                         </label>
                         <textarea
-                          name="notes"
-                          rows={2}
+                          rows={3}
                           value={notes}
                           onChange={(e) => setNotes(e.target.value)}
-                          placeholder="e.g. Interest in Boran breeding herd, vegetarian dining option requested..."
-                          className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                          placeholder="Tell us about any specific livestock interests, student delegations, or dietary preferences..."
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
                         />
                       </div>
                     </div>
 
-                    {/* Summary Bar & Submit */}
-                    <div
-                      style={{
-                        background: "#FAF8F5",
-                        border: "1px solid rgba(196, 136, 42, 0.2)",
-                        borderRadius: "18px",
-                      }}
-                      className="p-5 flex flex-col sm:flex-row items-center justify-between gap-4"
-                    >
+                    {/* Estimated cost box */}
+                    <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between">
                       <div>
-                        <span className="text-[10px] font-mono uppercase text-[#786550] font-bold">Estimated Total ({groupSize} Guests)</span>
-                        <div className="font-serif text-3xl font-bold text-[#1C1208]">
-                          KES {estimatedCost.toLocaleString()}
+                        <div className="text-xs font-mono font-bold uppercase text-[#8E5E16]">
+                          Estimated Experience Total
+                        </div>
+                        <div className="text-xs text-[#5C4835]">
+                          {groupSize} {groupSize === 1 ? "person" : "people"} &times; KES {activeTour.pricePerPerson.toLocaleString()}
                         </div>
                       </div>
-
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full sm:w-auto btn-primary py-3 px-8 text-xs flex items-center justify-center gap-2 shadow-sm"
-                      >
-                        {loading ? (
-                          <>
-                            <i className="bi bi-arrow-repeat animate-spin" />
-                            <span>Booking...</span>
-                          </>
-                        ) : (
-                          <>
-                            <i className="bi bi-calendar-plus" />
-                            <span>Confirm Visit Request</span>
-                          </>
-                        )}
-                      </button>
+                      <div className="font-serif text-2xl font-bold text-[#C4882A]">
+                        KES {estimatedCost.toLocaleString()}
+                      </div>
                     </div>
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full btn-primary py-4 text-xs tracking-widest justify-center shadow-xl"
+                    >
+                      {loading ? (
+                        <>
+                          <i className="ti ti-loader animate-spin" />
+                          <span>Processing Reservation...</span>
+                        </>
+                      ) : (
+                        <>
+                          <i className="ti ti-calendar-check" />
+                          <span>CONFIRM RANCH RESERVATION</span>
+                        </>
+                      )}
+                    </button>
                   </form>
                 )}
               </div>
             </div>
+
           </div>
         </div>
       </section>
+
     </div>
   )
 }

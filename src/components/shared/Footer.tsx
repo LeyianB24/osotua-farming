@@ -1,64 +1,84 @@
 "use client"
 
 import Link from "next/link"
-import Logo from "./Logo"
+import Image from "next/image"
+import { LOGO } from "@/lib/images"
 
 export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
     <footer
+      className="relative overflow-hidden text-white"
       style={{
-        background: "linear-gradient(180deg, #FAF5EB 0%, #F5EFE4 50%, #EDE5D8 100%)",
-        borderTop: "1px solid rgba(196, 136, 42, 0.25)",
-        position: "relative",
-        overflow: "hidden",
+        background: "linear-gradient(180deg, #1A1208 0%, #120C05 100%)",
+        borderTop: "1px solid rgba(196, 136, 42, 0.3)",
       }}
     >
-      {/* Ambient glows */}
-      <div aria-hidden="true" style={{
-        position: "absolute", top: "-80px", left: "10%",
-        width: "400px", height: "400px", borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(196,136,42,0.1) 0%, transparent 70%)",
-        pointerEvents: "none",
-      }} />
-      <div aria-hidden="true" style={{
-        position: "absolute", bottom: "-60px", right: "10%",
-        width: "300px", height: "300px", borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(61,107,62,0.08) 0%, transparent 70%)",
-        pointerEvents: "none",
-      }} />
+      {/* Ambient background glows */}
+      <div
+        aria-hidden="true"
+        className="absolute -top-24 left-1/4 w-96 h-96 rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(196,136,42,0.15) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-24 right-1/4 w-96 h-96 rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(46,107,52,0.15) 0%, transparent 70%)",
+        }}
+      />
 
-      {/* Main grid */}
-      <div className="os-container" style={{ padding: "5rem 1.5rem 4rem" }}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* Main Grid */}
+      <div className="os-container pt-20 pb-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-14">
 
-          {/* Col 1 — Brand */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(196, 136, 42, 0.22)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 30px rgba(196, 136, 42, 0.06)",
-              padding: "1.75rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.25rem",
-            }}
-          >
-            <Logo size="sm" textColor="dark" />
-            <p style={{ color: "#5C4835", fontSize: "0.85rem", lineHeight: 1.8 }}>
-              A modern smart farm raising premium indigenous livestock and growing wholesome produce
-              from Kajiado County, Kenya.
+          {/* Col 1 — Brand (4 cols) */}
+          <div className="lg:col-span-4 space-y-6">
+            <Link href="/" className="inline-flex items-center gap-4 no-underline group">
+              <div className="relative w-14 h-14 rounded-full overflow-hidden ring-2 ring-amber-400/60 shadow-xl bg-white shrink-0 group-hover:scale-105 group-hover:ring-amber-400 transition-all">
+                <Image
+                  src={LOGO}
+                  alt="Osotua Farming Official Logo"
+                  fill
+                  sizes="56px"
+                  priority
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span
+                  className="font-bold text-2xl tracking-tight text-white leading-tight group-hover:text-amber-400 transition-colors"
+                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                >
+                  Osotua Farming
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-400 font-bold mt-0.5">
+                  Pastoral Smart Farm &bull; Kenya
+                </span>
+              </div>
+            </Link>
+
+            <p className="text-sm text-stone-300/85 leading-relaxed max-w-sm">
+              Rooted in Maa pastoral heritage, raised with regenerative rangeland science, and delivered directly to your doorstep from Kajiado County, Kenya.
             </p>
+
+            {/* Verified seal */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-amber-500/30 text-amber-300 text-xs font-mono">
+              <i className="ti ti-shield-check text-[#C4882A] text-sm" />
+              <span>Kenya Stud Book &bull; Certified Purebred</span>
+            </div>
+
             {/* Social icons */}
-            <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
+            <div className="flex items-center gap-3 pt-2">
               {[
-                { icon: "bi-instagram",  href: "https://instagram.com",  label: "Instagram" },
-                { icon: "bi-facebook",   href: "https://facebook.com",   label: "Facebook" },
-                { icon: "bi-tiktok",     href: "https://tiktok.com",     label: "TikTok" },
-                { icon: "bi-youtube",    href: "https://youtube.com",    label: "YouTube" },
-                { icon: "bi-twitter-x", href: "https://twitter.com",    label: "Twitter / X" },
+                { icon: "ti-brand-instagram", href: "https://instagram.com", label: "Instagram" },
+                { icon: "ti-brand-facebook", href: "https://facebook.com", label: "Facebook" },
+                { icon: "ti-brand-tiktok", href: "https://tiktok.com", label: "TikTok" },
+                { icon: "ti-brand-youtube", href: "https://youtube.com", label: "YouTube" },
+                { icon: "ti-brand-x", href: "https://twitter.com", label: "Twitter / X" },
               ].map((s) => (
                 <a
                   key={s.label}
@@ -66,264 +86,130 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "50%",
-                    background: "rgba(196,136,42,0.08)",
-                    border: "1px solid rgba(196,136,42,0.25)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#8E5E16",
-                    textDecoration: "none",
-                    transition: "all 0.25s ease",
-                    fontSize: "0.9rem",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.borderColor = "#C4882A"
-                    el.style.color = "#FFFFFF"
-                    el.style.background = "#C4882A"
-                    el.style.boxShadow = "0 4px 12px rgba(196,136,42,0.3)"
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.borderColor = "rgba(196,136,42,0.25)"
-                    el.style.color = "#8E5E16"
-                    el.style.background = "rgba(196,136,42,0.08)"
-                    el.style.boxShadow = ""
-                  }}
+                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-amber-400/50 hover:bg-amber-500/20 text-stone-300 hover:text-amber-300 flex items-center justify-center text-lg transition-all duration-200"
                 >
-                  <i className={`bi ${s.icon}`} />
+                  <i className={`ti ${s.icon}`} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Col 2 — Quick Links */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(196, 136, 42, 0.22)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 30px rgba(196, 136, 42, 0.06)",
-              padding: "1.75rem",
-            }}
-          >
-            <div
-              style={{
-                fontFamily: "var(--font-space-grotesk), monospace",
-                fontSize: "0.58rem",
-                fontWeight: 700,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "#8E5E16",
-                marginBottom: "1.25rem",
-              }}
-            >
-              Quick Links
+          {/* Col 2 — Quick Links (2.5 cols) */}
+          <div className="lg:col-span-2 space-y-4">
+            <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-amber-400">
+              Navigation
             </div>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+            <nav className="flex flex-col gap-3">
               {[
-                { label: "Our Breeds",      href: "/breeds"   },
-                { label: "The Barn Store",  href: "/barn"     },
-                { label: "Invest With Us",  href: "/invest"   },
+                { label: "The Barn Store", href: "/barn" },
+                { label: "Our Breeds", href: "/breeds" },
                 { label: "Partner Farmers", href: "/partners" },
-                { label: "Visit the Ranch", href: "/visit"    },
-                { label: "Our Blog",        href: "/blog"     },
-                { label: "About Us",        href: "/about"    },
+                { label: "Visit the Ranch", href: "/visit" },
+                { label: "Invest With Us", href: "/invest" },
+                { label: "About Us", href: "/about" },
+                { label: "Contact", href: "/contact" },
               ].map((l) => (
                 <Link
                   key={l.href}
                   href={l.href}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    color: "#5C4835",
-                    fontSize: "0.88rem",
-                    textDecoration: "none",
-                    transition: "color 0.2s ease",
-                    lineHeight: 1.6,
-                  }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#C4882A" }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#5C4835" }}
+                  className="text-sm text-stone-300 hover:text-amber-300 transition-colors no-underline flex items-center gap-2"
                 >
-                  <i className="bi bi-arrow-right" style={{ fontSize: "0.65rem", color: "#C4882A" }} />
-                  {l.label}
+                  <i className="ti ti-chevron-right text-xs text-amber-500/60" />
+                  <span>{l.label}</span>
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* Col 3 — Livestock */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(196, 136, 42, 0.22)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 30px rgba(196, 136, 42, 0.06)",
-              padding: "1.75rem",
-            }}
-          >
-            <div
-              style={{
-                fontFamily: "var(--font-space-grotesk), monospace",
-                fontSize: "0.58rem",
-                fontWeight: 700,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "#8E5E16",
-                marginBottom: "1.25rem",
-              }}
-            >
-              Livestock Catalogue
+          {/* Col 3 — Genetics & Breeds (2.5 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-amber-400">
+              Stud Catalog
             </div>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+            <nav className="flex flex-col gap-3">
               {[
-                { label: "Boran Beef Cattle",     icon: "bi-bullseye"  },
-                { label: "Bonsmara Bulls",         icon: "bi-bullseye"  },
-                { label: "Sahiwal Dairy Cows",     icon: "bi-droplet-fill" },
-                { label: "Boer Goats",             icon: "bi-scissors"  },
-                { label: "Galla × Boer Crosses",   icon: "bi-scissors"  },
-                { label: "Dorper Sheep",           icon: "bi-flower1"   },
-                { label: "Red Maasai × Dorper",    icon: "bi-flower1"   },
+                { label: "Kenya Boran Cattle", href: "/breeds" },
+                { label: "Sahiwal Dual-Purpose", href: "/breeds" },
+                { label: "Boer Champion Goats", href: "/breeds" },
+                { label: "Galla × Boer Crosses", href: "/breeds" },
+                { label: "Dorper Stud Sheep", href: "/breeds" },
+                { label: "Red Maasai Genetics", href: "/breeds" },
               ].map((l) => (
                 <Link
                   key={l.label}
-                  href="/breeds"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    color: "#5C4835",
-                    fontSize: "0.88rem",
-                    textDecoration: "none",
-                    transition: "color 0.2s ease",
-                    lineHeight: 1.6,
-                  }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#C4882A" }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#5C4835" }}
+                  href={l.href}
+                  className="text-sm text-stone-300 hover:text-amber-300 transition-colors no-underline flex items-center gap-2"
                 >
-                  <i className={`bi ${l.icon}`} style={{ fontSize: "0.7rem", color: "#C4882A" }} />
-                  {l.label}
+                  <i className="ti ti-chevron-right text-xs text-amber-500/60" />
+                  <span>{l.label}</span>
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* Col 4 — Contact */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(196, 136, 42, 0.22)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 30px rgba(196, 136, 42, 0.06)",
-              padding: "1.75rem",
-            }}
-          >
-            <div
-              style={{
-                fontFamily: "var(--font-space-grotesk), monospace",
-                fontSize: "0.58rem",
-                fontWeight: 700,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "#8E5E16",
-                marginBottom: "1.25rem",
-              }}
-            >
-              Contact Us
+          {/* Col 4 — Ranch Gate Info (3 cols) */}
+          <div className="lg:col-span-3 space-y-5">
+            <div className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-amber-400">
+              Ranch Gate &amp; Contact
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {[
-                { icon: "bi-geo-alt-fill",   value: "Kajiado County, Kenya",         href: undefined },
-                { icon: "bi-telephone-fill", value: "+254 700 000 000",               href: "tel:+254700000000" },
-                { icon: "bi-envelope-fill",  value: "info@osotuafarming.co.ke",       href: "mailto:info@osotuafarming.co.ke" },
-                { icon: "bi-whatsapp",       value: "WhatsApp Us",                    href: "https://wa.me/254700000000" },
-                { icon: "bi-clock-fill",     value: "Mon – Sat: 8:00am – 5:00pm",    href: undefined },
-              ].map((c) => (
-                <div key={c.icon} style={{ display: "flex", gap: "0.875rem", alignItems: "flex-start" }}>
-                  <div style={{
-                    width: "34px",
-                    height: "34px",
-                    flexShrink: 0,
-                    border: "1px solid rgba(196,136,42,0.25)",
-                    background: "rgba(196,136,42,0.08)",
-                    borderRadius: "10px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}>
-                    <i className={`bi ${c.icon}`} style={{ fontSize: "0.85rem", color: "#C4882A" }} />
-                  </div>
-                  {c.href ? (
-                    <a
-                      href={c.href}
-                      target={c.href.startsWith("http") ? "_blank" : undefined}
-                      rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      style={{
-                        color: "#5C4835",
-                        fontSize: "0.88rem",
-                        textDecoration: "none",
-                        lineHeight: 1.6,
-                        transition: "color 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#C4882A" }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#5C4835" }}
-                    >
-                      {c.value}
-                    </a>
-                  ) : (
-                    <span style={{ color: "#5C4835", fontSize: "0.88rem", lineHeight: 1.6 }}>
-                      {c.value}
-                    </span>
-                  )}
-                </div>
-              ))}
+            <div className="space-y-3.5 text-sm text-stone-300">
+              <div className="flex items-start gap-3">
+                <i className="ti ti-map-pin text-amber-400 text-lg shrink-0 mt-0.5" />
+                <span>Kajiado County, Kenya &bull; Pasture Lot 14</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <i className="ti ti-phone text-amber-400 text-lg shrink-0" />
+                <a href="tel:+254700000000" className="text-stone-300 hover:text-amber-300 transition-colors no-underline">
+                  +254 700 000 000
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <i className="ti ti-mail text-amber-400 text-lg shrink-0" />
+                <a href="mailto:info@osotuafarming.co.ke" className="text-stone-300 hover:text-amber-300 transition-colors no-underline">
+                  info@osotuafarming.co.ke
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <i className="ti ti-clock text-amber-400 text-lg shrink-0" />
+                <span>Mon – Sat: 8:00 AM – 5:00 PM EAT</span>
+              </div>
+
+              {/* Fast WhatsApp Button */}
+              <div className="pt-2">
+                <a
+                  href="https://wa.me/254700000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2.5 w-full py-3 px-4 rounded-xl bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/40 font-bold text-xs uppercase tracking-wider transition-all no-underline shadow-lg"
+                >
+                  <i className="ti ti-brand-whatsapp text-base" />
+                  <span>Chat on WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div style={{
-        borderTop: "1px solid rgba(196,136,42,0.15)",
-        background: "rgba(237, 229, 216, 0.6)",
-      }}>
-        <div
-          className="os-container"
-          style={{
-            padding: "1.25rem 1.5rem",
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "0.75rem",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-            <p style={{ color: "#786550", fontSize: "0.78rem" }}>
-              &copy; {year} Osotua Farming Ltd (Reg. No. CPR/2023/10492). All rights reserved.
+      {/* Bottom Bar */}
+      <div
+        className="border-t border-white/10 py-6"
+        style={{ background: "rgba(12, 8, 3, 0.7)" }}
+      >
+        <div className="os-container flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
+            <p className="text-xs text-stone-400 m-0">
+              &copy; {year} Osotua Farming Ltd. All rights reserved.
             </p>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.25rem 0.65rem", borderRadius: "100px", background: "rgba(196,136,42,0.12)", border: "1px solid rgba(196,136,42,0.3)", color: "#8E5E16", fontSize: "0.68rem", fontWeight: 600 }}>
-              <i className="bi bi-shield-lock-fill" />
-              <span>Secured by M-Pesa &amp; Stripe • KDPA 2019 Compliant</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] font-bold">
+              <i className="ti ti-shield-check" />
+              <span>M-Pesa Verified &bull; KDPA 2019 Compliant</span>
             </div>
           </div>
-          <p style={{ color: "#786550", fontSize: "0.72rem" }}>
-            Designed &amp; built by{" "}
-            <a
-              href="https://www.bezalel.website/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#8E5E16", fontWeight: 600, textDecoration: "none", transition: "color 0.2s ease" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#C4882A" }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#8E5E16" }}
-            >
-              Bezalel Technologies LTD
-            </a>
+
+          <p className="text-xs text-stone-400 m-0">
+            Crafted for <span className="text-amber-400 font-semibold">Osotua Pastoral Smart Farm</span>
           </p>
         </div>
       </div>

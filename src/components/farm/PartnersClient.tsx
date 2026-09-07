@@ -1,23 +1,40 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
+import { LOGO } from "@/lib/images"
 
 const BENEFITS = [
-  { icon: "bi-graph-up-arrow", label: "Guaranteed Offtake Prices", desc: "Lock in predictable, competitive prices for your produce with multi-season supply contracts." },
-  { icon: "bi-shop", label: "Direct Market Access", desc: "Sell directly through our Barn Store and institutional delivery network without middleman markups." },
-  { icon: "bi-tree-fill", label: "Free Agronomist Support", desc: "Our field team provides free training, soil testing, and on-site guidance for enrolled farmers." },
-  { icon: "bi-truck", label: "Input Credit Scheme", desc: "Access high-yield seeds, organic fertilizers, and feed on credit against your upcoming harvest." },
+  {
+    icon: "ti-chart-arrows-vertical",
+    label: "Guaranteed Offtake Prices",
+    desc: "Lock in predictable, fair-market prices for your produce with multi-season supply contracts that insulate your farm against market volatility.",
+  },
+  {
+    icon: "ti-building-store",
+    label: "Direct Market Access",
+    desc: "Sell directly into our Barn Store, luxury hospitality clients, and premium retail delivery network without exploitative middleman markups.",
+  },
+  {
+    icon: "ti-plant",
+    label: "Free Agronomist Support",
+    desc: "Our on-ground field agronomists provide regular soil testing, organic pest control guidance, and certified yield enhancement workshops.",
+  },
+  {
+    icon: "ti-truck-delivery",
+    label: "Input Credit Scheme",
+    desc: "Access high-germination certified seed varieties, organic foliar fertilizers, and animal feed on credit against your harvest yield.",
+  },
 ]
 
 const SUPPLY_OPTIONS = [
-  "Vegetables", "Fruits", "Fodder / Animal Feed", "Eggs", "Honey", "Dairy Products", "Other",
-]
-
-const FIELDS = [
-  { name: "fullName", label: "Full Name", type: "text", placeholder: "John Kiplangat" },
-  { name: "email", label: "Email Address", type: "email", placeholder: "john@example.com" },
-  { name: "phone", label: "Phone Number", type: "tel", placeholder: "+254 700 000 000" },
-  { name: "location", label: "Your Location / County", type: "text", placeholder: "Kajiado County" },
+  "Indigenous Vegetables",
+  "Organic Fruits",
+  "High-Protein Fodder",
+  "Free-Range Eggs",
+  "Raw Rangeland Honey",
+  "Pasture Dairy",
+  "Pedigree Livestock Stock",
 ]
 
 export default function PartnersClient() {
@@ -38,7 +55,7 @@ export default function PartnersClient() {
       })
       if (!res.ok) {
         const json = await res.json().catch(() => ({}))
-        throw new Error((json as { error?: string }).error || "Failed to submit application")
+        throw new Error((json as { error?: string }).error || "Failed to submit partner application")
       }
       setSubmitted(true)
     } catch (err) {
@@ -49,105 +66,117 @@ export default function PartnersClient() {
   }
 
   return (
-    <div style={{ background: "#FBF7F0" }}>
-      {/* ── HERO ── */}
-      <div
-        className="bg-mesh-green noise"
-        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
-      >
-        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
-            Outgrower &amp; Producer Scheme
+    <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
+
+      {/* ── HERO BANNER ── */}
+      <section className="bg-mesh-green noise relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
+        <div className="os-container relative z-10">
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-amber-500/10 text-[#8E5E16] border border-amber-500/25 shadow-md">
+            <div className="relative w-5 h-5 rounded-full overflow-hidden ring-1 ring-amber-400 shrink-0 bg-white">
+              <Image src={LOGO} alt="Osotua Seal" fill sizes="20px" className="object-cover" />
+            </div>
+            <span>OUTGROWER &bull; PRODUCER COOPERATIVE SCHEME</span>
           </div>
+
           <h1
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-8"
             style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 400,
-              color: "#1C1208",
-              lineHeight: 0.95,
-              letterSpacing: "-0.02em",
-              marginBottom: "1.5rem",
+              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
             }}
           >
-            Grow with
-            <br />
-            <em style={{ color: "#C4882A", fontStyle: "italic" }}>Osotua</em>
+            Grow with <br />
+            <em className="font-normal italic text-gradient-gold">Osotua</em>
           </h1>
-          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem" }}>
-            Supply fresh vegetables, fodder, eggs, or dairy under our partner farmer outgrower scheme — benefiting from guaranteed offtake contracts, agronomy training, and input credit.
+
+          <p className="text-base sm:text-xl text-[#5C4835] max-w-2xl leading-relaxed font-normal">
+            Supply fresh vegetables, fodder, eggs, honey, or dairy under our partner farmer outgrower scheme — benefiting from guaranteed offtake contracts, agronomy training, and input credit.
           </p>
         </div>
-      </div>
+      </section>
 
-      {/* ── BENEFITS ── */}
-      <section
-        className="bg-mesh-earth noise"
-        style={{ padding: "7rem 0" }}
-      >
-        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div style={{ maxWidth: "560px", marginBottom: "4rem" }}>
-            <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1rem", fontWeight: 700 }}>
-              Partnership Perks
+      {/* ── VISUAL PHOTO FEATURE ── */}
+      <section className="bg-[#FBF7F0] pb-12 relative z-10">
+        <div className="os-container -translate-y-8 sm:-translate-y-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden shadow-xl border border-amber-900/15 group">
+              <Image
+                src="/images/cabbage fields.jpeg"
+                alt="Partner cabbage harvest"
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase tracking-wider">
+                Horticulture Outgrowers
+              </div>
+            </div>
+
+            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden shadow-xl border border-amber-900/15 group">
+              <Image
+                src="/images/maize sprinkled.jpeg"
+                alt="Irrigated fodder crop"
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase tracking-wider">
+                Precision Irrigation Support
+              </div>
+            </div>
+
+            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden shadow-xl border border-amber-900/15 group">
+              <Image
+                src="/images/WhatsApp Image 2026-08-10 at 11.56.45.jpeg"
+                alt="Livestock paddock"
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase tracking-wider">
+                Pastoral Livestock Co-ops
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── BENEFITS SECTION ── */}
+      <section className="bg-mesh-earth noise py-24 sm:py-36">
+        <div className="os-container relative z-10 space-y-16">
+          <div className="max-w-3xl space-y-3">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#8E5E16] bg-amber-500/10 border border-amber-500/20">
+              <span>PARTNERSHIP PERKS</span>
             </div>
             <h2
+              className="text-3xl sm:text-5xl font-normal text-[#1C1208] m-0"
               style={{
-                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                fontSize: "clamp(2.4rem, 4vw, 4rem)",
-                fontWeight: 400,
-                color: "#1C1208",
-                lineHeight: 1.1,
+                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
               }}
             >
-              Why Partner with <em style={{ color: "#C4882A" }}>Osotua</em>
+              Why Partner with <span className="text-gradient-gold font-semibold">Osotua</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {BENEFITS.map((b) => (
               <div
                 key={b.label}
-                style={{
-                  padding: "2.5rem 2rem",
-                  borderRadius: "24px",
-                  background: "#FFFFFF",
-                  border: "1px solid rgba(196, 136, 42, 0.22)",
-                  boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                }}
+                className="card-luxury p-8 sm:p-9 flex flex-col justify-between"
               >
-                <div>
-                  <div
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "14px",
-                      background: "rgba(196,136,42,0.12)",
-                      border: "1px solid rgba(196,136,42,0.25)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#C4882A",
-                      marginBottom: "1.5rem",
-                      fontSize: "1.3rem",
-                    }}
-                  >
-                    <i className={`bi ${b.icon}`} />
+                <div className="space-y-5">
+                  <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-2xl text-[#C4882A]">
+                    <i className={`ti ${b.icon}`} />
                   </div>
                   <h3
-                    style={{
-                      fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                      fontSize: "1.4rem",
-                      fontWeight: 500,
-                      color: "#1C1208",
-                      marginBottom: "0.75rem",
-                    }}
+                    className="text-xl font-bold text-[#1C1208] m-0"
+                    style={{ fontFamily: "var(--font-fraunces), serif" }}
                   >
                     {b.label}
                   </h3>
-                  <p style={{ color: "#5C4835", fontSize: "0.88rem", lineHeight: 1.7 }}>
+                  <p className="text-sm text-[#5C4835] leading-relaxed m-0">
                     {b.desc}
                   </p>
                 </div>
@@ -157,175 +186,219 @@ export default function PartnersClient() {
         </div>
       </section>
 
-      {/* ── APPLICATION FORM ── */}
-      <section style={{ padding: "7rem 0" }}>
+      {/* ── APPLICATION & REQUIREMENTS SECTION ── */}
+      <section className="py-24 sm:py-36 bg-gradient-to-b from-transparent via-[#F5EFE4]/50 to-transparent">
         <div className="os-container">
-          <div className="max-w-2xl mx-auto">
-            <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-              <div className="eyebrow justify-center" style={{ color: "#8E5E16", marginBottom: "0.75rem", fontWeight: 700 }}>
-                Outgrower Registration
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            
+            {/* Left Column: Requirements & Eligibility */}
+            <div className="lg:col-span-5 space-y-8">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#2E6B34] bg-emerald-500/10 border border-emerald-500/20">
+                  <span>OUTGROWER CRITERIA</span>
+                </div>
+                <h2
+                  className="text-3xl sm:text-5xl font-normal text-[#1C1208] leading-tight m-0"
+                  style={{ fontFamily: "var(--font-fraunces), serif" }}
+                >
+                  Joining the Scheme
+                </h2>
+                <p className="text-base text-[#5C4835] leading-relaxed">
+                  We work with dedicated pastoralists and smallholder growers who commit to regenerative land management, ethical animal welfare, and pesticide-free cultivation.
+                </p>
               </div>
-              <h2
-                style={{
-                  fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                  fontSize: "clamp(2.4rem, 4vw, 3.5rem)",
-                  fontWeight: 400,
-                  color: "#1C1208",
-                  lineHeight: 1.1,
-                }}
-              >
-                Apply to Become a <em style={{ color: "#C4882A" }}>Partner Producer</em>
-              </h2>
-              <p style={{ color: "#5C4835", fontSize: "0.95rem", marginTop: "1rem", lineHeight: 1.7 }}>
-                Fill out the application below. Our agricultural partnership team evaluates new farm partners within 3 business days.
-              </p>
+
+              <div className="space-y-4">
+                {[
+                  { title: "Minimum Land or Herd Size", desc: "At least 1 acre for horticulture or 5+ head of cattle / 15+ small stock." },
+                  { title: "Access to Reliable Water", desc: "Borehole, seasonal river, rain harvesting reservoir, or piped irrigation." },
+                  { title: "Organic & Regenerative Commitment", desc: "Zero harmful organophosphate pesticides and adherence to rotational grazing." },
+                ].map((item, idx) => (
+                  <div key={item.title} className="card-luxury p-6 flex gap-4 items-start bg-white">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-[#2E6B34] flex items-center justify-center font-bold text-xs shrink-0 font-mono">
+                      0{idx + 1}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-[#1C1208]">{item.title}</h4>
+                      <p className="text-xs text-[#5C4835] mt-1 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {submitted ? (
-              <div
-                style={{
-                  background: "#FFFFFF",
-                  border: "1px solid rgba(46,125,50,0.3)",
-                  borderRadius: "28px",
-                  padding: "4rem 2rem",
-                  textAlign: "center",
-                  boxShadow: "0 16px 48px rgba(46,125,50,0.08)",
-                }}
-              >
-                <div
-                  style={{
-                    width: "64px",
-                    height: "64px",
-                    borderRadius: "50%",
-                    background: "rgba(46,125,50,0.15)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "0 auto 1.5rem",
-                    color: "#2E7D32",
-                    fontSize: "2rem",
-                  }}
-                >
-                  <i className="bi bi-check-circle-fill" />
-                </div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "2.2rem",
-                    fontWeight: 500,
-                    color: "#1C1208",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  Application Submitted
-                </h3>
-                <p style={{ color: "#5C4835", fontSize: "0.9rem", maxWidth: "420px", margin: "0 auto 2rem" }}>
-                  We have received your farm details. An Osotua field agronomist will reach out via phone/email to schedule a site inspection.
-                </p>
-                <button onClick={() => setSubmitted(false)} className="btn-primary">
-                  Submit Another Farm Application
-                </button>
-              </div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                style={{
-                  background: "#FFFFFF",
-                  border: "1px solid rgba(196, 136, 42, 0.25)",
-                  borderRadius: "28px",
-                  padding: "3rem",
-                  boxShadow: "0 16px 48px rgba(196,136,42,0.08)",
-                }}
-              >
-                {error && (
-                  <div
-                    style={{
-                      background: "#FEF2F2",
-                      border: "1px solid #FCA5A5",
-                      borderRadius: "12px",
-                      padding: "1rem",
-                      color: "#991B1B",
-                      fontSize: "0.85rem",
-                      marginBottom: "2rem",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                    }}
-                  >
-                    <i className="bi bi-exclamation-triangle-fill text-[#DC2626]" />
-                    {error}
-                  </div>
-                )}
-
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
-                  {FIELDS.map((f) => (
-                    <div key={f.name} style={{ gridColumn: f.name === "location" ? "1 / -1" : "auto" }}>
-                      <label
-                        style={{
-                          display: "block",
-                          fontFamily: "var(--font-space-grotesk), monospace",
-                          fontSize: "0.62rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.14em",
-                          textTransform: "uppercase",
-                          color: "#8E5E16",
-                          marginBottom: "0.5rem",
-                        }}
+            {/* Right Column: Application Form */}
+            <div className="lg:col-span-7">
+              <div className="card-luxury p-8 sm:p-12 shadow-2xl">
+                {submitted ? (
+                  <div className="text-center py-12 space-y-5">
+                    <div className="w-20 h-20 rounded-full bg-emerald-500/10 text-[#2E6B34] flex items-center justify-center mx-auto text-4xl border border-emerald-500/30 shadow-lg">
+                      <i className="ti ti-circle-check" />
+                    </div>
+                    <h3
+                      className="text-3xl font-light text-[#1C1208]"
+                      style={{ fontFamily: "var(--font-fraunces), serif" }}
+                    >
+                      Application Submitted
+                    </h3>
+                    <p className="text-sm text-[#5C4835] max-w-md mx-auto leading-relaxed">
+                      Thank you for applying to join the Osotua Outgrower Network. An agronomist from our Kajiado hub will review your farm profile and contact you within 48 hours for a field assessment.
+                    </p>
+                    <div className="pt-4">
+                      <button
+                        onClick={() => setSubmitted(false)}
+                        className="btn-primary py-3 px-8 text-xs tracking-wider"
                       >
-                        {f.label} *
+                        Submit Another Application
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E5E16] bg-amber-500/10 border border-amber-500/20 mb-2">
+                        <span>FARMER APPLICATION</span>
+                      </div>
+                      <h3
+                        className="text-2xl sm:text-3xl font-light text-[#1C1208]"
+                        style={{ fontFamily: "var(--font-fraunces), serif" }}
+                      >
+                        Register as a Producer
+                      </h3>
+                    </div>
+
+                    {error && (
+                      <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                        <i className="ti ti-alert-triangle text-base" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          name="fullName"
+                          required
+                          placeholder="e.g. John Kiplangat"
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          required
+                          placeholder="john@example.com"
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          Phone Number *
+                        </label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          required
+                          placeholder="+254 700 000 000"
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          County / Sub-County *
+                        </label>
+                        <input
+                          type="text"
+                          name="location"
+                          required
+                          placeholder="e.g. Kajiado East"
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          Primary Produce / Supply *
+                        </label>
+                        <select
+                          name="produceType"
+                          required
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                        >
+                          {SUPPLY_OPTIONS.map((opt) => (
+                            <option key={opt} value={opt}>
+                              {opt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                          Acreage / Farm Size
+                        </label>
+                        <input
+                          type="text"
+                          name="farmSize"
+                          placeholder="e.g. 5 Acres / 20 Cows"
+                          className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#8E5E16] font-bold mb-1.5">
+                        Additional Farm Details
                       </label>
-                      <input
-                        type={f.type}
-                        name={f.name}
-                        required
-                        placeholder={f.placeholder}
-                        className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
+                      <textarea
+                        name="notes"
+                        rows={3}
+                        placeholder="Tell us about current harvests, irrigation setup, or previous co-op experience..."
+                        className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl p-3.5 text-sm text-[#1C1208] outline-none focus:border-[#C4882A]"
                       />
                     </div>
-                  ))}
-                </div>
 
-                <div style={{ marginBottom: "2.5rem" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      fontFamily: "var(--font-space-grotesk), monospace",
-                      fontSize: "0.62rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: "#8E5E16",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    Primary Produce / Supply Category *
-                  </label>
-                  <select
-                    name="supplyType"
-                    required
-                    className="w-full bg-[#FAF6EE] border border-[#C4882A]/25 rounded-xl p-3 text-xs text-[#1C1208] outline-none focus:border-[#C4882A]"
-                  >
-                    {SUPPLY_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full btn-primary py-4 text-xs tracking-widest justify-center shadow-xl"
+                    >
+                      {loading ? (
+                        <>
+                          <i className="ti ti-loader animate-spin" />
+                          <span>Submitting Application...</span>
+                        </>
+                      ) : (
+                        <>
+                          <i className="ti ti-send" />
+                          <span>SUBMIT OUTGROWER APPLICATION</span>
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn-primary w-full justify-center py-3.5 shadow-sm text-sm"
-                >
-                  {loading ? "Submitting Application..." : "Submit Partner Application"}
-                  <i className="bi bi-arrow-right" />
-                </button>
-              </form>
-            )}
           </div>
         </div>
       </section>
+
     </div>
   )
 }

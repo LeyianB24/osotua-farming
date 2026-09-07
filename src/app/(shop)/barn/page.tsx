@@ -4,7 +4,10 @@ import BarnClient from "@/components/farm/BarnClient"
 import Slideshow from "@/components/shared/Slideshow"
 import { RANCH_PANO, PRODUCE_SLIDESHOW } from "@/lib/images"
 
-export const metadata = { title: "The Barn Store — Osotua Farming" }
+export const metadata = {
+  title: "The Barn Store — Osotua Farming",
+  description: "Order fresh organic vegetables, pasture-raised beef, raw dairy, and artisanal farm honey direct from Osotua Farming in Kajiado, Kenya.",
+}
 
 async function getProducts() {
   return prisma.product.findMany({
@@ -21,162 +24,103 @@ export default async function BarnPage() {
   const [products, categories] = await Promise.all([getProducts(), getCategories()])
 
   return (
-    <div style={{ background: "#FBF7F0" }}>
+    <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
 
       {/* ── HERO BANNER ── */}
-      <div
-        className="bg-mesh-earth noise"
-        style={{ paddingTop: "10rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}
-      >
+      <section className="bg-mesh-earth noise relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
         {/* Pastoral background overlay */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <div className="absolute inset-0 z-0">
           <Image
             src={RANCH_PANO}
             alt="The Barn Store at Osotua Farming"
             fill
             priority
             sizes="100vw"
-            className="object-cover"
-            style={{ opacity: 0.18, scale: "1.05" }}
+            className="object-cover opacity-20 scale-105"
           />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(251,247,240,0.95) 0%, rgba(251,247,240,0.8) 60%, rgba(251,247,240,0.5) 100%)" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #FBF7F0 0%, transparent 60%)" }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FBF7F0]/95 via-[#FBF7F0]/85 to-[#FBF7F0]/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FBF7F0] via-transparent to-transparent" />
         </div>
 
-        <div className="os-container" style={{ position: "relative", zIndex: 1 }}>
-          <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.5rem", fontWeight: 700 }}>
-            Direct Farm Store &amp; Kitchen Supply
+        <div className="os-container relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-amber-500/10 text-[#8E5E16] border border-amber-500/25">
+            <span>DIRECT FARM STORE &bull; KITCHEN SUPPLY</span>
           </div>
+
           <h1
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-8"
             style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(3.2rem, 7vw, 7rem)",
-              fontWeight: 400,
-              color: "#1C1208",
-              lineHeight: 0.95,
-              letterSpacing: "-0.02em",
-              marginBottom: "1.5rem",
+              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
             }}
           >
-            Everything fresh,
-            <br />
-            <em style={{ color: "#C4882A", fontStyle: "italic" }}>everything ours</em>
+            Everything fresh, <br />
+            <em className="font-normal italic text-gradient-gold">everything ours</em>
           </h1>
-          <p style={{ color: "#5C4835", maxWidth: "540px", lineHeight: 1.8, fontSize: "1.05rem", marginBottom: "2.5rem" }}>
+
+          <p className="text-base sm:text-xl text-[#5C4835] max-w-2xl leading-relaxed mb-10 font-normal">
             Walk into our Barn or order directly online. Every product carries the Osotua promise — raised here in Kajiado, handled with artisanal care, and delivered fresh to your doorstep.
           </p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2rem", paddingTop: "1.75rem", borderTop: "1px solid rgba(196,136,42,0.2)" }}>
+          <div className="flex flex-wrap items-center gap-8 pt-8 border-t border-amber-900/15">
             {[
-              { icon: "bi-lightning-fill", label: "Daily Harvest Active", pulse: true },
-              { icon: "bi-leaf-fill", label: "Pesticide-Free Produce" },
-              { icon: "bi-arrow-repeat", label: "Traceable Farm-to-Fork" },
+              { icon: "ti-bolt", label: "Daily Dawn Harvest Active", pulse: true },
+              { icon: "ti-leaf", label: "Pesticide-Free Produce" },
+              { icon: "ti-truck-delivery", label: "Cold-Chain Same-Day Dispatch" },
             ].map((item) => (
-              <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                <div style={{ position: "relative" }}>
-                  <i className={`bi ${item.icon}`} style={{ color: "#C4882A", fontSize: "0.95rem" }} />
+              <div key={item.label} className="flex items-center gap-2.5">
+                <div className="relative flex items-center justify-center">
+                  <i className={`ti ${item.icon} text-[#C4882A] text-lg`} />
                   {item.pulse && (
-                    <span style={{
-                      position: "absolute", top: "-1px", right: "-3px",
-                      width: "6px", height: "6px", borderRadius: "50%",
-                      background: "#2E7D32", display: "block",
-                      animation: "whatsappRing 2s ease-out infinite",
-                    }} />
+                    <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
                   )}
                 </div>
-                <span
-                  style={{
-                    fontFamily: "var(--font-space-grotesk), monospace",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.16em",
-                    textTransform: "uppercase",
-                    color: "#8E5E16",
-                  }}
-                >
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#8E5E16]">
                   {item.label}
                 </span>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ── FRESHNESS FEATURE BAR ── */}
-      <div style={{ background: "#FBF7F0", paddingBottom: "2rem", position: "relative", zIndex: 10 }}>
-        <div className="os-container" style={{ transform: "translateY(-2rem)" }}>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <section className="bg-[#FBF7F0] pb-12 relative z-10">
+        <div className="os-container -translate-y-8 sm:-translate-y-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
             {/* Produce slideshow */}
-            <div className="lg:col-span-2" style={{ borderRadius: "24px", overflow: "hidden", border: "1px solid rgba(196, 136, 42, 0.25)", boxShadow: "0 20px 60px rgba(196,136,42,0.12)" }}>
-              <Slideshow slides={PRODUCE_SLIDESHOW} heightClass="h-72 sm:h-80" interval={3200} />
+            <div className="lg:col-span-8 rounded-3xl overflow-hidden border border-amber-900/15 shadow-2xl">
+              <Slideshow slides={PRODUCE_SLIDESHOW} heightClass="h-72 sm:h-96" interval={3200} />
             </div>
 
             {/* Feature card */}
-            <div
-              style={{
-                padding: "2.25rem",
-                borderRadius: "24px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                background: "#FFFFFF",
-                border: "1px solid rgba(196, 136, 42, 0.25)",
-                boxShadow: "0 12px 36px rgba(196, 136, 42, 0.08)",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <div style={{ position: "absolute", top: "-3rem", right: "-3rem", width: "180px", height: "180px", borderRadius: "50%", background: "radial-gradient(circle, rgba(196,136,42,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
-
-              <div>
-                <div className="eyebrow" style={{ color: "#8E5E16", marginBottom: "1.25rem", fontWeight: 700 }}>
-                  Fresh From The Ranch
+            <div className="lg:col-span-4 card-luxury p-8 sm:p-10 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E5E16] bg-amber-500/10 border border-amber-500/20">
+                  <span>FRESH FROM THE RANCH</span>
                 </div>
                 <h2
-                  style={{
-                    fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "2rem",
-                    fontWeight: 400,
-                    color: "#1C1208",
-                    lineHeight: 1.2,
-                    marginBottom: "1rem",
-                  }}
+                  className="text-2xl sm:text-3xl font-light text-[#1C1208] leading-tight"
+                  style={{ fontFamily: "var(--font-fraunces), serif" }}
                 >
-                  Garden, orchard &amp; pasture
+                  Garden, Orchard &amp; Pasture
                 </h2>
-                <p style={{ color: "#5C4835", fontSize: "0.9rem", lineHeight: 1.75 }}>
+                <p className="text-sm text-[#5C4835] leading-relaxed">
                   Every Barn item originates right here — pesticide-free leafy greens, vine-ripened crops, free-range eggs, and dry-aged grass-fed beef raised on the Osotua rangelands.
                 </p>
               </div>
 
-              <div
-                style={{
-                  marginTop: "2rem",
-                  paddingTop: "1.25rem",
-                  borderTop: "1px solid rgba(196, 136, 42, 0.15)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <span style={{ fontFamily: "var(--font-space-grotesk), monospace", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#8E5E16" }}>
-                  Next Delivery
+              <div className="pt-6 mt-6 border-t border-stone-100 flex items-center justify-between">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#8E5E16]">
+                  Next Nairobi Dispatch
                 </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                    fontSize: "1.3rem",
-                    fontWeight: 600,
-                    color: "#C4882A",
-                  }}
-                >
+                <span className="font-serif text-lg font-bold text-[#C4882A]">
                   Same-Day Express
                 </span>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ── BARN CATALOG ── */}
       <BarnClient initialProducts={products} categories={categories} />

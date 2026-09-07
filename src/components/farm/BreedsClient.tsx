@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BreedCard from "./BreedCard";
+import BreedGeneticsModal, { BreedModalData } from "./BreedGeneticsModal";
 
 interface BreedItem {
   id: string;
@@ -21,290 +22,188 @@ interface Props {
 }
 
 const speciesIcons: Record<string, string> = {
-  Cattle: "bi-bullseye",
-  Goats:  "bi-scissors",
-  Sheep:  "bi-flower1",
+  Cattle: "ti-circle-dot",
+  Goats: "ti-circle-dot",
+  Sheep: "ti-circle-dot",
 };
 
 export default function BreedsClient({ initialBreeds, speciesList }: Props) {
   const [selectedSpecies, setSelectedSpecies] = useState<string>("all");
-  const [searchQuery, setSearchQuery]         = useState<string>("");
-  const [sortBy, setSortBy]                   = useState<"name" | "price-asc" | "price-desc" | "stock">("name");
+  const [searchQuery, setSearchQuery] = useState<string>(" ");
+  const [sortBy, setSortBy] = useState<"name" | "price-asc" | "price-desc" | "stock">("name");
+  const [inspectingBreed, setInspectingBreed] = useState<BreedModalData | null>(null);
+
+
+  const queryTrimmed = searchQuery.trim().toLowerCase();
 
   const filtered = initialBreeds.filter((b) => {
     const matchSp = selectedSpecies === "all" || b.species.name.toLowerCase() === selectedSpecies.toLowerCase();
-    const matchQ  = b.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    b.purpose.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    b.origin.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchQ =
+      queryTrimmed === "" ||
+      b.name.toLowerCase().includes(queryTrimmed) ||
+      b.purpose.toLowerCase().includes(queryTrimmed) ||
+      b.origin.toLowerCase().includes(queryTrimmed);
     return matchSp && matchQ;
   });
 
   const sorted = [...filtered].sort((a, b) => {
-    if (sortBy === "price-asc")  return a.pricePerHead - b.pricePerHead;
+    if (sortBy === "price-asc") return a.pricePerHead - b.pricePerHead;
     if (sortBy === "price-desc") return b.pricePerHead - a.pricePerHead;
-    if (sortBy === "stock")      return b.inStock - a.inStock;
+    if (sortBy === "stock") return b.inStock - a.inStock;
     return a.name.localeCompare(b.name);
   });
 
-  const hasFilters = selectedSpecies !== "all" || searchQuery !== "";
+  const hasFilters = selectedSpecies !== "all" || queryTrimmed !== "";
 
   return (
-    <div
-      style={{ background: "#FBF7F0", padding: "3rem 0 6rem", position: "relative" }}
-    >
-      <div className="os-container relative" style={{ zIndex: 1 }}>
+    <section className="bg-[#FBF7F0] pb-28 pt-6 relative">
+      <div className="os-container relative z-10 space-y-12">
 
         {/* ── CONTROL BAR ── */}
-        <div
-          style={{
-            padding: "1.5rem",
-            marginBottom: "2.5rem",
-            borderRadius: "24px",
-            background: "#FFFFFF",
-            border: "1px solid rgba(196, 136, 42, 0.22)",
-            boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
-          }}
-        >
+        <div className="card-luxury p-6 sm:p-8 space-y-6">
           {/* Search + sort row */}
-          <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
-            <div style={{ position: "relative", flex: 1, minWidth: "200px" }}>
-              <i
-                className="bi bi-search"
-                style={{
-                  position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)",
-                  color: "#8E5E16", fontSize: "0.9rem", pointerEvents: "none",
-                }}
-              />
+          <div className="flex flex-col sm:flex-row gap-4 items-stretch">
+            <div className="relative flex-1">
+              <i className="ti ti-search absolute left-4 top-1/2 -translate-y-1/2 text-[#8E5E16] text-lg pointer-events-none" />
               <input
                 type="text"
-                value={searchQuery}
+                value={searchQuery === " " ? "" : searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by breed, purpose, or origin..."
-                style={{
-                  width: "100%",
-                  background: "#FAF6EE",
-                  border: "1px solid rgba(196, 136, 42, 0.25)",
-                  borderRadius: "12px",
-                  padding: "0.75rem 1rem 0.75rem 2.75rem",
-                  fontFamily: "var(--font-dm-sans, 'DM Sans'), sans-serif",
-                  fontSize: "0.9rem",
-                  color: "#1C1208",
-                  outline: "none",
-                  transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-                  paddingRight: searchQuery ? "2.5rem" : "1rem",
-                }}
-                onFocus={(e) => {
-                  e.currentTarget.style.borderColor = "#C4882A";
-                  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(196,136,42,0.15)";
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(196, 136, 42, 0.25)";
-                  e.currentTarget.style.boxShadow = "";
-                }}
+                className="w-full bg-[#FAF6EE] border border-amber-900/15 rounded-2xl py-3.5 pl-12 pr-10 text-sm text-[#1C1208] outline-none focus:border-[#C4882A] focus:ring-2 focus:ring-[#C4882A]/20 transition-all placeholder:text-stone-400"
               />
-              {searchQuery && (
+              {searchQuery.trim() !== "" && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  style={{
-                    position: "absolute", right: "0.875rem", top: "50%", transform: "translateY(-50%)",
-                    background: "none", border: "none", cursor: "pointer",
-                    color: "#786550", fontSize: "0.85rem",
-                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-1"
                 >
-                  <i className="bi bi-x-lg" />
+                  <i className="ti ti-x text-sm" />
                 </button>
               )}
             </div>
 
-            <div style={{ position: "relative", flexShrink: 0 }}>
-              <i
-                className="bi bi-sort-down"
-                style={{
-                  position: "absolute", left: "0.875rem", top: "50%", transform: "translateY(-50%)",
-                  color: "#C4882A", fontSize: "0.9rem", pointerEvents: "none",
-                }}
-              />
+            <div className="relative shrink-0 sm:w-64">
+              <i className="ti ti-arrows-sort absolute left-4 top-1/2 -translate-y-1/2 text-[#C4882A] text-lg pointer-events-none" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-                style={{
-                  paddingLeft: "2.5rem",
-                  paddingRight: "2.25rem",
-                  paddingTop: "0.75rem",
-                  paddingBottom: "0.75rem",
-                  appearance: "none",
-                  cursor: "pointer",
-                  minWidth: "180px",
-                  background: "#FAF6EE",
-                  border: "1px solid rgba(196, 136, 42, 0.25)",
-                  borderRadius: "12px",
-                  fontFamily: "var(--font-dm-sans, 'DM Sans'), sans-serif",
-                  fontSize: "0.85rem",
-                  color: "#1C1208",
-                  outline: "none",
-                }}
+                className="w-full appearance-none bg-[#FAF6EE] border border-amber-900/15 rounded-2xl py-3.5 pl-12 pr-10 text-xs font-mono font-bold uppercase tracking-wider text-[#1C1208] outline-none focus:border-[#C4882A] cursor-pointer transition-all"
               >
                 <option value="name">Sort by Name</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="stock">Most Available</option>
               </select>
-              <i
-                className="bi bi-chevron-down"
-                style={{
-                  position: "absolute", right: "0.875rem", top: "50%", transform: "translateY(-50%)",
-                  color: "#8E5E16", fontSize: "0.75rem", pointerEvents: "none",
-                }}
-              />
+              <i className="ti ti-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#8E5E16] text-xs pointer-events-none" />
             </div>
           </div>
 
           {/* Species filter pills */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+          <div className="flex flex-wrap gap-2.5 items-center pt-2 border-t border-stone-100">
             <button
               onClick={() => setSelectedSpecies("all")}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                padding: "0.45rem 1.1rem",
-                background: selectedSpecies === "all" ? "linear-gradient(135deg, #C4882A, #D99A30)" : "#FAF6EE",
-                color: selectedSpecies === "all" ? "#FFFFFF" : "#5C4835",
-                border: selectedSpecies === "all" ? "1px solid #C4882A" : "1px solid rgba(196, 136, 42, 0.2)",
-                borderRadius: "100px",
-                fontSize: "0.65rem",
-                fontFamily: "var(--font-space-grotesk), monospace",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-                boxShadow: selectedSpecies === "all" ? "0 4px 12px rgba(196,136,42,0.25)" : "none",
-              }}
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 ${
+                selectedSpecies === "all"
+                  ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white shadow-lg shadow-amber-900/20"
+                  : "bg-[#FAF6EE] text-[#5C4835] border border-amber-900/15 hover:border-amber-900/30"
+              }`}
             >
-              <i className="bi bi-collection" style={{ fontSize: "0.8rem" }} />
-              All Livestock
-              <span style={{ opacity: selectedSpecies === "all" ? 0.9 : 0.6, fontWeight: 400 }}>({initialBreeds.length})</span>
+              <i className="ti ti-layout-grid text-sm" />
+              <span>All Livestock</span>
+              <span className="opacity-70 font-normal">({initialBreeds.length})</span>
             </button>
 
             {speciesList.map((sp) => {
               const count = initialBreeds.filter((b) => b.species.name === sp.name).length;
               const active = selectedSpecies.toLowerCase() === sp.name.toLowerCase();
-              const icon = speciesIcons[sp.name] || "bi-geo-alt";
+              const icon = speciesIcons[sp.name] || "ti-circle";
               return (
                 <button
                   key={sp.id}
                   onClick={() => setSelectedSpecies(sp.name)}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.4rem",
-                    padding: "0.45rem 1.1rem",
-                    background: active ? "linear-gradient(135deg, #C4882A, #D99A30)" : "#FAF6EE",
-                    color: active ? "#FFFFFF" : "#5C4835",
-                    border: active ? "1px solid #C4882A" : "1px solid rgba(196, 136, 42, 0.2)",
-                    borderRadius: "100px",
-                    fontSize: "0.65rem",
-                    fontFamily: "var(--font-space-grotesk), monospace",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    boxShadow: active ? "0 4px 12px rgba(196,136,42,0.25)" : "none",
-                  }}
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all duration-300 ${
+                    active
+                      ? "bg-gradient-to-r from-[#C4882A] to-[#D99A30] text-white shadow-lg shadow-amber-900/20"
+                      : "bg-[#FAF6EE] text-[#5C4835] border border-amber-900/15 hover:border-amber-900/30"
+                  }`}
                 >
-                  <i className={`bi ${icon}`} style={{ fontSize: "0.8rem" }} />
-                  {sp.name}
-                  <span style={{ opacity: active ? 0.9 : 0.6, fontWeight: 400 }}>({count})</span>
+                  <i className={`ti ${icon} text-sm`} />
+                  <span>{sp.name}</span>
+                  <span className="opacity-70 font-normal">({count})</span>
                 </button>
               );
             })}
 
             {hasFilters && (
               <button
-                onClick={() => { setSelectedSpecies("all"); setSearchQuery(""); }}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  padding: "0.45rem 1rem",
-                  background: "rgba(196,67,30,0.1)",
-                  color: "#C2410C",
-                  border: "1px solid rgba(196,67,30,0.3)",
-                  borderRadius: "100px",
-                  fontSize: "0.62rem",
-                  fontFamily: "var(--font-space-grotesk), monospace",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
+                onClick={() => {
+                  setSelectedSpecies("all");
+                  setSearchQuery("");
                 }}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 transition-colors ml-auto"
               >
-                <i className="bi bi-x-lg" style={{ fontSize: "0.7rem" }} />
-                Clear Filters
+                <i className="ti ti-x text-xs" />
+                <span>Clear Filters</span>
               </button>
             )}
           </div>
 
-          {/* Results count */}
-          <p style={{ color: "#786550", fontSize: "0.8rem", marginTop: "1rem", fontFamily: "var(--font-space-grotesk), monospace" }}>
-            Showing{" "}
-            <strong style={{ color: "#C4882A", fontWeight: 700 }}>{sorted.length}</strong>
-            {" "}of {initialBreeds.length} breeds
-            {selectedSpecies !== "all" && (
-              <span> · <span style={{ color: "#8E5E16", fontWeight: 700 }}>{selectedSpecies}</span></span>
-            )}
-          </p>
+          {/* Results count text */}
+          <div className="flex items-center justify-between text-xs text-[#786550] font-mono pt-1">
+            <span>
+              Showing <strong className="text-[#C4882A] font-bold">{sorted.length}</strong> of {initialBreeds.length} breeds
+              {selectedSpecies !== "all" && <span> &bull; <strong className="text-[#8E5E16]">{selectedSpecies}</strong></span>}
+            </span>
+          </div>
         </div>
 
-        {/* ── BREED GRID ── */}
+        {/* ── BREED GRID (Spacious 3-column) ── */}
         {sorted.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
             {sorted.map((breed) => (
-              <BreedCard key={breed.id} breed={breed} />
+              <BreedCard
+                key={breed.id}
+                breed={breed}
+                onInspectGenetics={(b) => setInspectingBreed(b)}
+              />
             ))}
           </div>
         ) : (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "5rem 2rem",
-              borderRadius: "24px",
-              background: "#FFFFFF",
-              border: "1px solid rgba(196, 136, 42, 0.22)",
-              boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
-            }}
-          >
-            <i
-              className="bi bi-search"
-              style={{ fontSize: "3rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1.25rem" }}
-            />
+          <div className="card-luxury text-center py-20 px-8 space-y-4 max-w-lg mx-auto">
+            <div className="w-16 h-16 rounded-full bg-amber-500/10 text-[#C4882A] flex items-center justify-center mx-auto text-2xl">
+              <i className="ti ti-search" />
+            </div>
             <h3
-              style={{
-                fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-                fontSize: "2rem",
-                fontWeight: 400,
-                color: "#1C1208",
-                marginBottom: "0.75rem",
-              }}
+              className="text-3xl font-light text-[#1C1208]"
+              style={{ fontFamily: "var(--font-fraunces), serif" }}
             >
-              No breeds found
+              No Breeds Found
             </h3>
-            <p style={{ color: "#5C4835", fontSize: "0.9rem", marginBottom: "2rem" }}>
-              Try a different search term or species filter.
+            <p className="text-sm text-[#5C4835]">
+              Try adjusting your search criteria or species filter.
             </p>
-            <button
-              onClick={() => { setSelectedSpecies("all"); setSearchQuery(""); }}
-              className="btn-primary"
-            >
-              <i className="bi bi-arrow-counterclockwise" />
-              Reset Filters
-            </button>
+            <div className="pt-2">
+              <button
+                onClick={() => {
+                  setSelectedSpecies("all");
+                  setSearchQuery("");
+                }}
+                className="btn-primary py-3 px-6 text-xs tracking-wider"
+              >
+                <i className="ti ti-refresh" />
+                <span>Reset Filters</span>
+              </button>
+            </div>
           </div>
         )}
       </div>
-    </div>
+
+      {/* Genetics Modal */}
+      <BreedGeneticsModal
+        breed={inspectingBreed}
+        onClose={() => setInspectingBreed(null)}
+      />
+    </section>
   );
 }
+

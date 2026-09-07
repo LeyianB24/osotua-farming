@@ -2,7 +2,7 @@
 // Breeds/products use descriptive, named photos; anonymous ranch
 // shots are reserved for slideshows and background imagery.
 
-export const LOGO = "/logos/Rooted in Tradition, Growing with Nature (1).png"
+export const LOGO = "/logo.png"
 
 const img = (p: string) => `/images/${p}`
 

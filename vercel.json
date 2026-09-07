@@ -1,0 +1,13 @@
+{
+  "framework": "nextjs",
+  "regions": ["fra1"],
+  "functions": {
+    "src/app/api/**": { "maxDuration": 30 }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/subscriptions",
+      "schedule": "0 8 * * 1"
+    }
+  ]
+}

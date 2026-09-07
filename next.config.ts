@@ -11,14 +11,6 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path((?!auth|v1).*)",
-        destination: "/api/v1/:path*",
-      },
-    ];
-  },
   async headers() {
     return [
       {
@@ -35,7 +27,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://res.cloudinary.com https://*.stripe.com; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://api.stripe.com; frame-src 'self' https://js.stripe.com;",
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://res.cloudinary.com https://*.stripe.com; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://api.stripe.com https://sandbox.safaricom.co.ke https://api.safaricom.co.ke; frame-src 'self' https://js.stripe.com;",
           },
         ],
       },
