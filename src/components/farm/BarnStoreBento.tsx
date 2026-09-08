@@ -68,18 +68,15 @@ const pantryProducts = [
 
 export default function BarnStoreBento() {
   return (
-    <section className="py-20 md:py-24" style={{ backgroundColor: "#F5F0E8" }}>
+    <section className="py-24 lg:py-32" style={{ backgroundColor: "#F5F0E8" }}>
       <div className="os-container">
         {/* Section Header Row */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 lg:mb-16">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <span
-                className="text-[11px] font-bold uppercase tracking-[0.2em]"
-                style={{
-                  color: "#C99A2E",
-                  fontFamily: "var(--font-source-sans), sans-serif",
-                }}
+                className="text-[11px] font-mono font-bold uppercase tracking-[0.2em]"
+                style={{ color: "#C99A2E" }}
               >
                 KAJIADO CO-OP · DIRECT FARM
               </span>
@@ -87,34 +84,28 @@ export default function BarnStoreBento() {
             </div>
 
             <h2
-              className="text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.12] text-[#1C1208] m-0"
+              className="text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.08] text-[#1C1208] m-0"
               style={{
-                fontFamily: "var(--font-playfair), Georgia, serif",
+                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
                 fontWeight: 700,
               }}
             >
               The Farm Barn <br />
-              &amp; Harvest Pantry
+              <span className="text-[#C99A2E]">&amp; Harvest Pantry</span>
             </h2>
           </div>
 
           <Link
             href="/barn"
-            className="btn-outline shrink-0 self-start sm:self-end"
+            className="btn-outline shrink-0 self-start sm:self-end rounded-[0px]"
             style={{
-              borderRadius: "2px",
-              padding: "0.8rem 2rem",
-              fontSize: "0.78rem",
+              padding: "0.85rem 2rem",
+              fontSize: "0.75rem",
               letterSpacing: "0.14em",
               fontWeight: 700,
               textTransform: "uppercase",
               border: "1px solid #1C1208",
               color: "#1C1208",
-              textDecoration: "none",
-              transition: "all 0.2s ease",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
             VIEW ALL PRODUCTS

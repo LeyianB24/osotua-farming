@@ -14,24 +14,22 @@ export default function HeroMaster() {
     <div className="relative w-full overflow-hidden bg-[#1C1208]">
       {/* ── HERO BANNER WITH FULL-BLEED PHOTO & SCRIM ── */}
       <section className="relative min-h-[85vh] lg:min-h-[90vh] w-full flex flex-col justify-end pt-32 pb-16 lg:pb-24">
-        {/* Photographic Savanna Background */}
-        <div className="absolute inset-0 z-0">
+        {/* Photographic Savanna Background: Mobile full-bleed, Desktop framed unzoomed */}
+        <div className="absolute inset-0 lg:left-auto lg:right-0 lg:w-[56%] z-0">
           <Image
             src="/images/brahman cows.jpg"
             alt="Osotua pastoral Brahman cattle herd in Kajiado"
             fill
             priority
-          <Image
-            src="/images/brahman cows.jpg"
-            alt="Osotua pastoral Brahman cattle herd in Kajiado"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-right"
+            sizes="(max-width: 1024px) 100vw, 56vw"
+            className="object-cover object-center"
           />
-          {/* Subtle gradient scrim: protects text readability on the left without obscuring 4K Brahman cows */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1208] via-[#1C1208]/60 md:via-[#1C1208]/20 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-black/20" />
+          {/* Desktop Left Edge Feather: blends smoothly into dark soil */}
+          <div className="hidden lg:block absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-[#1C1208] to-transparent pointer-events-none" />
+          {/* Mobile Overlay: ensure text readability on phones with unblurred photo */}
+          <div className="lg:hidden absolute inset-0 bg-gradient-to-t from-[#1C1208] via-[#1C1208]/80 to-[#1C1208]/40 pointer-events-none" />
+          {/* Bottom vignette */}
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#1C1208] to-transparent pointer-events-none" />
         </div>
 
         {/* Hero Content */}

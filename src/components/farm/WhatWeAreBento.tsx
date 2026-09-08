@@ -49,17 +49,14 @@ const featuredBreeds: BreedItem[] = [
 
 export default function WhatWeAreBento() {
   return (
-    <section className="py-20 md:py-24" style={{ backgroundColor: "#F5F0E8" }}>
+    <section className="py-24 lg:py-32" style={{ backgroundColor: "#F5F0E8" }}>
       <div className="os-container">
         {/* Section Header */}
-        <div className="mb-14">
+        <div className="mb-14 lg:mb-16">
           <div className="flex items-center gap-3 mb-4">
             <span
-              className="text-[11px] font-bold uppercase tracking-[0.2em]"
-              style={{
-                color: "#C99A2E",
-                fontFamily: "var(--font-source-sans), sans-serif",
-              }}
+              className="text-[11px] font-mono font-bold uppercase tracking-[0.2em]"
+              style={{ color: "#C99A2E" }}
             >
               CERTIFIED GENETICS · KAJIADO STUD BOOK
             </span>
@@ -67,14 +64,14 @@ export default function WhatWeAreBento() {
           </div>
 
           <h2
-            className="text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.12] text-[#1C1208] m-0"
+            className="text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.08] text-[#1C1208] m-0"
             style={{
-              fontFamily: "var(--font-playfair), Georgia, serif",
+              fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
               fontWeight: 700,
             }}
           >
             Pedigree Livestock <br />
-            &amp; Breeding Stock
+            <span className="text-[#C99A2E]">&amp; Breeding Stock</span>
           </h2>
         </div>
 
@@ -83,8 +80,7 @@ export default function WhatWeAreBento() {
           {featuredBreeds.map((breed) => (
             <div
               key={breed.id}
-              className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-xl group"
-              style={{ borderRadius: "2px" }}
+              className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-md group rounded-[0px]"
             >
               {/* Image Section */}
               <div>
@@ -101,8 +97,8 @@ export default function WhatWeAreBento() {
                   />
                   {/* Top-left Category Badge */}
                   <div
-                    className="absolute top-3 left-3 text-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]"
-                    style={{ backgroundColor: "#6B7A3F", borderRadius: "2px" }}
+                    className="absolute top-3 left-3 text-white px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[0px]"
+                    style={{ backgroundColor: "#6B7A3F" }}
                   >
                     {breed.category}
                   </div>
@@ -112,10 +108,9 @@ export default function WhatWeAreBento() {
                 <div className="p-6">
                   <Link
                     href={`/breeds?id=${breed.id}`}
-                    className="font-serif text-2xl md:text-3xl text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A]"
+                    className="font-serif text-[22px] md:text-[24px] text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A] font-semibold"
                     style={{
-                      fontFamily: "var(--font-playfair), Georgia, serif",
-                      fontWeight: 600,
+                      fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
                     }}
                   >
                     {breed.name}
@@ -125,11 +120,8 @@ export default function WhatWeAreBento() {
                   <div className="mt-5 space-y-2.5 text-xs">
                     <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
                       <span
-                        className="text-[11px] font-semibold uppercase tracking-[0.14em]"
-                        style={{
-                          color: "#8E7E70",
-                          fontFamily: "var(--font-source-sans), sans-serif",
-                        }}
+                        className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em]"
+                        style={{ color: "#8E7E70" }}
                       >
                         HEAD COUNT
                       </span>
@@ -143,11 +135,8 @@ export default function WhatWeAreBento() {
 
                     <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
                       <span
-                        className="text-[11px] font-semibold uppercase tracking-[0.14em]"
-                        style={{
-                          color: "#8E7E70",
-                          fontFamily: "var(--font-source-sans), sans-serif",
-                        }}
+                        className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em]"
+                        style={{ color: "#8E7E70" }}
                       >
                         ORIGIN
                       </span>
@@ -161,11 +150,8 @@ export default function WhatWeAreBento() {
 
                     <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
                       <span
-                        className="text-[11px] font-semibold uppercase tracking-[0.14em]"
-                        style={{
-                          color: "#8E7E70",
-                          fontFamily: "var(--font-source-sans), sans-serif",
-                        }}
+                        className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em]"
+                        style={{ color: "#8E7E70" }}
                       >
                         PURPOSE
                       </span>
@@ -184,10 +170,10 @@ export default function WhatWeAreBento() {
               <div className="p-6 pt-0 flex justify-between items-center mt-auto">
                 <div className="flex items-baseline gap-1">
                   <span
-                    className="text-xl md:text-2xl font-bold"
+                    className="text-[20px] md:text-[22px] font-bold"
                     style={{
                       color: "#C4602A",
-                      fontFamily: "var(--font-playfair), Georgia, serif",
+                      fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
                     }}
                   >
                     KES {breed.price.toLocaleString()}
@@ -205,9 +191,8 @@ export default function WhatWeAreBento() {
 
                 <Link
                   href={`/breeds?enquire=${breed.id}`}
-                  className="btn-outline"
+                  className="btn-outline rounded-[0px]"
                   style={{
-                    borderRadius: "2px",
                     padding: "0.55rem 1.4rem",
                     fontSize: "0.75rem",
                     letterSpacing: "0.14em",
@@ -215,11 +200,6 @@ export default function WhatWeAreBento() {
                     textTransform: "uppercase",
                     border: "1px solid #1C1208",
                     color: "#1C1208",
-                    textDecoration: "none",
-                    transition: "all 0.2s ease",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
                   ENQUIRE
@@ -229,25 +209,19 @@ export default function WhatWeAreBento() {
           ))}
         </div>
 
-        {/* Centered Button: VIEW FULL BREED CATALOGUE */}
+        {/* Centered Button: VIEW FULL BREED CATALOGUE (Exact Ghost Dark Outline) */}
         <div className="flex justify-center">
           <Link
             href="/breeds"
-            className="btn-outline"
+            className="btn-outline rounded-[0px]"
             style={{
-              borderRadius: "2px",
               padding: "0.9rem 2.4rem",
-              fontSize: "0.8rem",
+              fontSize: "0.78rem",
               letterSpacing: "0.16em",
               fontWeight: 700,
               textTransform: "uppercase",
               border: "1px solid #1C1208",
               color: "#1C1208",
-              textDecoration: "none",
-              transition: "all 0.2s ease",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
             VIEW FULL BREED CATALOGUE

@@ -275,42 +275,42 @@ h1 em, h2 em, h3 em, h4 em {
 .section-light {
   background-color: var(--cream);
   color: var(--soil);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-mist {
   background-color: var(--mist);
   color: var(--soil);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-dark {
   background-color: var(--soil);
   color: var(--cream);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-hide {
   background-color: var(--hide);
   color: var(--cream);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-gold {
   background-color: var(--savanna);
   color: var(--soil);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 
 @media (min-width: 1024px) {
   .section-light, .section-mist, .section-dark, .section-hide, .section-gold {
-    padding: 7rem 0;
+    padding: 8rem 0;
   }
 }
 
-/* ── 6. CLEAN CARD SYSTEM (Umoja Sacco-inspired) ─────────────────────── */
+/* ── 6. CLEAN CARD SYSTEM (Exact Figma Architecture) ─────────────────────── */
 
-/* Light card — primary (white/cream bg, warm border, soft shadow) */
+/* Light card — primary (white/cream bg, warm border, sharp corners) */
 .os-card {
   background: #FFFFFF;
   border: 1px solid var(--bone);
-  border-radius: 20px;
+  border-radius: 0px;
   box-shadow: var(--shadow-card);
   transition:
     transform  var(--t-base) var(--smooth),
@@ -319,7 +319,7 @@ h1 em, h2 em, h3 em, h4 em {
   overflow: hidden;
 }
 .os-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
   border-color: rgba(196, 136, 42, 0.3);
 }
@@ -328,13 +328,13 @@ h1 em, h2 em, h3 em, h4 em {
 .os-card-cream {
   background: var(--cream);
   border: 1px solid var(--parchment);
-  border-radius: 20px;
+  border-radius: 0px;
   box-shadow: var(--shadow-card);
   transition: transform var(--t-base) var(--smooth), box-shadow var(--t-base) var(--smooth), border-color var(--t-base) ease;
   overflow: hidden;
 }
 .os-card-cream:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
   border-color: var(--savanna);
 }
@@ -343,7 +343,7 @@ h1 em, h2 em, h3 em, h4 em {
 .os-card-dark {
   background: var(--hide);
   border: 1px solid rgba(196, 136, 42, 0.15);
-  border-radius: 20px;
+  border-radius: 0px;
   transition: border-color var(--t-base) ease, box-shadow var(--t-base) ease;
   overflow: hidden;
 }
@@ -356,7 +356,7 @@ h1 em, h2 em, h3 em, h4 em {
 .os-card-gold {
   background: var(--savanna);
   border: 1px solid var(--savanna-glow);
-  border-radius: 20px;
+  border-radius: 0px;
   overflow: hidden;
   transition: background var(--t-base) ease;
 }
@@ -364,16 +364,16 @@ h1 em, h2 em, h3 em, h4 em {
   background: var(--savanna-glow);
 }
 
-/* Stat badge (Umoja Sacco style inline stats) */
+/* Stat badge (Figma style inline stats) */
 .os-stat {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
 .os-stat-value {
-  font-family: var(--font-cormorant), Georgia, serif;
+  font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
   font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
   color: var(--savanna);
 }
@@ -403,7 +403,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
-  border-radius: 2px;
+  border-radius: 0px;
   border: 1px solid #C99A2E;
   cursor: pointer;
   transition: all var(--t-base) ease;
@@ -432,7 +432,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
-  border-radius: 2px;
+  border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
   white-space: nowrap;
@@ -458,7 +458,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
-  border-radius: 2px;
+  border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
   white-space: nowrap;
@@ -485,7 +485,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
-  border-radius: 2px;
+  border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
   white-space: nowrap;
@@ -513,7 +513,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
-  border-radius: 2px;
+  border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
   white-space: nowrap;

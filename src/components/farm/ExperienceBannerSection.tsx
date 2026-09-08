@@ -5,11 +5,11 @@ import Image from "next/image";
 
 export default function ExperienceBannerSection() {
   return (
-    <section className="relative w-full py-32 md:py-44 overflow-hidden">
-      {/* Background Image */}
+    <section className="relative w-full py-28 md:py-36 lg:py-40 overflow-hidden">
+      {/* Background Image: Pastoral Rangelands Herd */}
       <Image
-        src="/images/brahman cows.jpg"
-        alt="Osotua pastoral Brahman cattle herd in Kajiado"
+        src="/images/osotua-rangelands-herd.jpg"
+        alt="Osotua pastoral rangelands in Kajiado"
         fill
         sizes="100vw"
         priority
@@ -21,7 +21,7 @@ export default function ExperienceBannerSection() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(28, 18, 8, 0.72) 0%, rgba(28, 18, 8, 0.82) 100%)",
+            "linear-gradient(180deg, rgba(28, 18, 8, 0.65) 0%, rgba(28, 18, 8, 0.82) 100%)",
         }}
       />
 
@@ -29,20 +29,17 @@ export default function ExperienceBannerSection() {
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {/* Eyebrow */}
         <div
-          className="text-xs md:text-sm font-bold uppercase tracking-[0.25em] mb-5"
-          style={{
-            color: "#C99A2E",
-            fontFamily: "var(--font-source-sans), sans-serif",
-          }}
+          className="text-[11px] font-mono font-bold uppercase tracking-[0.22em] mb-4"
+          style={{ color: "#C99A2E" }}
         >
           RANCH EXPERIENCES
         </div>
 
         {/* Heading */}
         <h2
-          className="text-4xl sm:text-5xl md:text-6xl text-white leading-[1.12] mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl text-white leading-[1.08] mb-6"
           style={{
-            fontFamily: "var(--font-playfair), Georgia, serif",
+            fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
             fontWeight: 700,
           }}
         >
@@ -63,21 +60,13 @@ export default function ExperienceBannerSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
           <Link
             href="/visit"
-            className="btn-gold w-full sm:w-auto"
+            className="btn-gold w-full sm:w-auto rounded-[0px]"
             style={{
-              borderRadius: "2px",
-              padding: "0.95rem 2.2rem",
-              fontSize: "0.82rem",
+              padding: "0.85rem 2.2rem",
+              fontSize: "0.75rem",
               letterSpacing: "0.14em",
               fontWeight: 700,
               textTransform: "uppercase",
-              backgroundColor: "#C99A2E",
-              color: "#1C1208",
-              textDecoration: "none",
-              transition: "all 0.2s ease",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
             BOOK A FARM VISIT
@@ -85,22 +74,13 @@ export default function ExperienceBannerSection() {
 
           <Link
             href="/invest"
-            className="btn-on-dark w-full sm:w-auto"
+            className="btn-on-dark w-full sm:w-auto rounded-[0px]"
             style={{
-              borderRadius: "2px",
-              padding: "0.95rem 2.2rem",
-              fontSize: "0.82rem",
+              padding: "0.85rem 2.2rem",
+              fontSize: "0.75rem",
               letterSpacing: "0.14em",
               fontWeight: 700,
               textTransform: "uppercase",
-              border: "1px solid rgba(245, 240, 232, 0.4)",
-              color: "#F5F0E8",
-              backgroundColor: "transparent",
-              textDecoration: "none",
-              transition: "all 0.2s ease",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
             RANCH INVESTMENT
