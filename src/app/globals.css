@@ -412,6 +412,27 @@ main > div > * + * {
   border-color: var(--savanna);
   transform: translateY(-1px);
 }
+.admin-stat-card {
+  display: block;
+  border: 1px solid var(--parchment);
+  border-radius: 2px;
+  background: #FFFFFF;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  transition: transform var(--t-base) var(--smooth), border-color var(--t-base) ease, box-shadow var(--t-base) var(--smooth);
+}
+.admin-stat-card:hover {
+  border-color: var(--savanna);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
 form {
   font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
 }

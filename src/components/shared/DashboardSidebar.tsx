@@ -67,13 +67,13 @@ export default function DashboardSidebar({
 
   return (
     <aside
-      className={`bg-[#FFFEFA] text-[#1C1208] flex flex-col fixed top-0 bottom-0 left-0 z-40 border-r border-[#C4882A]/20 shadow-[6px_0_30px_rgba(196,136,42,0.06)] select-none transition-all duration-300 ${
+      className={`admin-sidebar bg-[#FAF7F2] text-[#1C1208] flex flex-col fixed top-0 bottom-0 left-0 z-40 border-r border-[#C4882A]/20 shadow-[6px_0_30px_rgba(196,136,42,0.06)] select-none transition-all duration-300 ${
         collapsed ? "w-20" : "w-64"
       } ${
         mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       }`}
       style={{
-        background: "linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 40%, #FAF5EB 100%)",
+        background: "#FAF7F2",
         WebkitBackdropFilter: "blur(24px)",
         backdropFilter: "blur(24px)",
       }}
@@ -141,14 +141,14 @@ export default function DashboardSidebar({
 
       {/* Admin Quick Switch Portal Banner (If logged in user is ADMIN) */}
       {userIsAdmin && !collapsed && (
-        <div className="mx-3 mt-3 p-2.5 rounded-xl bg-white/90 border border-[#C4882A]/30 shadow-xs flex items-center justify-between">
+        <div className="mx-3 mt-3 flex items-center justify-between border border-[#C4882A]/30 bg-white/90 p-2.5 shadow-xs">
           <div className="text-[10px] font-mono">
             <span className="font-bold text-[#1C1208] block">{isAdmin ? "Admin Control" : "Admin Account"}</span>
             <span className="text-[#8E5E16] font-medium">{isAdmin ? "Viewing HQ" : "Member Portal"}</span>
           </div>
           <Link
             href={isAdmin ? "/dashboard" : "/admin"}
-            className="px-2.5 py-1 text-[9px] font-mono font-bold uppercase tracking-wider rounded-lg bg-[#C4882A] text-white hover:bg-[#D99A30] shadow-xs hover:shadow-sm transition-all"
+            className="bg-[#C4882A] px-2.5 py-1 text-[9px] font-mono font-bold uppercase tracking-wider text-white shadow-xs transition-all hover:bg-[#D99A30] hover:shadow-sm"
           >
             {isAdmin ? "Member View" : "Admin HQ"}
           </Link>
@@ -205,7 +205,7 @@ export default function DashboardSidebar({
                 justifyContent: collapsed ? "center" : "flex-start",
                 gap: "0.75rem",
                 padding: collapsed ? "0.75rem 0" : "0.625rem 0.875rem",
-                borderRadius: "10px",
+                borderRadius: "2px",
                 textDecoration: "none",
                 fontSize: "0.8rem",
                 fontFamily: "var(--font-space-grotesk), monospace",

@@ -122,7 +122,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
 
             {/* Desktop Navigation */}
             <nav
-              className="hidden lg:flex items-center gap-8"
+              className="hidden lg:flex items-center gap-10"
               aria-label="Main navigation"
             >
               {navLinks.map((link) => {
@@ -165,7 +165,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             </nav>
 
             {/* Desktop Right Actions */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-4">
               <Link
                 href="/dashboard"
                 style={{

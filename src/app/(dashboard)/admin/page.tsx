@@ -38,9 +38,9 @@ export default async function AdminPage() {
   ]
 
   return (
-    <div style={{ background: "#FBF7F0", minHeight: "100vh" }} className="p-6 sm:p-10 text-[#1C1208]">
+    <div className="min-h-screen bg-[#FBF7F0] p-6 text-[#1C1208] sm:p-10">
       {/* Header with Quick Action Bar */}
-      <div className="bg-gradient-to-r from-[#FFFFFF] via-[#FAF5EB] to-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-10 shadow-lg shadow-[#1C1208]/04 mb-8">
+      <div className="os-panel mb-8 p-6 sm:p-8">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/12 border border-[#C4882A]/30 text-[#8E5E16] mb-2">
@@ -98,7 +98,7 @@ export default async function AdminPage() {
           <Link
             key={stat.label}
             href={stat.href}
-            className="bg-[#FFFFFF] border border-[#C4882A]/20 hover:border-[#C4882A] rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 block no-underline group"
+            className="admin-stat-card group"
           >
             <div className="flex items-center justify-between mb-3">
               <div
@@ -122,7 +122,7 @@ export default async function AdminPage() {
       </div>
 
       {/* Recent Orders Ledger Card */}
-      <div className="bg-[#FFFFFF] border border-[#C4882A]/25 rounded-3xl p-6 sm:p-8 shadow-lg shadow-[#1C1208]/04">
+      <div className="os-panel overflow-hidden bg-white p-0">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#C4882A]/15">
           <div>
             <div className="text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold mb-1">

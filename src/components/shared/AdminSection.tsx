@@ -21,16 +21,14 @@ export function AdminSection({
   children: React.ReactNode
 }) {
   return (
-    <div style={{ background: "#FBF7F0", padding: "2.5rem 2rem 5rem", minHeight: "100vh" }}>
+    <div className="min-h-screen bg-[#FBF7F0] p-6 text-[#1C1208] sm:p-10">
       {/* Header card */}
       <div
+        className="os-panel mb-8 flex flex-wrap items-center justify-between gap-6 sm:p-8"
         style={{
-          padding: "2rem 2.5rem",
-          borderRadius: "24px",
-          marginBottom: "2.5rem",
-          background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5EB 100%)",
-          border: "1px solid rgba(196, 136, 42, 0.25)",
-          boxShadow: "0 10px 32px rgba(196, 136, 42, 0.08)",
+          background: "#FAF7F2",
+          border: "1px solid var(--parchment)",
+          boxShadow: "var(--shadow-card)",
           position: "relative",
           overflow: "hidden",
           display: "flex",
@@ -43,7 +41,7 @@ export function AdminSection({
         <div
           style={{
             position: "absolute", top: "-5rem", right: "-5rem", width: "300px", height: "300px",
-            borderRadius: "50%", background: "radial-gradient(circle, rgba(196,136,42,0.12) 0%, transparent 70%)",
+            borderRadius: "50%", background: "rgba(196,136,42,0.06)",
             pointerEvents: "none",
           }}
         />
@@ -100,12 +98,11 @@ export function AdminTable({
 }) {
   return (
     <div
-      style={{
-        borderRadius: "24px",
+        className="os-panel overflow-hidden p-0"
+        style={{
         background: "#FFFFFF",
-        border: "1px solid rgba(196, 136, 42, 0.22)",
-        boxShadow: "0 10px 32px rgba(196, 136, 42, 0.06)",
-        overflow: "hidden",
+        border: "1px solid var(--parchment)",
+        boxShadow: "var(--shadow-card)",
       }}
     >
       <div style={{ overflowX: "auto" }}>
