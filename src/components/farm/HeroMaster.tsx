@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCountUp } from "@/hooks/use-count-up";
+import { HERO_IMAGE } from "@/lib/images";
 
 export default function HeroMaster() {
   const { count: acresCount, ref: acresRef } = useCountUp(4200, 1600, 4200);
@@ -13,21 +14,22 @@ export default function HeroMaster() {
   return (
     <div className="relative w-full overflow-hidden bg-[#1C1208]">
       {/* ── HERO BANNER WITH FULL-BLEED PHOTO & SCRIM ── */}
-      <section className="relative min-h-[85vh] lg:min-h-[90vh] w-full flex flex-col justify-end pt-32 pb-16 lg:pb-24">
+      <section className="relative min-h-[78vh] lg:min-h-[84vh] w-full flex flex-col justify-end pt-28 pb-14 lg:pb-20">
         {/* Photographic Savanna Background: Mobile full-bleed, Desktop framed unzoomed */}
         <div className="absolute inset-0 lg:left-auto lg:right-0 lg:w-[56%] z-0">
           <Image
-            src="/images/brahman cows.jpg"
+            src={HERO_IMAGE}
             alt="Osotua pastoral Brahman cattle herd in Kajiado"
             fill
             priority
+            quality={90}
             sizes="(max-width: 1024px) 100vw, 56vw"
-            className="object-cover object-center"
+            className="object-cover object-[center_35%] lg:object-center"
           />
           {/* Desktop Left Edge Feather: blends smoothly into dark soil */}
           <div className="hidden lg:block absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-[#1C1208] to-transparent pointer-events-none" />
           {/* Mobile Overlay: ensure text readability on phones with unblurred photo */}
-          <div className="lg:hidden absolute inset-0 bg-gradient-to-t from-[#1C1208] via-[#1C1208]/80 to-[#1C1208]/40 pointer-events-none" />
+          <div className="lg:hidden absolute inset-0 bg-gradient-to-t from-[#1C1208]/85 via-[#1C1208]/45 to-[#1C1208]/15 pointer-events-none" />
           {/* Bottom vignette */}
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#1C1208] to-transparent pointer-events-none" />
         </div>
@@ -83,7 +85,7 @@ export default function HeroMaster() {
       </section>
 
       {/* ── STATS STRIP (Exact Figma 4-Column Layout) ── */}
-      <section className="relative z-10 w-full bg-[#1C1208] border-t border-white/10 py-10 sm:py-14">
+      <section className="relative z-10 w-full bg-[#1C1208] border-t border-white/10 py-8 sm:py-10">
         <div className="os-container">
           <div
             className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"

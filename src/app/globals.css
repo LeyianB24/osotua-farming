@@ -125,6 +125,11 @@
   --t-base: 220ms;
   --t-slow: 380ms;
   --t-page: 600ms;
+
+  /* Shared layout rhythm from the brand guide */
+  --space-card: 1.5rem;
+  --space-control: 0.875rem;
+  --control-height: 3.125rem;
 }
 
 /* ── 3. BASE RESETS ─────────────────────────────────────────────────────── */
@@ -137,7 +142,6 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
   background-color: var(--cream);
 }
 
@@ -173,7 +177,7 @@ h1 em, h2 em, h3 em, h4 em {
   font-weight: 700;
   font-size: clamp(3rem, 6.5vw, 6.5rem);
   line-height: 1.02;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 /* H2 · SECTION · PLAYFAIR DISPLAY 700 */
@@ -182,7 +186,7 @@ h1 em, h2 em, h3 em, h4 em {
   font-weight: 700;
   font-size: clamp(2.4rem, 4.5vw, 4.2rem);
   line-height: 1.08;
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
 }
 
 /* H3 · CARD · PLAYFAIR DISPLAY 600 */
@@ -252,7 +256,7 @@ h1 em, h2 em, h3 em, h4 em {
 
 /* Gradient text gold */
 .text-gradient-gold {
-  background: linear-gradient(135deg, #C4882A 0%, #F5C76D 50%, #D99A30 100%);
+  background: #C99A2E;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -261,46 +265,51 @@ h1 em, h2 em, h3 em, h4 em {
 /* ── 5. CONTAINER & SECTION LAYOUTS ───────────────────────────────────── */
 .os-container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
-@media (min-width: 640px)  { .os-container { padding-left: 2rem; padding-right: 2rem; } }
-@media (min-width: 1024px) { .os-container { padding-left: 3rem; padding-right: 3rem; } }
+@media (min-width: 640px)  { .os-container { padding-left: 2.5rem; padding-right: 2.5rem; } }
+@media (min-width: 1024px) { .os-container { padding-left: 4rem; padding-right: 4rem; } }
 @media (min-width: 1440px) { .os-container { max-width: 1340px; } }
+
+/* Keep top-level page blocks visually distinct across every route. */
+main > div > * + * {
+  margin-block-start: clamp(2rem, 4vw, 4rem);
+}
 
 /* Section variants */
 .section-light {
   background-color: var(--cream);
   color: var(--soil);
-  padding: 6rem 0;
+  padding: 5rem 0;
 }
 .section-mist {
   background-color: var(--mist);
   color: var(--soil);
-  padding: 6rem 0;
+  padding: 5rem 0;
 }
 .section-dark {
   background-color: var(--soil);
   color: var(--cream);
-  padding: 6rem 0;
+  padding: 5rem 0;
 }
 .section-hide {
   background-color: var(--hide);
   color: var(--cream);
-  padding: 6rem 0;
+  padding: 5rem 0;
 }
 .section-gold {
   background-color: var(--savanna);
   color: var(--soil);
-  padding: 6rem 0;
+  padding: 5rem 0;
 }
 
 @media (min-width: 1024px) {
   .section-light, .section-mist, .section-dark, .section-hide, .section-gold {
-    padding: 8rem 0;
+    padding: 7rem 0;
   }
 }
 
@@ -317,6 +326,16 @@ h1 em, h2 em, h3 em, h4 em {
     box-shadow var(--t-base) var(--smooth),
     border-color var(--t-base) ease;
   overflow: hidden;
+}
+.os-card-body {
+  padding: var(--space-card);
+}
+.os-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0 var(--space-card) var(--space-card);
 }
 .os-card:hover {
   transform: translateY(-2px);
@@ -364,6 +383,88 @@ h1 em, h2 em, h3 em, h4 em {
   background: var(--savanna-glow);
 }
 
+/* Shared panels, forms, and choice controls. */
+.os-panel,
+.os-form-panel {
+  background: #FAF7F2;
+  border: 1px solid var(--parchment);
+  border-radius: 2px;
+  box-shadow: var(--shadow-card);
+}
+.os-panel {
+  padding: var(--space-card);
+}
+.os-form-panel {
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+.os-choice {
+  display: flex;
+  min-height: var(--control-height);
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--parchment);
+  border-radius: 2px;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  transition: border-color var(--t-base) ease, background-color var(--t-base) ease, transform var(--t-base) var(--smooth);
+}
+.os-choice:hover {
+  border-color: var(--savanna);
+  transform: translateY(-1px);
+}
+form {
+  font-family: var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif;
+}
+form label {
+  display: block;
+  line-height: 1.35;
+}
+form :where(input, select, textarea) {
+  min-height: var(--control-height);
+  font-family: inherit;
+}
+
+/* Glass surfaces for photo and dark backgrounds. */
+.glass,
+.glass-gold,
+.glass-green,
+.glass-dark,
+.glass-nav {
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.glass-gold {
+  background: rgba(196, 136, 42, 0.12);
+  border: 1px solid rgba(196, 136, 42, 0.25);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+}
+.glass-green {
+  background: rgba(61, 107, 62, 0.15);
+  border: 1px solid rgba(61, 107, 62, 0.3);
+}
+.glass-dark {
+  background: rgba(28, 18, 8, 0.65);
+  border: 1px solid rgba(196, 136, 42, 0.2);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  backdrop-filter: blur(32px) saturate(180%);
+}
+.glass-nav {
+  background: rgba(28, 18, 8, 0.72);
+  border-bottom: 1px solid rgba(196, 136, 42, 0.15);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  backdrop-filter: blur(40px) saturate(180%);
+}
+
+button:not(:disabled),
+[role="button"] {
+  cursor: pointer;
+}
+
 /* Stat badge (Figma style inline stats) */
 .os-stat {
   display: flex;
@@ -403,6 +504,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
+  min-height: var(--control-height);
   border-radius: 0px;
   border: 1px solid #C99A2E;
   cursor: pointer;
@@ -432,6 +534,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
+  min-height: var(--control-height);
   border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
@@ -458,6 +561,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
+  min-height: var(--control-height);
   border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
@@ -465,7 +569,7 @@ h1 em, h2 em, h3 em, h4 em {
 }
 .btn-outline:hover, .btn-ghost-dark:hover {
   background: #1C1208;
-  color: #F5F0E8;
+  color: #F5F0E8 !important;
   transform: translateY(-1px);
 }
 
@@ -485,6 +589,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
+  min-height: var(--control-height);
   border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
@@ -513,6 +618,7 @@ h1 em, h2 em, h3 em, h4 em {
   text-transform: uppercase;
   text-decoration: none;
   padding: 0.85rem 1.75rem;
+  min-height: var(--control-height);
   border-radius: 0px;
   cursor: pointer;
   transition: all var(--t-base) ease;
@@ -541,7 +647,8 @@ textarea {
   background-color: #FAF7F2;
   border: 1px solid #D4C9B0;
   border-radius: 2px;
-  padding: 0.85rem 1.15rem;
+  min-height: var(--control-height);
+  padding: var(--space-control) 1.15rem;
   transition: border-color var(--t-base) ease, box-shadow var(--t-base) ease, background-color var(--t-base) ease;
   outline: none;
 }

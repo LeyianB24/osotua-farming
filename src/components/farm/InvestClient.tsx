@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { LOGO } from "@/lib/images"
 
 const TIERS = [
   {
@@ -294,7 +293,7 @@ export default function InvestClient() {
               </div>
 
               <div
-                className="p-8 sm:p-10 space-y-8 bg-[#FAF7F2] border border-[#D4C9B0] shadow-sm"
+                className="os-form-panel space-y-10"
                 style={{ borderRadius: "2px" }}
               >
                 {/* Investment Type Selector */}
@@ -409,7 +408,7 @@ export default function InvestClient() {
 
                 {/* Yield Output Box */}
                 <div
-                  className="p-6 bg-[#F5F0E8] border border-[#D4C9B0] space-y-3"
+                  className="p-6 bg-[#F5F0E8] border border-[#D4C9B0] space-y-4"
                   style={{ borderRadius: "2px" }}
                 >
                   <div className="flex justify-between items-center text-xs text-[#1C1208]/75">
@@ -472,7 +471,7 @@ export default function InvestClient() {
                   return (
                     <div
                       key={tier.label}
-                      className="p-7 space-y-4 transition-all duration-300 bg-[#FAF7F2] border"
+                      className="os-card-cream p-6 sm:p-7 space-y-5 transition-all duration-300"
                       style={{
                         borderRadius: "2px",
                         borderColor: isCurrent ? "#C99A2E" : "#D4C9B0",
@@ -522,11 +521,11 @@ export default function InvestClient() {
                         )}
                       </div>
 
-                      <div className="space-y-2 pt-2 border-t border-[#E8E0D2]">
+                      <div className="space-y-3 pt-4 border-t border-[#E8E0D2]">
                         {tier.perks.map((p) => (
                           <div
                             key={p}
-                            className="flex items-center gap-2 text-xs text-[#1C1208]/80 font-normal"
+                            className="flex items-start gap-2 text-xs leading-relaxed text-[#1C1208]/80 font-normal"
                             style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                           >
                             <i className="bi bi-check2 text-[#6B7A3F] font-bold" />
@@ -585,7 +584,7 @@ export default function InvestClient() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmitInquiry} className="space-y-4">
+              <form onSubmit={handleSubmitInquiry} className="space-y-6">
                 <div className="space-y-1">
                   <div
                     className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C99A2E]"
@@ -609,7 +608,7 @@ export default function InvestClient() {
 
                 <div>
                   <label
-                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-2"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     Full Name *
@@ -620,14 +619,14 @@ export default function InvestClient() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="e.g. Moses Ole Sironka"
-                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3.5 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
                     style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>
 
                 <div>
                   <label
-                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-2"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     Email Address *
@@ -638,14 +637,14 @@ export default function InvestClient() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="moses@example.com"
-                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3.5 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
                     style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>
 
                 <div>
                   <label
-                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-2"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     Phone Number
@@ -655,14 +654,14 @@ export default function InvestClient() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+254 700 000 000"
-                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3.5 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
                     style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>
 
                 <div>
                   <label
-                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-1"
+                    className="block text-[11px] uppercase tracking-[0.14em] text-[#8E7E70] font-semibold mb-2"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     Notes / Portfolio Objectives
@@ -672,7 +671,7 @@ export default function InvestClient() {
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Individual investor, institutional fund, or family office..."
-                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
+                    className="w-full bg-[#F5F0E8] border border-[#D4C9B0] p-3.5 text-xs text-[#1C1208] outline-none focus:border-[#C99A2E]"
                     style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
                   />
                 </div>

@@ -58,7 +58,7 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div
-      className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-md group rounded-[0px]"
+      className="os-card flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-md group rounded-[0px]"
     >
       {/* ── IMAGE CONTAINER ── */}
       <div>
@@ -96,7 +96,7 @@ export default function ProductCard({ product }: Props) {
         </Link>
 
         {/* ── CARD CONTENT (Exact Figma spacing from Screenshots) ── */}
-        <div className="px-6 pt-5 pb-2 space-y-1.5">
+        <div className="os-card-body space-y-2">
           <div
             className="text-[11px] font-mono uppercase tracking-[0.2em]"
             style={{ color: "#C4602A" }}
@@ -134,7 +134,7 @@ export default function ProductCard({ product }: Props) {
       </div>
 
       {/* ── FOOTER BUTTON (Exact Figma Full-Width Dark CTA) ── */}
-      <div className="px-6 pb-6 pt-4 mt-auto">
+      <div className="px-6 pb-6 pt-5 mt-auto">
         <button
           type="button"
           onClick={handleAdd}

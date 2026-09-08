@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function ExperienceBannerSection() {
   return (
-    <section className="relative w-full py-28 md:py-36 lg:py-40 overflow-hidden">
+    <section className="relative w-full pb-32 pt-24 md:pb-44 md:pt-28 lg:pb-52 lg:pt-32 overflow-hidden">
       {/* Background Image: Pastoral Rangelands Herd */}
       <Image
         src="/images/osotua-rangelands-herd.jpg"

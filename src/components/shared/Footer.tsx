@@ -33,7 +33,7 @@ export default function Footer() {
     <footer className="w-full">
       {/* ── TOP TERRACOTTA NEWSLETTER SECTION (Exact Figma Screenshot) ── */}
       <section
-        className="w-full py-24 md:py-32"
+        className="flex min-h-[360px] w-full items-center py-24 md:min-h-[390px] md:py-28"
         style={{ backgroundColor: "#C4602A" }}
       >
         <div className="os-container text-center max-w-3xl mx-auto">
@@ -120,10 +120,10 @@ export default function Footer() {
         style={{ backgroundColor: "#1C1208", color: "#F5F0E8" }}
       >
         <div className="os-container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-14">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
 
             {/* Column 1: Brand Wordmark, Description & Social Icons (4 cols) */}
-            <div className="lg:col-span-4 space-y-6">
+            <div className="space-y-6">
               <Link href="/" className="inline-flex items-center gap-2.5 no-underline">
                 <span
                   className="font-serif italic text-3xl text-[#C99A2E]"
@@ -140,7 +140,7 @@ export default function Footer() {
               </Link>
 
               <p
-                className="text-sm text-[#F5F0E8]/65 leading-relaxed max-w-xs font-normal m-0"
+                className="max-w-xs text-sm leading-8 text-[#F5F0E8]/65 font-normal m-0"
                 style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
                 Rooted in tradition, growing with nature. Premium indigenous livestock and wholesome produce from Kajiado County, Kenya.
@@ -169,6 +169,11 @@ export default function Footer() {
                     href: "https://youtube.com",
                     label: "YouTube",
                   },
+                  {
+                    icon: "bi-whatsapp",
+                    href: "https://wa.me/254755758208?text=Hello%20Osotua%20Farming!%20I%20would%20like%20to%20enquire%20about%20your%20products.",
+                    label: "WhatsApp Concierge",
+                  },
                 ].map((s) => (
                   <a
                     key={s.label}
@@ -186,14 +191,14 @@ export default function Footer() {
             </div>
 
             {/* Column 2: Quick Links (3 cols) */}
-            <div className="lg:col-span-3 space-y-4">
+            <div className="space-y-4 pt-8 md:pt-0 lg:pl-12">
               <div
                 className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
                 style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
                 QUICK LINKS
               </div>
-              <nav className="flex flex-col space-y-2.5" aria-label="Quick links">
+              <nav className="flex flex-col gap-3 leading-relaxed" aria-label="Quick links">
                 {[
                   { label: "Our Story", href: "/about" },
                   { label: "The Barn", href: "/barn" },
@@ -216,14 +221,14 @@ export default function Footer() {
             </div>
 
             {/* Column 3: Livestock Catalogue (2.5 cols) */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="space-y-4 pt-8 md:pt-0 lg:pl-12">
               <div
                 className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
                 style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
                 LIVESTOCK CATALOGUE
               </div>
-              <nav className="flex flex-col space-y-2.5" aria-label="Livestock catalogue">
+              <nav className="flex flex-col gap-3 leading-relaxed" aria-label="Livestock catalogue">
                 {[
                   { label: "Boran Beef Cattle", href: "/breeds?category=beef" },
                   { label: "Bonsmara Bulls", href: "/breeds?category=beef" },
@@ -246,14 +251,14 @@ export default function Footer() {
             </div>
 
             {/* Column 4: Get in Touch (2.5 cols) */}
-            <div className="lg:col-span-3 space-y-4">
+            <div className="space-y-4 pt-8 md:pt-0 lg:pl-12">
               <div
                 className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
                 style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
                 GET IN TOUCH
               </div>
-              <div className="flex flex-col space-y-3.5 text-sm text-[#F5F0E8]/70" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
+              <div className="flex flex-col gap-4 text-sm leading-relaxed text-[#F5F0E8]/70" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
                 <a
                   href="tel:+254755758208"
                   className="flex items-center gap-3 text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
@@ -285,7 +290,7 @@ export default function Footer() {
           </div>
 
           {/* Bottom Copyright Bar */}
-          <div className="pt-16 mt-16 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F5F0E8]/40">
+          <div className="pt-16 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F5F0E8]/40">
             <div>
               &copy; {year} Osotua Farming. All rights reserved.
             </div>

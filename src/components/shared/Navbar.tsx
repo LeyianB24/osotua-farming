@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "./CartContext";
 import { LOGO } from "@/lib/images";
@@ -21,7 +22,9 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { cartCount: ctxCartCount } = useCart();
+  const { data: session } = useSession();
   const cartCount = ctxCartCount ?? initialCartCount ?? 0;
+  const isAdmin = (session?.user as { role?: string } | undefined)?.role === "ADMIN";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -44,6 +47,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   return (
     <>
       <header
+        className="glass-nav"
         style={{
           position: "fixed",
           top: 0,
@@ -162,6 +166,34 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
 
             {/* Desktop Right Actions */}
             <div className="hidden lg:flex items-center gap-6">
+              <Link
+                href="/dashboard"
+                style={{
+                  fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
+                  fontSize: "0.88rem",
+                  fontWeight: 600,
+                  color: "rgba(245, 240, 232, 0.85)",
+                  textDecoration: "none",
+                  transition: "color 0.2s ease",
+                }}
+                className="hover:text-[#C99A2E]"
+              >
+                Member Portal
+              </Link>
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  style={{
+                    fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "#C99A2E",
+                    textDecoration: "none",
+                  }}
+                >
+                  Admin HQ
+                </Link>
+              )}
               {/* Visit Us link */}
               <Link
                 href="/visit"

@@ -65,6 +65,14 @@ export default async function AdminPage() {
               <span>Add Product</span>
             </Link>
             <Link
+              href="/admin/blog/new"
+              className="btn-ghost py-2.5 px-4 text-xs font-mono uppercase tracking-wider font-bold bg-[#FFFFFF]"
+              style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
+            >
+              <i className="bi bi-pencil-square text-[#C4882A]" />
+              <span>Write Story</span>
+            </Link>
+            <Link
               href="/admin/breeds/new"
               className="btn-ghost py-2.5 px-4 text-xs font-mono uppercase tracking-wider font-bold bg-[#FFFFFF]"
               style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}

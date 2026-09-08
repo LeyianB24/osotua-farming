@@ -7,10 +7,9 @@ import type { BreedModalData } from "./BreedGeneticsModal";
 
 interface Props {
   breed: BreedModalData;
-  onInspectGenetics?: (breed: BreedModalData) => void;
 }
 
-export default function BreedCard({ breed, onInspectGenetics }: Props) {
+export default function BreedCard({ breed }: Props) {
   const src = breed.image ?? imageForBreed(breed.name, breed.species.name);
   const categoryLabel = breed.species.name.toUpperCase().includes("BEEF")
     ? "BEEF CATTLE"
@@ -24,7 +23,7 @@ export default function BreedCard({ breed, onInspectGenetics }: Props) {
 
   return (
     <div
-      className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-xl group"
+      className="os-card flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-xl group"
       style={{ borderRadius: "2px" }}
     >
       {/* ── IMAGE SECTION ── */}
@@ -57,7 +56,7 @@ export default function BreedCard({ breed, onInspectGenetics }: Props) {
         </Link>
 
         {/* ── DETAILS AREA ── */}
-        <div className="p-6">
+        <div className="os-card-body">
           <Link
             href={`/breeds/${breed.id}`}
             className="font-serif text-2xl md:text-3xl text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A]"
@@ -129,7 +128,7 @@ export default function BreedCard({ breed, onInspectGenetics }: Props) {
       </div>
 
       {/* ── FOOTER ROW ── */}
-      <div className="p-6 pt-0 flex justify-between items-center mt-auto">
+      <div className="os-card-footer mt-auto">
         <div className="flex items-baseline gap-1">
           <span
             className="text-xl md:text-2xl font-bold"

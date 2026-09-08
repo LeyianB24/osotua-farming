@@ -99,6 +99,7 @@ function CheckoutContent() {
           breedId: item.type === "breed" ? item.id : undefined,
           quantity: item.quantity,
           unitPrice: item.price,
+          totalPrice: item.price * item.quantity,
         })),
       };
 
@@ -122,24 +123,30 @@ function CheckoutContent() {
       if (paymentMethod === "mpesa") {
         setMpesaPollingStatus("sent");
         try {
-          const mpesaRes = await fetch("/api/payments/mpesa/stkpush", {
+          const mpesaRes = await fetch("/api/payments/mpesa", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              phoneNumber: mpesaPhone || phone,
-              amount: grandTotal,
-              accountReference: generatedRef,
+              phone: mpesaPhone || phone,
               orderId: orderData.order?.id,
             }),
           });
-          if (mpesaRes.ok) {
-            setMpesaPollingStatus("waiting_pin");
-            setTimeout(() => {
-              setMpesaPollingStatus("confirmed");
-            }, 6000);
-          }
+          if (!mpesaRes.ok) throw new Error("M-Pesa request failed");
+          setMpesaPollingStatus("waiting_pin");
+          setTimeout(() => {
+            setMpesaPollingStatus("confirmed");
+          }, 6000);
         } catch {
-          // Keep reference fallback
+          setErrorMsg("The order was created, but the M-Pesa prompt could not be sent. Please contact support with your order reference.");
+        }
+      } else if (paymentMethod === "card") {
+        const stripeRes = await fetch("/api/payments/stripe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId: orderData.order?.id }),
+        });
+        if (!stripeRes.ok) {
+          setErrorMsg("The order was created, but Stripe could not start the card payment. Please contact support with your order reference.");
         }
       }
     } catch (err) {
@@ -247,7 +254,7 @@ function CheckoutContent() {
           <div className="lg:col-span-7">
             {/* STEP 1: DESTINATION DETAILS */}
             {step === "details" && (
-              <form onSubmit={handleNextToPayment} className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-8 shadow-sm space-y-5">
+              <form onSubmit={handleNextToPayment} className="os-form-panel space-y-5">
                 <div className="pb-4 border-b border-[#D4C9B0] flex items-center justify-between">
                   <h2
                     className="text-2xl font-bold text-[#1C1208]"
@@ -260,10 +267,11 @@ function CheckoutContent() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
+                    <label htmlFor="checkout-name" className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Full Name *
                     </label>
                     <input
+                      id="checkout-name"
                       type="text"
                       required
                       value={name}
@@ -274,10 +282,11 @@ function CheckoutContent() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
+                    <label htmlFor="checkout-email" className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Email Address *
                     </label>
                     <input
+                      id="checkout-email"
                       type="email"
                       required
                       value={email}
@@ -290,10 +299,11 @@ function CheckoutContent() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
+                    <label htmlFor="checkout-phone" className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Phone / WhatsApp *
                     </label>
                     <input
+                      id="checkout-phone"
                       type="tel"
                       required
                       value={phone}
@@ -304,10 +314,11 @@ function CheckoutContent() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
+                    <label htmlFor="checkout-address" className="block text-[10px] font-mono uppercase tracking-wider text-[#5C4A2A] font-bold mb-1">
                       Physical Delivery Address *
                     </label>
                     <input
+                      id="checkout-address"
                       type="text"
                       required
                       value={address}
@@ -332,7 +343,7 @@ function CheckoutContent() {
 
             {/* STEP 2: PAYMENT SELECTION */}
             {step === "payment" && (
-              <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-6 sm:p-8 shadow-sm space-y-6">
+              <div className="os-form-panel space-y-6">
                 <div className="pb-4 border-b border-[#D4C9B0] flex items-center justify-between">
                   <h2
                     className="text-2xl font-bold text-[#1C1208]"
@@ -373,10 +384,11 @@ function CheckoutContent() {
                 {/* M-PESA STK INPUT */}
                 {paymentMethod === "mpesa" && (
                   <div className="p-4 rounded-[2px] bg-white border border-[#6B7A3F]/35 space-y-2">
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#6B7A3F] font-bold">
+                    <label htmlFor="mpesa-phone" className="block text-[10px] font-mono uppercase tracking-wider text-[#6B7A3F] font-bold">
                       M-Pesa Registered Mobile Number
                     </label>
                     <input
+                      id="mpesa-phone"
                       type="tel"
                       value={mpesaPhone || phone}
                       onChange={(e) => setMpesaPhone(e.target.value)}

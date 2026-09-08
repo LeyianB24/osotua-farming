@@ -48,7 +48,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (saved) {
         const parsed = JSON.parse(saved);
         queueMicrotask(() => {
-          setCart(parsed);
+          if (Array.isArray(parsed)) {
+            setCart((current) => current.length > 0 ? current : parsed);
+          }
           setIsHydrated(true);
         });
         return;

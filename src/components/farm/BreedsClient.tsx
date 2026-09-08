@@ -49,12 +49,12 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
   const hasFilters = selectedSpecies !== "all" || queryTrimmed !== "";
 
   return (
-    <section className="bg-[#F5F0E8] text-[#1C1208] pb-32 pt-10 relative">
+    <section className="bg-[#F5F0E8] text-[#1C1208] pb-40 pt-10 sm:pb-56 relative">
       <div className="os-container relative z-10 space-y-12">
 
         {/* ── CONTROL BAR (Figma Clean Cream Style) ── */}
         <div
-          className="bg-[#FAF7F2] p-6 sm:p-8 border border-[#D4C9B0] space-y-6 shadow-sm"
+          className="os-panel space-y-6"
           style={{ borderRadius: "2px" }}
         >
           {/* Search + sort row */}
@@ -171,7 +171,6 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
               <BreedCard
                 key={breed.id}
                 breed={breed}
-                onInspectGenetics={(b) => setInspectingBreed(b)}
               />
             ))}
           </div>

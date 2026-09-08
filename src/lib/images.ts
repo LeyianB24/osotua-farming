@@ -7,12 +7,11 @@ export const LOGO = "/logo.png"
 const img = (p: string) => `/images/${p}`
 
 // ── Background / hero / section imagery (authentic ranch shots) ──
-export const HERO_IMAGE = img("brahman cows.jpg")
-export const RANCH_WIDE = img("brahman cows.jpg")
-export const RANCH_PANO = img("brahman cows.jpg")
+export const HERO_IMAGE = img("brahmangreen.jpeg")
+export const RANCH_WIDE = img("brahmangreen.jpeg")
+export const RANCH_PANO = img("brahmangreen.jpeg")
 export const FIELD_DAY = img("WhatsApp Image 2026-08-10 at 11.56.50.jpeg")
 export const HERD_FIELD = img("WhatsApp Image 2026-08-10 at 11.55.21.jpeg")
-export const RANGELANDS_HERD = img("osotua-rangelands-herd.jpg")
 
 // Authentic ranch photos — used in slideshows/galleries.
 export const RANCH_GALLERY: string[] = [

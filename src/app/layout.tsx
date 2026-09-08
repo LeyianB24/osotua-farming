@@ -3,7 +3,6 @@ import { Playfair_Display, Source_Sans_3, Cormorant_Garamond, Plus_Jakarta_Sans,
 import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
-import WhatsAppFAB from "@/components/shared/WhatsAppFAB"
 import Providers from "@/components/shared/Providers"
 import ScrollReveal from "@/components/shared/ScrollReveal"
 
@@ -123,7 +122,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CartProvider>
             <div id="main-content">{children}</div>
             <ToastContainer />
-            <WhatsAppFAB />
           </CartProvider>
         </Providers>
 

@@ -68,7 +68,7 @@ const pantryProducts = [
 
 export default function BarnStoreBento() {
   return (
-    <section className="py-24 lg:py-32" style={{ backgroundColor: "#F5F0E8" }}>
+    <section className="pb-28 pt-20 lg:pb-36 lg:pt-24" style={{ backgroundColor: "#F5F0E8" }}>
       <div className="os-container">
         {/* Section Header Row */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 lg:mb-16">

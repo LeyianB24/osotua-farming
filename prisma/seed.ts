@@ -377,7 +377,13 @@ async function main() {
 
   // 1. Users
   const USERS = [
-    { name: "Farm Administrator", email: "admin@osotuafarming.co.ke", phone: "+254700000000", password: "Admin1234!", role: UserRole.ADMIN },
+    {
+      name: process.env.ADMIN_NAME || "Farm Administrator",
+      email: process.env.ADMIN_EMAIL || "admin@osotuafarming.co.ke",
+      phone: process.env.ADMIN_PHONE || "+254700000000",
+      password: process.env.ADMIN_PASSWORD || "Admin1234!",
+      role: UserRole.ADMIN,
+    },
     { name: "Farm Operations", email: "admin@osotua.co.ke", phone: "+254700000001", password: "Admin1234!", role: UserRole.ADMIN },
     { name: "Joyce Wambui", email: "operator@osotua.co.ke", phone: "+254711000111", password: "Operator12!", role: UserRole.ADMIN },
     { name: "Daniel Otieno", email: "customer@osotua.co.ke", phone: "+254722000222", password: "Customer1!", role: UserRole.CUSTOMER },

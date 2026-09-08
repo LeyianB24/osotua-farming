@@ -114,8 +114,8 @@ export default function BarnClient({ initialProducts, categories }: Props) {
         )}
 
         {/* ── CONTROL BAR ── */}
-        <div
-          className="bg-[#FAF7F2] p-6 sm:p-8 border border-[#D4C9B0] space-y-6 shadow-sm"
+          <div
+          className="os-panel space-y-6"
           style={{ borderRadius: "2px" }}
         >
           {/* Search row */}

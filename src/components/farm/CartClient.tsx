@@ -133,7 +133,7 @@ export default function CartClient() {
                     {/* Quantity Controller */}
                     <div className="flex items-center border border-[#D4C9B0] rounded-[2px] bg-white overflow-hidden">
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.id, -1)}
                         className="w-8 h-8 flex items-center justify-center text-[#1C1208] font-bold hover:bg-[#EDE6DA] cursor-pointer"
                         aria-label="Decrease quantity"
                       >
@@ -143,7 +143,7 @@ export default function CartClient() {
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.id, 1)}
                         className="w-8 h-8 flex items-center justify-center text-[#1C1208] font-bold hover:bg-[#EDE6DA] cursor-pointer"
                         aria-label="Increase quantity"
                       >
