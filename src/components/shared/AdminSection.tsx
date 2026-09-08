@@ -21,60 +21,35 @@ export function AdminSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-[#FBF7F0] p-6 text-[#1C1208] sm:p-10">
+    <div className="min-h-screen bg-[#FBF7F0] p-4 sm:p-8 lg:p-10 text-[#1C1208]">
       {/* Header card */}
-      <div
-        className="os-panel mb-8 flex flex-wrap items-center justify-between gap-6 sm:p-8"
-        style={{
-          background: "#FAF7F2",
-          border: "1px solid var(--parchment)",
-          boxShadow: "var(--shadow-card)",
-          position: "relative",
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "1.5rem",
-        }}
-      >
+      <div className="os-panel mb-8 p-6 sm:p-8 bg-white border border-[#C4882A]/20 shadow-xs relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div
-          style={{
-            position: "absolute", top: "-5rem", right: "-5rem", width: "300px", height: "300px",
-            borderRadius: "50%", background: "rgba(196,136,42,0.06)",
-            pointerEvents: "none",
-          }}
+          className="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-[#C4882A]/5 pointer-events-none blur-xl"
+          aria-hidden="true"
         />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div
-            style={{
-              display: "flex", alignItems: "center", gap: "0.75rem",
-              fontFamily: "var(--font-space-grotesk), monospace",
-              fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.2em",
-              textTransform: "uppercase", color: "#8E5E16", marginBottom: "0.75rem",
-            }}
-          >
-            {icon && <i className={`bi ${icon}`} />}
-            {eyebrow}
+
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/10 border border-[#C4882A]/30 text-[#8E5E16] mb-3">
+            {icon && <i className={`bi ${icon} text-[#C4882A]`} />}
+            <span>{eyebrow}</span>
           </div>
-          <h1
-            style={{
-              fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), Georgia, serif",
-              fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "#1C1208", lineHeight: 1.05,
-            }}
-          >
+
+          <h1 className="font-serif text-3xl sm:text-4xl text-[#1C1208] font-normal leading-tight">
             {title}
           </h1>
+
           {count !== undefined && (
-            <div style={{ marginTop: "0.5rem", color: "#6B553E", fontSize: "0.85rem" }}>
-              <span style={{ color: "#C4882A", fontFamily: "var(--font-space-grotesk), monospace", fontWeight: 700 }}>
+            <div className="mt-2 text-xs font-mono text-[#786550] flex items-center gap-1.5">
+              <span className="font-bold text-[#C4882A] text-sm">
                 {count}
-              </span>{" "}
-              {countLabel}
+              </span>
+              <span>{countLabel || "records active in database"}</span>
             </div>
           )}
         </div>
-        {action && <div style={{ position: "relative", zIndex: 1 }}>{action}</div>}
+
+        {action && <div className="relative z-10 shrink-0">{action}</div>}
       </div>
 
       {children}
@@ -97,45 +72,28 @@ export function AdminTable({
   emptyText?: string
 }) {
   return (
-    <div
-        className="os-panel overflow-hidden p-0"
-        style={{
-        background: "#FFFFFF",
-        border: "1px solid var(--parchment)",
-        boxShadow: "var(--shadow-card)",
-      }}
-    >
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
+    <div className="bg-white rounded-2xl border border-[#C4882A]/20 overflow-hidden shadow-xs">
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-left text-xs">
           <thead>
-            <tr style={{ background: "rgba(250, 245, 235, 0.9)", borderBottom: "1px solid rgba(196, 136, 42, 0.15)" }}>
+            <tr className="bg-[#FAF8F5] border-b border-[#C4882A]/15 font-mono text-[10px] text-[#8E5E16] font-bold uppercase tracking-wider">
               {headers.map((h) => (
-                <th
-                  key={h}
-                  style={{
-                    padding: "1rem 1.25rem",
-                    fontFamily: "var(--font-space-grotesk), monospace",
-                    fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em",
-                    textTransform: "uppercase", color: "#8E5E16",
-                    textAlign: "left",
-                  }}
-                >
+                <th key={h} className="p-4 sm:p-4.5 whitespace-nowrap">
                   {h}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody>{children}</tbody>
+          <tbody className="divide-y divide-[#C4882A]/10">{children}</tbody>
         </table>
 
         {empty && (
-          <div style={{ textAlign: "center", padding: "4rem 2rem" }}>
+          <div className="text-center py-16 px-4">
             <i
-              className={`bi ${emptyIcon || "bi-inbox"}`}
-              style={{ fontSize: "2.5rem", color: "rgba(196,136,42,0.3)", display: "block", marginBottom: "1rem" }}
+              className={`bi ${emptyIcon || "bi-inbox"} text-4xl text-[#C4882A]/30 block mb-3`}
             />
-            <p style={{ color: "#786550", fontSize: "0.9rem" }}>
-              {emptyText || "No records found."}
+            <p className="text-xs font-mono text-[#786550]">
+              {emptyText || "No records recorded yet."}
             </p>
           </div>
         )}
@@ -154,12 +112,9 @@ export function AdminRow({
 }) {
   return (
     <tr
-      style={{
-        borderBottom: "1px solid rgba(196, 136, 42, 0.1)",
-        background: index % 2 === 0 ? "#FFFFFF" : "#FAF8F5",
-        transition: "background 0.15s ease",
-      }}
-      className="hover:bg-[#FAF5EB]"
+      className={`transition-colors hover:bg-[#FAF8F5] ${
+        index % 2 === 0 ? "bg-white" : "bg-[#FAFBF9]"
+      }`}
     >
       {children}
     </tr>
@@ -180,13 +135,13 @@ export function TD({
 }) {
   return (
     <td
-      style={{
-        padding: "1rem 1.25rem",
-        fontFamily: mono ? "var(--font-space-grotesk), monospace" : "inherit",
-        fontSize: mono ? "0.8rem" : "0.88rem",
-        color: accent ? "#C4882A" : muted ? "#786550" : "#1C1208",
-        fontWeight: mono ? 600 : 400,
-      }}
+      className={`p-4 sm:p-4.5 text-xs ${mono ? "font-mono" : "font-sans"} ${
+        accent
+          ? "text-[#C4882A] font-bold"
+          : muted
+          ? "text-[#786550]"
+          : "text-[#1C1208] font-medium"
+      }`}
     >
       {children}
     </td>
@@ -197,30 +152,37 @@ export function TD({
 export function StatusBadge({ status }: { status: string }) {
   const s = status?.toUpperCase() ?? ""
 
-  const color =
-    s === "ACTIVE" || s === "DELIVERED" || s === "PAID" || s === "COMPLETED" || s === "CONFIRMED"
-      ? { bg: "rgba(46,125,50,0.12)", border: "rgba(46,125,50,0.35)", text: "#2E7D32" }
-      : s === "PENDING" || s === "PROCESSING"
-      ? { bg: "rgba(196,136,42,0.14)", border: "rgba(196,136,42,0.35)", text: "#8E5E16" }
-      : s === "CANCELLED" || s === "SUSPENDED" || s === "REJECTED"
-      ? { bg: "rgba(196,67,30,0.12)", border: "rgba(196,67,30,0.35)", text: "#C2410C" }
-      : { bg: "rgba(28,18,8,0.06)", border: "rgba(28,18,8,0.15)", text: "#5C4835" }
+  const isSuccess =
+    s === "ACTIVE" ||
+    s === "DELIVERED" ||
+    s === "PAID" ||
+    s === "COMPLETED" ||
+    s === "CONFIRMED" ||
+    s === "APPROVED"
+
+  const isPending =
+    s === "PENDING" ||
+    s === "PROCESSING" ||
+    s === "DEPOSIT_PAID" ||
+    s === "READY" ||
+    s === "REVIEWING"
+
+  const isDanger =
+    s === "CANCELLED" ||
+    s === "SUSPENDED" ||
+    s === "REJECTED"
 
   return (
     <span
-      style={{
-        display: "inline-block",
-        padding: "0.25rem 0.65rem",
-        borderRadius: "100px",
-        background: color.bg,
-        border: `1px solid ${color.border}`,
-        color: color.text,
-        fontFamily: "var(--font-space-grotesk), monospace",
-        fontSize: "0.58rem",
-        fontWeight: 700,
-        letterSpacing: "0.14em",
-        textTransform: "uppercase",
-      }}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase tracking-wider ${
+        isSuccess
+          ? "bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30"
+          : isPending
+          ? "bg-[#C4882A]/15 text-[#8E5E16] border border-[#C4882A]/35"
+          : isDanger
+          ? "bg-[#C2410C]/12 text-[#C2410C] border border-[#C2410C]/30"
+          : "bg-[#1C1208]/5 text-[#5C4835] border border-[#1C1208]/15"
+      }`}
     >
       {status}
     </span>

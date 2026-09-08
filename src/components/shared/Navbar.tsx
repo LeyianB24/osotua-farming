@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "./CartContext";
 import { LOGO } from "@/lib/images";
@@ -22,9 +21,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { cartCount: ctxCartCount } = useCart();
-  const { data: session } = useSession();
   const cartCount = ctxCartCount ?? initialCartCount ?? 0;
-  const isAdmin = (session?.user as { role?: string } | undefined)?.role === "ADMIN";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -180,20 +177,6 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
               >
                 Member Portal
               </Link>
-              {isAdmin && (
-                <Link
-                  href="/admin"
-                  style={{
-                    fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
-                    fontSize: "0.88rem",
-                    fontWeight: 600,
-                    color: "#C99A2E",
-                    textDecoration: "none",
-                  }}
-                >
-                  Admin HQ
-                </Link>
-              )}
               {/* Visit Us link */}
               <Link
                 href="/visit"
@@ -370,7 +353,7 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             className="lg:hidden"
           >
             <nav style={{ display: "flex", flexDirection: "column", gap: "4px" }} aria-label="Mobile navigation">
-              {[...navLinks, { label: "Customer Portal", href: "/dashboard" }].map((link, i) => {
+              {[...navLinks, { label: "Member Portal", href: "/dashboard" }].map((link, i) => {
                 const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`));
                 return (
                   <motion.div

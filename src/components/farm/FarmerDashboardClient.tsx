@@ -2,965 +2,834 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 
-interface DashboardProps {
-  coopName?: string
-  userName?: string
-  metrics?: {
-    portfolioValue: number
-    headCount: number
-    yieldYtd: string
-    nextPayout: string
+interface OrderItemSummary {
+  id: string
+  name: string
+  quantity: number
+  unitPrice: number
+  image?: string | null
+}
+
+interface OrderSummary {
+  id: string
+  status: string
+  totalAmount: number
+  createdAt: string
+  deliveryAddress?: string | null
+  paymentMethod?: string | null
+  items: OrderItemSummary[]
+}
+
+interface SubscriptionSummary {
+  id: string
+  productName: string
+  categoryName: string
+  frequency: string
+  status: string
+  nextDelivery: string | null
+}
+
+interface FarmVisitSummary {
+  id: string
+  visitDate: string
+  groupSize: number
+  purpose?: string | null
+  status: string
+}
+
+interface MemberDashboardProps {
+  user: {
+    id: string
+    name: string
+    email: string
+    role: string
   }
-  categories?: Array<{ id: string; name: string }>
+  orders: OrderSummary[]
+  subscriptions: SubscriptionSummary[]
+  visits: FarmVisitSummary[]
+  partnerProfile?: {
+    fullName: string
+    location: string
+    supplyType: string
+    status: string
+  } | null
+  categories: Array<{ id: string; name: string }>
+  totalSpent: number
 }
 
 export default function FarmerDashboardClient({
-  coopName = "Kajiado Co-op",
-  userName = "Amina",
-  metrics = {
-    portfolioValue: 480000,
-    headCount: 14,
-    yieldYtd: "+8.2%",
-    nextPayout: "Sep 18",
-  },
-  categories = [],
-}: DashboardProps) {
-  const [showAddModal, setShowAddModal] = useState(false)
-  const [adding, setAdding] = useState(false)
-  const [statementModal, setStatementModal] = useState(false)
-  const [form, setForm] = useState({
+  user,
+  orders,
+  subscriptions,
+  visits,
+  partnerProfile,
+  categories,
+  totalSpent,
+}: MemberDashboardProps) {
+  const [activeTab, setActiveTab] = useState<"overview" | "orders" | "subscriptions" | "visits">("overview")
+  const [showAddProduceModal, setShowAddProduceModal] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [produceForm, setProduceForm] = useState({
     name: "",
     price: "",
     unit: "kg",
     categoryId: categories[0]?.id || "",
-    stockQty: "20",
+    stockQty: "25",
     description: "",
   })
 
-  const handleAddSubmit = async (e: React.FormEvent) => {
+  const firstName = user.name ? user.name.split(" ")[0] : "Patron"
+  const memberCode = `OS-${user.id.slice(-6).toUpperCase()}`
+
+  const handleProduceSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setAdding(true)
+    setSubmitting(true)
     try {
-      const slug = form.name.toLowerCase().trim().replace(/[^a-z0-9]/g, "-")
+      const slug = produceForm.name.toLowerCase().trim().replace(/[^a-z0-9]/g, "-")
       const res = await fetch("/api/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.name,
+          name: produceForm.name,
           slug: `${slug}-${Date.now().toString().slice(-4)}`,
-          price: Number(form.price),
-          unit: form.unit,
-          categoryId: form.categoryId || categories[0]?.id,
-          stockQty: Number(form.stockQty),
-          description: form.description || `Freshly harvested ${form.name} from ${coopName}.`,
+          price: Number(produceForm.price),
+          unit: produceForm.unit,
+          categoryId: produceForm.categoryId || categories[0]?.id,
+          stockQty: Number(produceForm.stockQty),
+          description: produceForm.description || `Organic farm harvest supplied by ${user.name}.`,
           inStock: true,
         }),
       })
+
       if (res.ok) {
-        setShowAddModal(false)
-        window.location.reload()
+        alert("Produce listing submitted successfully to Osotua Cold Storage catalog!")
+        setShowAddProduceModal(false)
+        setProduceForm({
+          name: "",
+          price: "",
+          unit: "kg",
+          categoryId: categories[0]?.id || "",
+          stockQty: "25",
+          description: "",
+        })
       } else {
-        alert("Could not save listing")
+        const data = await res.json().catch(() => ({}))
+        alert(data.error || "Failed to submit produce listing. Please check required fields.")
       }
     } catch {
-      alert("Error saving listing")
+      alert("Network error while submitting listing.")
     } finally {
-      setAdding(false)
+      setSubmitting(false)
     }
   }
 
   return (
-    <div
-      style={{
-        background: "#F6F1E6",
-        minHeight: "100vh",
-        color: "#211C15",
-        fontFamily: "var(--font-inter, 'Inter'), sans-serif",
-      }}
-      className="pb-24"
-    >
-      {/* ── 1. PORTAL HEADER BAR ── */}
-      <header
-        style={{
-          background: "#F6F1E6",
-          borderBottom: "1px solid #E4DCC8",
-          padding: "16px 28px",
-        }}
-        className="flex items-center justify-between sticky top-0 z-30 shadow-xs"
-      >
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="w-9 h-9 rounded-full bg-[#211C15] flex items-center justify-center text-[#C4922E] text-sm shrink-0 transition-transform hover:scale-105"
-            aria-label="Osotua Farming Home"
-          >
-            ◈
-          </Link>
+    <div className="min-h-screen bg-[#FBF7F0] p-4 sm:p-8 lg:p-10 text-[#1C1208]">
+      {/* ── 1. PATRON WELCOME BANNER ── */}
+      <div className="os-panel mb-8 p-6 sm:p-8 relative overflow-hidden bg-gradient-to-br from-[#FAF7F2] via-white to-[#F5EFE4] border border-[#C4882A]/20 shadow-[0_4px_24px_rgba(28,18,8,0.04)]">
+        {/* Background decorative watermark */}
+        <div
+          className="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-[#C4882A]/5 pointer-events-none blur-2xl"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#3D6B3E]/10 border border-[#3D6B3E]/25 text-[#2E7D32] mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D32] animate-pulse" />
+              <span>Verified Patron Suite &bull; {memberCode}</span>
+            </div>
+
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1C1208] font-normal leading-tight">
+              Welcome back, <em className="italic font-normal text-[#C4882A]">{firstName}</em>
+            </h1>
+            <p className="text-xs sm:text-sm text-[#5C4835] mt-1.5 max-w-xl font-mono">
+              Live tracking for your grass-fed orders, recurring harvests, and ranch reservations at Osotua Kajiado.
+            </p>
+          </div>
+
+          {/* Quick Action Speed Dial */}
+          <div className="flex items-center gap-3 flex-wrap">
             <Link
-              href="/"
-              style={{
-                fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                fontSize: "16px",
-                lineHeight: 1.1,
-                color: "#211C15",
-                textDecoration: "none",
-              }}
-              className="font-normal block hover:text-[#C4922E] transition-colors"
+              href="/barn"
+              className="btn-primary py-2.5 px-4 text-xs font-mono uppercase tracking-wider font-bold shadow-xs flex items-center gap-2"
             >
-              Osotua Farming
+              <i className="bi bi-shop" />
+              <span>Shop The Barn</span>
             </Link>
-            <div
-              style={{
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                fontSize: "9px",
-                color: "#C4922E",
-                fontWeight: 700,
-              }}
+
+            <Link
+              href="/visit"
+              className="btn-ghost py-2.5 px-4 text-xs font-mono uppercase tracking-wider font-bold bg-white text-[#1C1208] border-[#C4882A]/30 hover:border-[#C4882A] flex items-center gap-2 shadow-xs"
             >
-              Partner Portal
-            </div>
-          </div>
-        </div>
+              <i className="bi bi-calendar2-heart text-[#C4882A]" />
+              <span>Book Visit</span>
+            </Link>
 
-        <div className="flex items-center gap-4">
-          <button
-            type="button"
-            onClick={() => setShowAddModal(true)}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#211C15] text-[#FFFFFF] hover:bg-[#C4922E] transition-all"
-          >
-            <i className="bi bi-plus-lg text-[#C4922E]" />
-            <span>List Produce</span>
-          </button>
-
-          <div
-            style={{
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              fontSize: "10px",
-              color: "#211C15",
-              fontWeight: 600,
-            }}
-          >
-            Welcome back, {userName}
-          </div>
-        </div>
-      </header>
-
-      {/* ── 2. DASHBOARD BODY ── */}
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-8 pt-8">
-        
-        {/* Page Title & Subtitle */}
-        <div className="mb-6">
-          <h1
-            style={{
-              fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-              fontSize: "clamp(26px, 3.5vw, 34px)",
-              color: "#211C15",
-              fontWeight: 400,
-              lineHeight: 1.15,
-              marginBottom: "4px",
-            }}
-          >
-            Your <span style={{ fontStyle: "italic", color: "#C4922E" }}>portfolio</span>
-          </h1>
-          <p style={{ fontSize: "14px", color: "#6B6558", margin: 0 }}>
-            A snapshot of your livestock holdings and produce shares in the Kajiado herd.
-          </p>
-        </div>
-
-        {/* ── 3. STAT STRIP (4 Spacious Floating White Cards) ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10">
-          {/* Stat 1: Portfolio Value */}
-          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#C4922E] flex items-center justify-center mb-4">
-                <i className="bi bi-wallet2 text-lg" />
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "clamp(24px, 2.5vw, 30px)",
-                  color: "#211C15",
-                  fontWeight: 400,
-                  lineHeight: 1.1,
-                }}
-              >
-                KSh {metrics.portfolioValue.toLocaleString()}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "10px",
-                  color: "#8E5E16",
-                  fontWeight: 700,
-                  marginTop: "8px",
-                }}
-              >
-                PORTFOLIO VALUE
-              </div>
-            </div>
-            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
-              Total estimated livestock and harvest equity.
-            </p>
-          </div>
-
-          {/* Stat 2: Livestock Owned */}
-          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#3F6B3F] flex items-center justify-center mb-4">
-                <i className="bi bi-award text-lg" />
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "clamp(24px, 2.5vw, 30px)",
-                  color: "#211C15",
-                  fontWeight: 400,
-                  lineHeight: 1.1,
-                }}
-              >
-                {metrics.headCount} head
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "10px",
-                  color: "#3F6B3F",
-                  fontWeight: 700,
-                  marginTop: "8px",
-                }}
-              >
-                LIVESTOCK OWNED
-              </div>
-            </div>
-            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
-              Tagged &amp; registered in Kajiado stud registry.
-            </p>
-          </div>
-
-          {/* Stat 3: Yield YTD */}
-          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#C4922E] flex items-center justify-center mb-4">
-                <i className="bi bi-graph-up-arrow text-lg" />
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "clamp(24px, 2.5vw, 30px)",
-                  color: "#211C15",
-                  fontWeight: 400,
-                  lineHeight: 1.1,
-                }}
-              >
-                {metrics.yieldYtd}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "10px",
-                  color: "#8E5E16",
-                  fontWeight: 700,
-                  marginTop: "8px",
-                }}
-              >
-                YIELD, YTD
-              </div>
-            </div>
-            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
-              Herd weight gain and milk production return.
-            </p>
-          </div>
-
-          {/* Stat 4: Next Payout */}
-          <div className="bg-white rounded-[20px] p-6 sm:p-7 border border-[#EDE6D6] shadow-[0_10px_30px_rgba(33,28,21,0.04)] hover:shadow-md transition-all flex flex-col justify-between">
-            <div>
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#3F6B3F] flex items-center justify-center mb-4">
-                <i className="bi bi-calendar-check text-lg" />
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "clamp(24px, 2.5vw, 30px)",
-                  color: "#211C15",
-                  fontWeight: 400,
-                  lineHeight: 1.1,
-                }}
-              >
-                {metrics.nextPayout}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-space-grotesk, 'Space Grotesk'), monospace",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "10px",
-                  color: "#3F6B3F",
-                  fontWeight: 700,
-                  marginTop: "8px",
-                }}
-              >
-                NEXT PAYOUT
-              </div>
-            </div>
-            <p className="text-xs text-[#6B6558] mt-3 leading-relaxed">
-              M-Pesa automatic settlement date.
-            </p>
-          </div>
-        </div>
-
-        {/* ── 4. TWO-COLUMN GRID: HOLDINGS + SIDE PANEL ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* LEFT COLUMN: HOLDINGS & ACTIVITY (7 cols) */}
-          <div className="lg:col-span-7 space-y-8">
-            
-            {/* Holdings Section */}
-            <div>
-              <div className="flex justify-between items-baseline mb-3">
-                <h2
-                  style={{
-                    fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                    fontSize: "19px",
-                    color: "#211C15",
-                    margin: 0,
-                  }}
-                >
-                  Your holdings
-                </h2>
-                <Link
-                  href="/breeds"
-                  style={{
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    fontSize: "10px",
-                    color: "#C4922E",
-                    fontWeight: 700,
-                    textDecoration: "none",
-                  }}
-                  className="hover:underline"
-                >
-                  VIEW ALL →
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                {/* Holding Card 1: Boran Herd */}
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    border: "1px solid #EDE6D6",
-                  }}
-                  className="shadow-xs hover:shadow-lg hover:border-[#C4922E]/40 transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="relative h-36 w-full bg-stone-100">
-                      <Image
-                        src="/images/boran bulls.jpg"
-                        alt="Boran East Africa Herd"
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute top-2.5 left-2.5 bg-[#14100A]/70 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
-                        BEEF CATTLE
-                      </div>
-                      <div className="absolute top-2.5 right-2.5 bg-[#3F6B3F] text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
-                        6 HEAD
-                      </div>
-                    </div>
-
-                    <div className="p-4 space-y-1">
-                      <div
-                        style={{
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          fontSize: "10px",
-                          color: "#C4922E",
-                          fontWeight: 700,
-                        }}
-                      >
-                        BORAN
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "17px",
-                          color: "#211C15",
-                          lineHeight: 1.25,
-                        }}
-                      >
-                        East Africa herd
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 pt-2 flex justify-between items-center border-t border-stone-100 mt-2">
-                    <div>
-                      <div
-                        style={{
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          fontSize: "9px",
-                          color: "#6B6558",
-                          fontWeight: 600,
-                        }}
-                      >
-                        SHARE VALUE
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "16px",
-                          color: "#211C15",
-                          fontWeight: 500,
-                          marginTop: "2px",
-                        }}
-                      >
-                        KSh 270,000
-                      </div>
-                    </div>
-
-                    <Link
-                      href="/breeds"
-                      style={{
-                        background: "#211C15",
-                        color: "#FFFFFF",
-                        fontSize: "10px",
-                        padding: "6px 12px",
-                        borderRadius: "8px",
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        fontWeight: 700,
-                        textDecoration: "none",
-                      }}
-                      className="hover:bg-[#C4922E] hover:text-[#211C15] transition-colors"
-                    >
-                      VIEW →
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Holding Card 2: Boer x Galla Flock */}
-                <div
-                  style={{
-                    background: "#FFFFFF",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    border: "1px solid #EDE6D6",
-                  }}
-                  className="shadow-xs hover:shadow-lg hover:border-[#C4922E]/40 transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="relative h-36 w-full bg-stone-100">
-                      <Image
-                        src="/images/boer goat.jpg"
-                        alt="Boer and Galla Goats Flock"
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute top-2.5 left-2.5 bg-[#14100A]/70 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
-                        GOATS
-                      </div>
-                      <div className="absolute top-2.5 right-2.5 bg-[#3F6B3F] text-white px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider">
-                        8 HEAD
-                      </div>
-                    </div>
-
-                    <div className="p-4 space-y-1">
-                      <div
-                        style={{
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          fontSize: "10px",
-                          color: "#C4922E",
-                          fontWeight: 700,
-                        }}
-                      >
-                        BOER × GALLA
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "17px",
-                          color: "#211C15",
-                          lineHeight: 1.25,
-                        }}
-                      >
-                        Nakuru flock
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 pt-2 flex justify-between items-center border-t border-stone-100 mt-2">
-                    <div>
-                      <div
-                        style={{
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          fontSize: "9px",
-                          color: "#6B6558",
-                          fontWeight: 600,
-                        }}
-                      >
-                        SHARE VALUE
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                          fontSize: "16px",
-                          color: "#211C15",
-                          fontWeight: 500,
-                          marginTop: "2px",
-                        }}
-                      >
-                        KSh 210,000
-                      </div>
-                    </div>
-
-                    <Link
-                      href="/breeds"
-                      style={{
-                        background: "#211C15",
-                        color: "#FFFFFF",
-                        fontSize: "10px",
-                        padding: "6px 12px",
-                        borderRadius: "8px",
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        fontWeight: 700,
-                        textDecoration: "none",
-                      }}
-                      className="hover:bg-[#C4922E] hover:text-[#211C15] transition-colors"
-                    >
-                      VIEW →
-                    </Link>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* Recent Activity */}
-            <div>
-              <div
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "19px",
-                  color: "#211C15",
-                  marginBottom: "12px",
-                }}
-              >
-                Recent activity
-              </div>
-
-              <div
-                style={{
-                  background: "#FFFFFF",
-                  borderRadius: "14px",
-                  border: "1px solid #EDE6D6",
-                  overflow: "hidden",
-                }}
-                className="shadow-xs"
-              >
-                <div className="flex justify-between items-center px-4 py-3.5 border-b border-[#EDE6D6] text-[13px]">
-                  <span>Quarterly payout — Boran herd</span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                      color: "#3F6B3F",
-                      fontWeight: 500,
-                    }}
-                  >
-                    +KSh 18,400
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center px-4 py-3.5 border-b border-[#EDE6D6] text-[13px]">
-                  <span>Share purchase — Nakuru flock</span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                      color: "#211C15",
-                      fontWeight: 500,
-                    }}
-                  >
-                    KSh 210,000
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center px-4 py-3.5 text-[13px]">
-                  <span>Produce credit — Ranch Box x4</span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                      color: "#3F6B3F",
-                      fontWeight: 500,
-                    }}
-                  >
-                    +KSh 2,100
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* RIGHT COLUMN: UPCOMING PAYOUTS & HERD HEALTH (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Upcoming Payouts Dark Card */}
-            <div>
-              <div
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "19px",
-                  color: "#211C15",
-                  marginBottom: "12px",
-                }}
-              >
-                Upcoming payouts
-              </div>
-
-              <div
-                style={{
-                  background: "#211C15",
-                  color: "#F6F1E6",
-                  borderRadius: "14px",
-                  padding: "20px",
-                }}
-                className="shadow-md"
-              >
-                <div
-                  style={{
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    fontSize: "9px",
-                    color: "#C4922E",
-                    fontWeight: 700,
-                    marginBottom: "6px",
-                  }}
-                >
-                  NEXT PAYOUT &bull; SEP 18
-                </div>
-
-                <div
-                  style={{
-                    fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                    fontSize: "26px",
-                    marginBottom: "8px",
-                  }}
-                >
-                  KSh 24,600
-                </div>
-
-                <p style={{ fontSize: "12px", color: "#CFC7B4", margin: "0 0 16px", lineHeight: 1.5 }}>
-                  Quarterly distribution across your Boran and Nakuru shares.
-                </p>
-
-                <button
-                  type="button"
-                  onClick={() => setStatementModal(true)}
-                  style={{
-                    background: "#C4922E",
-                    color: "#211C15",
-                    width: "100%",
-                    textAlign: "center",
-                    padding: "10px",
-                    borderRadius: "6px",
-                    fontSize: "11px",
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    fontWeight: 700,
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                  className="hover:bg-[#A97B22] transition-colors"
-                >
-                  VIEW STATEMENT →
-                </button>
-              </div>
-            </div>
-
-            {/* Herd Health */}
-            <div>
-              <div
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), var(--font-cormorant), Georgia, serif",
-                  fontSize: "19px",
-                  color: "#211C15",
-                  marginBottom: "12px",
-                }}
-              >
-                Herd health
-              </div>
-
-              <div
-                style={{
-                  background: "#FFFFFF",
-                  borderRadius: "14px",
-                  border: "1px solid #EDE6D6",
-                  padding: "18px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "14px",
-                }}
-                className="shadow-xs"
-              >
-                <div>
-                  <div className="flex justify-between text-xs mb-1.5 font-medium">
-                    <span>Boran herd</span>
-                    <span style={{ color: "#3F6B3F", fontWeight: 700 }}>Healthy</span>
-                  </div>
-                  <div style={{ height: "6px", background: "#EDE6D6", borderRadius: "3px" }}>
-                    <div style={{ width: "92%", height: "100%", background: "#3F6B3F", borderRadius: "3px" }} />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-xs mb-1.5 font-medium">
-                    <span>Nakuru flock</span>
-                    <span style={{ color: "#C4922E", fontWeight: 700 }}>Monitoring</span>
-                  </div>
-                  <div style={{ height: "6px", background: "#EDE6D6", borderRadius: "3px" }}>
-                    <div style={{ width: "70%", height: "100%", background: "#C4922E", borderRadius: "3px" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Action: List Available Produce */}
-            <div
-              style={{
-                background: "#FFFFFF",
-                borderRadius: "14px",
-                border: "1px dashed #C4922E",
-                padding: "16px",
-              }}
-              className="text-center space-y-2"
+            <button
+              onClick={() => setShowAddProduceModal(true)}
+              className="btn-ghost py-2.5 px-4 text-xs font-mono uppercase tracking-wider font-bold bg-white text-[#1C1208] border-[#C4882A]/30 hover:border-[#C4882A] flex items-center gap-2 shadow-xs cursor-pointer"
             >
-              <div className="text-[11px] font-bold uppercase tracking-wider text-[#8E5E16]">
-                Cooperative Produce Hub
-              </div>
-              <p className="text-xs text-[#6B6558]">
-                List available shamba harvests or eggs directly to the online marketplace.
-              </p>
-              <button
-                type="button"
-                onClick={() => setShowAddModal(true)}
-                className="btn-primary py-2 px-5 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2"
-              >
-                <i className="bi bi-plus-circle-fill" />
-                <span>Add Available Product</span>
-              </button>
-            </div>
-
+              <i className="bi bi-plus-circle text-[#3D6B3E]" />
+              <span>Supply Harvest</span>
+            </button>
           </div>
-
         </div>
-
       </div>
 
-      {/* ── 5. ADD PRODUCE MODAL (For Farmers & Admins) ── */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#FFFFFF] border border-[#C4882A]/30 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-5">
-            <div className="flex items-center justify-between border-b border-[#EDE6D6] pb-4">
+      {/* ── 2. METRIC KPI CARDS ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+        <div className="bg-white rounded-xl p-5 border border-[#C4882A]/15 shadow-xs hover:shadow-md hover:border-[#C4882A]/30 transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <span className="w-10 h-10 rounded-xl bg-[#FAF5EB] border border-[#C4882A]/20 flex items-center justify-center text-[#C4882A] group-hover:scale-105 transition-transform">
+              <i className="bi bi-bag-check-fill text-lg" />
+            </span>
+            <span className="text-[10px] font-mono uppercase font-bold text-[#786550]">
+              Orders
+            </span>
+          </div>
+          <div className="font-mono text-2xl sm:text-3xl font-bold text-[#1C1208]">
+            {orders.length}
+          </div>
+          <div className="text-[11px] font-mono text-[#8E5E16] mt-1 truncate">
+            KES {totalSpent.toLocaleString()} spent
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-5 border border-[#C4882A]/15 shadow-xs hover:shadow-md hover:border-[#C4882A]/30 transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <span className="w-10 h-10 rounded-xl bg-[#F0F5F0] border border-[#3D6B3E]/20 flex items-center justify-center text-[#2E7D32] group-hover:scale-105 transition-transform">
+              <i className="bi bi-arrow-repeat text-lg" />
+            </span>
+            <span className="text-[10px] font-mono uppercase font-bold text-[#786550]">
+              Subscriptions
+            </span>
+          </div>
+          <div className="font-mono text-2xl sm:text-3xl font-bold text-[#1C1208]">
+            {subscriptions.length}
+          </div>
+          <div className="text-[11px] font-mono text-[#2E7D32] mt-1 truncate">
+            {subscriptions.filter((s) => s.status === "ACTIVE").length} Active Boxes
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-5 border border-[#C4882A]/15 shadow-xs hover:shadow-md hover:border-[#C4882A]/30 transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <span className="w-10 h-10 rounded-xl bg-[#FAF5EB] border border-[#C4882A]/20 flex items-center justify-center text-[#8E5E16] group-hover:scale-105 transition-transform">
+              <i className="bi bi-calendar-event-fill text-lg" />
+            </span>
+            <span className="text-[10px] font-mono uppercase font-bold text-[#786550]">
+              Experiences
+            </span>
+          </div>
+          <div className="font-mono text-2xl sm:text-3xl font-bold text-[#1C1208]">
+            {visits.length}
+          </div>
+          <div className="text-[11px] font-mono text-[#8E5E16] mt-1 truncate">
+            {visits.length > 0 ? "Ranch Visit Scheduled" : "Bookings Available"}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-5 border border-[#C4882A]/15 shadow-xs hover:shadow-md hover:border-[#C4882A]/30 transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <span className="w-10 h-10 rounded-xl bg-[#FBF7F0] border border-[#C4882A]/20 flex items-center justify-center text-[#C4882A] group-hover:scale-105 transition-transform">
+              <i className="bi bi-shield-check text-lg" />
+            </span>
+            <span className="text-[10px] font-mono uppercase font-bold text-[#786550]">
+              Status
+            </span>
+          </div>
+          <div className="font-mono text-lg sm:text-xl font-bold text-[#1C1208] truncate">
+            {partnerProfile ? "Partner Farmer" : "Patron Member"}
+          </div>
+          <div className="text-[11px] font-mono text-[#3D6B3E] mt-1 truncate">
+            100% Grass-Fed Certified
+          </div>
+        </div>
+      </div>
+
+      {/* ── 3. VIEW FILTER TABS ── */}
+      <div className="flex items-center gap-2 border-b border-[#C4882A]/20 mb-6 pb-2 overflow-x-auto">
+        <button
+          onClick={() => setActiveTab("overview")}
+          className={`px-4 py-2 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            activeTab === "overview"
+              ? "bg-[#1C1208] text-white shadow-xs"
+              : "text-[#5C4835] hover:text-[#1C1208] hover:bg-white/60"
+          }`}
+        >
+          <i className="bi bi-grid-fill mr-2 text-[#C4882A]" />
+          Overview
+        </button>
+
+        <button
+          onClick={() => setActiveTab("orders")}
+          className={`px-4 py-2 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            activeTab === "orders"
+              ? "bg-[#1C1208] text-white shadow-xs"
+              : "text-[#5C4835] hover:text-[#1C1208] hover:bg-white/60"
+          }`}
+        >
+          <i className="bi bi-box-seam mr-2 text-[#C4882A]" />
+          My Orders ({orders.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab("subscriptions")}
+          className={`px-4 py-2 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            activeTab === "subscriptions"
+              ? "bg-[#1C1208] text-white shadow-xs"
+              : "text-[#5C4835] hover:text-[#1C1208] hover:bg-white/60"
+          }`}
+        >
+          <i className="bi bi-arrow-repeat mr-2 text-[#C4882A]" />
+          Subscriptions ({subscriptions.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab("visits")}
+          className={`px-4 py-2 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+            activeTab === "visits"
+              ? "bg-[#1C1208] text-white shadow-xs"
+              : "text-[#5C4835] hover:text-[#1C1208] hover:bg-white/60"
+          }`}
+        >
+          <i className="bi bi-calendar2-check mr-2 text-[#C4882A]" />
+          Farm Visits ({visits.length})
+        </button>
+      </div>
+
+      {/* ── 4. TAB CONTENTS ── */}
+
+      {/* OVERVIEW TAB */}
+      {activeTab === "overview" && (
+        <div className="space-y-8">
+          {/* Recent Orders Overview Card */}
+          <div className="bg-white rounded-2xl border border-[#C4882A]/15 overflow-hidden shadow-xs">
+            <div className="p-5 sm:p-6 border-b border-[#C4882A]/15 flex items-center justify-between">
               <div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-fraunces, 'Fraunces'), Georgia, serif",
-                    fontSize: "20px",
-                    color: "#211C15",
-                  }}
-                >
-                  List Available Produce
-                </h3>
-                <p className="text-xs text-[#6B6558]">Add seasonal crops to Osotua Marketplace</p>
+                <h2 className="font-serif text-xl sm:text-2xl text-[#1C1208] font-normal">
+                  Recent Orders & Deliveries
+                </h2>
+                <p className="text-xs text-[#786550] font-mono mt-0.5">
+                  Live dispatch ledger and shipment updates
+                </p>
               </div>
-              <button
-                onClick={() => setShowAddModal(false)}
-                className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 hover:bg-stone-200"
+              <Link
+                href="/dashboard/orders"
+                className="text-xs font-mono font-bold text-[#8E5E16] hover:text-[#C4882A] flex items-center gap-1"
               >
-                <i className="bi bi-x-lg text-sm" />
-              </button>
+                <span>View All Orders</span>
+                <i className="bi bi-arrow-right" />
+              </Link>
             </div>
 
-            <form onSubmit={handleAddSubmit} className="space-y-4">
+            {orders.length > 0 ? (
+              <div className="divide-y divide-[#C4882A]/10">
+                {orders.slice(0, 3).map((order) => (
+                  <div key={order.id} className="p-5 sm:p-6 hover:bg-[#FAF8F4] transition-colors">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-sm font-bold text-[#C4882A]">
+                          #{order.id.slice(-8).toUpperCase()}
+                        </span>
+                        <span className="text-xs font-mono text-[#786550]">
+                          &bull; {new Date(order.createdAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-base font-bold text-[#1C1208]">
+                          KES {order.totalAmount.toLocaleString()}
+                        </span>
+                        <span
+                          className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                            order.status === "DELIVERED"
+                              ? "bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30"
+                              : "bg-[#C4882A]/15 text-[#8E5E16] border border-[#C4882A]/35"
+                          }`}
+                        >
+                          {order.status}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5 mb-3">
+                      {order.items.map((item) => (
+                        <div key={item.id} className="text-xs text-[#5C4835] flex items-center justify-between">
+                          <span className="font-medium text-[#1C1208]">
+                            {item.quantity}× {item.name}
+                          </span>
+                          <span className="font-mono text-[#786550]">
+                            KES {(item.quantity * item.unitPrice).toLocaleString()}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {order.deliveryAddress && (
+                      <div className="text-[11px] font-mono text-[#786550] flex items-center gap-1.5">
+                        <i className="bi bi-geo-alt text-[#C4882A]" />
+                        <span>Delivery to: {order.deliveryAddress}</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-10 text-center">
+                <i className="bi bi-basket text-4xl text-[#C4882A]/40 block mb-3" />
+                <h3 className="font-serif text-lg text-[#1C1208] mb-1">No orders yet</h3>
+                <p className="text-xs text-[#786550] font-mono mb-4">
+                  Browse pasture-raised meat, organic honey, and dairy in our Barn Store.
+                </p>
+                <Link href="/barn" className="btn-primary py-2 px-4 text-xs font-mono font-bold uppercase tracking-wider inline-flex">
+                  Explore Barn Store
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Subscriptions & Farm Visits Dual Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Subscriptions Overview */}
+            <div className="bg-white rounded-2xl border border-[#C4882A]/15 p-6 shadow-xs flex flex-col justify-between">
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
-                  Product / Crop Name
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <i className="bi bi-arrow-repeat text-[#2E7D32] text-lg" />
+                    <h3 className="font-serif text-xl text-[#1C1208]">Active Farm Subscriptions</h3>
+                  </div>
+                  <Link href="/dashboard/subscriptions" className="text-xs font-mono font-bold text-[#8E5E16] hover:text-[#C4882A]">
+                    Manage &rarr;
+                  </Link>
+                </div>
+
+                {subscriptions.length > 0 ? (
+                  <div className="space-y-3">
+                    {subscriptions.slice(0, 2).map((sub) => (
+                      <div key={sub.id} className="p-3 rounded-xl bg-[#FAF8F5] border border-[#C4882A]/15 flex items-center justify-between">
+                        <div>
+                          <div className="text-xs font-bold text-[#1C1208]">{sub.productName}</div>
+                          <div className="text-[10px] font-mono text-[#786550] uppercase">
+                            {sub.frequency} &bull; {sub.categoryName}
+                          </div>
+                        </div>
+                        <span className="px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider font-bold rounded-full bg-[#2E7D32]/10 text-[#2E7D32] border border-[#2E7D32]/30">
+                          {sub.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-[#786550] font-mono py-4">
+                    No recurring farm boxes active. Subscribe to weekly dairy, vegetables, or cuts.
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#C4882A]/15 flex items-center justify-between">
+                <span className="text-[11px] font-mono text-[#786550]">Weekly & Monthly Harvests</span>
+                <Link href="/barn" className="text-xs font-mono font-bold text-[#C4882A] hover:underline">
+                  Subscribe Now
+                </Link>
+              </div>
+            </div>
+
+            {/* Farm Visits Overview */}
+            <div className="bg-white rounded-2xl border border-[#C4882A]/15 p-6 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <i className="bi bi-compass text-[#C4882A] text-lg" />
+                    <h3 className="font-serif text-xl text-[#1C1208]">Ranch Agritourism</h3>
+                  </div>
+                  <Link href="/visit" className="text-xs font-mono font-bold text-[#8E5E16] hover:text-[#C4882A]">
+                    Book &rarr;
+                  </Link>
+                </div>
+
+                {visits.length > 0 ? (
+                  <div className="space-y-3">
+                    {visits.slice(0, 2).map((visit) => (
+                      <div key={visit.id} className="p-3 rounded-xl bg-[#FAF8F5] border border-[#C4882A]/15 flex items-center justify-between">
+                        <div>
+                          <div className="text-xs font-bold text-[#1C1208]">
+                            {new Date(visit.visitDate).toLocaleDateString("en-KE", { dateStyle: "medium" })}
+                          </div>
+                          <div className="text-[10px] font-mono text-[#786550]">
+                            Party of {visit.groupSize} {visit.purpose ? `&bull; ${visit.purpose}` : ""}
+                          </div>
+                        </div>
+                        <span className="px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider font-bold rounded-full bg-[#C4882A]/10 text-[#8E5E16] border border-[#C4882A]/30">
+                          {visit.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-[#786550] font-mono py-4">
+                    Tour our Kajiado rangelands, taste artisanal cheese, and view champion pedigree stock.
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#C4882A]/15 flex items-center justify-between">
+                <span className="text-[11px] font-mono text-[#786550]">Kajiado County, Kenya</span>
+                <Link href="/visit" className="text-xs font-mono font-bold text-[#C4882A] hover:underline">
+                  Schedule Experience
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ORDERS TAB */}
+      {activeTab === "orders" && (
+        <div className="bg-white rounded-2xl border border-[#C4882A]/15 p-6 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#C4882A]/15">
+            <div>
+              <h2 className="font-serif text-2xl text-[#1C1208]">Complete Order History</h2>
+              <p className="text-xs font-mono text-[#786550] mt-0.5">
+                Every transaction, delivery tracking, and invoice receipt
+              </p>
+            </div>
+            <Link href="/barn" className="btn-primary py-2 px-4 text-xs font-mono font-bold uppercase tracking-wider self-start sm:self-auto">
+              Place New Order
+            </Link>
+          </div>
+
+          {orders.length > 0 ? (
+            <div className="space-y-4">
+              {orders.map((order) => (
+                <div
+                  key={order.id}
+                  className="rounded-xl border border-[#C4882A]/20 bg-[#FAF8F5] p-5 hover:border-[#C4882A]/40 transition-all"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#C4882A]/15">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-sm font-bold text-[#C4882A]">
+                          #{order.id.slice(-8).toUpperCase()}
+                        </span>
+                        <span className="text-xs font-mono text-[#786550]">
+                          &bull; {new Date(order.createdAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
+                        </span>
+                      </div>
+                      {order.deliveryAddress && (
+                        <div className="text-[11px] font-mono text-[#786550] mt-1">
+                          <i className="bi bi-geo-alt text-[#C4882A] mr-1" />
+                          {order.deliveryAddress}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <div className="font-mono text-base font-bold text-[#1C1208]">
+                          KES {order.totalAmount.toLocaleString()}
+                        </div>
+                        <div className="text-[10px] font-mono text-[#786550]">
+                          {order.paymentMethod || "M-Pesa"}
+                        </div>
+                      </div>
+                      <span
+                        className={`text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
+                          order.status === "DELIVERED"
+                            ? "bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30"
+                            : "bg-[#C4882A]/15 text-[#8E5E16] border border-[#C4882A]/35"
+                        }`}
+                      >
+                        {order.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 space-y-2">
+                    {order.items.map((item) => (
+                      <div key={item.id} className="flex justify-between items-center text-xs">
+                        <span className="font-medium text-[#1C1208]">
+                          {item.name} <span className="text-[#786550]">× {item.quantity}</span>
+                        </span>
+                        <span className="font-mono text-[#5C4835]">
+                          KES {(item.quantity * item.unitPrice).toLocaleString()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <i className="bi bi-receipt text-5xl text-[#C4882A]/30 block mb-3" />
+              <h3 className="font-serif text-xl text-[#1C1208] mb-1">No Orders Found</h3>
+              <p className="text-xs text-[#786550] font-mono max-w-sm mx-auto mb-6">
+                You haven&apos;t placed any orders yet. Visit the Barn Store to purchase pasture-fed meat and farm supplies.
+              </p>
+              <Link href="/barn" className="btn-primary py-2.5 px-6 text-xs font-mono font-bold uppercase tracking-wider">
+                Browse The Barn
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* SUBSCRIPTIONS TAB */}
+      {activeTab === "subscriptions" && (
+        <div className="bg-white rounded-2xl border border-[#C4882A]/15 p-6 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#C4882A]/15">
+            <div>
+              <h2 className="font-serif text-2xl text-[#1C1208]">Recurring Harvest Subscriptions</h2>
+              <p className="text-xs font-mono text-[#786550] mt-0.5">
+                Fresh farm-to-table deliveries on a recurring schedule
+              </p>
+            </div>
+            <Link href="/barn" className="btn-primary py-2 px-4 text-xs font-mono font-bold uppercase tracking-wider self-start sm:self-auto">
+              Add Farm Box
+            </Link>
+          </div>
+
+          {subscriptions.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {subscriptions.map((sub) => (
+                <div key={sub.id} className="p-5 rounded-xl border border-[#C4882A]/20 bg-[#FAF8F5] flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#8E5E16] bg-[#C4882A]/10 px-2.5 py-0.5 rounded-full border border-[#C4882A]/25">
+                        {sub.categoryName}
+                      </span>
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30">
+                        {sub.status}
+                      </span>
+                    </div>
+
+                    <h3 className="font-serif text-lg font-bold text-[#1C1208] mb-1">{sub.productName}</h3>
+                    <div className="text-xs font-mono text-[#786550] mb-3">
+                      Cadence: <span className="font-bold text-[#1C1208]">{sub.frequency}</span>
+                    </div>
+
+                    {sub.nextDelivery && (
+                      <div className="text-xs font-mono text-[#2E7D32] bg-[#2E7D32]/5 p-2 rounded-lg border border-[#2E7D32]/20">
+                        <i className="bi bi-clock-history mr-1.5" />
+                        Next dispatch: {new Date(sub.nextDelivery).toLocaleDateString("en-KE", { dateStyle: "medium" })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <i className="bi bi-arrow-repeat text-5xl text-[#C4882A]/30 block mb-3" />
+              <h3 className="font-serif text-xl text-[#1C1208] mb-1">No Active Subscriptions</h3>
+              <p className="text-xs text-[#786550] font-mono max-w-sm mx-auto mb-6">
+                Receive recurring weekly pasture eggs, dairy, or fresh butchery cuts straight from our Kajiado ranch.
+              </p>
+              <Link href="/barn" className="btn-primary py-2.5 px-6 text-xs font-mono font-bold uppercase tracking-wider">
+                Discover Farm Boxes
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* VISITS TAB */}
+      {activeTab === "visits" && (
+        <div className="bg-white rounded-2xl border border-[#C4882A]/15 p-6 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#C4882A]/15">
+            <div>
+              <h2 className="font-serif text-2xl text-[#1C1208]">Ranch Tours & Reservations</h2>
+              <p className="text-xs font-mono text-[#786550] mt-0.5">
+                Private livestock tours, pasture walks, and family ranch visits
+              </p>
+            </div>
+            <Link href="/visit" className="btn-primary py-2 px-4 text-xs font-mono font-bold uppercase tracking-wider self-start sm:self-auto">
+              Schedule New Visit
+            </Link>
+          </div>
+
+          {visits.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {visits.map((visit) => (
+                <div key={visit.id} className="p-5 rounded-xl border border-[#C4882A]/20 bg-[#FAF8F5]">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono font-bold text-[#C4882A]">
+                      <i className="bi bi-calendar2-check mr-1.5" />
+                      {new Date(visit.visitDate).toLocaleDateString("en-KE", { dateStyle: "full" })}
+                    </span>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#C4882A]/15 text-[#8E5E16] border border-[#C4882A]/30">
+                      {visit.status}
+                    </span>
+                  </div>
+
+                  <div className="text-sm font-bold text-[#1C1208] mb-1">
+                    Group size: {visit.groupSize} {visit.groupSize === 1 ? "guest" : "guests"}
+                  </div>
+                  {visit.purpose && (
+                    <div className="text-xs text-[#786550] font-mono">
+                      Purpose: {visit.purpose}
+                    </div>
+                  )}
+                  <div className="mt-4 pt-3 border-t border-[#C4882A]/15 flex items-center justify-between text-[11px] font-mono text-[#786550]">
+                    <span>Location: Kajiado County Hub</span>
+                    <span className="text-[#3D6B3E] font-bold">Directions sent to email</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <i className="bi bi-geo-alt text-5xl text-[#C4882A]/30 block mb-3" />
+              <h3 className="font-serif text-xl text-[#1C1208] mb-1">No Scheduled Visits</h3>
+              <p className="text-xs text-[#786550] font-mono max-w-sm mx-auto mb-6">
+                Come experience our sustainable rangelands, observe pedigree breeding bulls, and meet our Maasai herders.
+              </p>
+              <Link href="/visit" className="btn-primary py-2.5 px-6 text-xs font-mono font-bold uppercase tracking-wider">
+                Book a Ranch Visit
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── 5. PRODUCE LISTING MODAL FOR PARTNER PRODUCERS ── */}
+      {showAddProduceModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl border border-[#C4882A]/30 shadow-2xl max-w-lg w-full p-6 sm:p-8 relative">
+            <button
+              onClick={() => setShowAddProduceModal(false)}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#FAF5EB] border border-[#C4882A]/20 flex items-center justify-center text-[#786550] hover:text-[#1C1208] cursor-pointer"
+              aria-label="Close"
+            >
+              <i className="bi bi-x-lg text-sm" />
+            </button>
+
+            <div className="mb-6">
+              <div className="text-[10px] font-mono uppercase tracking-widest text-[#8E5E16] font-bold mb-1">
+                Partner Farmer Supply
+              </div>
+              <h3 className="font-serif text-2xl text-[#1C1208]">
+                List Harvest for Osotua Cold Storage
+              </h3>
+              <p className="text-xs text-[#786550] font-mono mt-1">
+                Submit your fresh agricultural lot to be vetted and aggregated into the Osotua Barn catalog.
+              </p>
+            </div>
+
+            <form onSubmit={handleProduceSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-mono font-bold uppercase text-[#5C4835] mb-1">
+                  Produce Name *
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Crisp Carrots, Kienyeji Eggs"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
+                  placeholder="e.g., Cold-Pressed Acacia Honey"
+                  value={produceForm.name}
+                  onChange={(e) => setProduceForm({ ...produceForm, name: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-[#C4882A]/30 text-xs font-mono focus:border-[#C4882A] focus:outline-none bg-[#FAF8F5]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
-                    Price (KSh)
+                  <label className="block text-xs font-mono font-bold uppercase text-[#5C4835] mb-1">
+                    Price (KES) *
                   </label>
                   <input
                     type="number"
                     required
-                    placeholder="80"
-                    value={form.price}
-                    onChange={(e) => setForm({ ...form, price: e.target.value })}
-                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
+                    min="1"
+                    placeholder="1200"
+                    value={produceForm.price}
+                    onChange={(e) => setProduceForm({ ...produceForm, price: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#C4882A]/30 text-xs font-mono focus:border-[#C4882A] focus:outline-none bg-[#FAF8F5]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
-                    Unit
+                  <label className="block text-xs font-mono font-bold uppercase text-[#5C4835] mb-1">
+                    Unit (e.g., kg, jar, liter)
                   </label>
-                  <select
-                    value={form.unit}
-                    onChange={(e) => setForm({ ...form, unit: e.target.value })}
-                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
-                  >
-                    <option value="kg">per kg</option>
-                    <option value="bunch">per bunch</option>
-                    <option value="tray of 30">per tray of 30</option>
-                    <option value="L">per Litre</option>
-                    <option value="pc">per piece</option>
-                    <option value="box">per box</option>
-                  </select>
+                  <input
+                    type="text"
+                    required
+                    placeholder="kg"
+                    value={produceForm.unit}
+                    onChange={(e) => setProduceForm({ ...produceForm, unit: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#C4882A]/30 text-xs font-mono focus:border-[#C4882A] focus:outline-none bg-[#FAF8F5]"
+                  />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
+                  <label className="block text-xs font-mono font-bold uppercase text-[#5C4835] mb-1">
+                    Initial Stock Qty
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={produceForm.stockQty}
+                    onChange={(e) => setProduceForm({ ...produceForm, stockQty: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#C4882A]/30 text-xs font-mono focus:border-[#C4882A] focus:outline-none bg-[#FAF8F5]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-mono font-bold uppercase text-[#5C4835] mb-1">
                     Category
                   </label>
                   <select
-                    value={form.categoryId}
-                    onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
+                    value={produceForm.categoryId}
+                    onChange={(e) => setProduceForm({ ...produceForm, categoryId: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#C4882A]/30 text-xs font-mono focus:border-[#C4882A] focus:outline-none bg-[#FAF8F5]"
                   >
-                    {categories.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
                       </option>
                     ))}
                   </select>
                 </div>
-
-                <div>
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
-                    Available Qty
-                  </label>
-                  <input
-                    type="number"
-                    required
-                    value={form.stockQty}
-                    onChange={(e) => setForm({ ...form, stockQty: e.target.value })}
-                    className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2.5 text-sm text-[#211C15] focus:outline-[#C4922E]"
-                  />
-                </div>
               </div>
 
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-[#6B6558] block mb-1">
-                  Harvest Description
+                <label className="block text-xs font-mono font-bold uppercase text-[#5C4835] mb-1">
+                  Description / Origin Notes
                 </label>
                 <textarea
-                  rows={2}
-                  placeholder="Freshly harvested from organic shamba fields..."
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  className="w-full bg-[#FAF5EB] border border-stone-300 rounded-xl px-3.5 py-2 text-sm text-[#211C15] focus:outline-[#C4922E]"
+                  rows={3}
+                  placeholder="Provide origin, harvest date, packaging details..."
+                  value={produceForm.description}
+                  onChange={(e) => setProduceForm({ ...produceForm, description: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-[#C4882A]/30 text-xs font-mono focus:border-[#C4882A] focus:outline-none bg-[#FAF8F5]"
                 />
               </div>
 
-              <div className="flex gap-3 pt-2">
+              <div className="pt-2 flex items-center justify-end gap-3">
                 <button
                   type="button"
-                  onClick={() => setShowAddModal(false)}
-                  className="flex-1 py-2.5 border border-stone-300 rounded-xl text-xs font-bold uppercase tracking-wider text-[#6B6558] hover:bg-stone-100"
+                  onClick={() => setShowAddProduceModal(false)}
+                  className="px-4 py-2.5 rounded-lg text-xs font-mono font-bold text-[#786550] hover:text-[#1C1208] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  disabled={adding}
-                  className="flex-1 py-2.5 bg-[#C4922E] hover:bg-[#A97B22] text-[#211C15] rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm disabled:opacity-50"
+                  disabled={submitting}
+                  className="btn-primary py-2.5 px-6 text-xs font-mono font-bold uppercase tracking-wider cursor-pointer"
                 >
-                  {adding ? "Saving..." : "Publish Produce"}
+                  {submitting ? "Submitting..." : "Submit Listing"}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
-
-      {/* ── 6. STATEMENT MODAL ── */}
-      {statementModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#FFFFFF] border border-[#C4882A]/30 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-[#EDE6D6] pb-3">
-              <h3
-                style={{
-                  fontFamily: "var(--font-fraunces, 'Fraunces'), Georgia, serif",
-                  fontSize: "18px",
-                  color: "#211C15",
-                }}
-              >
-                Upcoming Payout Statement
-              </h3>
-              <button
-                onClick={() => setStatementModal(false)}
-                className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-stone-600"
-              >
-                <i className="bi bi-x-lg text-sm" />
-              </button>
-            </div>
-
-            <div className="space-y-3 text-xs text-[#211C15]">
-              <div className="flex justify-between py-1.5 border-b border-stone-100">
-                <span className="text-[#6B6558]">Boran Herd Dividend (6 Head)</span>
-                <span className="font-bold">KSh 16,800</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-stone-100">
-                <span className="text-[#6B6558]">Nakuru Flock Dividend (8 Head)</span>
-                <span className="font-bold">KSh 7,800</span>
-              </div>
-              <div className="flex justify-between py-2 font-bold text-sm text-[#211C15] pt-2">
-                <span>Total Expected Distribution</span>
-                <span className="text-[#3F6B3F]">KSh 24,600</span>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setStatementModal(false)}
-              className="w-full py-2.5 bg-[#211C15] hover:bg-[#C4922E] text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-
     </div>
   )
 }
