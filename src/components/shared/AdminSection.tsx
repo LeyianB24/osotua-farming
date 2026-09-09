@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 
 /* ── Section wrapper ─────────────────────────────── */
 export function AdminSection({
@@ -21,43 +22,50 @@ export function AdminSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-[#FBF7F0] p-4 sm:p-8 lg:p-10 text-[#1C1208]">
-      {/* Header card */}
-      <div className="os-panel mb-8 p-6 sm:p-8 bg-white border border-[#C4882A]/20 shadow-xs relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-        <div
-          className="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-[#C4882A]/5 pointer-events-none blur-xl"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#C4882A]/10 border border-[#C4882A]/30 text-[#8E5E16] mb-3">
-            {icon && <i className={`bi ${icon} text-[#C4882A]`} />}
+    <div className="min-h-screen text-[#F5EFE4]" style={{ background: "#0E0A05" }}>
+      {/* Header panel */}
+      <div
+        className="px-8 py-7 border-b flex items-start justify-between gap-4 flex-wrap"
+        style={{ borderColor: "rgba(196,136,42,0.1)" }}
+      >
+        <div>
+          <div
+            className="text-[10px] tracking-[0.22em] uppercase mb-2 flex items-center gap-1.5"
+            style={{ color: "#C4882A", fontFamily: "monospace" }}
+          >
+            {icon && <i className={`bi ${icon}`} />}
             <span>{eyebrow}</span>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-4xl text-[#1C1208] font-normal leading-tight">
+          <h1
+            className="font-light leading-tight"
+            style={{
+              fontFamily: "Georgia, serif",
+              fontSize: "clamp(1.5rem, 3vw, 2.2rem)",
+              color: "#F5EFE4",
+            }}
+          >
             {title}
           </h1>
 
           {count !== undefined && (
-            <div className="mt-2 text-xs font-mono text-[#786550] flex items-center gap-1.5">
-              <span className="font-bold text-[#C4882A] text-sm">
-                {count}
-              </span>
-              <span>{countLabel || "records active in database"}</span>
-            </div>
+            <p className="text-sm mt-1" style={{ color: "rgba(245,239,228,0.4)" }}>
+              {count} {countLabel || "records in database"}
+            </p>
           )}
         </div>
 
-        {action && <div className="relative z-10 shrink-0">{action}</div>}
+        {action && <div className="flex-shrink-0">{action}</div>}
       </div>
 
-      {children}
+      <div className="p-4 sm:p-8">
+        {children}
+      </div>
     </div>
   )
 }
 
-/* ── Crisp white table container ─────────────────────────────── */
+/* ── Crisp table container ─────────────────────────────── */
 export function AdminTable({
   headers,
   children,
@@ -72,27 +80,44 @@ export function AdminTable({
   emptyText?: string
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-[#C4882A]/20 overflow-hidden shadow-xs">
+    <div
+      className="rounded-xl overflow-hidden"
+      style={{
+        border: "1px solid rgba(196,136,42,0.1)",
+        background: "rgba(245,239,228,0.02)",
+      }}
+    >
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-xs">
           <thead>
-            <tr className="bg-[#FAF8F5] border-b border-[#C4882A]/15 font-mono text-[10px] text-[#8E5E16] font-bold uppercase tracking-wider">
+            <tr style={{ borderBottom: "1px solid rgba(196,136,42,0.1)", background: "rgba(255,255,255,0.02)" }}>
               {headers.map((h) => (
-                <th key={h} className="p-4 sm:p-4.5 whitespace-nowrap">
+                <th
+                  key={h}
+                  className="px-5 py-3"
+                  style={{
+                    fontFamily: "monospace",
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "rgba(245,239,228,0.4)",
+                  }}
+                >
                   {h}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#C4882A]/10">{children}</tbody>
+          <tbody>{children}</tbody>
         </table>
 
         {empty && (
           <div className="text-center py-16 px-4">
             <i
-              className={`bi ${emptyIcon || "bi-inbox"} text-4xl text-[#C4882A]/30 block mb-3`}
+              className={`bi ${emptyIcon || "bi-inbox"} text-4xl block mb-3`}
+              style={{ color: "rgba(196,136,42,0.3)" }}
             />
-            <p className="text-xs font-mono text-[#786550]">
+            <p className="text-xs font-mono" style={{ color: "rgba(245,239,228,0.4)" }}>
               {emptyText || "No records recorded yet."}
             </p>
           </div>
@@ -112,9 +137,8 @@ export function AdminRow({
 }) {
   return (
     <tr
-      className={`transition-colors hover:bg-[#FAF8F5] ${
-        index % 2 === 0 ? "bg-white" : "bg-[#FAFBF9]"
-      }`}
+      className="transition-colors duration-150 hover:bg-white/[0.03]"
+      style={{ borderBottom: "1px solid rgba(245,239,228,0.04)" }}
     >
       {children}
     </tr>
@@ -135,13 +159,15 @@ export function TD({
 }) {
   return (
     <td
-      className={`p-4 sm:p-4.5 text-xs ${mono ? "font-mono" : "font-sans"} ${
-        accent
-          ? "text-[#C4882A] font-bold"
+      className={`px-5 py-3.5 align-middle ${mono ? "font-mono" : "font-sans"} text-xs`}
+      style={{
+        color: accent
+          ? "#C4882A"
           : muted
-          ? "text-[#786550]"
-          : "text-[#1C1208] font-medium"
-      }`}
+          ? "rgba(245,239,228,0.5)"
+          : "#F5EFE4",
+        fontFamily: mono ? "monospace" : undefined,
+      }}
     >
       {children}
     </td>
@@ -174,15 +200,30 @@ export function StatusBadge({ status }: { status: string }) {
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase tracking-wider ${
-        isSuccess
-          ? "bg-[#2E7D32]/12 text-[#2E7D32] border border-[#2E7D32]/30"
+      className="inline-block px-2.5 py-0.5 rounded-xs text-[9px] font-medium tracking-[0.12em] uppercase font-mono whitespace-nowrap"
+      style={{
+        background: isSuccess
+          ? "rgba(61,107,62,0.12)"
           : isPending
-          ? "bg-[#C4882A]/15 text-[#8E5E16] border border-[#C4882A]/35"
+          ? "rgba(196,136,42,0.12)"
           : isDanger
-          ? "bg-[#C2410C]/12 text-[#C2410C] border border-[#C2410C]/30"
-          : "bg-[#1C1208]/5 text-[#5C4835] border border-[#1C1208]/15"
-      }`}
+          ? "rgba(160,67,30,0.12)"
+          : "rgba(245,239,228,0.05)",
+        color: isSuccess
+          ? "#4E8A4F"
+          : isPending
+          ? "#D99A30"
+          : isDanger
+          ? "#C05A2A"
+          : "rgba(245,239,228,0.4)",
+        border: isSuccess
+          ? "1px solid rgba(61,107,62,0.3)"
+          : isPending
+          ? "1px solid rgba(196,136,42,0.3)"
+          : isDanger
+          ? "1px solid rgba(160,67,30,0.3)"
+          : "1px solid rgba(245,239,228,0.1)",
+      }}
     >
       {status}
     </span>

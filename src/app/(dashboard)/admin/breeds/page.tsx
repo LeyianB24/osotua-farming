@@ -1,63 +1,62 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
-import { AdminSection, AdminTable, AdminRow, TD, StatusBadge } from "@/components/shared/AdminSection"
+import PageHeader from "@/components/dashboard/PageHeader"
+import DataTable from "@/components/dashboard/DataTable"
+import Badge from "@/components/dashboard/Badge"
 
-export const metadata = { title: "Breeds — Osotua Admin" }
+export const metadata = { title: "Breeds — Admin · Osotua Farming" }
 
 export default async function AdminBreedsPage() {
   const breeds = await prisma.breed.findMany({
     include: { species: true },
     orderBy: { name: "asc" },
-  })
+  }).catch(() => [])
 
   return (
-    <AdminSection
-      eyebrow="Livestock Registry"
-      title="Breed Catalogue"
-      count={breeds.length}
-      countLabel="breeds registered"
-      icon="bi-shield-check"
-      action={
-        <Link
-          href="/admin/breeds/new"
-          className="btn-primary"
-          style={{ fontSize: "0.75rem", padding: "0.6rem 1.25rem" }}
-        >
-          <i className="bi bi-plus-lg" /> Add Breed
-        </Link>
-      }
-    >
-      <AdminTable
-        headers={["Breed Name", "Species", "Purpose", "Price / Head (KES)", "In Stock", "Featured", "Actions"]}
-        empty={breeds.length === 0}
-        emptyIcon="bi-shield-x"
-        emptyText="No breeds registered yet."
-      >
-        {breeds.map((b, i) => (
-          <AdminRow key={b.id} index={i}>
-            <TD>{b.name}</TD>
-            <TD muted>{b.species.name}</TD>
-            <TD muted>{b.purpose}</TD>
-            <TD mono accent>KES {b.pricePerHead.toLocaleString()}</TD>
-            <TD mono>{b.inStock}</TD>
-            <TD><StatusBadge status={b.featured ? "ACTIVE" : "PENDING"} /></TD>
-            <td style={{ padding: "0.875rem 1.25rem" }}>
-              <Link
-                href={`/admin/breeds/${b.id}`}
-                style={{
-                  color: "#C4882A", fontSize: "0.78rem",
-                  fontFamily: "var(--font-space-grotesk), monospace",
-                  textDecoration: "none",
-                  display: "inline-flex", alignItems: "center", gap: "0.3rem",
-                }}
-                className="hover:underline"
-              >
-                <i className="bi bi-pencil-square" /> Edit
-              </Link>
-            </td>
-          </AdminRow>
-        ))}
-      </AdminTable>
-    </AdminSection>
+    <div>
+      <PageHeader
+        eyebrow="Livestock Management"
+        title="Breeds Catalogue"
+        sub={`${breeds.length} breeds registered`}
+        action={
+          <Link
+            href="/admin/breeds/new"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-95"
+            style={{
+              background: "linear-gradient(135deg, #C4882A, #D99A30)",
+              color: "#1C1208",
+              boxShadow: "0 4px 16px rgba(196,136,42,0.3)",
+            }}
+          >
+            <i className="bi bi-plus-lg text-sm" />
+            Add Breed
+          </Link>
+        }
+      />
+
+      <div className="p-4 sm:p-8">
+        <DataTable
+          columns={[
+            { key: "name",    label: "Breed Name" },
+            { key: "species", label: "Species",    width: "120px" },
+            { key: "purpose", label: "Purpose",    width: "140px" },
+            { key: "price",   label: "Price/Head", width: "140px" },
+            { key: "stock",   label: "In Stock",   width: "100px" },
+            { key: "status",  label: "Featured",   width: "100px" },
+            { key: "action",  label: "Action",     width: "80px" },
+          ]}
+          rows={breeds.map(b => ({
+            name:    <Link href={`/admin/breeds/${b.id}`} className="font-medium hover:text-[#C4882A] transition-colors" style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}>{b.name}</Link>,
+            species: <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{b.species?.name ?? "—"}</span>,
+            purpose: <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{b.purpose}</span>,
+            price:   <span style={{ color: "#C4882A", fontFamily: "monospace", fontSize: "0.8rem" }}>KES {b.pricePerHead.toLocaleString()}</span>,
+            stock:   <span style={{ color: "#F5EFE4" }}>{b.inStock}</span>,
+            status:  <Badge label={b.featured ? "Featured" : "Standard"} variant={b.featured ? "gold" : "muted"} />,
+            action:  <Link href={`/admin/breeds/${b.id}`} className="text-xs text-[#C4882A] hover:underline font-mono">Edit</Link>,
+          }))}
+          empty="No breeds registered yet. Add your first breed to get started."
+        />
+      </div>
+    </div>
   )
 }
