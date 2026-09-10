@@ -173,7 +173,7 @@ h1 em, h2 em, h3 em, h4 em {
 /* ── 4. TYPOGRAPHY SYSTEM (Exact Figma Type Scale) ───────────────────────── */
 
 /* H1 · HERO · PLAYFAIR DISPLAY 700 */
-.t-hero, h1 {
+.t-hero, h1:not([class*="text-"]) {
   font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
   font-weight: 700;
   font-size: clamp(3rem, 6.5vw, 6.5rem);
@@ -182,7 +182,7 @@ h1 em, h2 em, h3 em, h4 em {
 }
 
 /* H2 · SECTION · PLAYFAIR DISPLAY 700 */
-.t-section, h2 {
+.t-section, h2:not([class*="text-"]) {
   font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
   font-weight: 700;
   font-size: clamp(2.4rem, 4.5vw, 4.2rem);
@@ -191,7 +191,7 @@ h1 em, h2 em, h3 em, h4 em {
 }
 
 /* H3 · CARD · PLAYFAIR DISPLAY 600 */
-.t-card, h3 {
+.t-card, h3:not([class*="text-"]) {
   font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
   font-weight: 600;
   font-size: clamp(1.4rem, 2.2vw, 2rem);
