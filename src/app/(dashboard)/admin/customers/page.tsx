@@ -16,10 +16,10 @@ export default async function AdminCustomersPage() {
     <div>
       <PageHeader
         eyebrow="Customer Relations"
-        title="Customers"
-        sub={`${customers.length} registered customers`}
+        title="Patrons & Customers"
+        sub={`${customers.length} registered estate patrons`}
       />
-      <div className="p-4 sm:p-8">
+      <div className="p-6 sm:p-8">
         <DataTable
           columns={[
             { key: "name",   label: "Name" },
@@ -30,12 +30,12 @@ export default async function AdminCustomersPage() {
             { key: "joined", label: "Joined",  width: "130px" },
           ]}
           rows={customers.map(c => ({
-            name:   <span className="font-medium" style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}>{c.name ?? "—"}</span>,
-            email:  <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{c.email}</span>,
-            phone:  <span className="text-xs font-mono" style={{ color: "rgba(245,239,228,0.4)" }}>{c.phone ?? "—"}</span>,
-            orders: <span className="font-mono text-sm" style={{ color: "#C4882A" }}>{c._count.orders}</span>,
+            name:   <span className="font-bold text-[#1A1208]">{c.name ?? "Valued Patron"}</span>,
+            email:  <span className="text-xs text-[#7A6C5B]">{c.email}</span>,
+            phone:  <span className="text-xs font-mono text-[#7A6C5B]">{c.phone ?? "—"}</span>,
+            orders: <span className="font-mono text-xs font-bold text-[#C58F28]">{c._count.orders}</span>,
             role:   <Badge label={c.role} variant="muted" />,
-            joined: <span className="text-xs" style={{ color: "rgba(245,239,228,0.35)" }}>{new Date(c.createdAt).toLocaleDateString()}</span>,
+            joined: <span className="text-xs font-mono text-[#7A6C5B]">{new Date(c.createdAt).toLocaleDateString()}</span>,
           }))}
           empty="No customers registered yet."
         />

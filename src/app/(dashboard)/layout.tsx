@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
 import { cn } from "@/lib/utils"
@@ -24,20 +25,62 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const path = usePathname()
   const { data: session } = useSession()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [avatarImage, setAvatarImage] = useState<string | null>(session?.user?.image || null)
+  const sidebarFileRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const saved = localStorage.getItem("osotua_patron_avatar")
+    if (saved) setAvatarImage(saved)
+
+    const handleUpdate = () => {
+      const updated = localStorage.getItem("osotua_patron_avatar")
+      setAvatarImage(updated)
+    }
+
+    window.addEventListener("osotua_avatar_updated", handleUpdate)
+    return () => window.removeEventListener("osotua_avatar_updated", handleUpdate)
+  }, [])
+
+  const handleSidebarAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const base64 = reader.result as string
+      setAvatarImage(base64)
+      localStorage.setItem("osotua_patron_avatar", base64)
+      window.dispatchEvent(new Event("osotua_avatar_updated"))
+
+      try {
+        await fetch("/api/user/profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: base64 }),
+        })
+      } catch (err) {
+        console.error("Avatar save error:", err)
+      }
+    }
+    reader.readAsDataURL(file)
+  }
 
   // Use Kamau Achola or session user
-  const userName = session?.user?.name || "Kamau Achola"
+  const userName = "Kamau Achola"
   const userRole = "Ranch Manager"
-  const userInitials =
-    userName
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .slice(0, 2)
-      .toUpperCase() || "KA"
+  const userInitials = "KA"
 
   return (
     <div className="flex min-h-screen bg-[#FAF7F2] text-[#1A1208]">
+      {/* Hidden file input for quick sidebar upload */}
+      <input
+        type="file"
+        ref={sidebarFileRef}
+        onChange={handleSidebarAvatarUpload}
+        accept="image/*"
+        className="hidden"
+      />
+
       {/* ── MOBILE TOP BAR (< lg) ── */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-14 z-50 flex items-center justify-between px-4 bg-[#160F08] border-b border-[#2C2115]">
         <Link href="/" className="flex items-baseline gap-2">
@@ -167,9 +210,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <span>NEW ORDER</span>
           </Link>
           <div className="flex items-center gap-3 pt-2 border-t border-[#2C2115]/80">
-            <div className="w-8 h-8 rounded-[2px] bg-[#BA5932] text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
-              {userInitials}
-            </div>
+            <button
+              onClick={() => sidebarFileRef.current?.click()}
+              className="w-8 h-8 rounded-[2px] bg-[#BA5932] text-white font-bold text-xs flex items-center justify-center flex-shrink-0 overflow-hidden cursor-pointer"
+              title="Change Profile Picture"
+            >
+              {avatarImage ? (
+                <Image src={avatarImage} alt="Avatar" width={32} height={32} className="w-full h-full object-cover" />
+              ) : (
+                <span>{userInitials}</span>
+              )}
+            </button>
             <div className="flex-1 min-w-0">
               <div className="text-xs font-bold text-[#FAF7F2] truncate">{userName}</div>
               <div className="text-[10px] text-[#8E7E70] truncate">{userRole}</div>
@@ -177,6 +228,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
               className="text-[#8E7E70] hover:text-[#D4A045] p-1 cursor-pointer"
+              title="Sign Out"
             >
               <i className="bi bi-box-arrow-right text-sm" />
             </button>
@@ -300,11 +352,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <span>NEW ORDER</span>
           </Link>
 
-          {/* User Profile Bar */}
+          {/* User Profile Bar with Avatar Upload & Logout */}
           <div className="flex items-center gap-3 pt-2 border-t border-[#2C2115]/80">
-            <div className="w-8 h-8 rounded-[2px] bg-[#BA5932] text-white font-bold text-xs flex items-center justify-center flex-shrink-0 font-mono select-none">
-              {userInitials}
-            </div>
+            <button
+              onClick={() => sidebarFileRef.current?.click()}
+              className="w-8 h-8 rounded-[2px] bg-[#BA5932] text-white font-bold text-xs flex items-center justify-center flex-shrink-0 overflow-hidden cursor-pointer hover:opacity-90 relative group"
+              title="Click to Upload Profile Picture"
+            >
+              {avatarImage ? (
+                <Image
+                  src={avatarImage}
+                  alt="Patron Avatar"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span>{userInitials}</span>
+              )}
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-[10px]">
+                <i className="bi bi-camera text-white" />
+              </div>
+            </button>
+
             <div className="flex-1 min-w-0">
               <div className="text-xs font-bold text-[#FAF7F2] truncate">
                 {userName}
@@ -313,13 +383,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 {userRole}
               </div>
             </div>
+
+            {/* Logout Button */}
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
-              className="text-[#8E7E70] hover:text-[#D4A045] p-1 transition-colors cursor-pointer"
-              title="Sign Out"
-              aria-label="Sign Out"
+              className="text-[#8E7E70] hover:text-[#C4882A] p-1.5 rounded-[2px] hover:bg-white/5 transition-colors cursor-pointer flex items-center gap-1"
+              title="Logout from Osotua Estate"
+              aria-label="Logout"
             >
-              <i className="bi bi-box-arrow-right text-sm" />
+              <i className="bi bi-box-arrow-right text-base" />
             </button>
           </div>
         </div>

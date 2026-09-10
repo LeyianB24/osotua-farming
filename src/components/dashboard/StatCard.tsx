@@ -9,55 +9,44 @@ interface StatCardProps {
   accent?: "gold" | "green" | "rust" | "default"
 }
 
-const accents = {
-  gold:    { bg: "rgba(196,136,42,0.1)",  border: "rgba(196,136,42,0.25)",  icon: "#C4882A" },
-  green:   { bg: "rgba(61,107,62,0.1)",   border: "rgba(61,107,62,0.25)",   icon: "#3D6B3E" },
-  rust:    { bg: "rgba(160,67,30,0.1)",   border: "rgba(160,67,30,0.25)",   icon: "#A0431E" },
-  default: { bg: "rgba(245,239,228,0.04)", border: "rgba(245,239,228,0.08)", icon: "rgba(196,136,42,0.7)" },
-}
-
 export default function StatCard({ title, value, sub, icon, href, accent = "default" }: StatCardProps) {
-  const a = accents[accent]
   const Tag = href ? Link : "div"
+
+  const isHighlighted = accent === "rust"
 
   return (
     <Tag
       href={href as string}
-      className="block p-5 rounded-xl transition-all duration-300 group hover:border-[rgba(196,136,42,0.4)]"
-      style={{
-        background: a.bg,
-        border: `1px solid ${a.border}`,
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-      }}
+      className={`block p-5 bg-white border rounded-[2px] transition-all duration-200 group shadow-xs ${
+        isHighlighted
+          ? "border-[#B85D30] ring-1 ring-[#B85D30]"
+          : "border-[#E5DDD0] hover:border-[#C48D2A]"
+      }`}
     >
-      <div className="flex items-start justify-between mb-4">
-        <div
-          className="w-10 h-10 rounded-lg flex items-center justify-center"
-          style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${a.border}` }}
-        >
-          <i className={`bi ${icon} text-lg`} style={{ color: a.icon }} />
+      <div className="flex items-start justify-between mb-3">
+        <div className="w-9 h-9 rounded-[2px] bg-[#FAF7F2] border border-[#DDD4C4] flex items-center justify-center">
+          <i className={`bi ${icon} text-base text-[#C48D2A]`} />
         </div>
         {href && (
-          <i
-            className="bi bi-arrow-up-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-            style={{ color: a.icon }}
-          />
+          <i className="bi bi-arrow-up-right text-xs text-[#9F9384] group-hover:text-[#C48D2A] transition-colors" />
         )}
       </div>
 
       <div
-        className="text-3xl font-light mb-1 leading-none"
-        style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}
-      >{value}</div>
+        className="text-3xl font-bold mb-1 leading-none text-[#1A1208]"
+        style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+      >
+        {value}
+      </div>
 
-      <div
-        className="text-xs font-medium mb-1"
-        style={{ color: "rgba(245,239,228,0.5)", fontFamily: "monospace", letterSpacing: "0.1em", textTransform: "uppercase" }}
-      >{title}</div>
+      <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#7A6C5B] font-bold">
+        {title}
+      </div>
 
       {sub && (
-        <div className="text-xs mt-1" style={{ color: "rgba(245,239,228,0.3)" }}>{sub}</div>
+        <div className="text-xs text-[#5C6D37] font-semibold mt-1 flex items-center gap-1">
+          {sub}
+        </div>
       )}
     </Tag>
   )

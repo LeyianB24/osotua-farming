@@ -3,7 +3,7 @@ import PageHeader from "@/components/dashboard/PageHeader"
 import DataTable from "@/components/dashboard/DataTable"
 import Badge from "@/components/dashboard/Badge"
 
-export const metadata = { title: "Farm Visits — Admin · Osotua Farming" }
+export const metadata = { title: "Ranch Visits — Admin · Osotua Farming" }
 
 export default async function AdminVisitsPage() {
   const visits = await prisma.farmVisit.findMany({
@@ -15,11 +15,11 @@ export default async function AdminVisitsPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Farm Visits"
-        title="Visit Bookings"
-        sub={`${visits.length} bookings · ${upcoming} upcoming`}
+        eyebrow="Ranch & Rangeland Visits"
+        title="Visit Bookings & Consultations"
+        sub={`${visits.length} total bookings · ${upcoming} upcoming rangeland visits`}
       />
-      <div className="p-4 sm:p-8">
+      <div className="p-6 sm:p-8">
         <DataTable
           columns={[
             { key: "name",    label: "Name" },
@@ -31,15 +31,15 @@ export default async function AdminVisitsPage() {
             { key: "status",  label: "Status",     width: "120px" },
           ]}
           rows={visits.map(v => ({
-            name:    <span className="font-medium" style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}>{v.fullName}</span>,
-            email:   <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{v.email}</span>,
-            phone:   <span className="text-xs font-mono" style={{ color: "rgba(245,239,228,0.4)" }}>{v.phone}</span>,
-            group:   <span className="font-mono text-sm" style={{ color: "#F5EFE4" }}>{v.groupSize}</span>,
-            date:    <span className="text-xs font-mono" style={{ color: "rgba(245,239,228,0.5)" }}>{new Date(v.visitDate).toDateString()}</span>,
-            purpose: <span className="text-xs" style={{ color: "rgba(245,239,228,0.4)" }}>{v.purpose ?? "—"}</span>,
+            name:    <span className="font-bold text-[#1A1208]">{v.fullName}</span>,
+            email:   <span className="text-xs text-[#7A6C5B]">{v.email}</span>,
+            phone:   <span className="text-xs font-mono text-[#7A6C5B]">{v.phone}</span>,
+            group:   <span className="font-mono text-xs font-bold text-[#1A1208]">{v.groupSize} visitors</span>,
+            date:    <span className="text-xs font-mono text-[#BA5932] font-semibold">{new Date(v.visitDate).toDateString()}</span>,
+            purpose: <span className="text-xs text-[#7A6C5B]">{v.purpose ?? "—"}</span>,
             status:  <Badge label={v.status} />,
           }))}
-          empty="No visit bookings yet."
+          empty="No visit bookings registered yet."
         />
       </div>
     </div>

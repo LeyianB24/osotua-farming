@@ -15,26 +15,21 @@ export default async function AdminBreedsPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Livestock Management"
+        eyebrow="Livestock Genetics"
         title="Breeds Catalogue"
-        sub={`${breeds.length} breeds registered`}
+        sub={`${breeds.length} indigenous & purebred breeds registered`}
         action={
           <Link
             href="/admin/breeds/new"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-95"
-            style={{
-              background: "linear-gradient(135deg, #C4882A, #D99A30)",
-              color: "#1C1208",
-              boxShadow: "0 4px 16px rgba(196,136,42,0.3)",
-            }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-[0.14em] transition-all bg-[#D4A045] text-[#160F08] hover:bg-[#C28E2B] shadow-sm"
           >
-            <i className="bi bi-plus-lg text-sm" />
+            <i className="bi bi-plus-lg text-xs" />
             Add Breed
           </Link>
         }
       />
 
-      <div className="p-4 sm:p-8">
+      <div className="p-6 sm:p-8">
         <DataTable
           columns={[
             { key: "name",    label: "Breed Name" },
@@ -46,13 +41,13 @@ export default async function AdminBreedsPage() {
             { key: "action",  label: "Action",     width: "80px" },
           ]}
           rows={breeds.map(b => ({
-            name:    <Link href={`/admin/breeds/${b.id}`} className="font-medium hover:text-[#C4882A] transition-colors" style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}>{b.name}</Link>,
-            species: <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{b.species?.name ?? "—"}</span>,
-            purpose: <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{b.purpose}</span>,
-            price:   <span style={{ color: "#C4882A", fontFamily: "monospace", fontSize: "0.8rem" }}>KES {b.pricePerHead.toLocaleString()}</span>,
-            stock:   <span style={{ color: "#F5EFE4" }}>{b.inStock}</span>,
+            name:    <Link href={`/admin/breeds/${b.id}`} className="font-bold text-[#1A1208] hover:text-[#C4882A] transition-colors">{b.name}</Link>,
+            species: <span className="text-xs text-[#7A6C5B]">{b.species?.name ?? "—"}</span>,
+            purpose: <span className="text-xs text-[#7A6C5B]">{b.purpose}</span>,
+            price:   <span className="font-bold text-[#BA5932] font-mono text-xs">KES {b.pricePerHead.toLocaleString()}</span>,
+            stock:   <span className="font-mono text-xs text-[#1A1208] font-bold">{b.inStock}</span>,
             status:  <Badge label={b.featured ? "Featured" : "Standard"} variant={b.featured ? "gold" : "muted"} />,
-            action:  <Link href={`/admin/breeds/${b.id}`} className="text-xs text-[#C4882A] hover:underline font-mono">Edit</Link>,
+            action:  <Link href={`/admin/breeds/${b.id}`} className="text-xs text-[#C4882A] hover:underline font-mono font-bold">Edit</Link>,
           }))}
           empty="No breeds registered yet. Add your first breed to get started."
         />

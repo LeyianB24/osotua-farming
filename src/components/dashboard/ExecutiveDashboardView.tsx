@@ -1,7 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
+import { signOut } from "next-auth/react"
 
 interface OrderItem {
   id: string
@@ -18,6 +20,7 @@ interface ExecutiveDashboardProps {
     name?: string | null
     email?: string | null
     role?: string | null
+    image?: string | null
   }
   stats?: {
     totalLivestock?: number
@@ -84,12 +87,54 @@ const DEFAULT_ORDERS: OrderItem[] = [
 ]
 
 export default function ExecutiveDashboardView({
+  user,
   orders: propOrders,
 }: ExecutiveDashboardProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedKpi, setSelectedKpi] = useState<"livestock" | "revenue" | "orders" | "sustainability">("orders")
   const [showAddLivestock, setShowAddLivestock] = useState(false)
   const [notificationOpen, setNotificationOpen] = useState(false)
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false)
+  const [profileModalOpen, setProfileModalOpen] = useState(false)
+  const [avatarImage, setAvatarImage] = useState<string | null>(user?.image || null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Sync avatar with localStorage on client
+  useEffect(() => {
+    const saved = localStorage.getItem("osotua_patron_avatar")
+    if (saved) setAvatarImage(saved)
+  }, [])
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const base64 = reader.result as string
+      setAvatarImage(base64)
+      localStorage.setItem("osotua_patron_avatar", base64)
+      window.dispatchEvent(new Event("osotua_avatar_updated"))
+
+      // Persist to server
+      try {
+        await fetch("/api/user/profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: base64 }),
+        })
+      } catch (err) {
+        console.error("Avatar save error:", err)
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleRemoveAvatar = () => {
+    setAvatarImage(null)
+    localStorage.removeItem("osotua_patron_avatar")
+    window.dispatchEvent(new Event("osotua_avatar_updated"))
+  }
 
   // Use "Kamau" to match the exact design screenshot
   const firstName = "Kamau"
@@ -133,6 +178,15 @@ export default function ExecutiveDashboardView({
 
   return (
     <div className="p-6 sm:p-8 lg:p-10 max-w-[1400px] mx-auto min-h-screen relative">
+      {/* Hidden file upload */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleAvatarUpload}
+        accept="image/*"
+        className="hidden"
+      />
+
       {/* ── TOP HEADER BAR ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-7">
         <div>
@@ -193,9 +247,96 @@ export default function ExecutiveDashboardView({
             )}
           </div>
 
-          {/* Avatar Tile */}
-          <div className="w-9 h-9 rounded-[2px] bg-[#BA5932] text-white font-bold text-xs flex items-center justify-center font-mono shadow-xs select-none">
-            {userInitials}
+          {/* Avatar Tile with Profile Menu & Logout */}
+          <div className="relative">
+            <button
+              onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+              className="w-9 h-9 rounded-[2px] bg-[#BA5932] text-white font-bold text-xs flex items-center justify-center font-mono shadow-xs overflow-hidden cursor-pointer hover:ring-2 hover:ring-[#C58F28] transition-all"
+              title="Patron Profile & Options"
+              aria-label="User Profile"
+            >
+              {avatarImage ? (
+                <Image
+                  src={avatarImage}
+                  alt="Patron Avatar"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span>{userInitials}</span>
+              )}
+            </button>
+
+            {/* Profile Dropdown */}
+            {profileMenuOpen && (
+              <div className="absolute right-0 mt-2 w-64 bg-[#FAF7F2] border border-[#DDD4C4] rounded-[2px] shadow-xl z-40 p-4 divide-y divide-[#EFE9DF]">
+                <div className="pb-3 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-[2px] bg-[#BA5932] text-white font-bold text-sm flex items-center justify-center overflow-hidden shrink-0">
+                    {avatarImage ? (
+                      <Image
+                        src={avatarImage}
+                        alt="Avatar"
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span>{userInitials}</span>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="font-bold text-sm text-[#1A1208] truncate">Kamau Achola</div>
+                    <div className="text-[11px] text-[#7A6C5B] font-mono uppercase">Ranch Manager</div>
+                  </div>
+                </div>
+
+                <div className="py-2.5 space-y-1">
+                  <button
+                    onClick={() => {
+                      setProfileMenuOpen(false)
+                      fileInputRef.current?.click()
+                    }}
+                    className="w-full text-left px-2 py-1.5 rounded-[2px] hover:bg-[#EFE9DF] text-xs text-[#1A1208] flex items-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <i className="bi bi-camera text-sm text-[#C58F28]" />
+                    <span>Upload Profile Picture</span>
+                  </button>
+
+                  {avatarImage && (
+                    <button
+                      onClick={() => {
+                        handleRemoveAvatar()
+                        setProfileMenuOpen(false)
+                      }}
+                      className="w-full text-left px-2 py-1.5 rounded-[2px] hover:bg-[#FEF2F2] text-xs text-[#991B1B] flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <i className="bi bi-trash text-sm" />
+                      <span>Remove Picture</span>
+                    </button>
+                  )}
+
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setProfileMenuOpen(false)}
+                    className="w-full text-left px-2 py-1.5 rounded-[2px] hover:bg-[#EFE9DF] text-xs text-[#1A1208] flex items-center gap-2 transition-colors block"
+                  >
+                    <i className="bi bi-gear text-sm text-[#7A6C5B]" />
+                    <span>Account Settings</span>
+                  </Link>
+                </div>
+
+                <div className="pt-2.5">
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/login" })}
+                    className="w-full bg-[#160F08] hover:bg-[#B85D30] text-[#FAF7F2] text-xs font-mono font-bold uppercase tracking-[0.14em] py-2 px-3 rounded-[2px] flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <i className="bi bi-box-arrow-right text-xs" />
+                    <span>LOGOUT</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -569,13 +710,13 @@ export default function ExecutiveDashboardView({
         ?
       </button>
 
-      {/* ── MODALS ── */}
+      {/* ── ADD LIVESTOCK MODAL ── */}
       {showAddLivestock && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
           <div className="bg-[#FAF7F2] border border-[#DDD4C4] rounded-[2px] p-6 max-w-md w-full shadow-2xl">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-serif text-xl font-bold text-[#1A1208]">Add Purebred Livestock</h3>
-              <button onClick={() => setShowAddLivestock(false)} className="text-[#8E7E70] hover:text-black">
+              <button onClick={() => setShowAddLivestock(false)} className="text-[#8E7E70] hover:text-black cursor-pointer">
                 <i className="bi bi-x-lg" />
               </button>
             </div>
@@ -591,7 +732,7 @@ export default function ExecutiveDashboardView({
                   alert("Livestock draft registered into Osotua Herd Registry.")
                   setShowAddLivestock(false)
                 }}
-                className="w-full py-2.5 bg-[#D4A045] font-bold text-[#160F08] rounded-[2px] tracking-wider uppercase font-mono mt-2"
+                className="w-full py-2.5 bg-[#D4A045] font-bold text-[#160F08] rounded-[2px] tracking-wider uppercase font-mono mt-2 cursor-pointer"
               >
                 Register Animal
               </button>

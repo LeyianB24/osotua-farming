@@ -17,22 +17,17 @@ export default async function AdminLivestockPage() {
       <PageHeader
         eyebrow="Herd Management"
         title="Livestock Registry"
-        sub={`${livestock.length} animals registered`}
+        sub={`${livestock.length} animals registered in pedigree database`}
         action={
           <Link
             href="/admin/livestock/new"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-95"
-            style={{
-              background: "linear-gradient(135deg, #C4882A, #D99A30)",
-              color: "#1C1208",
-              boxShadow: "0 4px 16px rgba(196,136,42,0.3)",
-            }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-[0.14em] transition-all bg-[#D4A045] text-[#160F08] hover:bg-[#C28E2B] shadow-sm"
           >
-            <i className="bi bi-plus-lg text-sm" /> Add Animal
+            <i className="bi bi-plus-lg text-xs" /> Add Animal
           </Link>
         }
       />
-      <div className="p-4 sm:p-8">
+      <div className="p-6 sm:p-8">
         <DataTable
           columns={[
             { key: "tag",     label: "Tag #",      width: "130px" },
@@ -44,15 +39,15 @@ export default async function AdminLivestockPage() {
             { key: "dob",     label: "Birth Date", width: "130px" },
           ]}
           rows={livestock.map(a => ({
-            tag:     <span className="font-mono text-xs" style={{ color: "#C4882A" }}>{a.tagNumber}</span>,
-            breed:   <span className="font-medium" style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}>{a.breed.name}</span>,
-            species: <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{a.breed.species.name}</span>,
-            gender:  <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{a.gender}</span>,
-            weight:  <span className="text-xs font-mono" style={{ color: "rgba(245,239,228,0.4)" }}>{a.weight ? `${a.weight}kg` : "—"}</span>,
+            tag:     <span className="font-mono text-xs font-bold text-[#7A6C5B]">{a.tagNumber}</span>,
+            breed:   <span className="font-bold text-[#1A1208]">{a.breed.name}</span>,
+            species: <span className="text-xs text-[#7A6C5B]">{a.breed.species.name}</span>,
+            gender:  <span className="text-xs text-[#7A6C5B]">{a.gender}</span>,
+            weight:  <span className="text-xs font-mono text-[#1A1208] font-bold">{a.weight ? `${a.weight} kg` : "—"}</span>,
             status:  <Badge label={a.status} />,
-            dob:     <span className="text-xs" style={{ color: "rgba(245,239,228,0.35)" }}>{a.birthDate ? new Date(a.birthDate).toLocaleDateString() : "—"}</span>,
+            dob:     <span className="text-xs font-mono text-[#7A6C5B]">{a.birthDate ? new Date(a.birthDate).toLocaleDateString() : "—"}</span>,
           }))}
-          empty="No livestock records yet."
+          empty="No livestock records registered yet. Click 'Add Animal' to create one."
         />
       </div>
     </div>

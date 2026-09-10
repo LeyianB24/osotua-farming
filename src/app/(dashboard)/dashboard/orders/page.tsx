@@ -27,76 +27,43 @@ export default async function CustomerOrdersPage() {
         sub="Complete history of your pedigree livestock purchases, cold room pantry orders, and live delivery status."
         action={
           <div className="flex items-center gap-3">
-            <div
-              className="px-4 py-2 rounded-xl text-right hidden sm:block"
-              style={{
-                background: "rgba(245,239,228,0.03)",
-                border: "1px solid rgba(196,136,42,0.2)",
-              }}
-            >
-              <div
-                className="text-[9px] font-mono uppercase tracking-wider"
-                style={{ color: "rgba(245,239,228,0.4)" }}
-              >
+            <div className="px-4 py-2 rounded-[2px] bg-white border border-[#DDD4C4] text-right hidden sm:block shadow-xs">
+              <div className="text-[9px] font-mono uppercase tracking-wider text-[#7A6C5B] font-bold">
                 Lifetime Spent
               </div>
-              <div className="font-mono text-base font-bold" style={{ color: "#C4882A" }}>
+              <div className="font-mono text-sm font-bold text-[#BA5932]">
                 KES {totalSpent.toLocaleString()}
               </div>
             </div>
             <Link
               href="/barn"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
-              style={{
-                background: "linear-gradient(135deg, #C4882A, #D99A30)",
-                color: "#1C1208",
-                boxShadow: "0 4px 16px rgba(196,136,42,0.3)",
-              }}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-[0.14em] transition-all bg-[#D4A045] text-[#160F08] hover:bg-[#C28E2B] shadow-sm"
             >
-              <i className="bi bi-shop text-sm" />
+              <i className="bi bi-shop text-xs" />
               Shop Barn
             </Link>
           </div>
         }
       />
 
-      <div className="p-4 sm:p-8 space-y-4">
+      <div className="p-6 sm:p-8 space-y-4">
         {orders.length === 0 ? (
-          <div
-            className="rounded-2xl p-12 text-center"
-            style={{
-              background: "rgba(245,239,228,0.02)",
-              border: "1px solid rgba(196,136,42,0.12)",
-            }}
-          >
-            <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
-              style={{
-                background: "rgba(196,136,42,0.1)",
-                border: "1px solid rgba(196,136,42,0.25)",
-              }}
-            >
-              <i className="bi bi-bag-x text-2xl" style={{ color: "#C4882A" }} />
+          <div className="bg-white border border-[#E5DDD0] rounded-[2px] p-12 text-center shadow-xs">
+            <div className="w-12 h-12 rounded-[2px] bg-[#FAF7F2] border border-[#DDD4C4] flex items-center justify-center mx-auto mb-4 text-[#C58F28]">
+              <i className="bi bi-bag-x text-2xl" />
             </div>
             <h3
-              className="text-lg font-light mb-1"
-              style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}
+              className="text-xl font-bold text-[#1A1208] mb-1"
+              style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
             >
-              No Orders Found
+              No Orders Placed Yet
             </h3>
-            <p
-              className="text-xs mb-6 max-w-sm mx-auto"
-              style={{ color: "rgba(245,239,228,0.45)" }}
-            >
+            <p className="text-xs text-[#7A6C5B] mb-6 max-w-sm mx-auto">
               You haven&apos;t placed any orders yet. Visit our rangelands barn store or explore pedigree breeds to place your first reservation.
             </p>
             <Link
               href="/barn"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition-all"
-              style={{
-                background: "linear-gradient(135deg, #C4882A, #D99A30)",
-                color: "#1C1208",
-              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[2px] text-xs font-mono uppercase tracking-wider font-bold bg-[#D4A045] text-[#160F08] hover:bg-[#C28E2B] transition-colors"
             >
               Explore Farm Barn
             </Link>
@@ -105,30 +72,15 @@ export default async function CustomerOrdersPage() {
           orders.map((order) => (
             <div
               key={order.id}
-              className="rounded-2xl p-6 transition-all duration-300 group"
-              style={{
-                background: "rgba(245,239,228,0.02)",
-                border: "1px solid rgba(196,136,42,0.12)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-              }}
+              className="bg-white border border-[#E5DDD0] rounded-[2px] p-6 shadow-xs hover:border-[#C48D2A] transition-all"
             >
               {/* Order Header */}
-              <div
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b"
-                style={{ borderColor: "rgba(196,136,42,0.1)" }}
-              >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#EFE9DF]">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <span
-                    className="font-mono text-sm font-bold tracking-wider"
-                    style={{ color: "#C4882A" }}
-                  >
+                  <span className="font-mono text-xs font-bold text-[#7A6C5B]">
                     #{order.id.slice(-8).toUpperCase()}
                   </span>
-                  <span
-                    className="text-xs font-mono"
-                    style={{ color: "rgba(245,239,228,0.4)" }}
-                  >
+                  <span className="text-xs font-mono text-[#7A6C5B]">
                     &bull; {new Date(order.createdAt).toLocaleDateString("en-KE", { day: "numeric", month: "short", year: "numeric" })}
                   </span>
                   <Badge label={order.type} variant="muted" />
@@ -136,8 +88,8 @@ export default async function CustomerOrdersPage() {
 
                 <div className="flex items-center gap-4">
                   <div
-                    className="font-medium text-lg"
-                    style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}
+                    className="font-bold text-lg text-[#BA5932]"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                   >
                     KES {order.totalAmount.toLocaleString()}
                   </div>
@@ -150,28 +102,18 @@ export default async function CustomerOrdersPage() {
                 {order.items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex justify-between items-center text-xs py-1.5 border-b last:border-b-0"
-                    style={{ borderColor: "rgba(245,239,228,0.03)" }}
+                    className="flex justify-between items-center text-xs py-1.5 border-b border-[#FAF7F2] last:border-b-0"
                   >
                     <div className="flex items-center gap-2">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full"
-                        style={{ background: "#C4882A" }}
-                      />
-                      <span
-                        className="font-medium"
-                        style={{ fontFamily: "Georgia, serif", color: "#F5EFE4" }}
-                      >
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C58F28]" />
+                      <span className="font-semibold text-[#1A1208]">
                         {item.breed?.name || item.product?.name || "Farm Produce"}
                       </span>
-                      <span style={{ color: "rgba(245,239,228,0.4)", fontFamily: "monospace" }}>
+                      <span className="text-[#7A6C5B] font-mono">
                         &times; {item.quantity}
                       </span>
                     </div>
-                    <span
-                      className="font-mono"
-                      style={{ color: "rgba(245,239,228,0.6)" }}
-                    >
+                    <span className="font-mono font-bold text-[#BA5932]">
                       KES {((item.unitPrice || 0) * item.quantity).toLocaleString()}
                     </span>
                   </div>
@@ -179,19 +121,16 @@ export default async function CustomerOrdersPage() {
               </div>
 
               {/* Order Footer */}
-              <div
-                className="pt-3 border-t flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2"
-                style={{ borderColor: "rgba(196,136,42,0.08)", color: "rgba(245,239,228,0.35)", fontFamily: "monospace" }}
-              >
+              <div className="pt-3 border-t border-[#EFE9DF] flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2 font-mono text-[#7A6C5B]">
                 <div>
-                  Payment: <span style={{ color: "rgba(245,239,228,0.7)" }}>{order.paymentMethod || "M-Pesa"}</span>
+                  Payment: <span className="text-[#1A1208] font-bold">{order.paymentMethod || "M-Pesa"}</span>
                   {order.deliveryAddress && (
                     <span className="ml-3">
-                      Dispatch to: <span style={{ color: "rgba(245,239,228,0.7)" }}>{order.deliveryAddress}</span>
+                      Dispatch to: <span className="text-[#1A1208] font-bold">{order.deliveryAddress}</span>
                     </span>
                   )}
                 </div>
-                <div style={{ color: "#C4882A" }}>
+                <div className="text-[#C58F28] font-bold">
                   Verified Pastoral Chain &bull; Osotua Ranch
                 </div>
               </div>

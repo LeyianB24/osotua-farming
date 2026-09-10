@@ -14,56 +14,46 @@ export interface DataTableProps {
 
 export default function DataTable({ columns, rows, empty = "No records yet." }: DataTableProps) {
   return (
-    <div
-      className="rounded-xl overflow-hidden"
-      style={{
-        border: "1px solid rgba(196,136,42,0.1)",
-        background: "rgba(245,239,228,0.02)",
-      }}
-    >
+    <div className="bg-white border border-[#E5DDD0] rounded-[2px] shadow-xs overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr style={{ borderBottom: "1px solid rgba(196,136,42,0.1)" }}>
+            <tr className="border-b border-[#EFE9DF] bg-[#FAF7F2]">
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className="text-left px-5 py-3"
-                  style={{
-                    fontFamily: "monospace",
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    color: "rgba(245,239,228,0.4)",
-                    width: col.width,
-                    background: "rgba(255,255,255,0.02)",
-                  }}
-                >{col.label}</th>
+                  className="py-3.5 px-4 font-mono text-[10px] uppercase text-[#7A6C5B] font-bold tracking-wider"
+                  style={{ width: col.width }}
+                >
+                  {col.label}
+                </th>
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-[#EFE9DF]">
             {rows.length === 0 ? (
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="px-5 py-12 text-center"
-                  style={{ color: "rgba(245,239,228,0.25)", fontFamily: "Georgia, serif", fontStyle: "italic" }}
-                >{empty}</td>
+                  className="py-12 px-4 text-center text-[#7A6C5B] italic font-serif"
+                >
+                  {empty}
+                </td>
               </tr>
-            ) : rows.map((row, i) => (
-              <tr
-                key={i}
-                className="transition-colors duration-150 hover:bg-white/[0.03]"
-                style={{ borderBottom: i < rows.length - 1 ? "1px solid rgba(245,239,228,0.04)" : "none" }}
-              >
-                {columns.map((col) => (
-                  <td key={col.key} className="px-5 py-3.5 align-middle">
-                    {row[col.key]}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            ) : (
+              rows.map((row, i) => (
+                <tr
+                  key={i}
+                  className="hover:bg-[#FAF7F2] transition-colors duration-150"
+                >
+                  {columns.map((col) => (
+                    <td key={col.key} className="py-3.5 px-4 align-middle text-[#1A1208]">
+                      {row[col.key]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

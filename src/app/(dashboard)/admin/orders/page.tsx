@@ -18,9 +18,9 @@ export default async function AdminOrdersPage() {
       <PageHeader
         eyebrow="Sales Management"
         title="All Orders"
-        sub={`${orders.length} orders · KES ${total.toLocaleString()} total`}
+        sub={`${orders.length} orders · KES ${total.toLocaleString()} total revenue`}
       />
-      <div className="p-4 sm:p-8">
+      <div className="p-6 sm:p-8">
         <DataTable
           columns={[
             { key: "id",      label: "Order ID",  width: "120px" },
@@ -33,16 +33,16 @@ export default async function AdminOrdersPage() {
             { key: "date",    label: "Date",      width: "120px" },
           ]}
           rows={orders.map(o => ({
-            id:     <span className="font-mono text-xs" style={{ color: "#C4882A" }}>#{o.id.slice(-6).toUpperCase()}</span>,
-            name:   <span style={{ color: "#F5EFE4" }}>{o.customerName}</span>,
-            phone:  <span className="text-xs font-mono" style={{ color: "rgba(245,239,228,0.5)" }}>{o.customerPhone || "—"}</span>,
-            type:   <span className="text-xs" style={{ color: "rgba(245,239,228,0.5)" }}>{o.type}</span>,
-            amount: <span className="font-medium" style={{ color: "#F5EFE4" }}>KES {o.totalAmount.toLocaleString()}</span>,
-            method: <span className="text-xs font-mono" style={{ color: "rgba(245,239,228,0.4)" }}>{o.paymentMethod ?? "—"}</span>,
+            id:     <span className="font-mono text-xs font-bold text-[#7A6C5B]">#{o.id.slice(-6).toUpperCase()}</span>,
+            name:   <span className="font-bold text-[#1A1208]">{o.customerName}</span>,
+            phone:  <span className="text-xs font-mono text-[#7A6C5B]">{o.customerPhone || "—"}</span>,
+            type:   <span className="text-xs font-mono uppercase text-[#7A6C5B]">{o.type}</span>,
+            amount: <span className="font-bold text-[#BA5932]">KES {o.totalAmount.toLocaleString()}</span>,
+            method: <span className="text-xs font-mono uppercase text-[#7A6C5B]">{o.paymentMethod ?? "—"}</span>,
             status: <Badge label={o.status} />,
-            date:   <span className="text-xs" style={{ color: "rgba(245,239,228,0.35)" }}>{new Date(o.createdAt).toLocaleDateString()}</span>,
+            date:   <span className="text-xs font-mono text-[#7A6C5B]">{new Date(o.createdAt).toLocaleDateString()}</span>,
           }))}
-          empty="No orders yet."
+          empty="No orders placed yet."
         />
       </div>
     </div>
