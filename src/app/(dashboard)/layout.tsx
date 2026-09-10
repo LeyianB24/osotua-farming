@@ -25,13 +25,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const path = usePathname()
   const { data: session } = useSession()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [avatarImage, setAvatarImage] = useState<string | null>(session?.user?.image || null)
+  const [avatarImage, setAvatarImage] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("osotua_patron_avatar") || null
+    }
+    return null
+  })
   const sidebarFileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem("osotua_patron_avatar")
-    if (saved) setAvatarImage(saved)
-
     const handleUpdate = () => {
       const updated = localStorage.getItem("osotua_patron_avatar")
       setAvatarImage(updated)
@@ -65,10 +67,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     reader.readAsDataURL(file)
   }
 
-  // Use Kamau Achola or session user
-  const userName = "Kamau Achola"
-  const userRole = "Ranch Manager"
-  const userInitials = "KA"
+  const userName = session?.user?.name || "Kamau Achola"
+  const userRole = (session?.user as { role?: string })?.role === "ADMIN" ? "Estate Administrator" : "Ranch Manager"
+  const userInitials = (session?.user?.name
+    ? session.user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase()
+    : "KA")
 
   return (
     <div className="flex min-h-screen bg-[#FAF7F2] text-[#1A1208]">

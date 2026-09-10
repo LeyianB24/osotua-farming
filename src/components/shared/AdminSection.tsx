@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
 
 /* ── Section wrapper ─────────────────────────────── */
 export function AdminSection({
@@ -133,11 +132,14 @@ export function AdminRow({
   index,
 }: {
   children: React.ReactNode
-  index: number
+  index?: number
 }) {
   return (
     <tr
-      className="transition-colors duration-150 hover:bg-white/[0.03]"
+      data-row-index={index}
+      className={`transition-colors duration-150 hover:bg-white/[0.03] ${
+        index !== undefined && index % 2 === 1 ? "bg-white/[0.01]" : ""
+      }`}
       style={{ borderBottom: "1px solid rgba(245,239,228,0.04)" }}
     >
       {children}

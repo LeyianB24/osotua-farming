@@ -7,9 +7,8 @@ export const metadata = { title: "Admin Portal — Osotua Farming" }
 export default async function AdminPage() {
   const session = await auth()
 
-  const [breeds, products, ordersCount, recentOrders] = await Promise.all([
+  const [breeds, ordersCount, recentOrders] = await Promise.all([
     prisma.breed.count().catch(() => 0),
-    prisma.product.count().catch(() => 0),
     prisma.order.count().catch(() => 0),
     prisma.order.findMany({
       take: 6,

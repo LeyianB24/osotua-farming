@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   PrismaClient,
   UserRole,
@@ -472,7 +471,6 @@ async function main() {
   const allBreeds = await prisma.breed.findMany()
   const allProducts = await prisma.product.findMany()
   const customerUser = await prisma.user.findUnique({ where: { email: "customer@osotua.co.ke" } })
-  const maryUser = await prisma.user.findUnique({ where: { email: "user2@osotua.co.ke" } })
 
   // 6. Individual Livestock Herd (Tags & Weight)
   const boranBreed = allBreeds.find((b) => b.name === "Boran")
@@ -738,7 +736,7 @@ async function main() {
     const ranchBoxProduct = allProducts.find((p) => p.slug === "the-osotua-ranch-box") || allProducts[0]
     const steakProduct = allProducts.find((p) => p.slug === "boran-sirloin-steak") || allProducts[0]
 
-    const demoOrder = await prisma.order.create({
+    await prisma.order.create({
       data: {
         userId: customerUser.id,
         customerName: customerUser.name || "Daniel Otieno",

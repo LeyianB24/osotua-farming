@@ -95,14 +95,23 @@ export default function ExecutiveDashboardView({
   const [showAddLivestock, setShowAddLivestock] = useState(false)
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
-  const [profileModalOpen, setProfileModalOpen] = useState(false)
-  const [avatarImage, setAvatarImage] = useState<string | null>(user?.image || null)
+  const [avatarImage, setAvatarImage] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("osotua_patron_avatar") || user?.image || null
+    }
+    return user?.image || null
+  })
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Sync avatar with localStorage on client
+  // Listen for avatar updates across the estate
   useEffect(() => {
-    const saved = localStorage.getItem("osotua_patron_avatar")
-    if (saved) setAvatarImage(saved)
+    const handleUpdate = () => {
+      const updated = localStorage.getItem("osotua_patron_avatar")
+      if (updated) setAvatarImage(updated)
+    }
+
+    window.addEventListener("osotua_avatar_updated", handleUpdate)
+    return () => window.removeEventListener("osotua_avatar_updated", handleUpdate)
   }, [])
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
