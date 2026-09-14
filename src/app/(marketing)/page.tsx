@@ -7,7 +7,7 @@ import SocialShowcaseSection from "@/components/farm/SocialShowcaseSection";
 import BrandQuoteSection from "@/components/farm/BrandQuoteSection";
 
 export const metadata = {
-  title: "Osotua Farming — From Our Land, To Your Table",
+  title: "From Our Land, To Your Table",
   description:
     "A world-class Kenyan agribusiness platform raising purebred indigenous livestock, cold-pressing artisanal dairy, and harvesting organic provisions across 4,200 acres in Kajiado County.",
 };
@@ -15,9 +15,6 @@ export const metadata = {
 export default function HomePage() {
   return (
     <div className="w-full overflow-x-hidden" style={{ background: "#F5F0E8" }}>
-      <h1 className="sr-only">
-        Osotua Farming — Premium Kenyan Agribusiness and Pastoral Rangelands Platform
-      </h1>
 
       {/* ── 01. HERO MASTER: Dark Pastoral · Left Scrim · 4 Stats Strip ── */}
       <HeroMaster />

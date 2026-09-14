@@ -5,7 +5,7 @@ import Slideshow from "@/components/shared/Slideshow"
 import { RANCH_PANO, PRODUCE_SLIDESHOW } from "@/lib/images"
 
 export const metadata = {
-  title: "The Barn Store — Osotua Farming",
+  title: "The Farm Barn & Harvest Pantry",
   description: "Order fresh organic vegetables, pasture-raised beef, raw dairy, and artisanal farm honey direct from Osotua Farming in Kajiado, Kenya.",
 }
 

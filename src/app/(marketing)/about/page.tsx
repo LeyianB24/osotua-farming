@@ -3,7 +3,7 @@ import Link from "next/link"
 import { RANCH_WIDE, RANCH_GALLERY, LOGO } from "@/lib/images"
 
 export const metadata = {
-  title: "About — Osotua Farming",
+  title: "Our Heritage & Pastoral Mission",
   description: "Learn about the heritage, mission, and pastoral covenant behind Osotua Farming in Kajiado County, Kenya.",
 }
 

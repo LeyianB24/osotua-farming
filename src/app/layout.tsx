@@ -62,6 +62,9 @@ export const metadata: Metadata = {
   creator: "Bezalel Technologies LTD",
   publisher: "Osotua Farming",
   metadataBase: new URL(process.env.NEXTAUTH_URL || "https://osotuafarming.co.ke"),
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     type: "website",
     locale: "en_KE",
@@ -97,6 +100,44 @@ export const viewport: Viewport = {
   themeColor: "#1C1208",
 }
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "LocalBusiness"],
+      "@id": "https://osotuafarming.co.ke/#organization",
+      name: "Osotua Farming",
+      url: "https://osotuafarming.co.ke",
+      logo: "https://osotuafarming.co.ke/icon.png",
+      image: "https://osotuafarming.co.ke/og-image.jpg",
+      description:
+        "A modern smart farm raising premium indigenous livestock, growing wholesome food, and delivering it fresh from Kajiado County, Kenya.",
+      telephone: "+254755758208",
+      email: "info@osotuafarming.co.ke",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Off Namanga Highway, 2 km from Kajiado Town",
+        addressLocality: "Kajiado",
+        addressRegion: "Kajiado County",
+        addressCountry: "KE",
+      },
+      sameAs: [
+        "https://www.instagram.com/osotua_ranches_/",
+        "https://www.tiktok.com/@osotua.ranches",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://osotuafarming.co.ke/#website",
+      url: "https://osotuafarming.co.ke",
+      name: "Osotua Farming",
+      publisher: {
+        "@id": "https://osotuafarming.co.ke/#organization",
+      },
+    },
+  ],
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -108,6 +149,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
+        {/* Schema.org Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="antialiased bg-[#F5F0E8] text-[#1C1208] font-sans">

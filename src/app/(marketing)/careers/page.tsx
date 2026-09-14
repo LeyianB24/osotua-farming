@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 
 export const metadata = {
-  title: "Careers — Osotua Farming",
+  title: "Careers & Pastoral Apprenticeships",
   description: "Join the Osotua Farming team in Kajiado. Open roles for farmers, technologists, vets, and agribusiness professionals.",
 }
 

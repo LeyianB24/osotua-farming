@@ -292,7 +292,16 @@ export default function Footer() {
           {/* Bottom Copyright Bar */}
           <div className="pt-16 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F5F0E8]/40">
             <div>
-              &copy; {year} Osotua Farming. All rights reserved.
+              &copy; {year} Osotua Farming. Built by{" "}
+              <a
+                href="https://www.bezalel.website/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors underline"
+              >
+                Bezalel Technologies
+              </a>
+              . All rights reserved.
             </div>
             <div className="flex items-center gap-6">
               <Link href="/privacy" className="hover:text-white transition-colors no-underline">

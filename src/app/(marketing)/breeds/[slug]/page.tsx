@@ -2,7 +2,40 @@ import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
+import type { Metadata } from "next"
 import { imageForBreed } from "@/lib/images"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const breed = await prisma.breed.findUnique({
+    where: { id: slug },
+    include: { species: true },
+  })
+  if (!breed) return { title: "Breed Not Found" }
+
+  const desc = breed.description.slice(0, 160)
+  const image = breed.image ?? imageForBreed(breed.name, breed.species.name)
+
+  return {
+    title: `${breed.name} (${breed.species.name}) Pedigree Genetics`,
+    description: desc,
+    openGraph: {
+      title: `${breed.name} — Osotua Pedigree Livestock`,
+      description: desc,
+      images: image ? [{ url: image }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${breed.name} — Osotua Pedigree Livestock`,
+      description: desc,
+      images: image ? [image] : undefined,
+    },
+  }
+}
 
 export default async function BreedDetailPage({
   params,

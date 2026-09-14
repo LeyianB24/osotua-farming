@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import { RegisterClient } from "@/components/shared/AuthForms";
 
 export const metadata: Metadata = {
-  title: "Create Member Account — Osotua Farming",
+  title: "Create Member Account",
   description: "Register for an Osotua Farming account to manage orders, schedule consultations, and access exclusive livestock releases.",
+  robots: { index: false, follow: false },
 };
 
 export default function RegisterPage() {

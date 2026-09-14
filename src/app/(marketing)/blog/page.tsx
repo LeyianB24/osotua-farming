@@ -3,7 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 
 export const metadata = {
-  title: "Blog — Osotua Farming",
+  title: "Field Dispatch & Rangeland Stories",
   description: "Farming guides, breed profiles, seasonal updates and stories from Osotua Farming, Kajiado.",
 }
 

@@ -16,8 +16,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/careers",
     "/blog",
     "/contact",
-    "/cart",
-    "/checkout",
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -26,10 +24,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   try {
-    const [breeds, products, posts] = await Promise.all([
+    const [breeds, products, posts, jobs] = await Promise.all([
       prisma.breed.findMany({ select: { id: true, updatedAt: true } }),
       prisma.product.findMany({ select: { slug: true, updatedAt: true } }),
       prisma.post.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } }),
+      prisma.job.findMany({ where: { isOpen: true }, select: { id: true, updatedAt: true } }),
     ])
 
     const breedRoutes: MetadataRoute.Sitemap = breeds.map((b) => ({
@@ -53,7 +52,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
 
-    return [...staticRoutes, ...breedRoutes, ...productRoutes, ...postRoutes]
+    const jobRoutes: MetadataRoute.Sitemap = jobs.map((j) => ({
+      url: `${baseUrl}/careers/${j.id}`,
+      lastModified: j.updatedAt,
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }))
+
+    return [...staticRoutes, ...breedRoutes, ...productRoutes, ...postRoutes, ...jobRoutes]
   } catch {
     return staticRoutes
   }

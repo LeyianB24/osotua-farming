@@ -89,7 +89,7 @@ export default function BreedGeneticsModal({ breed, onClose }: Props) {
             </h4>
             <div className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold text-[#C4882A]">
               <div className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-[#C4882A] shrink-0">
-                <Image src={LOGO} alt="" fill sizes="16px" className="object-cover" />
+                <Image src={LOGO} alt="Osotua Stud Book Verified Seal" fill sizes="16px" className="object-cover" />
               </div>
               <span>Kenya Stud Book Registered</span>
             </div>

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import PartnersClient from "@/components/farm/PartnersClient";
 
 export const metadata: Metadata = {
-  title: "Partner Farmers Outgrower Scheme — Osotua Farming",
+  title: "Partner Farmers Outgrower Scheme",
   description: "Join our network of partner producers in Kenya. Guaranteed offtake agreements, agronomy training, and input support.",
 };
 

@@ -5,7 +5,7 @@ import Slideshow from "@/components/shared/Slideshow"
 import { HERD_FIELD, LIVESTOCK_SLIDESHOW } from "@/lib/images"
 
 export const metadata = {
-  title: "Our Breeds — Osotua Farming",
+  title: "Pedigree Livestock & Certified Genetics",
   description: "Explore Kenya Stud Book registered pedigree Boran cattle, Sahiwal dairy cows, Boer goats, and Dorper sheep from Osotua Farming.",
 }
 
