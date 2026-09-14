@@ -25,9 +25,12 @@ export async function GET(
 
     if (!order) return notFound("Order not found")
 
-    // If request has auth session, verify ownership or admin role
+    // Verify user authentication and order ownership or admin role
     const user = await getSessionUser()
-    if (order.userId && user && order.userId !== user.id && !isAdmin(user)) {
+    if (!user) {
+      return unauthorized("Authentication required to view order")
+    }
+    if (order.userId && order.userId !== user.id && !isAdmin(user)) {
       return forbidden("You do not have permission to view this order")
     }
 

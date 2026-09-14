@@ -32,18 +32,23 @@ export async function POST(req: Request) {
       const orderId =
         typeof accountRef === "string" ? accountRef.replace("OSOTUA-", "") : undefined
 
-      if (orderId) {
-        await prisma.order.update({
-          where: { id: orderId },
-          data: {
-            status: "PAID",
-            paymentRef: String(mpesaRef ?? ""),
-            paymentMethod: "mpesa",
-          },
+      if (orderId && checkoutRequestId) {
+        const order = await prisma.order.findFirst({
+          where: { id: orderId, paymentRef: checkoutRequestId },
         })
+        if (order) {
+          await prisma.order.update({
+            where: { id: orderId },
+            data: {
+              status: "PAID",
+              paymentRef: String(mpesaRef ?? checkoutRequestId),
+              paymentMethod: "mpesa",
+            },
+          })
+        }
       } else if (checkoutRequestId) {
         await prisma.order.updateMany({
-          where: { paymentRef: checkoutRequestId },
+          where: { paymentRef: checkoutRequestId, status: { not: "PAID" } },
           data: {
             status: "PAID",
             paymentRef: String(mpesaRef ?? checkoutRequestId),

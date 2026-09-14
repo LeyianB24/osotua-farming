@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { stkPush } from "@/lib/mpesa"
 import { prisma } from "@/lib/prisma"
+import { getSessionUser, isAdmin } from "@/lib/api-utils"
 
 export async function POST(req: Request) {
   try {
@@ -10,6 +11,11 @@ export async function POST(req: Request) {
     if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 })
     if (order.status === "PAID") {
       return NextResponse.json({ error: "Order is already paid" }, { status: 400 })
+    }
+
+    const user = await getSessionUser()
+    if (order.userId && (!user || (order.userId !== user.id && !isAdmin(user)))) {
+      return NextResponse.json({ error: "Unauthorized access to order" }, { status: 403 })
     }
 
     const result = await stkPush({

@@ -36,7 +36,28 @@ export async function POST(req: Request) {
 
     // Execute within Prisma interactive transaction
     const order = await prisma.$transaction(async (tx) => {
-      // 1. Create the Order and Items
+      let serverCalculatedTotal = 0
+      const verifiedItems = []
+
+      for (const item of data.items) {
+        let unitPrice = item.unitPrice
+        if (item.productId) {
+          const product = await tx.product.findUnique({ where: { id: item.productId } })
+          if (!product) throw new Error(`Product not found: ${item.productId}`)
+          unitPrice = product.price
+        } else if (item.breedId) {
+          const breed = await tx.breed.findUnique({ where: { id: item.breedId } })
+          if (!breed) throw new Error(`Breed not found: ${item.breedId}`)
+          unitPrice = breed.pricePerHead
+        }
+        serverCalculatedTotal += unitPrice * item.quantity
+        verifiedItems.push({
+          ...item,
+          unitPrice,
+        })
+      }
+
+      // 1. Create the Order and Items with verified server amounts
       const createdOrder = await tx.order.create({
         data: {
           userId: user?.id ?? data.userId ?? null,
@@ -45,14 +66,14 @@ export async function POST(req: Request) {
           customerPhone: data.customerPhone,
           type: data.type,
           status: "PENDING",
-          totalAmount: data.totalAmount,
+          totalAmount: serverCalculatedTotal,
           depositAmount: data.depositAmount ?? null,
           paymentMethod: data.paymentMethod ?? null,
           paymentRef: data.paymentRef ?? null,
           deliveryAddress: data.deliveryAddress ?? null,
           deliveryDate: data.deliveryDate ?? null,
           notes: data.notes ?? null,
-          items: { create: data.items },
+          items: { create: verifiedItems },
         },
         include: {
           items: {

@@ -9,6 +9,10 @@ import { ZodError } from "zod"
 
 export async function GET() {
   try {
+    const user = await getSessionUser()
+    if (!user) return unauthorized()
+    if (!isAdmin(user)) return forbidden("Admin access required")
+
     const stocks = await prisma.stock.findMany({
       include: { product: true, breed: { include: { species: true } } },
       orderBy: { name: "asc" },
