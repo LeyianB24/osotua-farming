@@ -61,7 +61,15 @@ export const metadata: Metadata = {
   authors: [{ name: "Osotua Farming", url: "https://osotuafarming.co.ke" }],
   creator: "Bezalel Technologies LTD",
   publisher: "Osotua Farming",
-  metadataBase: new URL(process.env.NEXTAUTH_URL || "https://osotuafarming.co.ke"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://osotuafarming.co.ke")
+  ),
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || process.env.GOOGLE_SITE_VERIFICATION || undefined,
+  },
   alternates: {
     canonical: "./",
   },

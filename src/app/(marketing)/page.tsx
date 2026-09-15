@@ -7,9 +7,22 @@ import SocialShowcaseSection from "@/components/farm/SocialShowcaseSection";
 import BrandQuoteSection from "@/components/farm/BrandQuoteSection";
 
 export const metadata = {
-  title: "From Our Land, To Your Table",
+  title: {
+    absolute: "Osotua Farming — Indigenous Livestock, Dairy & Organic Produce Kenya",
+  },
   description:
-    "A world-class Kenyan agribusiness platform raising purebred indigenous livestock, cold-pressing artisanal dairy, and harvesting organic provisions across 4,200 acres in Kajiado County.",
+    "Osotua Farming is a premier Kenyan smart farm raising purebred indigenous livestock (Boran, Bonsmara, Sahiwal, Dorper, Red Maasai), artisanal dairy, and organic provisions across 4,200 acres in Kajiado County.",
+  keywords: [
+    "Osotua Farming",
+    "Osotua",
+    "Osotua Farm Kenya",
+    "Osotua Ranches",
+    "Kajiado farm",
+    "purebred livestock Kenya",
+    "Boran cattle",
+    "Sahiwal cows",
+    "Red Maasai sheep",
+  ],
 };
 
 export default function HomePage() {
