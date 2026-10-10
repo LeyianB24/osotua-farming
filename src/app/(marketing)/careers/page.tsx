@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
+import PageHero from "@/components/farm/PageHero"
+import { FIELD_DAY } from "@/lib/images"
 
 export const metadata = {
   title: "Careers & Pastoral Apprenticeships",
@@ -22,32 +24,38 @@ export default async function CareersPage() {
   return (
     <div className="w-full overflow-x-hidden bg-[#F5F0E8] text-[#1C1208]">
 
-      {/* ── HERO BANNER ── */}
-      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden bg-[#1C1208]">
-        <div className="os-container relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[2px] text-[11px] font-mono font-bold uppercase tracking-[0.16em] bg-[#6B7A3F] text-white mb-6">
-            <i className="bi bi-briefcase-fill text-xs" />
-            <span>JOIN OUR TEAM &bull; BUILD WITH US</span>
-          </div>
-
-          <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F5F0E8] leading-[1.02] tracking-tight max-w-5xl mb-6"
-            style={{
-              fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            }}
-          >
+      {/* ── STANDARDIZED CINEMATIC PAGE HERO ── */}
+      <PageHero
+        image={{
+          src: FIELD_DAY,
+          alt: "Osotua Farming rangeland pastoral landscape for careers and team building",
+        }}
+        eyebrow="JOIN OUR TEAM · BUILD WITH US"
+        title={
+          <>
             Build something <br />
             <em className="font-normal italic text-[#C99A2E]">that lasts</em>
-          </h1>
-
-          <p className="text-base sm:text-xl text-[#F5F0E8]/85 max-w-2xl leading-relaxed font-normal">
-            We are assembling a world-class team of pastoralists, agronomists, technologists, veterinarians, and agribusiness specialists transforming East African agriculture.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+        lead="We are assembling a world-class team of pastoralists, agronomists, technologists, veterinarians, and agribusiness specialists transforming East African agriculture."
+        trustChips={[
+          { label: "Competitive Salaries + Farm Benefits" },
+          { label: "4,200+ Acre Kajiado Ranch" },
+          { label: "Grow Fast with the Enterprise" },
+        ]}
+        ctaText="View Open Positions"
+        ctaHref="#open-positions"
+        secondaryCtaText="Internship Programme"
+        secondaryCtaHref="#internships"
+        stats={[
+          { value: "4", label: "Core Perks & Benefits" },
+          { value: "Kenya", label: "Kajiado County Base" },
+          { value: "Now", label: "Hiring Open Roles" },
+        ]}
+      />
 
       {/* ── PERKS ── */}
-      <section className="py-20 sm:py-28 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
+      <section className="py-16 sm:py-20 md:py-24 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
         <div className="os-container">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {PERKS.map((p) => (
@@ -74,7 +82,7 @@ export default async function CareersPage() {
       </section>
 
       {/* ── OPEN ROLES ── */}
-      <section className="py-24 sm:py-32 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
+      <section id="open-positions" className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
         <div className="os-container">
           <div className="flex items-baseline justify-between mb-14 flex-wrap gap-4">
             <div>
@@ -164,7 +172,7 @@ export default async function CareersPage() {
       </section>
 
       {/* ── INTERNSHIPS ── */}
-      <section id="internships" className="py-24 sm:py-32 bg-[#FAF7F2]">
+      <section id="internships" className="py-16 sm:py-20 md:py-24 bg-[#FAF7F2]">
         <div className="os-container">
           <div className="bg-[#FFFFFF] border border-[#D4C9B0] rounded-[2px] p-8 sm:p-14 shadow-sm max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px] mb-4">

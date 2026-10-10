@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import PageHero from "@/components/farm/PageHero";
 import { FIELD_DAY, LOGO } from "@/lib/images";
 
 const TOUR_TYPES = [
@@ -92,99 +93,38 @@ export default function VisitClient() {
   return (
     <div style={{ background: "#F5F0E8", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
 
-      {/* ── HERO BANNER ── */}
-      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
-        {/* Pastoral background overlay */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={FIELD_DAY}
-            alt="Osotua rangeland pastures"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-25"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F0E8]/95 via-[#F5F0E8]/85 to-[#F5F0E8]/70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#F5F0E8] via-transparent to-transparent" />
-        </div>
-
-        <div className="os-container relative z-10">
-          <div className="flex items-center gap-3 mb-6">
-            <div
-              className="relative w-9 h-9 rounded-full overflow-hidden border border-[#C99A2E]/50 shrink-0 bg-white"
-            >
-              <Image
-                src={LOGO}
-                alt="Osotua Farming Emblem"
-                fill
-                sizes="36px"
-                className="object-cover"
-              />
-            </div>
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white"
-              style={{ backgroundColor: "#6B7A3F", borderRadius: "2px" }}
-            >
-              <i className="bi bi-geo-alt text-xs" />
-              <span>KAJIADO RANGELANDS · 90 MIN FROM NAIROBI</span>
-            </div>
-          </div>
-
-          <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-6"
-            style={{
-              fontFamily: "var(--font-playfair), Georgia, serif",
-            }}
-          >
+      {/* ── STANDARDIZED CINEMATIC PAGE HERO ── */}
+      <PageHero
+        image={{
+          src: FIELD_DAY,
+          alt: "Ranch visitors exploring the rangelands of Osotua Farming in Kajiado",
+        }}
+        eyebrow="KAJIADO RANGELANDS · 90 MIN FROM NAIROBI"
+        title={
+          <>
             Visit Osotua, <br />
-            <span style={{ color: "#C99A2E" }}>Walk the Living Pastures</span>
-          </h1>
-
-          <p
-            className="text-base sm:text-xl text-[#8E7E70] max-w-2xl leading-relaxed mb-10 font-normal"
-            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-          >
-            Experience purebred Kenyan livestock breeding, explore solar irrigation and water harvesting swales, and enjoy an authentic bush breakfast under our acacia canopies.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-[#D4C9B0]">
-            <a
-              href="https://wa.me/254755758208"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold"
-              style={{ borderRadius: "2px" }}
-            >
-              <i className="bi bi-whatsapp" />
-              <span>WHATSAPP CONCIERGE (+254 755 758 208)</span>
-            </a>
-
-            <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-[0.14em] text-[#8E7E70]">
-              <span>Follow our ranch journey:</span>
-              <a
-                href="https://www.instagram.com/osotua_ranches_/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1C1208] hover:text-[#C99A2E] transition-colors"
-              >
-                @osotua_ranches_
-              </a>
-              <span>·</span>
-              <a
-                href="https://www.tiktok.com/@osotua.ranches"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1C1208] hover:text-[#C99A2E] transition-colors"
-              >
-                @osotua.ranches
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+            <span className="text-[#C99A2E]">Walk the Living Pastures</span>
+          </>
+        }
+        lead="Experience purebred Kenyan livestock breeding, explore solar irrigation and water harvesting swales, and enjoy an authentic bush breakfast under our acacia canopies."
+        trustChips={[
+          { label: "Guided Ranch Walks" },
+          { label: "Family & Delegation Friendly" },
+          { label: "Farm-to-Table Bush Breakfast" },
+        ]}
+        ctaText="Book A Farm Tour"
+        ctaHref="#booking-section"
+        secondaryCtaText="WhatsApp Concierge"
+        secondaryCtaHref="https://wa.me/254755758208"
+        stats={[
+          { value: "4", label: "Curated Tour Itineraries" },
+          { value: "90 min", label: "Drive from Nairobi CBD" },
+          { value: "100%", label: "Open-Air Pasture Experience" },
+        ]}
+      />
 
       {/* ── TOURS SELECTION & BOOKING SECTION ── */}
-      <section className="py-16 md:py-24 bg-[#F5F0E8]">
+      <section id="booking-section" className="py-16 md:py-24 bg-[#F5F0E8]">
         <div className="os-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 

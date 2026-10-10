@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { LOGO } from "@/lib/images";
+import PageHero from "@/components/farm/PageHero";
+import { LOGO, FIELD_DAY } from "@/lib/images";
 
 const CONTACT_ITEMS = [
   { icon: "bi-geo-alt", label: "Location", value: "Kajiado County, Kenya", sub: "Off Magadi Road, 90 min from Nairobi CBD" },
@@ -58,45 +59,38 @@ export default function ContactClient() {
   return (
     <div style={{ background: "#F5F0E8", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
 
-      {/* ── HERO BANNER ── */}
-      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
-        <div className="os-container relative z-10">
-          <div className="flex items-center gap-3 mb-6">
-            <div
-              className="relative w-9 h-9 rounded-full overflow-hidden border border-[#C99A2E]/50 shrink-0 bg-white"
-            >
-              <Image src={LOGO} alt="Osotua Official Seal" fill sizes="36px" className="object-cover" />
-            </div>
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white"
-              style={{ backgroundColor: "#6B7A3F", borderRadius: "2px" }}
-            >
-              <i className="bi bi-chat-dots text-xs" />
-              <span>GET IN TOUCH · KAJIADO RANCH OFFICE</span>
-            </div>
-          </div>
-
-          <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#1C1208] leading-[1.04] tracking-tight max-w-5xl mb-6"
-            style={{
-              fontFamily: "var(--font-playfair), Georgia, serif",
-            }}
-          >
+      {/* ── STANDARDIZED CINEMATIC PAGE HERO ── */}
+      <PageHero
+        image={{
+          src: FIELD_DAY,
+          alt: "Osotua Farming pastoral rangelands and livestock, Kajiado Kenya",
+        }}
+        eyebrow="GET IN TOUCH · KAJIADO RANCH OFFICE"
+        title={
+          <>
             Let&apos;s talk <br />
-            <span style={{ color: "#C99A2E" }}>Farming &amp; Herds</span>
-          </h1>
-
-          <p
-            className="text-base sm:text-xl text-[#8E7E70] max-w-2xl leading-relaxed font-normal"
-            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-          >
-            Whether you are acquiring certified Boran genetics, sourcing kitchen provisions, or planning an educational rangeland tour — our ranch desk is here for you.
-          </p>
-        </div>
-      </section>
+            <span className="text-[#C99A2E]">Farming &amp; Herds</span>
+          </>
+        }
+        lead="Whether you are acquiring certified Boran genetics, sourcing kitchen provisions, or planning an educational rangeland tour — our ranch desk is here for you."
+        trustChips={[
+          { label: "Rapid Response · 24hr SLA" },
+          { label: "Ranch Office Mon–Sat 8AM–5PM" },
+          { label: "WhatsApp Concierge Available" },
+        ]}
+        ctaText="Send A Message"
+        ctaHref="#contact-form"
+        secondaryCtaText="WhatsApp Us"
+        secondaryCtaHref="https://wa.me/254755758208"
+        stats={[
+          { value: "24hr", label: "Response Commitment" },
+          { value: "Mon–Sat", label: "Ranch Office Hours" },
+          { value: "Kenya", label: "Kajiado County Base" },
+        ]}
+      />
 
       {/* ── CONTENT SECTION ── */}
-      <section className="py-16 md:py-24 bg-[#F5F0E8]">
+      <section id="contact-form" className="py-16 md:py-24 bg-[#F5F0E8]">
         <div className="os-container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             

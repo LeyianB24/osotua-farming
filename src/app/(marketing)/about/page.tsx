@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import { RANCH_WIDE, RANCH_GALLERY, LOGO } from "@/lib/images"
+import PageHero from "@/components/farm/PageHero"
+import { RANCH_WIDE, RANCH_GALLERY } from "@/lib/images"
 
 export const metadata = {
   title: "Our Heritage & Pastoral Mission",
@@ -33,61 +34,43 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <div className="w-full overflow-x-hidden bg-[#F5F0E8] text-[#1C1208]">
-
-      {/* ── HERO BANNER ── */}
-      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden bg-[#1C1208]">
-        {/* Pastoral background overlay */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={RANCH_WIDE}
-            alt="The Osotua ranch landscape"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-25 scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1208] via-[#1C1208]/90 to-[#1C1208]/50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208] via-transparent to-transparent" />
-        </div>
-
-        <div className="os-container relative z-10">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="relative w-14 h-14 rounded-full overflow-hidden ring-2 ring-[#C99A2E]/40 shadow-md bg-white">
-              <Image
-                src={LOGO}
-                alt="Osotua Farming"
-                fill
-                priority
-                className="object-cover"
-              />
-            </div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[2px] text-[11px] font-mono font-bold uppercase tracking-[0.16em] bg-[#6B7A3F] text-white">
-              <span>OUR STORY &bull; THE PASTORAL COVENANT</span>
-            </div>
-          </div>
-
-          <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F5F0E8] leading-[1.02] tracking-tight max-w-5xl mb-8"
-            style={{
-              fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            }}
-          >
+      {/* ── STANDARDIZED CINEMATIC PAGE HERO ── */}
+      <PageHero
+        image={{
+          src: RANCH_WIDE,
+          alt: "The expansive Osotua ranch landscape and pastoral rangelands in Kajiado",
+        }}
+        eyebrow="OUR STORY · THE PASTORAL COVENANT"
+        title={
+          <>
             A farm built on <br />
-            <em className="font-normal italic text-[#C99A2E]">trust and land</em>
-          </h1>
-
-          <p className="text-base sm:text-xl text-[#F5F0E8]/85 max-w-2xl leading-relaxed font-normal">
-            Osotua means a sacred bond of friendship and peace in the Maa language — an enduring covenant between the rangelands, the pastoralist, and the community we serve.
-          </p>
-        </div>
-      </section>
+            <span className="text-[#C99A2E]">trust and land</span>
+          </>
+        }
+        lead="Osotua means a sacred bond of friendship and peace in the Maa language — an enduring covenant between the rangelands, the pastoralist, and the community we serve."
+        trustChips={[
+          { label: "4,200+ Titled Acres in Kajiado" },
+          { label: "40+ Smallholder Pastoral Co-ops" },
+          { label: "100% Direct Traceability" },
+        ]}
+        ctaText="Book A Farm Visit"
+        ctaHref="/visit"
+        secondaryCtaText="Explore Farm Barn"
+        secondaryCtaHref="/barn"
+        secondaryCtaExternal={false}
+        stats={[
+          { value: "4,200+", label: "Titled Rangeland Acres" },
+          { value: "40+", label: "Partner Co-operatives" },
+          { value: "100%", label: "Regenerative Covenant" },
+        ]}
+      />
 
       {/* ── CORE PURPOSE ── */}
-      <section className="py-24 sm:py-32 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
+      <section className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
         <div className="os-container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             {/* Left quote card */}
-            <div className="lg:col-span-6 bg-[#FAF7F2] border border-[#D4C9B0] p-10 sm:p-14 relative overflow-hidden rounded-[2px] shadow-sm">
+            <div className="lg:col-span-6 bg-[#FAF7F2] border border-[#D4C9B0] p-10 sm:p-14 relative overflow-hidden rounded-[2px] shadow-sm hover-lift">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 mb-8 rounded-[2px]">
                 <span>OUR MOTTO</span>
               </div>
@@ -111,28 +94,34 @@ export default function AboutPage() {
               </div>
 
               <h2
-                className="text-3xl sm:text-5xl font-bold text-[#1C1208] leading-tight m-0"
+                className="text-3xl sm:text-5xl font-bold text-[#1C1208] m-0"
                 style={{
                   fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
                 }}
               >
-                Redefining African <span className="text-[#C99A2E]">Agribusiness</span>
+                Rooted in Community, <br />
+                <span className="text-[#C99A2E]">Powered by the Sun</span>
               </h2>
 
-              <p className="text-base sm:text-lg text-[#5C4A2A] leading-relaxed m-0">
-                Osotua Farming is a premier smart agribusiness enterprise based across 4,200 acres in Kajiado County, Kenya. We raise climate-resilient indigenous livestock, cultivate organic produce, and supply consumers and hospitality clients directly through our Barn Store.
+              <p className="text-base sm:text-lg text-[#5C4A2A] leading-relaxed">
+                We believe the future of African food sovereignty lies in harmonizing traditional pastoral knowledge with modern regenerative techniques. By practicing multi-species rotational grazing, water harvesting, and solar-powered cold-chain distribution, Osotua produces superior livestock and pure food while actively regenerating the land.
               </p>
 
-              <p className="text-base sm:text-lg text-[#5C4A2A] leading-relaxed m-0">
-                We champion Africa&apos;s finest livestock genetics combined with precision farming technology and regenerative land management — proving that pastoral tradition and modern innovation thrive together.
-              </p>
+              <div className="pt-2 flex flex-wrap gap-4">
+                <Link href="/breeds" className="btn-outline">
+                  <span>VIEW OUR BREEDS</span>
+                </Link>
+                <Link href="/barn" className="btn-gold">
+                  <span>VISIT THE BARN</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── VALUES ── */}
-      <section className="py-24 sm:py-32 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
+      {/* ── VALUES (Generous card spacing matching Compass Cartage) ── */}
+      <section className="py-16 sm:py-20 md:py-24 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
         <div className="os-container relative z-10 space-y-16">
           <div className="max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px]">
@@ -152,7 +141,7 @@ export default function AboutPage() {
             {VALUES.map((item) => (
               <div
                 key={item.title}
-                className="bg-[#FAF7F2] border border-[#D4C9B0] p-8 sm:p-10 flex gap-6 items-start rounded-[2px] hover:border-[#C99A2E] transition-all"
+                className="bg-[#FAF7F2] border border-[#D4C9B0] p-8 sm:p-10 flex gap-6 items-start rounded-[2px] hover:border-[#C99A2E] transition-all hover-lift"
               >
                 <div className="w-14 h-14 rounded-[2px] bg-[#C99A2E]/10 border border-[#C99A2E]/25 flex items-center justify-center shrink-0 text-2xl text-[#C99A2E]">
                   <i className={`bi ${item.icon}`} />
@@ -164,7 +153,7 @@ export default function AboutPage() {
                   >
                     {item.title}
                   </h3>
-                  <p className="text-base text-[#5C4A2A] leading-relaxed m-0">
+                  <p className="text-base text-[#5C4A2A] leading-relaxed m-0 font-normal">
                     {item.desc}
                   </p>
                 </div>
@@ -175,7 +164,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── GALLERY ── */}
-      <section className="py-24 sm:py-32 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
+      <section className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
         <div className="os-container relative z-10 space-y-16">
           <div className="max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#6B7A3F] bg-[#6B7A3F]/10 border border-[#6B7A3F]/30 rounded-[2px]">
@@ -212,7 +201,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── LOCATION CTA ── */}
-      <section className="py-24 sm:py-32 text-center bg-[#FAF7F2]">
+      <section className="py-16 sm:py-20 md:py-24 text-center bg-[#FAF7F2] border-t border-[#D4C9B0]/40">
         <div className="os-container relative z-10 max-w-3xl space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px]">
             <span>VISIT OUR RANCH</span>
@@ -225,12 +214,12 @@ export default function AboutPage() {
           >
             Kajiado County, Kenya
           </h2>
-          <p className="text-base sm:text-lg text-[#5C4835] leading-relaxed max-w-xl mx-auto">
+          <p className="text-base sm:text-lg text-[#5C4835] leading-relaxed max-w-xl mx-auto font-normal">
             Located in the heart of East Africa&apos;s pastoral country — book a guided rangeland tour and experience Osotua firsthand.
           </p>
 
           <div className="pt-4 flex justify-center">
-            <Link href="/visit" className="btn-gold">
+            <Link href="/visit" className="btn-gold btn-shimmer">
               <i className="bi bi-geo-alt-fill text-sm" />
               <span>BOOK A FARM VISIT</span>
             </Link>

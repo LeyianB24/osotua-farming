@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { LOGO } from "@/lib/images"
+import PageHero from "@/components/farm/PageHero"
+import { FIELD_DAY } from "@/lib/images"
 
 const BENEFITS = [
   {
@@ -68,31 +69,35 @@ export default function PartnersClient() {
   return (
     <div className="w-full overflow-x-hidden bg-[#F5F0E8] text-[#1C1208]">
 
-      {/* ── HERO BANNER ── */}
-      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden bg-[#1C1208]">
-        <div className="os-container relative z-10">
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-[2px] text-[11px] font-mono font-bold uppercase tracking-[0.16em] mb-6 bg-[#6B7A3F] text-white shadow-sm">
-            <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 bg-white">
-              <Image src={LOGO} alt="Osotua Seal" fill sizes="16px" className="object-cover" />
-            </div>
-            <span>OUTGROWER &bull; PRODUCER COOPERATIVE SCHEME</span>
-          </div>
-
-          <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F5F0E8] leading-[1.02] tracking-tight max-w-5xl mb-6"
-            style={{
-              fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            }}
-          >
+      {/* ── STANDARDIZED CINEMATIC PAGE HERO ── */}
+      <PageHero
+        image={{
+          src: FIELD_DAY,
+          alt: "Osotua Farming partner fields and outgrower programme, Kajiado Kenya",
+        }}
+        eyebrow="OUTGROWER • PRODUCER COOPERATIVE SCHEME"
+        title={
+          <>
             Grow with <br />
             <em className="font-normal italic text-[#C99A2E]">Osotua</em>
-          </h1>
-
-          <p className="text-base sm:text-xl text-[#F5F0E8]/85 max-w-2xl leading-relaxed font-normal">
-            Supply fresh vegetables, fodder, eggs, honey, or dairy under our partner farmer outgrower scheme — benefiting from guaranteed offtake contracts, agronomy training, and input credit.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+        lead="Supply fresh vegetables, fodder, eggs, honey, or dairy under our partner farmer outgrower scheme — benefiting from guaranteed offtake contracts, agronomy training, and input credit."
+        trustChips={[
+          { label: "Guaranteed Offtake Contracts" },
+          { label: "Free Agronomist Support" },
+          { label: "Input Credit Available" },
+        ]}
+        ctaText="Apply as Partner Farmer"
+        ctaHref="#partner-form"
+        secondaryCtaText="Call Us Now"
+        secondaryCtaHref="tel:+254755758208"
+        stats={[
+          { value: "7+", label: "Produce Categories" },
+          { value: "100%", label: "Organic Standards" },
+          { value: "Fair", label: "Market-Pegged Prices" },
+        ]}
+      />
 
       {/* ── VISUAL PHOTO FEATURE ── */}
       <section className="bg-[#F5F0E8] pb-12 relative z-10">
@@ -144,7 +149,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ── BENEFITS SECTION ── */}
-      <section className="py-20 sm:py-28 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
+      <section className="py-16 sm:py-20 md:py-24 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
         <div className="os-container space-y-14">
           <div className="max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px]">
@@ -187,7 +192,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ── APPLICATION & REQUIREMENTS SECTION ── */}
-      <section className="py-24 sm:py-32 bg-[#F5F0E8]">
+      <section id="partner-form" className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8]">
         <div className="os-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             

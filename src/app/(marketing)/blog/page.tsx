@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 import Image from "next/image"
+import PageHero from "@/components/farm/PageHero"
+import { FIELD_DAY } from "@/lib/images"
 
 export const metadata = {
   title: "Field Dispatch & Rangeland Stories",
@@ -16,32 +18,36 @@ export default async function BlogPage() {
   return (
     <div className="w-full overflow-x-hidden bg-[#F5F0E8] text-[#1C1208]">
 
-      {/* ── HERO BANNER ── */}
-      <section className="relative pt-36 sm:pt-44 pb-20 sm:pb-28 overflow-hidden bg-[#1C1208]">
-        <div className="os-container relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[2px] text-[11px] font-mono font-bold uppercase tracking-[0.16em] bg-[#6B7A3F] text-white mb-6">
-            <i className="bi bi-journal-text text-xs" />
-            <span>KNOWLEDGE HUB &amp; FIELD STORIES</span>
-          </div>
-
-          <h1
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#F5F0E8] leading-[1.02] tracking-tight max-w-5xl mb-6"
-            style={{
-              fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-            }}
-          >
+      {/* ── STANDARDIZED CINEMATIC PAGE HERO ── */}
+      <PageHero
+        image={{
+          src: FIELD_DAY,
+          alt: "Osotua Farming field dispatch — rangeland stories and farming guides from Kajiado",
+        }}
+        eyebrow="KNOWLEDGE HUB · FIELD STORIES"
+        title={
+          <>
             From the <br />
             <em className="font-normal italic text-[#C99A2E]">rangeland</em>
-          </h1>
-
-          <p className="text-base sm:text-xl text-[#F5F0E8]/85 max-w-2xl leading-relaxed font-normal">
-            Farming guides, purebred profiles, seasonal harvest updates, and stories from Kajiado&apos;s most innovative pastoral enterprise.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+        lead="Farming guides, purebred profiles, seasonal harvest updates, and stories from Kajiado&apos;s most innovative pastoral enterprise."
+        trustChips={[
+          { label: "Agronomist-Authored Guides" },
+          { label: "Breed & Herd Profiles" },
+          { label: "Seasonal Harvest Updates" },
+        ]}
+        ctaText="Browse All Articles"
+        ctaHref="#articles"
+        stats={[
+          { value: "100%", label: "Field-Verified Content" },
+          { value: "Kajiado", label: "On-Ground Reporting" },
+          { value: "Free", label: "Open Knowledge Hub" },
+        ]}
+      />
 
       {/* ── BLOG POSTS ── */}
-      <section className="py-20 sm:py-28 bg-[#F5F0E8]">
+      <section id="articles" className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8]">
         <div className="os-container">
           {posts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

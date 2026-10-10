@@ -31,27 +31,26 @@ export default function Footer() {
 
   return (
     <footer className="w-full">
-      {/* ── TOP TERRACOTTA NEWSLETTER SECTION (Exact Figma Screenshot) ── */}
+      {/* ── TOP TERRACOTTA NEWSLETTER SECTION ── */}
       <section
-        className="flex min-h-[360px] w-full items-center py-24 md:min-h-[390px] md:py-28"
+        className="relative w-full py-16 sm:py-20 md:py-24 overflow-hidden border-t border-[#C99A2E]/20"
         style={{ backgroundColor: "#C4602A" }}
       >
-        <div className="os-container text-center max-w-3xl mx-auto">
+        <div className="os-container text-center max-w-2xl mx-auto relative z-10">
           {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-[1px] w-8 bg-white/40" />
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="h-[1px] w-6 bg-white/40" />
             <span
-              className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/80"
-              style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+              className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-white/90"
             >
               THE OSOTUA GAZETTE
             </span>
-            <div className="h-[1px] w-8 bg-white/40" />
+            <div className="h-[1px] w-6 bg-white/40" />
           </div>
 
           {/* Heading */}
           <h2
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-bold leading-tight mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl text-white font-bold leading-tight mb-3"
             style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
           >
             Subscribe to the Ranch
@@ -59,41 +58,39 @@ export default function Footer() {
 
           {/* Subtitle */}
           <p
-            className="text-base sm:text-lg text-white/90 max-w-xl mx-auto mb-10 leading-relaxed font-normal"
+            className="text-sm sm:text-base text-white/90 max-w-lg mx-auto mb-8 leading-relaxed font-normal"
             style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
           >
-            Seasonal harvest announcements, breeding stock availability, and pastoral ranching updates &mdash; delivered to your inbox.
+            Seasonal harvest announcements, breeding stock availability, and pastoral ranching updates &mdash; delivered directly to your inbox.
           </p>
 
           {/* Form */}
           <form
             onSubmit={handleSubscribe}
-            className="flex flex-col sm:flex-row items-center justify-center gap-0 max-w-xl mx-auto shadow-sm"
+            className="flex flex-col sm:flex-row items-stretch justify-center gap-2 sm:gap-0 max-w-md mx-auto"
           >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder="Enter your email address..."
               required
               disabled={status === "loading" || status === "success"}
-              className="w-full sm:w-84 py-4 px-5 text-sm text-white placeholder:text-white/70 outline-none border transition-colors"
+              className="w-full sm:flex-1 py-3.5 px-4 text-sm text-white placeholder:text-white/60 outline-none border transition-colors rounded-[2px] sm:rounded-r-none focus:border-white"
               style={{
-                backgroundColor: "rgba(28, 18, 8, 0.2)",
-                borderColor: "rgba(28, 18, 8, 0.3)",
-                borderRadius: "2px 0 0 2px",
+                backgroundColor: "rgba(28, 18, 8, 0.25)",
+                borderColor: "rgba(255, 255, 255, 0.25)",
                 fontFamily: "var(--font-source-sans), sans-serif",
               }}
             />
             <button
               type="submit"
               disabled={status === "loading" || status === "success"}
-              className="w-full sm:w-auto py-4 px-8 font-bold text-xs uppercase tracking-[0.16em] transition-all cursor-pointer shrink-0"
+              className="w-full sm:w-auto py-3.5 px-7 font-bold text-xs uppercase tracking-[0.16em] transition-all cursor-pointer shrink-0 rounded-[2px] sm:rounded-l-none btn-shimmer"
               style={{
                 backgroundColor: "#1C1208",
                 color: "#F5F0E8",
                 border: "none",
-                borderRadius: "0 2px 2px 0",
                 fontFamily: "var(--font-source-sans), sans-serif",
               }}
             >
@@ -102,8 +99,8 @@ export default function Footer() {
           </form>
 
           {status === "success" && (
-            <p className="text-center text-xs text-white mt-4 font-semibold">
-              You are subscribed to the Osotua ranch dispatch.
+            <p className="text-center text-xs text-white/95 mt-4 font-semibold">
+              ✓ You have successfully subscribed to the Osotua ranch dispatch.
             </p>
           )}
           {status === "error" && (
@@ -114,16 +111,16 @@ export default function Footer() {
         </div>
       </section>
 
-      {/* ── MAIN FOOTER BODY (Exact Figma 4-Column Layout) ── */}
+      {/* ── MAIN FOOTER BODY (Standardized Obsidian & Brushed Brass Grid) ── */}
       <div
-        className="w-full py-20 md:py-24"
-        style={{ backgroundColor: "#1C1208", color: "#F5F0E8" }}
+        className="w-full py-16 sm:py-20 border-t border-[#C99A2E]/15"
+        style={{ backgroundColor: "#110B05", color: "#F5F0E8" }}
       >
         <div className="os-container">
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
+          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
 
             {/* Column 1: Brand Wordmark, Description & Social Icons (4 cols) */}
-            <div className="space-y-6">
+            <div className="space-y-6 sm:col-span-2 lg:col-span-4">
               <Link href="/" className="inline-flex items-center gap-2.5 no-underline">
                 <span
                   className="font-serif italic text-3xl text-[#C99A2E]"
@@ -140,14 +137,14 @@ export default function Footer() {
               </Link>
 
               <p
-                className="max-w-xs text-sm leading-8 text-[#F5F0E8]/65 font-normal m-0"
+                className="max-w-sm text-sm leading-relaxed text-[#F5F0E8]/65 font-normal m-0"
                 style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
-                Rooted in tradition, growing with nature. Premium indigenous livestock and wholesome produce from Kajiado County, Kenya.
+                Rooted in tradition, growing with nature. Premium indigenous livestock genetics, organic produce, and pastoral agricultural tours from Kajiado County, Kenya.
               </p>
 
               {/* Social Media Square Icon Buttons */}
-              <div className="flex items-center gap-3 pt-2">
+              <div className="flex items-center gap-2.5 pt-1">
                 {[
                   {
                     icon: "bi-instagram",
@@ -181,8 +178,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="w-9 h-9 flex items-center justify-center text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] hover:border-[#C99A2E] transition-all duration-200 border border-white/15 bg-white/[0.04]"
-                    style={{ borderRadius: "2px" }}
+                    className="w-9 h-9 flex items-center justify-center text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] hover:border-[#C99A2E] hover:bg-white/[0.08] transition-all duration-200 border border-white/10 bg-white/[0.03] rounded-[2px]"
                   >
                     <i className={`bi ${s.icon}`} aria-hidden="true" />
                   </a>
@@ -190,28 +186,28 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Column 2: Quick Links (3 cols) */}
-            <div className="space-y-4 pt-8 md:pt-0 lg:pl-12">
+            {/* Column 2: Quick Links (2 cols) */}
+            <div className="space-y-4 lg:col-span-2">
               <div
-                className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
-                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
               >
                 QUICK LINKS
               </div>
-              <nav className="flex flex-col gap-3 leading-relaxed" aria-label="Quick links">
+              <nav className="flex flex-col gap-2.5 leading-relaxed" aria-label="Quick links">
                 {[
                   { label: "Our Story", href: "/about" },
                   { label: "The Barn", href: "/barn" },
                   { label: "Breeding Programme", href: "/breeds" },
                   { label: "Ranch Visits", href: "/visit" },
                   { label: "Invest with Us", href: "/invest" },
-                  { label: "Blog", href: "/blog" },
-                  { label: "Partners", href: "/partners" },
+                  { label: "Blog & Field Notes", href: "/blog" },
+                  { label: "Partner Farmers", href: "/partners" },
+                  { label: "Careers", href: "/careers" },
                 ].map((l) => (
                   <Link
                     key={l.label}
                     href={l.href}
-                    className="text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
+                    className="text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] hover:translate-x-0.5 transition-all no-underline inline-block"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     {l.label}
@@ -220,28 +216,27 @@ export default function Footer() {
               </nav>
             </div>
 
-            {/* Column 3: Livestock Catalogue (2.5 cols) */}
-            <div className="space-y-4 pt-8 md:pt-0 lg:pl-12">
+            {/* Column 3: Livestock Catalogue (3 cols) */}
+            <div className="space-y-4 lg:col-span-3">
               <div
-                className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
-                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
               >
                 LIVESTOCK CATALOGUE
               </div>
-              <nav className="flex flex-col gap-3 leading-relaxed" aria-label="Livestock catalogue">
+              <nav className="flex flex-col gap-2.5 leading-relaxed" aria-label="Livestock catalogue">
                 {[
                   { label: "Boran Beef Cattle", href: "/breeds?category=beef" },
                   { label: "Bonsmara Bulls", href: "/breeds?category=beef" },
                   { label: "Sahiwal Dairy Cows", href: "/breeds?category=dairy" },
-                  { label: "Boer Goats", href: "/breeds?category=goats" },
+                  { label: "Boer Meat Goats", href: "/breeds?category=goats" },
                   { label: "Galla × Boer Crosses", href: "/breeds?category=goats" },
-                  { label: "Dorper Sheep", href: "/breeds?category=sheep" },
+                  { label: "Dorper Hair Sheep", href: "/breeds?category=sheep" },
                   { label: "Red Maasai × Dorper", href: "/breeds?category=sheep" },
                 ].map((l) => (
                   <Link
                     key={l.label}
                     href={l.href}
-                    className="text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
+                    className="text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] hover:translate-x-0.5 transition-all no-underline inline-block"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     {l.label}
@@ -250,28 +245,27 @@ export default function Footer() {
               </nav>
             </div>
 
-            {/* Column 4: Get in Touch (2.5 cols) */}
-            <div className="space-y-4 pt-8 md:pt-0 lg:pl-12">
+            {/* Column 4: Get in Touch (3 cols) */}
+            <div className="space-y-4 lg:col-span-3">
               <div
-                className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
-                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
+                className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
               >
                 GET IN TOUCH
               </div>
-              <div className="flex flex-col gap-4 text-sm leading-relaxed text-[#F5F0E8]/70" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
+              <div className="flex flex-col gap-3.5 text-sm leading-relaxed text-[#F5F0E8]/70" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
                 <a
                   href="tel:+254755758208"
-                  className="flex items-center gap-3 text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
+                  className="flex items-center gap-3 text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline group"
                 >
-                  <i className="bi bi-telephone text-sm text-[#C99A2E]" aria-hidden="true" />
+                  <i className="bi bi-telephone text-sm text-[#C99A2E] group-hover:scale-110 transition-transform" aria-hidden="true" />
                   <span>+254 755 758 208</span>
                 </a>
 
                 <a
                   href="mailto:info@osotuafarming.co.ke"
-                  className="flex items-center gap-3 text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
+                  className="flex items-center gap-3 text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline group"
                 >
-                  <i className="bi bi-envelope text-sm text-[#C99A2E]" aria-hidden="true" />
+                  <i className="bi bi-envelope text-sm text-[#C99A2E] group-hover:scale-110 transition-transform" aria-hidden="true" />
                   <span>info@osotuafarming.co.ke</span>
                 </a>
 
@@ -289,8 +283,8 @@ export default function Footer() {
 
           </div>
 
-          {/* Bottom Copyright Bar */}
-          <div className="pt-16 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F5F0E8]/40">
+          {/* Bottom Copyright Bar with Subtle Border Line */}
+          <div className="border-t border-white/10 pt-8 mt-14 sm:mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F5F0E8]/50">
             <div>
               &copy; {year} Osotua Farming. Built by{" "}
               <a

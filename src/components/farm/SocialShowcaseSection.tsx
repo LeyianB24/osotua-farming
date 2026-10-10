@@ -71,7 +71,7 @@ const SOCIAL_POSTS: SocialPost[] = [
 
 export default function SocialShowcaseSection() {
   return (
-    <section className="py-24 md:py-32" style={{ backgroundColor: "#F5F0E8" }}>
+    <section className="py-16 sm:py-20 md:py-24 border-b border-[#D4C9B0]/40" style={{ backgroundColor: "#F5F0E8" }}>
       <div className="os-container">
         
         {/* Header with Channel Badges */}

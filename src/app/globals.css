@@ -274,10 +274,7 @@ h1 em, h2 em, h3 em, h4 em {
 @media (min-width: 1024px) { .os-container { padding-left: 4rem; padding-right: 4rem; } }
 @media (min-width: 1440px) { .os-container { max-width: 1340px; } }
 
-/* Keep top-level page blocks visually distinct across every route. */
-main > div > * + * {
-  margin-block-start: clamp(2rem, 4vw, 4rem);
-}
+/* Standardized section spacing controls section flow directly via py-* utilities */
 
 /* Section variants */
 .section-light {
@@ -647,6 +644,44 @@ button:not(:disabled),
 .btn-dark-fill:hover, .btn-cart:hover {
   background: #2E1C08;
   border-color: #2E1C08;
+}
+
+/* Shimmer Beam Animation on Primary CTAs (from Compass Cartage design system) */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+}
+.btn-shimmer:hover::after {
+  animation: shimmer-sweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.hover-lift {
+  transition: transform var(--t-base) var(--smooth), box-shadow var(--t-base) var(--smooth), border-color var(--t-base) ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 /* ── 8. FORM INPUTS (Exact Figma clean style) ────────────────────────── */

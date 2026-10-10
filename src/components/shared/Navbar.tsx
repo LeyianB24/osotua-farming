@@ -44,42 +44,18 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
   return (
     <>
       <header
-        className="glass-nav"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          backgroundColor: scrolled ? "rgba(28, 18, 8, 0.98)" : "#1C1208",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderBottom: "1px solid rgba(201, 154, 46, 0.15)",
-          height: "76px",
-          display: "flex",
-          alignItems: "center",
-          transition: "box-shadow 0.3s ease, background-color 0.3s ease",
-          boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.5)" : "none",
-        }}
+        className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+          scrolled
+            ? "border-[#C99A2E]/20 bg-[#070c14]/95 backdrop-blur-md shadow-2xl py-3"
+            : "border-white/10 bg-[#070c14]/85 backdrop-blur-sm py-4"
+        }`}
       >
         <div className="os-container w-full">
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div className="flex items-center justify-between">
 
-            {/* Brand Logo & Wordmark (Figma Exact + Official Emblem) */}
-            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }} className="group">
-              <div
-                style={{
-                  position: "relative",
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  border: "1px solid rgba(201, 154, 46, 0.4)",
-                  backgroundColor: "#FAF7F2",
-                  flexShrink: 0,
-                }}
-                className="group-hover:border-[#C99A2E] transition-colors"
-              >
+            {/* Brand Logo & Wordmark */}
+            <Link href="/" className="flex items-center gap-3 no-underline group">
+              <div className="relative w-9 h-9 rounded-full overflow-hidden border border-[#C99A2E]/40 bg-[#FAF7F2] shrink-0 group-hover:border-[#C99A2E] transition-colors shadow-sm">
                 <Image
                   src={LOGO}
                   alt="Osotua Farming Official Logo"
@@ -89,37 +65,22 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                   className="object-cover"
                 />
               </div>
-              <span
-                style={{
-                  fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-                  fontSize: "1.7rem",
-                  fontWeight: 700,
-                  fontStyle: "italic",
-                  color: "#C99A2E",
-                  lineHeight: 1,
-                  display: "inline-block",
-                }}
-              >
-                Osotua
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
-                  fontSize: "0.68rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.25em",
-                  textTransform: "uppercase",
-                  color: "#D4C9B0",
-                  marginTop: "3px",
-                }}
-              >
-                FARMING
-              </span>
+              <div className="flex flex-col">
+                <span
+                  className="text-2xl font-bold italic text-[#C99A2E] leading-none tracking-tight group-hover:text-[#D9AA3E] transition-colors"
+                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                >
+                  Osotua
+                </span>
+                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-[#D4C9B0] mt-0.5">
+                  FARMING
+                </span>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
             <nav
-              className="hidden lg:flex items-center gap-10"
+              className="hidden lg:flex items-center gap-8"
               aria-label="Main navigation"
             >
               {navLinks.map((link) => {
@@ -128,31 +89,17 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                   <Link
                     key={link.href}
                     href={link.href}
-                    style={{
-                      fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
-                      fontSize: "0.88rem",
-                      fontWeight: 600,
-                      color: active ? "#C99A2E" : "rgba(245, 240, 232, 0.85)",
-                      textDecoration: "none",
-                      transition: "color 0.2s ease",
-                      position: "relative",
-                      paddingBottom: "2px",
-                    }}
-                    className="hover:text-[#C99A2E]"
+                    className={`relative text-xs font-mono font-bold uppercase tracking-[0.14em] transition-all no-underline pb-1 ${
+                      active
+                        ? "text-[#C99A2E]"
+                        : "text-[#F5F0E8]/75 hover:text-[#C99A2E]"
+                    }`}
                   >
                     {link.label}
                     {active && (
                       <motion.span
                         layoutId="nav-active-underline"
-                        style={{
-                          position: "absolute",
-                          bottom: "-2px",
-                          left: 0,
-                          right: 0,
-                          height: "1.5px",
-                          background: "#C99A2E",
-                          borderRadius: "2px",
-                        }}
+                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C99A2E] rounded-full shadow-sm"
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
@@ -162,164 +109,65 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
             </nav>
 
             {/* Desktop Right Actions */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-5">
               <Link
                 href="/dashboard"
-                style={{
-                  fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
-                  fontSize: "0.88rem",
-                  fontWeight: 600,
-                  color: "rgba(245, 240, 232, 0.85)",
-                  textDecoration: "none",
-                  transition: "color 0.2s ease",
-                }}
-                className="hover:text-[#C99A2E]"
+                className="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
               >
                 Member Portal
               </Link>
-              {/* Visit Us link */}
+
               <Link
                 href="/visit"
-                style={{
-                  fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif",
-                  fontSize: "0.88rem",
-                  fontWeight: 600,
-                  color: "rgba(245, 240, 232, 0.85)",
-                  textDecoration: "none",
-                  transition: "color 0.2s ease",
-                }}
-                className="hover:text-[#C99A2E]"
+                className="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
               >
-                Visit Us
+                Ranch Tours
               </Link>
 
-              {/* Cart */}
+              {/* Cart Button */}
               <Link
                 href="/cart"
-                style={{
-                  position: "relative",
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "2px",
-                  background: "rgba(245,240,232,0.06)",
-                  border: "1px solid rgba(245,240,232,0.15)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#F5F0E8",
-                  textDecoration: "none",
-                  transition: "border-color 0.2s ease",
-                }}
+                className="relative w-9 h-9 rounded-[2px] bg-white/[0.04] border border-white/15 hover:border-[#C99A2E] flex items-center justify-center text-[#F5F0E8] transition-colors no-underline"
                 aria-label={`Cart with ${cartCount} items`}
               >
                 <i className="bi bi-bag text-sm" aria-hidden="true" />
                 {cartCount > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "-4px",
-                      right: "-4px",
-                      width: "16px",
-                      height: "16px",
-                      borderRadius: "50%",
-                      background: "#C99A2E",
-                      color: "#1C1208",
-                      fontSize: "9px",
-                      fontWeight: 800,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#C99A2E] text-[#1C1208] text-[9px] font-extrabold flex items-center justify-center shadow-sm">
                     {cartCount}
                   </span>
                 )}
               </Link>
 
-              {/* SHOP THE BARN CTA (Figma Gold Fill, rectangular) */}
+              {/* SHOP THE BARN CTA */}
               <Link
                 href="/barn"
-                className="btn-gold"
-                style={{
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0.65rem 1.4rem",
-                  fontSize: "0.78rem",
-                  letterSpacing: "0.14em",
-                  fontWeight: 700,
-                  borderRadius: "2px",
-                  backgroundColor: "#C99A2E",
-                  color: "#1C1208",
-                  transition: "all 0.2s ease",
-                  whiteSpace: "nowrap",
-                }}
+                className="btn-gold btn-shimmer py-2.5 px-5 text-[11px] font-mono font-bold uppercase tracking-[0.16em] no-underline rounded-[2px] shadow-sm"
               >
-                SHOP THE BARN
+                <span>SHOP THE BARN</span>
               </Link>
             </div>
 
             {/* Mobile Actions */}
-            <div className="flex lg:hidden items-center gap-2">
+            <div className="flex lg:hidden items-center gap-2.5">
               <Link
                 href="/cart"
-                style={{
-                  position: "relative",
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#FFFFFF",
-                  textDecoration: "none",
-                }}
+                className="relative w-9 h-9 rounded-[2px] bg-white/[0.06] border border-white/15 flex items-center justify-center text-white no-underline"
                 aria-label={`Shopping Cart (${cartCount} items)`}
               >
-                <i className="bi bi-bag text-base" aria-hidden="true" />
+                <i className="bi bi-bag text-sm" aria-hidden="true" />
                 {cartCount > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "-4px",
-                      right: "-4px",
-                      width: "16px",
-                      height: "16px",
-                      borderRadius: "50%",
-                      background: "#C4882A",
-                      color: "#1C1208",
-                      fontSize: "9px",
-                      fontWeight: 800,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#C99A2E] text-[#1C1208] text-[9px] font-extrabold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
               </Link>
               <button
                 onClick={() => setOpen(!open)}
-                style={{
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "10px",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  color: "#FFFFFF",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                }}
+                className="w-9 h-9 rounded-[2px] bg-white/[0.06] border border-white/15 text-white flex items-center justify-center cursor-pointer hover:border-[#C99A2E] transition-colors"
                 aria-expanded={open}
                 aria-label="Toggle navigation menu"
               >
-                <i className={`bi text-lg ${open ? "bi-x-lg" : "bi-list"}`} aria-hidden="true" />
+                <i className={`bi text-base ${open ? "bi-x-lg" : "bi-list"}`} aria-hidden="true" />
               </button>
             </div>
           </div>

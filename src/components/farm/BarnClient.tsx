@@ -50,7 +50,7 @@ export default function BarnClient({ initialProducts, categories }: Props) {
   const hasFilters = selectedCategory !== "all" || queryTrimmed !== "";
 
   return (
-    <section className="bg-[#F5F0E8] text-[#1C1208] pb-32 pt-8 relative">
+    <section className="bg-[#F5F0E8] text-[#1C1208] py-16 sm:py-20 md:py-24 relative">
       <div className="os-container relative z-10 space-y-12">
 
         {/* ── CART ACTIVE BANNER ── */}

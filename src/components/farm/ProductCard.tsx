@@ -58,7 +58,7 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div
-      className="os-card flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-md group rounded-[0px]"
+      className="os-card flex flex-col justify-between h-full bg-[#FFFFFF] border border-[#D4C9B0] transition-all duration-300 hover:border-[#C99A2E] hover-lift rounded-[2px] shadow-sm hover:shadow-xl group"
     >
       {/* ── IMAGE CONTAINER ── */}
       <div>
@@ -80,14 +80,16 @@ export default function ProductCard({ product }: Props) {
             </div>
           )}
 
-          {/* Top-left: Category Badge (Exact Figma Dark Pill) */}
-          <div className="absolute top-3 left-3 bg-[#1C1208]/90 text-[#F5F0E8] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[0px]">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-transparent to-transparent" />
+
+          {/* Top-left: Category Badge */}
+          <div className="absolute top-3 left-3 bg-[#1C1208]/90 text-[#F5F0E8] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[2px]">
             {badgeLabel}
           </div>
 
-          {/* Top-right: Status Badge (Exact Figma Mustard Pill) */}
+          {/* Top-right: Status Badge */}
           <div
-            className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[0px] ${
+            className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[2px] ${
               product.inStock ? "bg-[#C99A2E] text-[#1C1208]" : "bg-[#D4C9B0] text-[#1C1208]/60"
             }`}
           >
@@ -95,36 +97,32 @@ export default function ProductCard({ product }: Props) {
           </div>
         </Link>
 
-        {/* ── CARD CONTENT (Exact Figma spacing from Screenshots) ── */}
-        <div className="os-card-body space-y-2">
+        {/* ── CARD CONTENT ── */}
+        <div className="p-6 space-y-2">
           <div
-            className="text-[11px] font-mono uppercase tracking-[0.2em]"
-            style={{ color: "#C4602A" }}
+            className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#C99A2E]"
           >
-            KAJIADO CO-OP
+            KAJIADO CO-OP DIRECT
           </div>
 
           <Link
             href={`/barn/${product.slug}`}
-            className="font-serif text-[21px] sm:text-[22px] text-[#1C1208] leading-snug block no-underline transition-colors hover:text-[#C4602A] font-semibold"
+            className="text-xl sm:text-2xl text-[#1C1208] leading-snug block no-underline transition-colors hover:text-[#C4602A] font-bold"
             style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
           >
             {product.name}
           </Link>
 
-          {/* Price with Terracotta accent (Playfair 700) */}
+          {/* Price with Terracotta accent */}
           <div className="pt-2 flex items-baseline gap-1.5">
             <span
-              className="text-[21px] sm:text-[22px] font-bold"
-              style={{
-                color: "#C4602A",
-                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-              }}
+              className="text-2xl font-bold text-[#C4602A]"
+              style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
             >
               KES {product.price.toLocaleString()}
             </span>
             <span
-              className="text-[13px] font-normal text-[#1C1208]/60"
+              className="text-xs font-normal text-[#8E7E70]"
               style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
             >
               /{product.unit}
@@ -133,25 +131,25 @@ export default function ProductCard({ product }: Props) {
         </div>
       </div>
 
-      {/* ── FOOTER BUTTON (Exact Figma Full-Width Dark CTA) ── */}
-      <div className="px-6 pb-6 pt-5 mt-auto">
+      {/* ── FOOTER BUTTON ── */}
+      <div className="px-6 pb-6 pt-3 mt-auto">
         <button
           type="button"
           onClick={handleAdd}
           disabled={!product.inStock}
-          className="w-full py-3.5 px-4 font-bold text-[11px] tracking-[0.16em] uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 rounded-[0px] bg-[#1C1208] hover:bg-[#C99A2E] text-[#FAF7F2] hover:text-[#1C1208] disabled:opacity-50"
-          style={{
-            fontFamily: "var(--font-source-sans), sans-serif",
-            backgroundColor: added ? "#6B7A3F" : undefined,
-          }}
+          className={`w-full py-3 px-4 font-mono font-bold text-[11px] tracking-[0.16em] uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 rounded-[2px] ${
+            added
+              ? "bg-[#6B7A3F] text-white"
+              : "bg-[#1C1208] hover:bg-[#C99A2E] text-white hover:text-[#1C1208] btn-shimmer"
+          } disabled:opacity-50`}
         >
           {added ? (
             <>
               <i className="bi bi-check2 text-sm" />
-              <span>ADDED TO CART</span>
+              <span>ADDED TO BASKET</span>
             </>
           ) : (
-            <span>ADD TO CART</span>
+            <span>ADD TO BASKET</span>
           )}
         </button>
       </div>

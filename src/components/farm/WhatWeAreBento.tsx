@@ -49,38 +49,42 @@ const featuredBreeds: BreedItem[] = [
 
 export default function WhatWeAreBento() {
   return (
-    <section className="pb-28 pt-20 lg:pb-36 lg:pt-24" style={{ backgroundColor: "#F5F0E8" }}>
+    <section className="py-16 sm:py-20 md:py-24 border-b border-[#D4C9B0]/40 bg-[#FAF7F2]">
       <div className="os-container">
-        {/* Section Header */}
-        <div className="mb-14 lg:mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <span
-              className="text-[11px] font-mono font-bold uppercase tracking-[0.2em]"
-              style={{ color: "#C99A2E" }}
+        {/* Section Header Row matching Compass Cartage FeaturedServicesMatrix */}
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end mb-12 sm:mb-16">
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <span className="h-px w-8 bg-[#C99A2E]" aria-hidden="true" />
+              <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#C99A2E]">
+                CERTIFIED GENETICS · KAJIADO STUD BOOK
+              </span>
+            </div>
+
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#1C1208] leading-tight m-0"
+              style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
             >
-              CERTIFIED GENETICS · KAJIADO STUD BOOK
-            </span>
-            <div className="h-[1px] w-12 bg-[#C99A2E]/50" />
+              Pedigree Livestock <br />
+              <span className="text-[#C99A2E] italic">&amp; Foundation Genetics</span>
+            </h2>
           </div>
 
-          <h2
-            className="text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.08] text-[#1C1208] m-0"
-            style={{
-              fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-              fontWeight: 700,
-            }}
+          <Link
+            href="/breeds"
+            className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#C99A2E] hover:text-[#B0821E] transition-colors group no-underline self-start md:self-end"
           >
-            Pedigree Livestock <br />
-            <span className="text-[#C99A2E]">&amp; Breeding Stock</span>
-          </h2>
+            <span>View All Foundation Breeds</span>
+            <i className="bi bi-arrow-right group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
 
         {/* 3 Breed Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredBreeds.map((breed) => (
             <div
               key={breed.id}
-              className="flex flex-col justify-between h-full bg-[#FAF7F2] border border-[#D4C9B0] transition-all duration-300 hover:shadow-md group rounded-[0px]"
+              className="flex flex-col justify-between h-full bg-[#FFFFFF] border border-[#D4C9B0] transition-all duration-300 hover:border-[#C99A2E] hover-lift rounded-[2px] shadow-sm hover:shadow-xl group"
             >
               {/* Image Section */}
               <div>
@@ -95,70 +99,54 @@ export default function WhatWeAreBento() {
                     sizes="(min-width: 1024px) 33vw, 100vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-transparent to-transparent" />
+                  
                   {/* Top-left Category Badge */}
-                  <div
-                    className="absolute top-3 left-3 text-white px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[0px]"
-                    style={{ backgroundColor: "#6B7A3F" }}
-                  >
+                  <div className="absolute top-3 left-3 text-white px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[2px] bg-[#6B7A3F]">
                     {breed.category}
+                  </div>
+
+                  {/* Top-right Stud Status */}
+                  <div className="absolute top-3 right-3 text-[#1C1208] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[2px] bg-[#C99A2E]">
+                    STUD BOOK VERIFIED
                   </div>
                 </Link>
 
                 {/* Details Section */}
-                <div className="p-6">
+                <div className="p-7">
                   <Link
                     href={`/breeds?id=${breed.id}`}
-                    className="font-serif text-[22px] md:text-[24px] text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A] font-semibold"
-                    style={{
-                      fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-                    }}
+                    className="text-2xl font-bold text-[#1C1208] leading-tight block no-underline transition-colors hover:text-[#C4602A]"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                   >
                     {breed.name}
                   </Link>
 
                   {/* Metadata Specs Table */}
                   <div className="mt-5 space-y-2.5 text-xs">
-                    <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
-                      <span
-                        className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em]"
-                        style={{ color: "#8E7E70" }}
-                      >
+                    <div className="flex items-center justify-between py-2 border-b border-[#E8E0D2]">
+                      <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E7E70]">
                         HEAD COUNT
                       </span>
-                      <span
-                        className="font-semibold text-[#1C1208]"
-                        style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-                      >
-                        {breed.headCount}
+                      <span className="font-semibold text-[#1C1208]">
+                        {breed.headCount} Registered
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
-                      <span
-                        className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em]"
-                        style={{ color: "#8E7E70" }}
-                      >
+                    <div className="flex items-center justify-between py-2 border-b border-[#E8E0D2]">
+                      <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E7E70]">
                         ORIGIN
                       </span>
-                      <span
-                        className="font-semibold text-[#1C1208]"
-                        style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-                      >
+                      <span className="font-semibold text-[#1C1208]">
                         {breed.origin}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-1.5 border-b border-[#E8E0D2]">
-                      <span
-                        className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em]"
-                        style={{ color: "#8E7E70" }}
-                      >
+                    <div className="flex items-center justify-between py-2 border-b border-[#E8E0D2]">
+                      <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8E7E70]">
                         PURPOSE
                       </span>
-                      <span
-                        className="font-semibold text-[#1C1208]"
-                        style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-                      >
+                      <span className="font-semibold text-[#1C1208]">
                         {breed.purpose}
                       </span>
                     </div>
@@ -167,65 +155,28 @@ export default function WhatWeAreBento() {
               </div>
 
               {/* Footer Row */}
-              <div className="p-6 pt-0 flex justify-between items-center mt-auto">
+              <div className="p-7 pt-0 flex justify-between items-center mt-auto border-t border-[#E8E0D2]/60 pt-5">
                 <div className="flex items-baseline gap-1">
                   <span
-                    className="text-[20px] md:text-[22px] font-bold"
-                    style={{
-                      color: "#C4602A",
-                      fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-                    }}
+                    className="text-2xl font-bold text-[#C4602A]"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                   >
                     KES {breed.price.toLocaleString()}
                   </span>
-                  <span
-                    className="text-xs font-normal"
-                    style={{
-                      color: "#8E7E70",
-                      fontFamily: "var(--font-source-sans), sans-serif",
-                    }}
-                  >
+                  <span className="text-xs text-[#8E7E70] font-normal">
                     /head
                   </span>
                 </div>
 
                 <Link
                   href={`/breeds?enquire=${breed.id}`}
-                  className="btn-outline rounded-[0px]"
-                  style={{
-                    padding: "0.55rem 1.4rem",
-                    fontSize: "0.75rem",
-                    letterSpacing: "0.14em",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    border: "1px solid #1C1208",
-                    color: "#1C1208",
-                  }}
+                  className="btn-outline-gold py-2 px-4 text-[11px] font-mono font-bold uppercase tracking-wider rounded-[2px] no-underline hover:bg-[#C99A2E] hover:text-[#1C1208] transition-colors"
                 >
-                  ENQUIRE
+                  ENQUIRE STUD
                 </Link>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Centered Button: VIEW FULL BREED CATALOGUE (Exact Ghost Dark Outline) */}
-        <div className="flex justify-center">
-          <Link
-            href="/breeds"
-            className="btn-outline rounded-[0px]"
-            style={{
-              padding: "0.9rem 2.4rem",
-              fontSize: "0.78rem",
-              letterSpacing: "0.16em",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              border: "1px solid #1C1208",
-              color: "#1C1208",
-            }}
-          >
-            VIEW FULL BREED CATALOGUE
-          </Link>
         </div>
       </div>
     </section>

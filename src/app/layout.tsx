@@ -1,10 +1,34 @@
 import type { Metadata, Viewport } from "next"
-import { Playfair_Display, Source_Sans_3, Cormorant_Garamond, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google"
+import { Fraunces, Plus_Jakarta_Sans, Space_Mono, Playfair_Display, Source_Sans_3 } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
 import Providers from "@/components/shared/Providers"
 import ScrollReveal from "@/components/shared/ScrollReveal"
+
+// Editorial display serif from Compass Cartage
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-fraunces",
+  display: "swap",
+})
+
+// Modern industrial sans body font from Compass Cartage
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
+  display: "swap",
+})
+
+// Precision technical monospace font from Compass Cartage
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-mono",
+  display: "swap",
+})
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -19,29 +43,6 @@ const sourceSans = Source_Sans_3({
   weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-source-sans",
-  display: "swap",
-})
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  style: ["normal", "italic"],
-  variable: "--font-jakarta",
-  display: "swap",
-})
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-  display: "swap",
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-space-grotesk",
   display: "swap",
 })
 

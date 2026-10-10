@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import PageHero from "@/components/farm/PageHero"
+import { RANCH_WIDE } from "@/lib/images"
 
 const TIERS = [
   {
@@ -116,67 +118,38 @@ export default function InvestClient() {
   return (
     <div style={{ background: "#FBF7F0", color: "#1C1208", width: "100%", overflowX: "hidden" }}>
 
-      {/* ── HERO BANNER ── */}
-      <section className="relative pt-32 sm:pt-40 pb-20 sm:pb-24 overflow-hidden" style={{ backgroundColor: "#F5F0E8" }}>
-        <div className="os-container relative z-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span
-              className="text-[11px] font-bold uppercase tracking-[0.2em]"
-              style={{
-                color: "#C99A2E",
-                fontFamily: "var(--font-source-sans), sans-serif",
-              }}
-            >
-              INVESTOR RELATIONS · IMPACT AGRIBUSINESS
-            </span>
-            <div className="h-[1px] w-12 bg-[#C99A2E]/50" />
-          </div>
-
-          <h1
-            className="text-4xl sm:text-6xl md:text-7xl font-bold text-[#1C1208] leading-[1.08] max-w-5xl mb-6"
-            style={{
-              fontFamily: "var(--font-playfair), Georgia, serif",
-            }}
-          >
+      {/* ── STANDARDIZED CINEMATIC PAGE HERO ── */}
+      <PageHero
+        image={{
+          src: RANCH_WIDE,
+          alt: "Aerial view of Osotua Farming's vast pastoral rangelands in Kajiado County",
+        }}
+        eyebrow="INVESTOR RELATIONS · IMPACT AGRIBUSINESS"
+        title={
+          <>
             Invest in <br />
-            <span style={{ color: "#C99A2E" }}>Africa&apos;s Pastoral Future</span>
-          </h1>
-
-          <p
-            className="text-base sm:text-lg text-[#1C1208]/80 max-w-2xl leading-relaxed mb-10 font-normal"
-            style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-          >
-            Osotua Farming offers a tangible, asset-backed agribusiness opportunity uniting climate-resilient livestock genetics, organic supply chains, and modern precision logistics from a titled estate in Kajiado.
-          </p>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-8 border-t border-[#D4C9B0]">
-            {[
-              { value: "16%", label: "Livestock ROI p.a." },
-              { value: "KES 2B+", label: "Herd Asset Value" },
-              { value: "3,200", label: "Titled Acres" },
-              { value: "4", label: "Purebred Species" },
-            ].map((s) => (
-              <div key={s.label} className="border-l-2 border-[#C99A2E]/40 pl-4">
-                <div
-                  className="text-3xl sm:text-4xl font-bold text-[#C99A2E]"
-                  style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-                >
-                  {s.value}
-                </div>
-                <div
-                  className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1C1208]/70 mt-1"
-                  style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-                >
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            <span className="text-[#C99A2E]">Africa&apos;s Pastoral Future</span>
+          </>
+        }
+        lead="Osotua Farming offers a tangible, asset-backed agribusiness opportunity uniting climate-resilient livestock genetics, organic supply chains, and modern precision logistics from a titled estate in Kajiado."
+        trustChips={[
+          { label: "Asset-Backed by 3,200+ Titled Acres" },
+          { label: "16% Projected Livestock ROI p.a." },
+          { label: "Full Audit-Ready Transparency" },
+        ]}
+        ctaText="Explore Investment Tiers"
+        ctaHref="#invest-tiers"
+        secondaryCtaText="Contact Investor Desk"
+        secondaryCtaHref="https://wa.me/254755758208"
+        stats={[
+          { value: "16%", label: "Projected ROI p.a." },
+          { value: "KES 2B+", label: "Herd Asset Value" },
+          { value: "3,200+", label: "Titled Acres" },
+        ]}
+      />
 
       {/* ── PILLARS SECTION WITH IMAGES ── */}
-      <section className="py-20 sm:py-28" style={{ backgroundColor: "#FAF7F2", borderTop: "1px solid #D4C9B0" }}>
+      <section className="py-16 sm:py-20 md:py-24" style={{ backgroundColor: "#FAF7F2", borderTop: "1px solid #D4C9B0" }}>
         <div className="os-container relative z-10 space-y-12">
           <div>
             <div className="flex items-center gap-3 mb-4">
@@ -259,7 +232,7 @@ export default function InvestClient() {
       </section>
 
       {/* ── CALCULATOR & TIERS SECTION ── */}
-      <section className="py-20 sm:py-28" style={{ backgroundColor: "#F5F0E8" }}>
+      <section id="invest-tiers" className="py-16 sm:py-20 md:py-24 border-t border-[#D4C9B0]/60" style={{ backgroundColor: "#F5F0E8" }}>
         <div className="os-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
