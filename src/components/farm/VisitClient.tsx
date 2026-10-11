@@ -124,7 +124,7 @@ export default function VisitClient() {
       />
 
       {/* ── TOURS SELECTION & BOOKING SECTION ── */}
-      <section id="booking-section" className="py-16 md:py-24 bg-[#F5F0E8]">
+      <section id="booking-section" className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8]">
         <div className="os-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 

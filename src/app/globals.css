@@ -280,32 +280,32 @@ h1 em, h2 em, h3 em, h4 em {
 .section-light {
   background-color: var(--cream);
   color: var(--soil);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-mist {
   background-color: var(--mist);
   color: var(--soil);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-dark {
   background-color: var(--soil);
   color: var(--cream);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-hide {
   background-color: var(--hide);
   color: var(--cream);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 .section-gold {
   background-color: var(--savanna);
   color: var(--soil);
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 
 @media (min-width: 1024px) {
   .section-light, .section-mist, .section-dark, .section-hide, .section-gold {
-    padding: 7rem 0;
+    padding: 9rem 0;
   }
 }
 

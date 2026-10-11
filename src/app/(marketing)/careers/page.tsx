@@ -55,13 +55,25 @@ export default async function CareersPage() {
       />
 
       {/* ── PERKS ── */}
-      <section className="py-16 sm:py-20 md:py-24 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
-        <div className="os-container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="py-20 sm:py-24 md:py-32 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
+        <div className="os-container space-y-16">
+          <div className="max-w-3xl space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px]">
+              <span>LIFE AT OSOTUA FARMING</span>
+            </div>
+            <h2
+              className="text-3xl sm:text-5xl font-bold text-[#1C1208] m-0"
+              style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+            >
+              Why Work <span className="text-[#C99A2E]">With Us</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {PERKS.map((p) => (
               <div
                 key={p.title}
-                className="bg-[#FAF7F2] border border-[#D4C9B0] p-8 rounded-[2px] flex flex-col gap-4 shadow-sm hover:border-[#C99A2E] transition-all"
+                className="bg-[#FAF7F2] border border-[#D4C9B0] p-8 sm:p-10 rounded-[2px] flex flex-col gap-4 shadow-sm hover:border-[#C99A2E] hover-lift transition-all"
               >
                 <div className="w-12 h-12 rounded-[2px] bg-[#C99A2E]/10 border border-[#C99A2E]/30 flex items-center justify-center text-xl text-[#C99A2E]">
                   <i className={`bi ${p.icon}`} />
@@ -82,7 +94,7 @@ export default async function CareersPage() {
       </section>
 
       {/* ── OPEN ROLES ── */}
-      <section id="open-positions" className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
+      <section id="open-positions" className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
         <div className="os-container">
           <div className="flex items-baseline justify-between mb-14 flex-wrap gap-4">
             <div>
@@ -172,7 +184,7 @@ export default async function CareersPage() {
       </section>
 
       {/* ── INTERNSHIPS ── */}
-      <section id="internships" className="py-16 sm:py-20 md:py-24 bg-[#FAF7F2]">
+      <section id="internships" className="py-20 sm:py-24 md:py-32 bg-[#FAF7F2]">
         <div className="os-container">
           <div className="bg-[#FFFFFF] border border-[#D4C9B0] rounded-[2px] p-8 sm:p-14 shadow-sm max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px] mb-4">

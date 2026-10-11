@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function RangelandsGallerySection() {
   return (
-    <section className="py-16 sm:py-20 md:py-24 border-y border-[#C99A2E]/20" style={{ backgroundColor: "#110B05" }}>
+    <section className="py-20 sm:py-24 md:py-32 border-y border-[#C99A2E]/20" style={{ backgroundColor: "#110B05" }}>
       <div className="os-container">
         {/* Section Title */}
         <div className="text-center mb-16">

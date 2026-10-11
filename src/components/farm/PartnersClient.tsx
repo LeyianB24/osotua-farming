@@ -149,7 +149,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ── BENEFITS SECTION ── */}
-      <section className="py-16 sm:py-20 md:py-24 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
+      <section className="py-20 sm:py-24 md:py-32 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
         <div className="os-container space-y-14">
           <div className="max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px]">
@@ -192,7 +192,7 @@ export default function PartnersClient() {
       </section>
 
       {/* ── APPLICATION & REQUIREMENTS SECTION ── */}
-      <section id="partner-form" className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8]">
+      <section id="partner-form" className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8]">
         <div className="os-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             

@@ -49,7 +49,7 @@ const featuredBreeds: BreedItem[] = [
 
 export default function WhatWeAreBento() {
   return (
-    <section className="py-16 sm:py-20 md:py-24 border-b border-[#D4C9B0]/40 bg-[#FAF7F2]">
+    <section className="py-20 sm:py-24 md:py-32 border-b border-[#D4C9B0]/40 bg-[#FAF7F2]">
       <div className="os-container">
         {/* Section Header Row matching Compass Cartage FeaturedServicesMatrix */}
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end mb-12 sm:mb-16">

@@ -33,7 +33,7 @@ export default function Footer() {
     <footer className="w-full">
       {/* ── TOP TERRACOTTA NEWSLETTER SECTION ── */}
       <section
-        className="relative w-full py-16 sm:py-20 md:py-24 overflow-hidden border-t border-[#C99A2E]/20"
+        className="relative w-full py-20 sm:py-24 md:py-32 overflow-hidden border-t border-[#C99A2E]/20"
         style={{ backgroundColor: "#C4602A" }}
       >
         <div className="os-container text-center max-w-2xl mx-auto relative z-10">
@@ -113,11 +113,11 @@ export default function Footer() {
 
       {/* ── MAIN FOOTER BODY (Standardized Obsidian & Brushed Brass Grid) ── */}
       <div
-        className="w-full py-16 sm:py-20 border-t border-[#C99A2E]/15"
+        className="w-full py-20 sm:py-24 md:py-28 border-t border-[#C99A2E]/15"
         style={{ backgroundColor: "#110B05", color: "#F5F0E8" }}
       >
         <div className="os-container">
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+          <div className="grid grid-cols-1 gap-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-14">
 
             {/* Column 1: Brand Wordmark, Description & Social Icons (4 cols) */}
             <div className="space-y-6 sm:col-span-2 lg:col-span-4">
@@ -284,7 +284,7 @@ export default function Footer() {
           </div>
 
           {/* Bottom Copyright Bar with Subtle Border Line */}
-          <div className="border-t border-white/10 pt-8 mt-14 sm:mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F5F0E8]/50">
+          <div className="border-t border-white/10 pt-10 mt-16 sm:mt-20 flex flex-col sm:flex-row items-center justify-between gap-5 text-xs text-[#F5F0E8]/50">
             <div>
               &copy; {year} Osotua Farming. Built by{" "}
               <a

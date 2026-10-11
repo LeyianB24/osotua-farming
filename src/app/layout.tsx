@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Fraunces, Plus_Jakarta_Sans, Space_Mono, Playfair_Display, Source_Sans_3 } from "next/font/google"
+import { Fraunces, Plus_Jakarta_Sans, Space_Mono, Playfair_Display, Source_Sans_3, Cormorant_Garamond, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/shared/CartContext"
 import ToastContainer from "@/components/shared/Toast"
@@ -43,6 +43,21 @@ const sourceSans = Source_Sans_3({
   weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-source-sans",
+  display: "swap",
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 })
 
@@ -151,7 +166,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${sourceSans.variable} ${plusJakartaSans.variable} ${cormorant.variable} ${spaceGrotesk.variable}`}
+      className={`${playfair.variable} ${sourceSans.variable} ${plusJakartaSans.variable} ${cormorant.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${spaceMono.variable}`}
     >
       <head>
         {/* Bootstrap Icons */}

@@ -149,7 +149,7 @@ export default function InvestClient() {
       />
 
       {/* ── PILLARS SECTION WITH IMAGES ── */}
-      <section className="py-16 sm:py-20 md:py-24" style={{ backgroundColor: "#FAF7F2", borderTop: "1px solid #D4C9B0" }}>
+      <section className="py-20 sm:py-24 md:py-32" style={{ backgroundColor: "#FAF7F2", borderTop: "1px solid #D4C9B0" }}>
         <div className="os-container relative z-10 space-y-12">
           <div>
             <div className="flex items-center gap-3 mb-4">
@@ -232,7 +232,7 @@ export default function InvestClient() {
       </section>
 
       {/* ── CALCULATOR & TIERS SECTION ── */}
-      <section id="invest-tiers" className="py-16 sm:py-20 md:py-24 border-t border-[#D4C9B0]/60" style={{ backgroundColor: "#F5F0E8" }}>
+      <section id="invest-tiers" className="py-20 sm:py-24 md:py-32 border-t border-[#D4C9B0]/60" style={{ backgroundColor: "#F5F0E8" }}>
         <div className="os-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             

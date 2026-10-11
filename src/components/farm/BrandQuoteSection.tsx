@@ -2,7 +2,7 @@
 
 export default function BrandQuoteSection() {
   return (
-    <section className="relative bg-[#F5F0E8] text-[#1C1208] py-16 sm:py-20 md:py-24 overflow-hidden border-t border-[#D4C9B0]/60">
+    <section className="relative bg-[#F5F0E8] text-[#1C1208] py-20 sm:py-24 md:py-32 overflow-hidden border-t border-[#D4C9B0]/60">
       
       {/* Decorative vertical hairline accents */}
       <div className="hidden lg:block absolute top-12 bottom-12 left-16 w-[1px] bg-gradient-to-b from-transparent via-[#C99A2E]/30 to-transparent" />

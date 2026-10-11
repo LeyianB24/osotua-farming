@@ -90,7 +90,7 @@ export default function ContactClient() {
       />
 
       {/* ── CONTENT SECTION ── */}
-      <section id="contact-form" className="py-16 md:py-24 bg-[#F5F0E8]">
+      <section id="contact-form" className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8]">
         <div className="os-container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             

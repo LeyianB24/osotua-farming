@@ -47,10 +47,24 @@ export default async function BlogPage() {
       />
 
       {/* ── BLOG POSTS ── */}
-      <section id="articles" className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8]">
-        <div className="os-container">
+      <section id="articles" className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8]">
+        <div className="os-container space-y-16">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6">
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#6B7A3F] bg-[#6B7A3F]/10 border border-[#6B7A3F]/30 rounded-[2px]">
+                <span>FIELD KNOWLEDGE HUB</span>
+              </div>
+              <h2
+                className="text-3xl sm:text-5xl font-bold text-[#1C1208] m-0"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
+                Articles &amp; <span className="text-[#C99A2E]">Ranch Stories</span>
+              </h2>
+            </div>
+          </div>
+
           {posts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
               {posts.map((post) => (
                 <Link
                   key={post.id}
@@ -79,7 +93,7 @@ export default async function BlogPage() {
                     )}
                   </div>
 
-                  <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
                     <div>
                       <h2
                         className="text-2xl font-bold text-[#1C1208] leading-snug mb-3 group-hover:text-[#C4602A] transition-colors"

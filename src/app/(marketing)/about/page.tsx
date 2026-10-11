@@ -66,7 +66,7 @@ export default function AboutPage() {
       />
 
       {/* ── CORE PURPOSE ── */}
-      <section className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
+      <section className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
         <div className="os-container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
             {/* Left quote card */}
@@ -121,7 +121,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── VALUES (Generous card spacing matching Compass Cartage) ── */}
-      <section className="py-16 sm:py-20 md:py-24 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
+      <section className="py-20 sm:py-24 md:py-32 bg-[#EDE6DA] border-b border-[#D4C9B0]/60">
         <div className="os-container relative z-10 space-y-16">
           <div className="max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px]">
@@ -164,7 +164,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── GALLERY ── */}
-      <section className="py-16 sm:py-20 md:py-24 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
+      <section className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
         <div className="os-container relative z-10 space-y-16">
           <div className="max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#6B7A3F] bg-[#6B7A3F]/10 border border-[#6B7A3F]/30 rounded-[2px]">
@@ -201,7 +201,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── LOCATION CTA ── */}
-      <section className="py-16 sm:py-20 md:py-24 text-center bg-[#FAF7F2] border-t border-[#D4C9B0]/40">
+      <section className="py-20 sm:py-24 md:py-32 text-center bg-[#FAF7F2] border-t border-[#D4C9B0]/40">
         <div className="os-container relative z-10 max-w-3xl space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#C99A2E] bg-[#C99A2E]/10 border border-[#C99A2E]/30 rounded-[2px]">
             <span>VISIT OUR RANCH</span>
