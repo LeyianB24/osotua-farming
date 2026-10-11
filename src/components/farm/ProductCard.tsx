@@ -58,7 +58,7 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div
-      className="os-card flex flex-col justify-between h-full bg-[#FFFFFF] border border-[#D4C9B0] transition-all duration-300 hover:border-[#C99A2E] hover-lift rounded-[2px] shadow-sm hover:shadow-xl group"
+      className="os-card flex flex-col justify-between h-full bg-[#FFFFFF] border border-[#D4C9B0] transition-all duration-300 hover:border-[#C99A2E] hover-lift rounded-[0px] shadow-sm hover:shadow-xl group"
     >
       {/* ── IMAGE CONTAINER ── */}
       <div>
@@ -83,13 +83,13 @@ export default function ProductCard({ product }: Props) {
           <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-transparent to-transparent" />
 
           {/* Top-left: Category Badge */}
-          <div className="absolute top-3 left-3 bg-[#1C1208]/90 text-[#F5F0E8] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[2px]">
+          <div className="absolute top-3 left-3 bg-[#1C1208]/90 text-[#F5F0E8] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[0px]">
             {badgeLabel}
           </div>
 
           {/* Top-right: Status Badge */}
           <div
-            className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[2px] ${
+            className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] rounded-[0px] ${
               product.inStock ? "bg-[#C99A2E] text-[#1C1208]" : "bg-[#D4C9B0] text-[#1C1208]/60"
             }`}
           >
@@ -100,9 +100,9 @@ export default function ProductCard({ product }: Props) {
         {/* ── CARD CONTENT ── */}
         <div className="p-6 space-y-2">
           <div
-            className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#C99A2E]"
+            className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#7A7848]"
           >
-            KAJIADO CO-OP DIRECT
+            KAJIADO CO-OP
           </div>
 
           <Link
@@ -137,19 +137,19 @@ export default function ProductCard({ product }: Props) {
           type="button"
           onClick={handleAdd}
           disabled={!product.inStock}
-          className={`w-full py-3 px-4 font-mono font-bold text-[11px] tracking-[0.16em] uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 rounded-[2px] ${
+          className={`w-full py-3.5 px-4 font-mono font-bold text-[11px] tracking-[0.16em] uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 rounded-[0px] ${
             added
               ? "bg-[#6B7A3F] text-white"
-              : "bg-[#1C1208] hover:bg-[#C99A2E] text-white hover:text-[#1C1208] btn-shimmer"
+              : "bg-[#1C1208] hover:bg-[#C99A2E] text-white hover:text-[#1C1208]"
           } disabled:opacity-50`}
         >
           {added ? (
             <>
               <i className="bi bi-check2 text-sm" />
-              <span>ADDED TO BASKET</span>
+              <span>ADDED TO CART</span>
             </>
           ) : (
-            <span>ADD TO BASKET</span>
+            <span>ADD TO CART</span>
           )}
         </button>
       </div>

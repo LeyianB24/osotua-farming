@@ -1,6 +1,5 @@
 import Navbar from "@/components/shared/Navbar"
 import Footer from "@/components/shared/Footer"
-import RangelandsTelemetry from "@/components/shared/RangelandsTelemetry"
 
 export default function MarketingLayout({
   children,
@@ -10,10 +9,7 @@ export default function MarketingLayout({
   return (
     <>
       <Navbar />
-      <div className="pt-[72px]">
-        <RangelandsTelemetry />
-      </div>
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen pt-[64px]">{children}</main>
       <Footer />
     </>
   )

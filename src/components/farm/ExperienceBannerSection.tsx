@@ -60,30 +60,16 @@ export default function ExperienceBannerSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
           <Link
             href="/visit"
-            className="btn-gold w-full sm:w-auto rounded-[0px]"
-            style={{
-              padding: "0.85rem 2.2rem",
-              fontSize: "0.75rem",
-              letterSpacing: "0.14em",
-              fontWeight: 700,
-              textTransform: "uppercase",
-            }}
+            className="inline-flex items-center justify-center rounded-[0px] bg-[#C99A2E] hover:bg-[#D9AA3E] text-[#1C1208] px-8 py-3.5 text-xs font-bold uppercase tracking-[0.14em] shadow-sm transition-all no-underline w-full sm:w-auto active:scale-[0.98]"
           >
-            BOOK A FARM VISIT
+            <span>BOOK A FARM VISIT</span>
           </Link>
 
           <Link
             href="/invest"
-            className="btn-on-dark w-full sm:w-auto rounded-[0px]"
-            style={{
-              padding: "0.85rem 2.2rem",
-              fontSize: "0.75rem",
-              letterSpacing: "0.14em",
-              fontWeight: 700,
-              textTransform: "uppercase",
-            }}
+            className="inline-flex items-center justify-center rounded-[0px] border border-white/40 hover:border-[#C99A2E] text-white hover:text-[#C99A2E] bg-black/20 backdrop-blur-sm px-8 py-3.5 text-xs font-bold uppercase tracking-[0.14em] transition-all no-underline w-full sm:w-auto"
           >
-            RANCH INVESTMENT
+            <span>RANCH INVESTMENT</span>
           </Link>
         </div>
       </div>

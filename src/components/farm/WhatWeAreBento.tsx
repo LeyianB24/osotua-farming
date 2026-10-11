@@ -72,9 +72,9 @@ export default function WhatWeAreBento() {
 
           <Link
             href="/breeds"
-            className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#C99A2E] hover:text-[#B0821E] transition-colors group no-underline self-start md:self-end"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-[#C99A2E] hover:text-[#B0821E] transition-colors group no-underline self-start md:self-end"
           >
-            <span>View All Foundation Breeds</span>
+            <span>VIEW ALL FOUNDATION BREEDS</span>
             <i className="bi bi-arrow-right group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -84,7 +84,7 @@ export default function WhatWeAreBento() {
           {featuredBreeds.map((breed) => (
             <div
               key={breed.id}
-              className="flex flex-col justify-between h-full bg-[#FFFFFF] border border-[#D4C9B0] transition-all duration-300 hover:border-[#C99A2E] hover-lift rounded-[2px] shadow-sm hover:shadow-xl group"
+              className="flex flex-col justify-between h-full bg-[#FFFFFF] border border-[#D4C9B0] transition-all duration-300 hover:border-[#C99A2E] hover-lift rounded-[0px] shadow-sm hover:shadow-xl group"
             >
               {/* Image Section */}
               <div>
@@ -102,12 +102,12 @@ export default function WhatWeAreBento() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/60 via-transparent to-transparent" />
                   
                   {/* Top-left Category Badge */}
-                  <div className="absolute top-3 left-3 text-white px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[2px] bg-[#6B7A3F]">
+                  <div className="absolute top-3 left-3 text-white px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[0px] bg-[#6B7A3F]">
                     {breed.category}
                   </div>
 
                   {/* Top-right Stud Status */}
-                  <div className="absolute top-3 right-3 text-[#1C1208] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[2px] bg-[#C99A2E]">
+                  <div className="absolute top-3 right-3 text-[#1C1208] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.14em] rounded-[0px] bg-[#C99A2E]">
                     STUD BOOK VERIFIED
                   </div>
                 </Link>
@@ -170,7 +170,7 @@ export default function WhatWeAreBento() {
 
                 <Link
                   href={`/breeds?enquire=${breed.id}`}
-                  className="btn-outline-gold py-2 px-4 text-[11px] font-mono font-bold uppercase tracking-wider rounded-[2px] no-underline hover:bg-[#C99A2E] hover:text-[#1C1208] transition-colors"
+                  className="py-2.5 px-5 text-[11px] font-bold uppercase tracking-[0.14em] rounded-[0px] no-underline border border-[#1C1208] text-[#1C1208] hover:bg-[#1C1208] hover:text-[#FAF7F2] transition-colors"
                 >
                   ENQUIRE STUD
                 </Link>

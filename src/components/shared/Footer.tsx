@@ -31,125 +31,143 @@ export default function Footer() {
 
   return (
     <footer className="w-full">
-      {/* ── TOP TERRACOTTA NEWSLETTER SECTION ── */}
+      {/* ── TOP TERRACOTTA NEWSLETTER SECTION (Figma Exact Sizing & Spacing) ── */}
       <section
-        className="relative w-full py-20 sm:py-24 md:py-32 overflow-hidden border-t border-[#C99A2E]/20"
-        style={{ backgroundColor: "#C4602A" }}
+        className="relative w-full overflow-hidden"
+        style={{
+          backgroundColor: "#C4602A",
+          paddingTop: "120px",
+          paddingBottom: "130px",
+        }}
       >
-        <div className="os-container text-center max-w-2xl mx-auto relative z-10">
+        <div className="os-container text-center max-w-3xl mx-auto relative z-10 px-6">
           {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="h-[1px] w-6 bg-white/40" />
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <div className="h-[1px] w-8 bg-white/40" />
             <span
-              className="text-[10px] font-mono font-bold uppercase tracking-[0.25em] text-white/90"
+              className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/90"
+              style={{ fontFamily: "var(--font-source-sans), monospace" }}
             >
               THE OSOTUA GAZETTE
             </span>
-            <div className="h-[1px] w-6 bg-white/40" />
+            <div className="h-[1px] w-8 bg-white/40" />
           </div>
 
           {/* Heading */}
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl text-white font-bold leading-tight mb-3"
-            style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+            className="text-4xl sm:text-5xl md:text-[54px] text-white font-bold leading-[1.1] mb-5"
+            style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
           >
             Subscribe to the Ranch
           </h2>
 
           {/* Subtitle */}
           <p
-            className="text-sm sm:text-base text-white/90 max-w-lg mx-auto mb-8 leading-relaxed font-normal"
+            className="text-sm sm:text-base text-white/90 max-w-xl mx-auto mb-12 leading-relaxed font-normal"
             style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
           >
-            Seasonal harvest announcements, breeding stock availability, and pastoral ranching updates &mdash; delivered directly to your inbox.
+            Seasonal harvest announcements, breeding stock availability, and pastoral ranching updates &mdash; delivered to your inbox.
           </p>
 
           {/* Form */}
           <form
             onSubmit={handleSubscribe}
-            className="flex flex-col sm:flex-row items-stretch justify-center gap-2 sm:gap-0 max-w-md mx-auto"
+            className="flex flex-col sm:flex-row items-stretch justify-center max-w-[580px] w-full mx-auto"
+            style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.12)" }}
           >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address..."
+              placeholder="your@email.com"
               required
               disabled={status === "loading" || status === "success"}
-              className="w-full sm:flex-1 py-3.5 px-4 text-sm text-white placeholder:text-white/60 outline-none border transition-colors rounded-[2px] sm:rounded-r-none focus:border-white"
+              className="w-full sm:flex-1 text-sm text-white placeholder:text-white/60 outline-none transition-colors"
               style={{
-                backgroundColor: "rgba(28, 18, 8, 0.25)",
-                borderColor: "rgba(255, 255, 255, 0.25)",
+                backgroundColor: "rgba(28, 18, 8, 0.22)",
+                border: "1px solid rgba(255, 255, 255, 0.35)",
+                borderRadius: "0px",
+                padding: "16px 20px",
                 fontFamily: "var(--font-source-sans), sans-serif",
+                minWidth: "0",
               }}
             />
             <button
               type="submit"
               disabled={status === "loading" || status === "success"}
-              className="w-full sm:w-auto py-3.5 px-7 font-bold text-xs uppercase tracking-[0.16em] transition-all cursor-pointer shrink-0 rounded-[2px] sm:rounded-l-none btn-shimmer"
+              className="w-full sm:w-auto text-xs font-bold uppercase tracking-[0.18em] transition-colors cursor-pointer shrink-0 whitespace-nowrap disabled:opacity-50"
               style={{
                 backgroundColor: "#1C1208",
-                color: "#F5F0E8",
+                color: "#FFFFFF",
                 border: "none",
+                borderRadius: "0px",
+                padding: "16px 36px",
                 fontFamily: "var(--font-source-sans), sans-serif",
               }}
             >
-              {status === "loading" ? "Subscribing..." : status === "success" ? "Subscribed ✓" : "JOIN THE RANCH"}
+              {status === "loading" ? "JOINING..." : status === "success" ? "SUBSCRIBED ✓" : "JOIN THE RANCH"}
             </button>
           </form>
 
           {status === "success" && (
-            <p className="text-center text-xs text-white/95 mt-4 font-semibold">
-              ✓ You have successfully subscribed to the Osotua ranch dispatch.
+            <p className="text-center text-xs text-white/95 mt-5 font-semibold flex items-center justify-center gap-1.5">
+              <i className="bi bi-check-circle-fill text-white" />
+              <span>You have successfully subscribed to the Osotua ranch dispatch.</span>
             </p>
           )}
           {status === "error" && (
-            <p className="text-center text-xs text-red-100 mt-4 font-semibold">
-              Subscription failed. Please check your email address and try again.
+            <p className="text-center text-xs text-red-100 mt-5 font-semibold flex items-center justify-center gap-1.5">
+              <i className="bi bi-exclamation-triangle-fill" />
+              <span>Subscription failed. Please check your email address and try again.</span>
             </p>
           )}
         </div>
       </section>
 
-      {/* ── MAIN FOOTER BODY (Standardized Obsidian & Brushed Brass Grid) ── */}
+      {/* ── MAIN 4-COLUMN FOOTER BODY (Figma Exact Ranch Brown Grid) ── */}
       <div
-        className="w-full py-20 sm:py-24 md:py-28 border-t border-[#C99A2E]/15"
-        style={{ backgroundColor: "#110B05", color: "#F5F0E8" }}
+        className="w-full"
+        style={{
+          backgroundColor: "#1C1208",
+          color: "#F5F0E8",
+          paddingTop: "90px",
+          paddingBottom: "60px",
+        }}
       >
         <div className="os-container">
-          <div className="grid grid-cols-1 gap-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-14">
 
-            {/* Column 1: Brand Wordmark, Description & Social Icons (4 cols) */}
-            <div className="space-y-6 sm:col-span-2 lg:col-span-4">
+            {/* Column 1: Brand Wordmark, Description & Social Icons */}
+            <div className="space-y-6">
               <Link href="/" className="inline-flex items-center gap-2.5 no-underline">
                 <span
-                  className="font-serif italic text-3xl text-[#C99A2E]"
-                  style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontWeight: 700 }}
+                  className="italic text-2xl sm:text-[26px] text-[#C99A2E] leading-none tracking-tight font-bold"
+                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                 >
                   Osotua
                 </span>
                 <span
-                  className="text-xs font-bold tracking-[0.25em] text-[#D4C9B0] uppercase"
-                  style={{ fontFamily: "var(--font-source-sans), sans-serif", marginTop: "2px" }}
+                  className="text-[10px] font-bold tracking-[0.25em] text-[#D4C9B0] uppercase mt-0.5"
+                  style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                 >
                   FARMING
                 </span>
               </Link>
 
               <p
-                className="max-w-sm text-sm leading-relaxed text-[#F5F0E8]/65 font-normal m-0"
+                className="text-[13px] leading-relaxed text-[#B5A494] font-normal m-0 max-w-xs"
                 style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
-                Rooted in tradition, growing with nature. Premium indigenous livestock genetics, organic produce, and pastoral agricultural tours from Kajiado County, Kenya.
+                Rooted in tradition, growing with nature. Premium indigenous livestock and wholesome produce from Kajiado County, Kenya.
               </p>
 
-              {/* Social Media Square Icon Buttons */}
+              {/* Social Media Square Icon Buttons (Figma Exact Style) */}
               <div className="flex items-center gap-2.5 pt-1">
                 {[
                   {
                     icon: "bi-instagram",
                     href: "https://www.instagram.com/osotua_ranches_/",
-                    label: "Instagram (@osotua_ranches_)",
+                    label: "Instagram",
                   },
                   {
                     icon: "bi-facebook",
@@ -159,17 +177,12 @@ export default function Footer() {
                   {
                     icon: "bi-tiktok",
                     href: "https://www.tiktok.com/@osotua.ranches",
-                    label: "TikTok (@osotua.ranches)",
+                    label: "TikTok",
                   },
                   {
                     icon: "bi-youtube",
                     href: "https://youtube.com",
                     label: "YouTube",
-                  },
-                  {
-                    icon: "bi-whatsapp",
-                    href: "https://wa.me/254755758208?text=Hello%20Osotua%20Farming!%20I%20would%20like%20to%20enquire%20about%20your%20products.",
-                    label: "WhatsApp Concierge",
                   },
                 ].map((s) => (
                   <a
@@ -178,7 +191,8 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="w-9 h-9 flex items-center justify-center text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] hover:border-[#C99A2E] hover:bg-white/[0.08] transition-all duration-200 border border-white/10 bg-white/[0.03] rounded-[2px]"
+                    className="w-9 h-9 flex items-center justify-center text-sm text-[#D4C9B0]/75 hover:text-[#C99A2E] hover:border-[#C99A2E] hover:bg-white/[0.05] transition-all border border-white/10 bg-white/[0.02]"
+                    style={{ borderRadius: "0px" }}
                   >
                     <i className={`bi ${s.icon}`} aria-hidden="true" />
                   </a>
@@ -186,28 +200,28 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Column 2: Quick Links (2 cols) */}
-            <div className="space-y-4 lg:col-span-2">
+            {/* Column 2: Quick Links */}
+            <div className="space-y-5">
               <div
-                className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
+                className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4C9B0]"
+                style={{ fontFamily: "var(--font-source-sans), monospace" }}
               >
                 QUICK LINKS
               </div>
-              <nav className="flex flex-col gap-2.5 leading-relaxed" aria-label="Quick links">
+              <nav className="flex flex-col gap-3" aria-label="Quick links">
                 {[
                   { label: "Our Story", href: "/about" },
                   { label: "The Barn", href: "/barn" },
                   { label: "Breeding Programme", href: "/breeds" },
                   { label: "Ranch Visits", href: "/visit" },
                   { label: "Invest with Us", href: "/invest" },
-                  { label: "Blog & Field Notes", href: "/blog" },
-                  { label: "Partner Farmers", href: "/partners" },
-                  { label: "Careers", href: "/careers" },
+                  { label: "Blog", href: "/blog" },
+                  { label: "Partners", href: "/partners" },
                 ].map((l) => (
                   <Link
                     key={l.label}
                     href={l.href}
-                    className="text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] hover:translate-x-0.5 transition-all no-underline inline-block"
+                    className="text-[13px] text-[#B5A494] hover:text-[#C99A2E] transition-colors no-underline block"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     {l.label}
@@ -216,27 +230,28 @@ export default function Footer() {
               </nav>
             </div>
 
-            {/* Column 3: Livestock Catalogue (3 cols) */}
-            <div className="space-y-4 lg:col-span-3">
+            {/* Column 3: Livestock Catalogue */}
+            <div className="space-y-5">
               <div
-                className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
+                className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4C9B0]"
+                style={{ fontFamily: "var(--font-source-sans), monospace" }}
               >
                 LIVESTOCK CATALOGUE
               </div>
-              <nav className="flex flex-col gap-2.5 leading-relaxed" aria-label="Livestock catalogue">
+              <nav className="flex flex-col gap-3" aria-label="Livestock catalogue">
                 {[
-                  { label: "Boran Beef Cattle", href: "/breeds?category=beef" },
-                  { label: "Bonsmara Bulls", href: "/breeds?category=beef" },
-                  { label: "Sahiwal Dairy Cows", href: "/breeds?category=dairy" },
-                  { label: "Boer Meat Goats", href: "/breeds?category=goats" },
-                  { label: "Galla × Boer Crosses", href: "/breeds?category=goats" },
-                  { label: "Dorper Hair Sheep", href: "/breeds?category=sheep" },
-                  { label: "Red Maasai × Dorper", href: "/breeds?category=sheep" },
+                  { label: "Boran Beef Cattle", href: "/breeds" },
+                  { label: "Bonsmara Bulls", href: "/breeds" },
+                  { label: "Sahiwal Dairy Cows", href: "/breeds" },
+                  { label: "Boer Goats", href: "/breeds" },
+                  { label: "Galla × Boer Crosses", href: "/breeds" },
+                  { label: "Dorper Sheep", href: "/breeds" },
+                  { label: "Red Maasai × Dorper", href: "/breeds" },
                 ].map((l) => (
                   <Link
                     key={l.label}
                     href={l.href}
-                    className="text-sm text-[#F5F0E8]/70 hover:text-[#C99A2E] hover:translate-x-0.5 transition-all no-underline inline-block"
+                    className="text-[13px] text-[#B5A494] hover:text-[#C99A2E] transition-colors no-underline block"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     {l.label}
@@ -245,36 +260,37 @@ export default function Footer() {
               </nav>
             </div>
 
-            {/* Column 4: Get in Touch (3 cols) */}
-            <div className="space-y-4 lg:col-span-3">
+            {/* Column 4: Get in Touch */}
+            <div className="space-y-5">
               <div
-                className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[#D4C9B0]"
+                className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4C9B0]"
+                style={{ fontFamily: "var(--font-source-sans), monospace" }}
               >
                 GET IN TOUCH
               </div>
-              <div className="flex flex-col gap-3.5 text-sm leading-relaxed text-[#F5F0E8]/70" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
+              <div className="flex flex-col gap-4 text-[13px] leading-relaxed text-[#B5A494]" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
                 <a
-                  href="tel:+254755758208"
-                  className="flex items-center gap-3 text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline group"
+                  href="tel:+254700000000"
+                  className="flex items-center gap-3 text-[#B5A494] hover:text-[#C99A2E] transition-colors no-underline group"
                 >
-                  <i className="bi bi-telephone text-sm text-[#C99A2E] group-hover:scale-110 transition-transform" aria-hidden="true" />
-                  <span>+254 755 758 208</span>
+                  <i className="bi bi-telephone text-sm text-[#C99A2E]" aria-hidden="true" />
+                  <span>+254 700 000 000</span>
                 </a>
 
                 <a
                   href="mailto:info@osotuafarming.co.ke"
-                  className="flex items-center gap-3 text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline group"
+                  className="flex items-center gap-3 text-[#B5A494] hover:text-[#C99A2E] transition-colors no-underline group"
                 >
-                  <i className="bi bi-envelope text-sm text-[#C99A2E] group-hover:scale-110 transition-transform" aria-hidden="true" />
+                  <i className="bi bi-envelope text-sm text-[#C99A2E]" aria-hidden="true" />
                   <span>info@osotuafarming.co.ke</span>
                 </a>
 
-                <div className="flex items-center gap-3 text-[#F5F0E8]/70">
+                <div className="flex items-center gap-3 text-[#B5A494]">
                   <i className="bi bi-clock text-sm text-[#C99A2E]" aria-hidden="true" />
                   <span>Mon–Sat, 8:00am–5:00pm</span>
                 </div>
 
-                <div className="flex items-center gap-3 text-[#F5F0E8]/70">
+                <div className="flex items-center gap-3 text-[#B5A494]">
                   <i className="bi bi-geo-alt text-sm text-[#C99A2E]" aria-hidden="true" />
                   <span>Kajiado County, Kenya</span>
                 </div>
@@ -283,29 +299,20 @@ export default function Footer() {
 
           </div>
 
-          {/* Bottom Copyright Bar with Subtle Border Line */}
-          <div className="border-t border-white/10 pt-10 mt-16 sm:mt-20 flex flex-col sm:flex-row items-center justify-between gap-5 text-xs text-[#F5F0E8]/50">
+          {/* Bottom Copyright Bar */}
+          <div className="border-t border-white/10 pt-8 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#B5A494]/60">
             <div>
-              &copy; {year} Osotua Farming. Built by{" "}
-              <a
-                href="https://www.bezalel.website/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors underline"
-              >
-                Bezalel Technologies
-              </a>
-              . All rights reserved.
+              &copy; {year} Osotua Farming. All rights reserved.
             </div>
             <div className="flex items-center gap-6">
-              <Link href="/privacy" className="hover:text-white transition-colors no-underline">
-                Privacy Policy
+              <Link href="/about" className="hover:text-white transition-colors no-underline">
+                About Us
               </Link>
-              <Link href="/terms" className="hover:text-white transition-colors no-underline">
-                Terms of Service
+              <Link href="/barn" className="hover:text-white transition-colors no-underline">
+                The Barn
               </Link>
               <Link href="/contact" className="hover:text-white transition-colors no-underline">
-                Ranch Support
+                Contact
               </Link>
             </div>
           </div>

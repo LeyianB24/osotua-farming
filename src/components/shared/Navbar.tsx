@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCart } from "./CartContext";
 import { LOGO } from "@/lib/images";
+import RangelandsTelemetry from "./RangelandsTelemetry";
 
 const navLinks = [
   { label: "Our Breeds", href: "/breeds" },
@@ -46,41 +47,40 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
       <header
         className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
           scrolled
-            ? "border-[#C99A2E]/20 bg-[#070c14]/95 backdrop-blur-md shadow-2xl py-3"
-            : "border-white/10 bg-[#070c14]/85 backdrop-blur-sm py-4"
+            ? "border-[#C99A2E]/20 bg-[#1C1208]/98 backdrop-blur-md shadow-2xl py-2.5"
+            : "border-white/10 bg-[#1C1208] py-3.5"
         }`}
       >
         <div className="os-container w-full">
           <div className="flex items-center justify-between">
 
-            {/* Brand Logo & Wordmark */}
-            <Link href="/" className="flex items-center gap-3 no-underline group">
-              <div className="relative w-9 h-9 rounded-full overflow-hidden border border-[#C99A2E]/40 bg-[#FAF7F2] shrink-0 group-hover:border-[#C99A2E] transition-colors shadow-sm">
+            {/* Brand Logo & Wordmark (Exact Figma style) */}
+            <Link href="/" className="flex items-center gap-2.5 no-underline group">
+              {/* Circular logo mark */}
+              <div className="relative w-9 h-9 rounded-full overflow-hidden border border-[#C99A2E]/50 bg-[#FAF7F2] shrink-0 shadow-sm">
                 <Image
                   src={LOGO}
-                  alt="Osotua Farming Official Logo"
+                  alt="Osotua Farming logo"
                   fill
                   sizes="36px"
                   priority
                   className="object-cover"
                 />
               </div>
-              <div className="flex flex-col">
-                <span
-                  className="text-2xl font-bold italic text-[#C99A2E] leading-none tracking-tight group-hover:text-[#D9AA3E] transition-colors"
-                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
-                >
-                  Osotua
-                </span>
-                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-[#D4C9B0] mt-0.5">
-                  FARMING
-                </span>
-              </div>
+              <span
+                className="text-2xl sm:text-[26px] font-bold italic text-[#C99A2E] leading-none tracking-tight group-hover:text-[#D9AA3E] transition-colors"
+                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+              >
+                Osotua
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4C9B0] mt-0.5">
+                FARMING
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav
-              className="hidden lg:flex items-center gap-8"
+              className="hidden lg:flex items-center gap-7"
               aria-label="Main navigation"
             >
               {navLinks.map((link) => {
@@ -89,17 +89,18 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative text-xs font-mono font-bold uppercase tracking-[0.14em] transition-all no-underline pb-1 ${
+                    className={`relative text-[13px] font-medium transition-all no-underline pb-0.5 ${
                       active
                         ? "text-[#C99A2E]"
-                        : "text-[#F5F0E8]/75 hover:text-[#C99A2E]"
+                        : "text-[#F5F0E8]/85 hover:text-[#C99A2E]"
                     }`}
+                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     {link.label}
                     {active && (
                       <motion.span
                         layoutId="nav-active-underline"
-                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C99A2E] rounded-full shadow-sm"
+                        className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#C99A2E]"
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
@@ -108,42 +109,37 @@ export default function Navbar({ cartCount: initialCartCount }: { cartCount?: nu
               })}
             </nav>
 
-            {/* Desktop Right Actions */}
-            <div className="hidden lg:flex items-center gap-5">
-              <Link
-                href="/dashboard"
-                className="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
-              >
-                Member Portal
-              </Link>
-
+            {/* Desktop Right Actions (Exact Figma style) */}
+            <div className="hidden lg:flex items-center gap-6">
               <Link
                 href="/visit"
-                className="text-xs font-mono font-bold uppercase tracking-[0.14em] text-[#F5F0E8]/70 hover:text-[#C99A2E] transition-colors no-underline"
+                className="text-[13px] font-medium text-[#F5F0E8]/85 hover:text-[#C99A2E] transition-colors no-underline"
+                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
-                Ranch Tours
+                Visit Us
               </Link>
 
               {/* Cart Button */}
               <Link
                 href="/cart"
-                className="relative w-9 h-9 rounded-[2px] bg-white/[0.04] border border-white/15 hover:border-[#C99A2E] flex items-center justify-center text-[#F5F0E8] transition-colors no-underline"
+                className="relative w-8 h-8 flex items-center justify-center text-[#F5F0E8] hover:text-[#C99A2E] transition-colors no-underline"
                 aria-label={`Cart with ${cartCount} items`}
               >
-                <i className="bi bi-bag text-sm" aria-hidden="true" />
+                <i className="bi bi-bag text-base" aria-hidden="true" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#C99A2E] text-[#1C1208] text-[9px] font-extrabold flex items-center justify-center shadow-sm">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C99A2E] text-[#1C1208] text-[9px] font-extrabold flex items-center justify-center shadow-sm">
                     {cartCount}
                   </span>
                 )}
               </Link>
 
-              {/* SHOP THE BARN CTA */}
+              {/* SHOP THE BARN CTA (Figma Exact) */}
               <Link
                 href="/barn"
-                className="btn-gold btn-shimmer py-2.5 px-5 text-[11px] font-mono font-bold uppercase tracking-[0.16em] no-underline rounded-[2px] shadow-sm"
+                className="bg-[#C99A2E] hover:bg-[#D9AA3E] text-[#1C1208] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.14em] no-underline transition-colors shadow-sm"
+                style={{ borderRadius: "0px", fontFamily: "var(--font-source-sans), sans-serif" }}
               >
-                <span>SHOP THE BARN</span>
+                SHOP THE BARN
               </Link>
             </div>
 

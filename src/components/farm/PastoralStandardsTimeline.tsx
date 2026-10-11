@@ -44,7 +44,7 @@ const STEPS = [
 
 export default function PastoralStandardsTimeline() {
   return (
-    <section className="relative overflow-hidden bg-[#070c14] py-20 text-white md:py-28 border-y border-[#C99A2E]/20">
+    <section className="relative overflow-hidden bg-[#0A100B] py-20 text-white md:py-28 border-y border-[#C99A2E]/20">
       {/* Background architectural grid */}
       <div
         aria-hidden="true"
@@ -79,7 +79,7 @@ export default function PastoralStandardsTimeline() {
             return (
               <div
                 key={step.number}
-                className="group relative flex flex-col justify-between rounded-[2px] border border-white/10 bg-[#0F172A]/70 p-7 transition-all duration-300 hover:border-[#C99A2E]/60 hover:bg-[#0F172A] hover-lift"
+                className="group relative flex flex-col justify-between rounded-[0px] border border-white/10 bg-[#121A13]/90 p-7 transition-all duration-300 hover:border-[#C99A2E]/60 hover:bg-[#152016] hover-lift"
               >
                 <div>
                   {/* Top row: Big number & Icon */}
@@ -90,7 +90,7 @@ export default function PastoralStandardsTimeline() {
                     >
                       {step.number}
                     </span>
-                    <div className="w-10 h-10 rounded-[2px] bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#C99A2E] group-hover:border-[#C99A2E]/50 group-hover:bg-[#C99A2E]/10 transition-colors">
+                    <div className="w-10 h-10 rounded-[0px] bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#C99A2E] group-hover:border-[#C99A2E]/50 group-hover:bg-[#C99A2E]/10 transition-colors">
                       <Icon className="h-5 w-5" />
                     </div>
                   </div>
@@ -126,7 +126,7 @@ export default function PastoralStandardsTimeline() {
           </p>
           <Link
             href="/visit"
-            className="btn-gold btn-shimmer py-2.5 px-6 text-xs font-mono font-bold uppercase tracking-[0.16em] no-underline rounded-[2px] inline-flex items-center gap-2 shadow-sm"
+            className="inline-flex items-center justify-center gap-2 rounded-[0px] bg-[#C99A2E] hover:bg-[#D9AA3E] text-[#1C1208] px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] shadow-sm transition-all no-underline active:scale-[0.98]"
           >
             <span>BOOK A GUIDED RANCH TOUR</span>
             <ArrowRight className="h-3.5 w-3.5" />
