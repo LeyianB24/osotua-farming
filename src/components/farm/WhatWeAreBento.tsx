@@ -155,7 +155,7 @@ export default function WhatWeAreBento() {
               </div>
 
               {/* Footer Row */}
-              <div className="p-7 pt-0 flex justify-between items-center mt-auto border-t border-[#E8E0D2]/60 pt-5">
+              <div className="px-7 pb-7 pt-5 flex justify-between items-center mt-auto border-t border-[#E8E0D2]/60">
                 <div className="flex items-baseline gap-1">
                   <span
                     className="text-2xl font-bold text-[#C4602A]"

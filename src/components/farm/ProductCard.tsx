@@ -102,7 +102,7 @@ export default function ProductCard({ product }: Props) {
           <div
             className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#7A7848]"
           >
-            KAJIADO CO-OP
+            KAJIADO CO-OP DIRECT
           </div>
 
           <Link
@@ -146,10 +146,10 @@ export default function ProductCard({ product }: Props) {
           {added ? (
             <>
               <i className="bi bi-check2 text-sm" />
-              <span>ADDED TO CART</span>
+              <span>ADDED TO BASKET</span>
             </>
           ) : (
-            <span>ADD TO CART</span>
+            <span>ADD TO BASKET</span>
           )}
         </button>
       </div>

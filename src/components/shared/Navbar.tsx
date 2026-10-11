@@ -3,11 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+
 import { useCart } from "./CartContext";
 import { LOGO } from "@/lib/images";
-import RangelandsTelemetry from "./RangelandsTelemetry";
 
 const navLinks = [
   { label: "Our Breeds", href: "/breeds" },
@@ -15,322 +15,428 @@ const navLinks = [
   { label: "Invest", href: "/invest" },
   { label: "Partners", href: "/partners" },
   { label: "About", href: "/about" },
+  { label: "Ranch Tours", href: "/visit" },
 ];
 
-export default function Navbar({ cartCount: initialCartCount }: { cartCount?: number }) {
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
+function isActivePath(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export default function Navbar({
+  cartCount: initialCartCount = 0,
+}: {
+  cartCount?: number;
+}) {
+  const pathname = usePathname();
+
+  const { cartCount: contextCartCount } = useCart();
+
+  const cartCount = contextCartCount ?? initialCartCount;
+
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-  const { cartCount: ctxCartCount } = useCart();
-  const cartCount = ctxCartCount ?? initialCartCount ?? 0;
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+  const closeMenu = useCallback(() => {
+    setOpen(false);
   }, []);
 
+  /*
+   * Detect scrolling.
+   * The navbar becomes slightly more compact and gains a refined
+   * background and shadow after the visitor begins scrolling.
+   */
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => { document.body.style.overflow = ""; };
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  /*
+   * Close the mobile menu when navigating.
+   */
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  /*
+   * Lock background scrolling while the mobile menu is open.
+   * Preserve any existing inline overflow style.
+   */
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, [open]);
 
-  const [prevPath, setPrevPath] = useState(pathname);
-  if (prevPath !== pathname) {
-    setPrevPath(pathname);
-    setOpen(false);
-  }
+  /*
+   * Prevent the desktop navigation and mobile menu from competing
+   * when the viewport crosses the responsive breakpoint.
+   */
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+
+    const handleBreakpoint = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setOpen(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleBreakpoint);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleBreakpoint);
+    };
+  }, []);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
-          scrolled
-            ? "border-[#C99A2E]/20 bg-[#1C1208]/98 backdrop-blur-md shadow-2xl py-2.5"
-            : "border-white/10 bg-[#1C1208] py-3.5"
-        }`}
+        className={[
+          "os-navbar",
+          scrolled ? "os-navbar-scrolled" : "",
+          open ? "os-navbar-menu-open" : "",
+        ].join(" ")}
       >
-        <div className="os-container w-full">
-          <div className="flex items-center justify-between">
+        <div className="os-navbar-inner">
+          {/* BRAND */}
+          <Link
+            href="/"
+            onClick={closeMenu}
+            className="os-brand"
+            aria-label="Osotua Farming home"
+          >
+            <span className="os-brand-mark">
+              <Image
+                src={LOGO}
+                alt=""
+                fill
+                priority
+                sizes="40px"
+                className="os-brand-image"
+              />
+            </span>
 
-            {/* Brand Logo & Wordmark (Exact Figma style) */}
-            <Link href="/" className="flex items-center gap-2.5 no-underline group">
-              {/* Circular logo mark */}
-              <div className="relative w-9 h-9 rounded-full overflow-hidden border border-[#C99A2E]/50 bg-[#FAF7F2] shrink-0 shadow-sm">
-                <Image
-                  src={LOGO}
-                  alt="Osotua Farming logo"
-                  fill
-                  sizes="36px"
-                  priority
-                  className="object-cover"
-                />
-              </div>
-              <span
-                className="text-2xl sm:text-[26px] font-bold italic text-[#C99A2E] leading-none tracking-tight group-hover:text-[#D9AA3E] transition-colors"
-                style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
-              >
-                Osotua
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4C9B0] mt-0.5">
-                FARMING
-              </span>
+            <span className="os-brand-copy">
+              <span className="os-brand-name">Osotua</span>
+
+              <span className="os-brand-divider" aria-hidden="true" />
+
+              <span className="os-brand-subtitle">Farming</span>
+            </span>
+          </Link>
+
+          {/* DESKTOP NAVIGATION */}
+          <nav
+            className="os-desktop-nav"
+            aria-label="Main navigation"
+          >
+            {navLinks.map((link) => {
+              const active = isActivePath(pathname, link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  className={[
+                    "os-nav-link",
+                    active ? "os-nav-link-active" : "",
+                  ].join(" ")}
+                >
+                  <span>{link.label}</span>
+
+                  {active && (
+                    <motion.span
+                      layoutId="os-nav-indicator"
+                      className="os-nav-indicator"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 32,
+                      }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* DESKTOP ACTIONS */}
+          <div className="os-navbar-actions">
+            <Link
+              href="/dashboard"
+              className={[
+                "os-member-link",
+                isActivePath(pathname, "/dashboard")
+                  ? "os-member-link-active"
+                  : "",
+              ].join(" ")}
+            >
+              Member Portal
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav
-              className="hidden lg:flex items-center gap-7"
-              aria-label="Main navigation"
+            <Link
+              href="/cart"
+              className="os-cart-link"
+              aria-label={`Shopping cart, ${cartCount} items`}
             >
-              {navLinks.map((link) => {
-                const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`));
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`relative text-[13px] font-medium transition-all no-underline pb-0.5 ${
-                      active
-                        ? "text-[#C99A2E]"
-                        : "text-[#F5F0E8]/85 hover:text-[#C99A2E]"
-                    }`}
-                    style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-                  >
-                    {link.label}
-                    {active && (
-                      <motion.span
-                        layoutId="nav-active-underline"
-                        className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#C99A2E]"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
+              <i className="bi bi-bag" aria-hidden="true" />
 
-            {/* Desktop Right Actions (Exact Figma style) */}
-            <div className="hidden lg:flex items-center gap-6">
-              <Link
-                href="/visit"
-                className="text-[13px] font-medium text-[#F5F0E8]/85 hover:text-[#C99A2E] transition-colors no-underline"
-                style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
-              >
-                Visit Us
-              </Link>
+              {cartCount > 0 && (
+                <span className="os-cart-count">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
 
-              {/* Cart Button */}
-              <Link
-                href="/cart"
-                className="relative w-8 h-8 flex items-center justify-center text-[#F5F0E8] hover:text-[#C99A2E] transition-colors no-underline"
-                aria-label={`Cart with ${cartCount} items`}
-              >
-                <i className="bi bi-bag text-base" aria-hidden="true" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C99A2E] text-[#1C1208] text-[9px] font-extrabold flex items-center justify-center shadow-sm">
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
+            <Link href="/barn" className="os-shop-button">
+              <span>Shop the Barn</span>
 
-              {/* SHOP THE BARN CTA (Figma Exact) */}
-              <Link
-                href="/barn"
-                className="bg-[#C99A2E] hover:bg-[#D9AA3E] text-[#1C1208] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.14em] no-underline transition-colors shadow-sm"
-                style={{ borderRadius: "0px", fontFamily: "var(--font-source-sans), sans-serif" }}
-              >
-                SHOP THE BARN
-              </Link>
-            </div>
+              <i className="bi bi-arrow-up-right" aria-hidden="true" />
+            </Link>
+          </div>
 
-            {/* Mobile Actions */}
-            <div className="flex lg:hidden items-center gap-2.5">
-              <Link
-                href="/cart"
-                className="relative w-9 h-9 rounded-[2px] bg-white/[0.06] border border-white/15 flex items-center justify-center text-white no-underline"
-                aria-label={`Shopping Cart (${cartCount} items)`}
-              >
-                <i className="bi bi-bag text-sm" aria-hidden="true" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#C99A2E] text-[#1C1208] text-[9px] font-extrabold flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-              <button
-                onClick={() => setOpen(!open)}
-                className="w-9 h-9 rounded-[2px] bg-white/[0.06] border border-white/15 text-white flex items-center justify-center cursor-pointer hover:border-[#C99A2E] transition-colors"
-                aria-expanded={open}
-                aria-label="Toggle navigation menu"
-              >
-                <i className={`bi text-base ${open ? "bi-x-lg" : "bi-list"}`} aria-hidden="true" />
-              </button>
-            </div>
+          {/* MOBILE ACTIONS */}
+          <div className="os-mobile-actions">
+            <Link
+              href="/cart"
+              className="os-mobile-cart"
+              aria-label={`Shopping cart, ${cartCount} items`}
+            >
+              <i className="bi bi-bag" aria-hidden="true" />
+
+              {cartCount > 0 && (
+                <span className="os-cart-count">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setOpen((previous) => !previous)}
+              className="os-menu-toggle"
+              aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={open}
+              aria-controls="os-mobile-navigation"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.i
+                  key={open ? "close" : "open"}
+                  initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
+                  transition={{ duration: 0.15 }}
+                  className={`bi ${open ? "bi-x-lg" : "bi-list"}`}
+                  aria-hidden="true"
+                />
+              </AnimatePresence>
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Full-Screen Menu */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.28, ease: [0.34, 1.56, 0.64, 1] }}
-            style={{
-              position: "fixed",
-              inset: 0,
-              zIndex: 40,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              paddingTop: "88px",
-              paddingBottom: "2.5rem",
-              paddingLeft: "1.5rem",
-              paddingRight: "1.5rem",
-              backgroundColor: "rgba(22, 13, 5, 0.98)",
-              backdropFilter: "blur(24px) saturate(180%)",
-              WebkitBackdropFilter: "blur(24px) saturate(180%)",
-              overflowY: "auto",
-            }}
-            className="lg:hidden"
-          >
-            <nav style={{ display: "flex", flexDirection: "column", gap: "4px" }} aria-label="Mobile navigation">
-              {[...navLinks, { label: "Member Portal", href: "/dashboard" }].map((link, i) => {
-                const active = pathname === link.href || (link.href !== "/" && pathname.startsWith(`${link.href}/`));
-                return (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.04, duration: 0.25 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        padding: "1rem 0",
-                        borderBottom: "1px solid rgba(255,255,255,0.07)",
-                        textDecoration: "none",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "var(--font-cormorant), Georgia, serif",
-                          fontSize: "2rem",
-                          fontWeight: 300,
-                          letterSpacing: "-0.01em",
-                          color: active ? "#C4882A" : "#FFFFFF",
-                          transition: "color 0.2s ease",
+          <>
+            {/* Backdrop */}
+            <motion.button
+              type="button"
+              aria-label="Close navigation menu"
+              className="os-mobile-backdrop"
+              onClick={closeMenu}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+
+            {/* Navigation Panel */}
+            <motion.div
+              id="os-mobile-navigation"
+              className="os-mobile-menu"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{
+                duration: 0.3,
+                ease: easeOut,
+              }}
+            >
+              <div className="os-mobile-menu-content">
+                {/* Menu Introduction */}
+                <div className="os-mobile-menu-intro">
+                  <span className="os-mobile-eyebrow">
+                    Discover Osotua
+                  </span>
+
+                  <p>
+                    Rooted in the land.
+                    <br />
+                    Built for generations.
+                  </p>
+                </div>
+
+                {/* Navigation Links */}
+                <nav
+                  className="os-mobile-nav"
+                  aria-label="Mobile navigation"
+                >
+                  {navLinks.map((link, index) => {
+                    const active = isActivePath(pathname, link.href);
+
+                    return (
+                      <motion.div
+                        key={link.href}
+                        initial={{ opacity: 0, x: -12 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                          delay: index * 0.045,
+                          duration: 0.25,
                         }}
                       >
-                        {link.label}
-                      </span>
-                      <i className="bi bi-arrow-right" style={{ color: "#C4882A", opacity: 0.7, fontSize: "1rem" }} />
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </nav>
+                        <Link
+                          href={link.href}
+                          onClick={closeMenu}
+                          aria-current={active ? "page" : undefined}
+                          className={[
+                            "os-mobile-nav-link",
+                            active ? "os-mobile-nav-link-active" : "",
+                          ].join(" ")}
+                        >
+                          <span className="os-mobile-nav-number">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
 
-            {/* Mobile Footer CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.28, duration: 0.25 }}
-              style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "2rem" }}
-            >
-              <Link
-                href="/visit"
-                onClick={() => setOpen(false)}
-                className="btn-primary justify-center"
-                style={{
-                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                  padding: "0.875rem",
-                }}
-              >
-                <span>Book Farm Visit</span>
-                <i className="bi bi-calendar-check" />
-              </Link>
-              <a
-                href="https://wa.me/254755758208"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-ghost justify-center"
-                style={{
-                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                  padding: "0.875rem",
-                }}
-              >
-                <i className="bi bi-whatsapp" style={{ color: "#25D366" }} />
-                <span>WhatsApp Concierge</span>
-              </a>
+                          <span className="os-mobile-nav-label">
+                            {link.label}
+                          </span>
 
-              {/* Official Social Links */}
-              <div style={{ display: "flex", gap: "8px", justifyContent: "center", paddingTop: "0.5rem" }}>
-                <a
-                  href="https://www.instagram.com/osotua_ranches_/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "6px 12px",
-                    borderRadius: "9999px",
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(196,136,42,0.3)",
-                    color: "#FBF7F0",
-                    fontSize: "0.75rem",
-                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                    textDecoration: "none",
-                  }}
+                          <i
+                            className="bi bi-arrow-up-right"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </nav>
+
+                {/* Member Portal */}
+                <Link
+                  href="/dashboard"
+                  onClick={closeMenu}
+                  className="os-mobile-member-link"
                 >
-                  <i className="bi bi-instagram" style={{ color: "#C4882A" }} />
-                  <span>@osotua_ranches_</span>
-                </a>
-                <a
-                  href="https://www.tiktok.com/@osotua.ranches"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "6px 12px",
-                    borderRadius: "9999px",
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(196,136,42,0.3)",
-                    color: "#FBF7F0",
-                    fontSize: "0.75rem",
-                    fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                    textDecoration: "none",
-                  }}
-                >
-                  <i className="bi bi-tiktok" style={{ color: "#C4882A" }} />
-                  <span>@osotua.ranches</span>
-                </a>
+                  <i className="bi bi-person-circle" aria-hidden="true" />
+                  <span>Member Portal</span>
+                  <i className="bi bi-arrow-right" aria-hidden="true" />
+                </Link>
+
+                {/* Calls to Action */}
+                <div className="os-mobile-ctas">
+                  <Link
+                    href="/barn"
+                    onClick={closeMenu}
+                    className="os-mobile-primary-cta"
+                  >
+                    <span>Shop the Barn</span>
+
+                    <i className="bi bi-arrow-up-right" aria-hidden="true" />
+                  </Link>
+
+                  <Link
+                    href="/visit"
+                    onClick={closeMenu}
+                    className="os-mobile-secondary-cta"
+                  >
+                    <i
+                      className="bi bi-calendar-event"
+                      aria-hidden="true"
+                    />
+
+                    <span>Book a Farm Visit</span>
+                  </Link>
+                </div>
+
+                {/* Contact */}
+                <div className="os-mobile-contact">
+                  <span className="os-mobile-eyebrow">
+                    Speak to our team
+                  </span>
+
+                  <a
+                    href="https://wa.me/254755758208"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="os-whatsapp-link"
+                  >
+                    <i className="bi bi-whatsapp" aria-hidden="true" />
+
+                    <span>WhatsApp Concierge</span>
+
+                    <i className="bi bi-arrow-up-right" aria-hidden="true" />
+                  </a>
+                </div>
+
+                {/* Social Links */}
+                <div className="os-mobile-socials">
+                  <a
+                    href="https://www.instagram.com/osotua_ranches_/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Osotua Farming on Instagram"
+                  >
+                    <i className="bi bi-instagram" aria-hidden="true" />
+                  </a>
+
+                  <a
+                    href="https://www.tiktok.com/@osotua.ranches"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Osotua Farming on TikTok"
+                  >
+                    <i className="bi bi-tiktok" aria-hidden="true" />
+                  </a>
+                </div>
+
+                {/* Footer */}
+                <div className="os-mobile-footer">
+                  <span>OSOTUA FARMING</span>
+
+                  <span>Kajiado County, Kenya</span>
+                </div>
               </div>
-              <p
-                style={{
-                  textAlign: "center",
-                  fontFamily: "var(--font-jakarta), system-ui, sans-serif",
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.18em",
-                  color: "rgba(196,136,42,0.6)",
-                  marginTop: "0.75rem",
-                }}
-              >
-                Osotua &bull; Kajiado County, Kenya &bull; Est. 2026
-              </p>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

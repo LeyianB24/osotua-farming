@@ -3,7 +3,20 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 
-const pantryProducts = [
+type PantryProduct = {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  unit: string;
+  image: string;
+  inStock: boolean;
+  category: {
+    name: string;
+  };
+};
+
+const pantryProducts: PantryProduct[] = [
   {
     id: "boran-sirloin-steak",
     slug: "boran-sirloin-steak",
@@ -20,7 +33,7 @@ const pantryProducts = [
     name: "Farm Fresh Raw Milk",
     price: 120,
     unit: "litre",
-    image: "/images/sahiwal calves.jpeg",
+    image: "/images/sahiwal cow.jpg",
     inStock: true,
     category: { name: "Dairy Products" },
   },
@@ -68,55 +81,81 @@ const pantryProducts = [
 
 export default function BarnStoreBento() {
   return (
-    <section className="py-20 sm:py-24 md:py-32 border-b border-[#D4C9B0]/40" style={{ backgroundColor: "#F5F0E8" }}>
+    <section
+      aria-labelledby="barn-store-heading"
+      className="relative overflow-hidden border-b border-[#D4C9B0]/60 bg-[#F5F0E8] py-20 sm:py-24 lg:py-28"
+    >
       <div className="os-container">
-        {/* Section Header Row */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 lg:mb-16">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <span
-                className="text-[11px] font-mono font-bold uppercase tracking-[0.2em]"
-                style={{ color: "#C99A2E" }}
-              >
-                KAJIADO CO-OP · DIRECT FARM
+        {/* Section heading */}
+        <div className="mb-12 flex flex-col justify-between gap-7 sm:mb-14 sm:flex-row sm:items-end lg:mb-16">
+          <div className="max-w-3xl">
+            <div className="mb-5 flex items-center gap-3">
+              <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#8C6A20] sm:text-[11px]">
+                KAJIADO CO-OP
               </span>
-              <div className="h-[1px] w-12 bg-[#C99A2E]/50" />
+
+              <span
+                aria-hidden="true"
+                className="h-px w-10 bg-[#C99A2E]/70 sm:w-14"
+              />
+
+              <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#756B5B] sm:text-[11px]">
+                DIRECT FROM THE FARM
+              </span>
             </div>
 
             <h2
-              className="text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.08] text-[#1C1208] m-0"
-              style={{
-                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-                fontWeight: 700,
-              }}
+              id="barn-store-heading"
+              className="m-0 font-serif text-4xl font-bold leading-[1.08] tracking-[-0.035em] text-[#1C1208] sm:text-5xl lg:text-6xl"
             >
-              The Farm Barn <br />
-              <span className="text-[#C99A2E]">&amp; Harvest Pantry</span>
+              The Farm Barn
+              <br />
+              <span className="text-[#A67C22]">
+                &amp; Harvest Pantry
+              </span>
             </h2>
+
+            <p className="mt-5 max-w-xl text-base leading-7 text-[#6D6253] sm:text-lg">
+              Discover quality farm produce, ranch-raised favourites, and
+              seasonal harvests, thoughtfully brought together for your table.
+            </p>
           </div>
 
           <Link
             href="/barn"
-            className="btn-outline shrink-0 self-start sm:self-end rounded-[0px]"
-            style={{
-              padding: "0.85rem 2rem",
-              fontSize: "0.75rem",
-              letterSpacing: "0.14em",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              border: "1px solid #1C1208",
-              color: "#1C1208",
-            }}
+            className="group inline-flex min-h-12 shrink-0 items-center justify-center gap-4 self-start border border-[#1C1208] px-6 py-3 text-xs font-bold uppercase tracking-[0.13em] text-[#1C1208] transition-colors duration-300 hover:border-[#1C1208] hover:bg-[#1C1208] hover:text-[#F5F0E8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C99A2E] sm:self-end sm:px-7"
           >
-            VIEW ALL PRODUCTS
+            Explore the Barn
+
+            <span
+              aria-hidden="true"
+              className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+            >
+              →
+            </span>
           </Link>
         </div>
 
-        {/* 6 Products Grid (3 columns on desktop) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Product grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:grid-cols-3 lg:gap-8">
           {pantryProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+        </div>
+
+        {/* Bottom section note */}
+        <div className="mt-12 flex flex-col gap-3 border-t border-[#D4C9B0] pt-6 sm:mt-14 sm:flex-row sm:items-center sm:justify-between">
+          <p className="m-0 text-sm leading-6 text-[#756B5B]">
+            Good food starts with good farming.
+          </p>
+
+          <Link
+            href="/barn"
+            className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-[#725719] underline decoration-[#C99A2E]/50 underline-offset-4 transition-colors hover:text-[#1C1208] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C99A2E]"
+          >
+            Browse the full collection
+            <span aria-hidden="true">↗</span>
+          </Link>
         </div>
       </div>
     </section>
