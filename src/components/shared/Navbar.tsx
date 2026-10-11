@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useCart } from "./CartContext";
@@ -38,8 +38,12 @@ export default function Navbar({
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+
   const closeMenu = useCallback(() => {
     setOpen(false);
+    toggleButtonRef.current?.focus();
   }, []);
 
   /*
@@ -71,8 +75,8 @@ export default function Navbar({
   }, [pathname]);
 
   /*
-   * Lock background scrolling while the mobile menu is open.
-   * Preserve any existing inline overflow style.
+   * Lock background scrolling while the mobile menu is open,
+   * manage focus trap, and restore focus on close.
    */
   useEffect(() => {
     if (!open) return;
@@ -81,15 +85,56 @@ export default function Navbar({
 
     document.body.style.overflow = "hidden";
 
+    // Auto-focus first interactive link inside mobile navigation
+    const focusTimer = setTimeout(() => {
+      const firstLink = mobileNavRef.current?.querySelector<HTMLElement>(
+        'a[href], button:not([disabled])'
+      );
+      firstLink?.focus();
+    }, 60);
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
+        toggleButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key === "Tab") {
+        const modal = mobileNavRef.current;
+        const toggle = toggleButtonRef.current;
+        if (!modal) return;
+
+        const focusableElements = Array.from(
+          modal.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]):not([tabindex="-1"]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        );
+
+        const allFocusable = toggle ? [toggle, ...focusableElements] : focusableElements;
+        if (allFocusable.length === 0) return;
+
+        const firstElement = allFocusable[0];
+        const lastElement = allFocusable[allFocusable.length - 1];
+
+        if (event.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            event.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            event.preventDefault();
+          }
+        }
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      clearTimeout(focusTimer);
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -240,6 +285,7 @@ export default function Navbar({
             </Link>
 
             <button
+              ref={toggleButtonRef}
               type="button"
               onClick={() => setOpen((previous) => !previous)}
               className="os-menu-toggle"
@@ -270,7 +316,8 @@ export default function Navbar({
             {/* Backdrop */}
             <motion.button
               type="button"
-              aria-label="Close navigation menu"
+              tabIndex={-1}
+              aria-hidden="true"
               className="os-mobile-backdrop"
               onClick={closeMenu}
               initial={{ opacity: 0 }}
@@ -281,8 +328,12 @@ export default function Navbar({
 
             {/* Navigation Panel */}
             <motion.div
+              ref={mobileNavRef}
               id="os-mobile-navigation"
               className="os-mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Site Navigation"
               initial={{ opacity: 0, y: -12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
@@ -332,7 +383,7 @@ export default function Navbar({
                             active ? "os-mobile-nav-link-active" : "",
                           ].join(" ")}
                         >
-                          <span className="os-mobile-nav-number">
+                          <span className="os-mobile-nav-number" aria-hidden="true">
                             {String(index + 1).padStart(2, "0")}
                           </span>
 
@@ -398,6 +449,7 @@ export default function Navbar({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="os-whatsapp-link"
+                    aria-label="WhatsApp Concierge (opens in new tab)"
                   >
                     <i className="bi bi-whatsapp" aria-hidden="true" />
 
@@ -413,7 +465,7 @@ export default function Navbar({
                     href="https://www.instagram.com/osotua_ranches_/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Osotua Farming on Instagram"
+                    aria-label="Osotua Farming on Instagram (opens in new tab)"
                   >
                     <i className="bi bi-instagram" aria-hidden="true" />
                   </a>
@@ -422,7 +474,7 @@ export default function Navbar({
                     href="https://www.tiktok.com/@osotua.ranches"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Osotua Farming on TikTok"
+                    aria-label="Osotua Farming on TikTok (opens in new tab)"
                   >
                     <i className="bi bi-tiktok" aria-hidden="true" />
                   </a>

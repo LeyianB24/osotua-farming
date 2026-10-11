@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
+
 import {
   Playfair_Display,
   Source_Sans_3,
@@ -14,13 +16,9 @@ import Providers from "@/components/shared/Providers";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 
 /* =========================================================
-   OSOTUA FARMING — TYPOGRAPHY SYSTEM
+   OSOTUA FARMING — TYPOGRAPHY
    ========================================================= */
 
-/**
- * Display font:
- * Used for hero headings, breed names, and editorial titles.
- */
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -29,10 +27,6 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-/**
- * Body font:
- * Used for paragraphs, navigation, buttons, and general UI.
- */
 const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -40,10 +34,6 @@ const sourceSans = Source_Sans_3({
   display: "swap",
 });
 
-/**
- * UI font:
- * Used for dashboard interfaces, forms, labels, and controls.
- */
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -51,10 +41,6 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-/**
- * Technical font:
- * Used for metadata, technical labels, prices, and small UI details.
- */
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -66,17 +52,52 @@ const spaceGrotesk = Space_Grotesk({
    SITE CONFIGURATION
    ========================================================= */
 
-const SITE_URL = (
-  process.env.NEXT_PUBLIC_APP_URL ||
-  "https://osotuafarming.co.ke"
-).replace(/\/+$/, "");
-
 const SITE_NAME = "Osotua Farming";
 
-const DEFAULT_TITLE = "Osotua Farming — From Our Land, To Your Table";
+const DEFAULT_TITLE =
+  "Osotua Farming — From Our Land, To Your Table";
 
 const DEFAULT_DESCRIPTION =
   "Discover premium livestock and farm products from Osotua Farming in Kajiado County, Kenya. Explore our breeds, farming practices, and ranch experiences.";
+
+const configuredSiteUrl = (
+  process.env.NEXT_PUBLIC_APP_URL || "https://osotuafarming.co.ke"
+).trim();
+
+/**
+ * NEXT_PUBLIC_APP_URL must be an absolute URL, for example:
+ * https://osotuafarming.co.ke
+ *
+ * URL.origin normalizes the domain and removes any path, query,
+ * or fragment from the canonical site origin.
+ */
+function getSiteOrigin(value: string): string {
+  try {
+    const url = new URL(value);
+
+    if (url.protocol !== "https:" && url.protocol !== "http:") {
+      throw new Error("The site URL must use HTTP or HTTPS.");
+    }
+
+    if (
+      process.env.NODE_ENV === "production" &&
+      url.protocol !== "https:" &&
+      url.hostname !== "localhost" &&
+      url.hostname !== "127.0.0.1"
+    ) {
+      throw new Error("Production site URLs must use HTTPS.");
+    }
+
+    return url.origin;
+  } catch {
+    throw new Error(
+      "Invalid NEXT_PUBLIC_APP_URL. Set it to a valid absolute URL, " +
+        "such as https://osotuafarming.co.ke."
+    );
+  }
+}
+
+const SITE_URL = getSiteOrigin(configuredSiteUrl);
 
 /* =========================================================
    SEO METADATA
@@ -116,12 +137,12 @@ export const metadata: Metadata = {
 
   creator: "Bezalel Technologies LTD",
   publisher: SITE_NAME,
-
   category: "Agriculture",
 
-  alternates: {
-    canonical: "/",
-  },
+  /**
+   * Do not define a global canonical URL here.
+   * Individual pages should define their own canonical paths.
+   */
 
   openGraph: {
     type: "website",
@@ -164,8 +185,7 @@ export const metadata: Metadata = {
 
   verification: {
     google:
-      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
-      undefined,
+      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
   },
 
   icons: {
@@ -203,29 +223,26 @@ export const viewport: Viewport = {
 };
 
 /* =========================================================
-   STRUCTURED DATA
+   STRUCTURED DATA — JSON-LD
    ========================================================= */
 
 const jsonLd = {
   "@context": "https://schema.org",
+
   "@graph": [
     {
       "@type": ["Organization", "LocalBusiness"],
-
       "@id": `${SITE_URL}/#organization`,
 
       name: SITE_NAME,
-
       url: SITE_URL,
 
       logo: `${SITE_URL}/icon.png`,
-
       image: `${SITE_URL}/og-image.jpg`,
 
       description: DEFAULT_DESCRIPTION,
 
       telephone: "+254755758208",
-
       email: "info@osotuafarming.co.ke",
 
       address: {
@@ -244,11 +261,9 @@ const jsonLd = {
 
     {
       "@type": "WebSite",
-
       "@id": `${SITE_URL}/#website`,
 
       url: SITE_URL,
-
       name: SITE_NAME,
 
       publisher: {
@@ -261,7 +276,8 @@ const jsonLd = {
 };
 
 /**
- * Escape characters that could terminate an embedded JSON-LD script.
+ * Prevent a less-than character in serialized JSON from being
+ * interpreted as the beginning of an HTML tag inside the script.
  */
 function serializeJsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
@@ -274,7 +290,7 @@ function serializeJsonLd(data: unknown): string {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html
@@ -287,6 +303,13 @@ export default function RootLayout({
       ].join(" ")}
     >
       <head>
+        {/* Improve connection setup for the icon stylesheet CDN */}
+        <link
+          rel="preconnect"
+          href="https://cdn.jsdelivr.net"
+          crossOrigin="anonymous"
+        />
+
         {/* Bootstrap Icons */}
         <link
           rel="stylesheet"
@@ -303,17 +326,38 @@ export default function RootLayout({
       </head>
 
       <body className="antialiased bg-[#F5F0E8] text-[#1C1208]">
-        {/* Accessibility: skip directly to page content */}
+        {/* Keyboard accessibility */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[#C99A2E] focus:text-[#1C1208] focus:px-5 focus:py-3 focus:font-bold focus:shadow-xl"
+          className="
+            sr-only
+            focus:not-sr-only
+            focus:fixed
+            focus:left-4
+            focus:top-4
+            focus:z-[9999]
+            focus:bg-[#C99A2E]
+            focus:px-5
+            focus:py-3
+            focus:font-bold
+            focus:text-[#1C1208]
+            focus:shadow-xl
+            focus:outline
+            focus:outline-2
+            focus:outline-offset-2
+            focus:outline-[#1C1208]
+          "
         >
           Skip to main content
         </a>
 
         <Providers>
           <CartProvider>
-            {children}
+            {/* Stable target for the skip-navigation link.
+                A div avoids introducing a nested <main> element. */}
+            <div id="main-content" tabIndex={-1}>
+              {children}
+            </div>
 
             <ToastContainer />
           </CartProvider>

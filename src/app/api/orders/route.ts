@@ -34,89 +34,97 @@ export async function POST(req: Request) {
     const body = await req.json()
     const data = orderSchema.parse(body)
 
-    // Execute within Prisma interactive transaction
-    const order = await prisma.$transaction(async (tx) => {
-      let serverCalculatedTotal = 0
-      const verifiedItems = []
+    // --- Phase 1: Verify prices OUTSIDE the transaction to keep it short ---
+    let serverCalculatedTotal = 0
+    const verifiedItems: Array<{
+      productId?: string
+      breedId?: string
+      quantity: number
+      unitPrice: number
+      totalPrice: number
+    }> = []
 
-      for (const item of data.items) {
-        let unitPrice = item.unitPrice
-        if (item.productId) {
-          const product = await tx.product.findUnique({ where: { id: item.productId } })
-          if (!product) throw new Error(`Product not found: ${item.productId}`)
-          unitPrice = product.price
-        } else if (item.breedId) {
-          const breed = await tx.breed.findUnique({ where: { id: item.breedId } })
-          if (!breed) throw new Error(`Breed not found: ${item.breedId}`)
-          unitPrice = breed.pricePerHead
-        }
-        serverCalculatedTotal += unitPrice * item.quantity
-        verifiedItems.push({
-          ...item,
-          unitPrice,
-        })
+    for (const item of data.items) {
+      let unitPrice = item.unitPrice
+      if (item.productId) {
+        const product = await prisma.product.findUnique({ where: { id: item.productId } })
+        if (!product) throw new Error(`Product not found: ${item.productId}`)
+        unitPrice = product.price
+      } else if (item.breedId) {
+        const breed = await prisma.breed.findUnique({ where: { id: item.breedId } })
+        if (!breed) throw new Error(`Breed not found: ${item.breedId}`)
+        unitPrice = breed.pricePerHead
       }
+      serverCalculatedTotal += unitPrice * item.quantity
+      verifiedItems.push({
+        productId: item.productId,
+        breedId: item.breedId,
+        quantity: item.quantity,
+        unitPrice,
+        totalPrice: unitPrice * item.quantity,
+      })
+    }
 
-      // 1. Create the Order and Items with verified server amounts
-      const createdOrder = await tx.order.create({
-        data: {
-          userId: user?.id ?? data.userId ?? null,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          customerPhone: data.customerPhone,
-          type: data.type,
-          status: "PENDING",
-          totalAmount: serverCalculatedTotal,
-          depositAmount: data.depositAmount ?? null,
-          paymentMethod: data.paymentMethod ?? null,
-          paymentRef: data.paymentRef ?? null,
-          deliveryAddress: data.deliveryAddress ?? null,
-          deliveryDate: data.deliveryDate ?? null,
-          notes: data.notes ?? null,
-          items: { create: verifiedItems },
-        },
-        include: {
-          items: {
-            include: {
-              product: true,
-              breed: true,
+    // --- Phase 2: Short transaction — create order + parallel stock updates ---
+    const order = await prisma.$transaction(
+      async (tx) => {
+        // Create the order with already-verified items and amounts
+        const createdOrder = await tx.order.create({
+          data: {
+            userId: user?.id ?? data.userId ?? null,
+            customerName: data.customerName,
+            customerEmail: data.customerEmail,
+            customerPhone: data.customerPhone,
+            type: data.type,
+            status: "PENDING",
+            totalAmount: serverCalculatedTotal,
+            depositAmount: data.depositAmount ?? null,
+            paymentMethod: data.paymentMethod ?? null,
+            paymentRef: data.paymentRef ?? null,
+            deliveryAddress: data.deliveryAddress ?? null,
+            deliveryDate: data.deliveryDate ?? null,
+            notes: data.notes ?? null,
+            items: { create: verifiedItems },
+          },
+          include: {
+            items: {
+              include: {
+                product: true,
+                breed: true,
+              },
             },
           },
-        },
-      })
+        })
 
-      // 2. Decrement Product Stock and update status
-      for (const item of data.items) {
-        if (item.productId) {
-          const product = await tx.product.findUnique({ where: { id: item.productId } })
-          if (product) {
-            const newQty = Math.max(0, product.stockQty - item.quantity)
-            await tx.product.update({
-              where: { id: item.productId },
-              data: {
-                stockQty: newQty,
-                inStock: newQty > 0,
-              },
-            })
-          }
-        }
+        // Decrement product stock and breed counts in parallel
+        await Promise.all(
+          verifiedItems.map(async (item) => {
+            if (item.productId) {
+              // Use updateMany with arithmetic to avoid a read-then-write race
+              await tx.$executeRaw`
+                UPDATE "Product"
+                SET "stockQty" = GREATEST(0, "stockQty" - ${item.quantity}::int),
+                    "inStock"  = GREATEST(0, "stockQty" - ${item.quantity}::int) > 0
+                WHERE "id" = ${item.productId}
+              `
+            }
+            if (item.breedId) {
+              await tx.$executeRaw`
+                UPDATE "Breed"
+                SET "inStock" = GREATEST(0, "inStock" - ${item.quantity}::int)
+                WHERE "id" = ${item.breedId}
+              `
+            }
+          })
+        )
 
-        // 3. Decrement Breed inStock count if a breed was purchased
-        if (item.breedId) {
-          const breed = await tx.breed.findUnique({ where: { id: item.breedId } })
-          if (breed && breed.inStock > 0) {
-            await tx.breed.update({
-              where: { id: item.breedId },
-              data: {
-                inStock: Math.max(0, breed.inStock - item.quantity),
-              },
-            })
-          }
-        }
+        return createdOrder
+      },
+      {
+        maxWait: 10_000, // wait up to 10 s for a connection slot
+        timeout:  30_000, // allow the transaction itself up to 30 s
       }
-
-      return createdOrder
-    })
+    )
 
     // 4. Send Confirmation Email
     try {
