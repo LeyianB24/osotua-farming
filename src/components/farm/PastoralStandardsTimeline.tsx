@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, Compass, Dna, Leaf, ShieldCheck, Truck, Sparkles, ArrowRight } from "lucide-react";
+import { Compass, Dna, Leaf, ShieldCheck, Truck, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const STEPS = [

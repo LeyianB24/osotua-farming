@@ -57,8 +57,8 @@ export async function POST(req: Request) {
       }
       serverCalculatedTotal += unitPrice * item.quantity
       verifiedItems.push({
-        productId: item.productId,
-        breedId: item.breedId,
+        productId: item.productId ?? undefined,
+        breedId: item.breedId ?? undefined,
         quantity: item.quantity,
         unitPrice,
         totalPrice: unitPrice * item.quantity,

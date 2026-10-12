@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import PageHero from "@/components/farm/PageHero";
-import { FIELD_DAY, LOGO } from "@/lib/images";
+import { FIELD_DAY } from "@/lib/images";
 
 const TOUR_TYPES = [
   {

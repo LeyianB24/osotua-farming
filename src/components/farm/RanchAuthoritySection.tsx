@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, Award } from "lucide-react";
+import { ArrowRight, CheckCircle2, Award, ClipboardCheck, Sprout } from "lucide-react";
 
 export default function RanchAuthoritySection() {
   return (
-    <section className="relative border-b border-[#D4C9B0]/50 bg-[#FAF7F2] py-20 md:py-28 overflow-hidden">
-      {/* Subtle drafting grid */}
+    <section className="relative overflow-hidden border-b border-[#D4C9B0]/50 bg-[#FAF7F2] py-20 md:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-[1] bg-[linear-gradient(to_right,rgba(201,154,46,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,154,46,0.035)_1px,transparent_1px)] bg-[size:3rem_3rem]"
@@ -15,10 +14,9 @@ export default function RanchAuthoritySection() {
 
       <div className="os-container">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          
-          {/* Left Column: Authentic Local Imagery & Integrated Experience Badges */}
           <div className="relative">
-            <div className="relative aspect-[4/3] overflow-hidden border border-[#D4C9B0] shadow-xl bg-[#1C1208] rounded-[0px]">
+            <div className="absolute -left-5 -top-5 hidden h-28 w-28 border border-[#C99A2E]/35 md:block" aria-hidden="true" />
+            <div className="relative aspect-[4/3] overflow-hidden border border-[#D4C9B0] bg-[#1C1208] shadow-[0_24px_70px_rgba(28,18,8,0.16)]">
               <Image
                 src="/images/brahmangreen.jpeg"
                 alt="Osotua pastoral rangelands and certified Brahman cattle herd, Kajiado County Kenya"
@@ -27,8 +25,7 @@ export default function RanchAuthoritySection() {
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C1208]/85 via-transparent to-black/20" />
-              
-              {/* Top-left pill */}
+
               <div className="absolute top-4 left-4 z-10 border border-white/20 bg-[#1C1208]/90 px-3.5 py-1.5 backdrop-blur shadow-md rounded-[0px]">
                 <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#C99A2E] m-0">
                   Registered Stud Stock
@@ -38,7 +35,6 @@ export default function RanchAuthoritySection() {
                 </p>
               </div>
 
-              {/* Bottom Integrated Experience Strip */}
               <div className="absolute bottom-4 left-4 right-4 z-10 border border-[#C99A2E]/40 bg-[#1C1208]/92 backdrop-blur p-4 shadow-xl flex items-center justify-between gap-4 rounded-[0px]">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#C99A2E]/15 border border-[#C99A2E]/40 flex items-center justify-center text-[#C99A2E] shrink-0 rounded-[0px]">
@@ -60,9 +56,25 @@ export default function RanchAuthoritySection() {
                 </div>
               </div>
             </div>
+
+            <div className="relative z-10 -mt-6 ml-6 grid max-w-xl grid-cols-2 border border-[#D4C9B0] bg-white shadow-[0_18px_48px_rgba(28,18,8,0.12)] sm:grid-cols-3">
+              {[
+                ["40+", "Co-op partners"],
+                ["100%", "Traceable batches"],
+                ["0", "Broker transfers"],
+              ].map(([value, label]) => (
+                <div key={label} className="border-r border-[#E8E0D2] p-4 last:border-r-0">
+                  <p className="m-0 font-serif text-3xl font-bold leading-none text-[#C4602A]">
+                    {value}
+                  </p>
+                  <p className="m-0 mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#6D6253]">
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Right Column: Authority Narrative & Checklist */}
           <div className="space-y-6 lg:pl-6">
             <div>
               <div className="flex items-center gap-3 mb-3">
@@ -85,25 +97,30 @@ export default function RanchAuthoritySection() {
               In Maa, <em className="text-[#1C1208] font-semibold not-italic">Osotua</em> represents an inviolable covenant of friendship and peace. We bring that sacred standard to modern agriculture — uniting indigenous genetics with rigorous traceability, ethical husbandry, and ecological balance.
             </p>
 
-            {/* Checklist items */}
-            <div className="space-y-3.5 pt-2">
+            <div className="grid gap-3 pt-2">
               {[
                 {
                   title: "100% Direct Pedigree Traceability",
                   desc: "Every animal carries verified lineage back to certified Boran, Bonsmara, and Sahiwal foundation genetics.",
+                  icon: ClipboardCheck,
                 },
                 {
                   title: "Holistic Regenerative Pastures",
                   desc: "Rotational savanna grazing restores native grasses, captures groundwater, and eliminates synthetic inputs.",
+                  icon: Sprout,
                 },
                 {
                   title: "Fair-Trade Outgrower Offtake",
                   desc: "Direct market linkage for 40+ pastoral co-ops, paying premium market-pegged prices without middlemen markups.",
+                  icon: CheckCircle2,
                 },
-              ].map((item) => (
-                <div key={item.title} className="flex items-start gap-3.5">
-                  <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-[2px] bg-[#6B7A3F]/15 text-[#6B7A3F]">
-                    <CheckCircle2 className="h-3.5 w-3.5" />
+              ].map((item) => {
+                const Icon = item.icon;
+
+                return (
+                <div key={item.title} className="grid grid-cols-[44px_1fr] gap-4 border border-[#E8E0D2] bg-white/72 p-4 shadow-sm">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#6B7A3F]/12 text-[#6B7A3F]">
+                    <Icon className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-[#1C1208] m-0">
@@ -114,10 +131,10 @@ export default function RanchAuthoritySection() {
                     </p>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
-            {/* Actions */}
             <div className="flex flex-wrap items-center gap-5 pt-4">
               <Link
                 href="/about"

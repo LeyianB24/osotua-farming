@@ -68,13 +68,6 @@ export default function Navbar({
   }, []);
 
   /*
-   * Close the mobile menu when navigating.
-   */
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  /*
    * Lock background scrolling while the mobile menu is open,
    * manage focus trap, and restore focus on close.
    */

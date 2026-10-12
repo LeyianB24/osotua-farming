@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { useCart } from "@/components/shared/CartContext";
@@ -28,26 +28,68 @@ interface Props {
   categories: CategoryItem[];
 }
 
+type SortOption = "featured" | "price-asc" | "price-desc" | "name-asc";
+
 export default function BarnClient({ initialProducts, categories }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [inStockOnly, setInStockOnly] = useState<boolean>(false);
+  const [sortOption, setSortOption] = useState<SortOption>("featured");
   const { cartCount, cartTotal } = useCart();
 
   const queryTrimmed = searchQuery.trim().toLowerCase();
 
-  const filtered = initialProducts.filter((p) => {
-    const matchCat =
-      selectedCategory === "all" ||
-      p.category.name.toLowerCase() === selectedCategory.toLowerCase() ||
-      p.category.id === selectedCategory;
-    const matchQ =
-      queryTrimmed === "" ||
-      p.name.toLowerCase().includes(queryTrimmed) ||
-      p.category.name.toLowerCase().includes(queryTrimmed);
-    return matchCat && matchQ;
-  });
+  const availableCount = initialProducts.filter((product) => product.inStock).length;
+  const featuredCount = initialProducts.filter((product) => product.featured).length;
+  const categoryCount = categories.length;
 
-  const hasFilters = selectedCategory !== "all" || queryTrimmed !== "";
+  const filtered = useMemo(() => {
+    const products = initialProducts.filter((product) => {
+      const matchCat =
+        selectedCategory === "all" ||
+        product.category.name.toLowerCase() === selectedCategory.toLowerCase() ||
+        product.category.id === selectedCategory;
+      const matchQ =
+        queryTrimmed === "" ||
+        product.name.toLowerCase().includes(queryTrimmed) ||
+        product.category.name.toLowerCase().includes(queryTrimmed);
+      const matchAvailability = !inStockOnly || product.inStock;
+
+      return matchCat && matchQ && matchAvailability;
+    });
+
+    return products.sort((a, b) => {
+      if (sortOption === "price-asc") return a.price - b.price;
+      if (sortOption === "price-desc") return b.price - a.price;
+      if (sortOption === "name-asc") return a.name.localeCompare(b.name);
+
+      if (a.featured !== b.featured) return Number(b.featured) - Number(a.featured);
+      if (a.inStock !== b.inStock) return Number(b.inStock) - Number(a.inStock);
+      return a.name.localeCompare(b.name);
+    });
+  }, [initialProducts, inStockOnly, queryTrimmed, selectedCategory, sortOption]);
+
+  const hasFilters =
+    selectedCategory !== "all" ||
+    queryTrimmed !== "" ||
+    inStockOnly ||
+    sortOption !== "featured";
+
+  const sortLabel =
+    sortOption === "price-asc"
+      ? "Lowest price first"
+      : sortOption === "price-desc"
+      ? "Highest price first"
+      : sortOption === "name-asc"
+      ? "A-Z product name"
+      : "Featured harvest first";
+
+  const resetCatalog = () => {
+    setSelectedCategory("all");
+    setSearchQuery("");
+    setInStockOnly(false);
+    setSortOption("featured");
+  };
 
   return (
     <section className="bg-[#F5F0E8] text-[#1C1208] py-20 sm:py-24 md:py-32 relative">
@@ -118,6 +160,42 @@ export default function BarnClient({ initialProducts, categories }: Props) {
           className="os-panel space-y-6"
           style={{ borderRadius: "2px" }}
         >
+          <div className="grid gap-4 sm:grid-cols-3 border-b border-[#E8E0D2] pb-6">
+            <div className="space-y-1">
+              <div
+                className="text-2xl font-bold text-[#C4602A]"
+                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+              >
+                {availableCount}
+              </div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#5C4A2A]">
+                Available Today
+              </div>
+            </div>
+            <div className="space-y-1 sm:border-l sm:border-[#D4C9B0] sm:pl-5">
+              <div
+                className="text-2xl font-bold text-[#C4602A]"
+                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+              >
+                {featuredCount}
+              </div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#5C4A2A]">
+                Ranch Picks
+              </div>
+            </div>
+            <div className="space-y-1 sm:border-l sm:border-[#D4C9B0] sm:pl-5">
+              <div
+                className="text-2xl font-bold text-[#C4602A]"
+                style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+              >
+                {categoryCount}
+              </div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#5C4A2A]">
+                Pantry Sections
+              </div>
+            </div>
+          </div>
+
           {/* Search row */}
           <div className="relative">
             <i
@@ -141,6 +219,37 @@ export default function BarnClient({ initialProducts, categories }: Props) {
                 <i className="bi bi-x text-base" aria-hidden="true" />
               </button>
             )}
+          </div>
+
+          {/* Availability and sorting controls */}
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(220px,280px)] lg:items-center">
+            <label className="flex min-h-12 items-center gap-3 border border-[#D4C9B0] bg-white px-4 py-3 text-sm text-[#1C1208]">
+              <input
+                type="checkbox"
+                checked={inStockOnly}
+                onChange={(event) => setInStockOnly(event.target.checked)}
+                className="h-4 w-4 accent-[#C4602A]"
+              />
+              <span className="font-semibold">Show only provisions ready for dispatch</span>
+              <span className="ml-auto hidden text-[10px] font-bold uppercase tracking-[0.14em] text-[#8E7E70] sm:inline">
+                {availableCount} in stock
+              </span>
+            </label>
+
+            <label className="grid gap-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#5C4A2A]">
+              Sort pantry
+              <select
+                value={sortOption}
+                onChange={(event) => setSortOption(event.target.value as SortOption)}
+                className="min-h-12 w-full border border-[#D4C9B0] bg-white px-4 py-3 text-sm font-semibold normal-case tracking-normal text-[#1C1208] outline-none transition-all focus:border-[#C99A2E]"
+                style={{ borderRadius: "2px", fontFamily: "var(--font-source-sans), sans-serif" }}
+              >
+                <option value="featured">Featured harvest first</option>
+                <option value="price-asc">Lowest price first</option>
+                <option value="price-desc">Highest price first</option>
+                <option value="name-asc">A-Z product name</option>
+              </select>
+            </label>
           </div>
 
           {/* Category filter pills */}
@@ -188,14 +297,11 @@ export default function BarnClient({ initialProducts, categories }: Props) {
 
             {hasFilters && (
               <button
-                onClick={() => {
-                  setSelectedCategory("all");
-                  setSearchQuery("");
-                }}
+                onClick={resetCatalog}
                 className="text-xs text-[#C4602A] hover:underline ml-auto font-semibold cursor-pointer"
                 style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
               >
-                Reset Filters
+                Reset Browse State
               </button>
             )}
           </div>
@@ -206,7 +312,7 @@ export default function BarnClient({ initialProducts, categories }: Props) {
           <span>
             Showing <strong className="text-[#1C1208]">{filtered.length}</strong> farm provisions
           </span>
-          <span>100% Traceable · Kajiado Pastures</span>
+          <span>{sortLabel} · 100% Traceable · Kajiado Pastures</span>
         </div>
 
         {/* ── PRODUCT GRID ── */}
@@ -232,10 +338,7 @@ export default function BarnClient({ initialProducts, categories }: Props) {
               We could not find any products matching your current filters. Try selecting another category or resetting filters.
             </p>
             <button
-              onClick={() => {
-                setSelectedCategory("all");
-                setSearchQuery("");
-              }}
+              onClick={resetCatalog}
               className="btn-gold"
               style={{ borderRadius: "2px" }}
             >

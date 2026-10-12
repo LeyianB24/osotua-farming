@@ -2,7 +2,51 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  Beef,
+  CalendarDays,
+  Leaf,
+  MapPin,
+  ShieldCheck,
+  Sprout,
+  Truck,
+} from "lucide-react";
 import { useCountUp } from "@/hooks/use-count-up";
+
+const assurances = [
+  {
+    label: "Stud book genetics",
+    icon: BadgeCheck,
+  },
+  {
+    label: "Chemical-free grazing",
+    icon: Leaf,
+  },
+  {
+    label: "Farm-gate delivery",
+    icon: Truck,
+  },
+];
+
+const provenanceNotes = [
+  {
+    title: "Rotational grazing",
+    description: "Low-stress movement across rested Kajiado pasture blocks.",
+    icon: Sprout,
+  },
+  {
+    title: "Verified health records",
+    description: "Pedigree, vaccination, and harvest data kept batch by batch.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Direct ranch supply",
+    description: "Fresh cuts, dairy, and produce shipped without broker handling.",
+    icon: Beef,
+  },
+];
 
 export default function HeroMaster() {
   const { count: acresCount, ref: acresRef } = useCountUp(4200, 1600, 4200);
@@ -10,9 +54,39 @@ export default function HeroMaster() {
   const { count: familiesCount, ref: familiesRef } = useCountUp(127, 1600, 127);
   const { count: yieldCount, ref: yieldRef } = useCountUp(380, 1600, 380);
 
+  const stats = [
+    {
+      value: acresCount.toLocaleString(),
+      suffix: "+",
+      label: "Acres",
+      description: "Rotational pasture blocks",
+      ref: acresRef,
+    },
+    {
+      value: livestockCount.toLocaleString(),
+      suffix: "+",
+      label: "Livestock Head",
+      description: "Boran, Dorper, Sahiwal",
+      ref: livestockRef,
+    },
+    {
+      value: familiesCount.toLocaleString(),
+      suffix: "+",
+      label: "Partner Families",
+      description: "Pastoral co-op offtake",
+      ref: familiesRef,
+    },
+    {
+      value: yieldCount.toLocaleString(),
+      suffix: "+ t",
+      label: "Annual Yield",
+      description: "Beef, mutton, dairy",
+      ref: yieldRef,
+    },
+  ];
+
   return (
     <div className="relative isolate w-full overflow-hidden bg-[#1C1208] text-[#F5F0E8]">
-      {/* ── FULL-BLEED PHOTOGRAPHIC SAVANNA BACKDROP & VIGNETTES ── */}
       <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden" aria-hidden="true">
         <Image
           src="/images/brahmangreen.jpeg"
@@ -23,167 +97,150 @@ export default function HeroMaster() {
           className="object-cover object-center"
         />
 
-        {/* 1. Left-heavy overlay — text perfectly legible on left, rich photography bleeds through on right */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(28,18,8,0.92) 0%, rgba(28,18,8,0.78) 35%, rgba(28,18,8,0.40) 65%, rgba(28,18,8,0.18) 100%)",
-          }}
-        />
-
-        {/* 2. Bottom vignette — seamless transition to bottom stats bar */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(28,18,8,0.96) 0%, rgba(28,18,8,0.35) 20%, transparent 45%)",
-          }}
-        />
-
-        {/* 3. Top vignette — blends behind the fixed navbar */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(28,18,8,0.70) 0%, transparent 28%)",
-          }}
-        />
-
-        {/* 4. Subtle architectural golden drafting grid */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,154,46,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,154,46,0.035)_1px,transparent_1px)] bg-[size:3rem_3rem]"
-        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(28,18,8,0.96)_0%,rgba(28,18,8,0.84)_36%,rgba(28,18,8,0.48)_68%,rgba(28,18,8,0.28)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(28,18,8,0.72)_0%,rgba(28,18,8,0.08)_34%,rgba(28,18,8,0.96)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,154,46,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,154,46,0.035)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem]" />
       </div>
 
-      {/* ── HERO BANNER CONTENT ── */}
-      <section className="relative min-h-[76vh] lg:min-h-[84vh] w-full flex flex-col justify-end pt-20 sm:pt-24 lg:pt-28 pb-20 lg:pb-24">
+      <section className="relative flex min-h-[86vh] w-full flex-col justify-end pt-28 pb-12 sm:pt-32 lg:min-h-[92vh] lg:pb-16">
         <div className="os-container relative z-10 w-full">
-          <div className="max-w-3xl space-y-6" data-reveal data-delay="1">
-            {/* Eyebrow badge matching Figma signature style */}
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-[#C99A2E]" aria-hidden="true" />
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[0px] bg-[#6B7A3F] text-white text-[11px] font-mono font-bold uppercase tracking-[0.16em] shadow-sm">
-                <i className="bi bi-geo-alt-fill text-xs text-white" aria-hidden="true" />
-                <span>KAJIADO COUNTY, KENYA</span>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-end xl:grid-cols-[minmax(0,1fr)_430px]">
+            <div className="max-w-4xl space-y-7" data-reveal data-delay="1">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="h-px w-10 bg-[#C99A2E]" aria-hidden="true" />
+                <div className="inline-flex items-center gap-2 border border-[#C99A2E]/35 bg-[#6B7A3F]/90 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white shadow-sm">
+                  <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span>Kajiado County, Kenya</span>
+                </div>
+                <div className="hidden border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#D4C9B0] backdrop-blur sm:inline-flex">
+                  4,200-acre working ranch
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                <h1
+                  className="m-0 max-w-4xl text-5xl font-bold leading-[1.02] text-[#F5F0E8] sm:text-6xl md:text-7xl lg:text-[82px]"
+                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                >
+                  Pristine livestock
+                  <span className="block text-[#C99A2E]">&amp; farm harvests,</span>
+                  direct from Kajiado.
+                </h1>
+
+                <p
+                  className="m-0 max-w-2xl text-base leading-8 text-[#F5F0E8]/88 sm:text-lg md:text-xl"
+                  style={{ fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif" }}
+                >
+                  Ethical breeding, grass-fed livestock, artisanal dairy, and seasonal
+                  produce from a Kenyan ranch built around traceability, soil health,
+                  and direct supply.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center">
+                <Link
+                  href="/barn"
+                  className="group inline-flex min-h-14 items-center justify-center gap-3 bg-[#C99A2E] px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-[#1C1208] shadow-[0_16px_42px_rgba(201,154,46,0.28)] transition-all hover:bg-[#D9AA3E] hover:translate-y-[-1px] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
+                >
+                  <span>Shop Farm Barn</span>
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+
+                <Link
+                  href="/visit"
+                  className="inline-flex min-h-14 items-center justify-center gap-3 border border-white/35 bg-black/25 px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8] backdrop-blur-sm transition-all hover:border-[#C99A2E] hover:bg-black/40 hover:text-[#C99A2E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
+                >
+                  <CalendarDays className="h-4 w-4" />
+                  <span>Book a Visit</span>
+                </Link>
+              </div>
+
+              <div className="grid gap-3 pt-3 sm:grid-cols-3">
+                {assurances.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <div
+                      key={item.label}
+                      className="flex items-center gap-3 border border-white/10 bg-white/[0.055] px-4 py-3 text-sm font-semibold text-[#F5F0E8] backdrop-blur"
+                    >
+                      <Icon className="h-4 w-4 shrink-0 text-[#C99A2E]" />
+                      <span>{item.label}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Headline: Playfair Display 700 */}
-            <h1
-              className="text-[#F5F0E8] m-0 font-bold tracking-tight text-4xl sm:text-6xl md:text-7xl lg:text-[76px] leading-[1.04]"
-              style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+            <aside
+              className="relative hidden border border-[#C99A2E]/30 bg-[#1C1208]/78 p-5 shadow-2xl backdrop-blur-xl lg:block"
+              data-reveal
+              data-delay="2"
+              aria-label="Osotua ranch provenance"
             >
-              Pristine <br />
-              Livestock <br />
-              <span className="text-[#C99A2E]">&amp; Artisanal</span> <br />
-              Farm Produce
-            </h1>
+              <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#0F0904]">
+                <Image
+                  src="/images/osotua-rangelands-herd.jpg"
+                  alt="Osotua ranch herd moving through open rangelands"
+                  fill
+                  sizes="430px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_20%,rgba(28,18,8,0.84)_100%)]" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="m-0 text-[10px] font-bold uppercase tracking-[0.18em] text-[#C99A2E]">
+                    Today on the ranch
+                  </p>
+                  <p className="m-0 mt-1 text-lg font-bold leading-tight text-white">
+                    Herd checks, pasture rotation, and fresh barn orders.
+                  </p>
+                </div>
+              </div>
 
-            {/* Subtitle */}
-            <p
-              className="text-base sm:text-lg md:text-xl text-[#F5F0E8]/90 max-w-xl leading-relaxed m-0 font-normal"
-              style={{ fontFamily: "var(--font-source-sans), var(--font-jakarta), system-ui, sans-serif" }}
-            >
-              Directly from Kenya&apos;s sun-drenched pastures &mdash; ethical breeding, grass-fed livestock, organic dairy, raw honey.
-            </p>
+              <div className="mt-5 space-y-3">
+                {provenanceNotes.map((note) => {
+                  const Icon = note.icon;
 
-            {/* CTA Buttons — subtitle flows directly into CTAs with exact Figma button sizing */}
-            <div className="flex flex-wrap items-center gap-4 pt-6">
-              <Link
-                href="/barn"
-                className="group inline-flex items-center justify-center rounded-[0px] bg-[#C99A2E] px-8 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-[#1C1208] shadow-[0_0_24px_rgba(201,154,46,0.3)] transition-all hover:bg-[#D9AA3E] hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
-              >
-                <span>EXPLORE FARM BARN</span>
-              </Link>
-
-              <Link
-                href="/breeds"
-                className="inline-flex items-center justify-center rounded-[0px] border border-white/35 bg-black/25 px-8 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8] backdrop-blur-sm transition-all hover:border-[#C99A2E] hover:text-[#C99A2E] hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
-              >
-                <span>VIEW PEDIGREE BREEDS</span>
-              </Link>
-            </div>
+                  return (
+                    <div key={note.title} className="grid grid-cols-[42px_1fr] gap-3 border border-white/10 bg-white/[0.045] p-3">
+                      <div className="flex h-10 w-10 items-center justify-center bg-[#C99A2E]/12 text-[#C99A2E]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h2 className="m-0 text-sm font-bold text-white">{note.title}</h2>
+                        <p className="m-0 mt-1 text-xs leading-5 text-[#D4C9B0]/82">
+                          {note.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      {/* ── STATS STRIP & REASSURANCE BAR (Divided Layout matching Compass Cartage) ── */}
-      <section className="relative z-10 w-full bg-[#1C1208]/75 backdrop-blur-md border-t border-white/10 py-5 sm:py-6">
+      <section className="relative z-10 w-full border-t border-white/10 bg-[#1C1208]/82 py-5 backdrop-blur-md sm:py-6">
         <div className="os-container">
-          <div className="flex flex-wrap items-center justify-between gap-6" data-reveal data-delay="2">
-            {/* Stats with vertical dividers */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 divide-x divide-white/15 w-full lg:w-auto">
-              {/* Stat 1: Acres */}
-              <div className="space-y-1 pl-4 first:pl-0">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-0 md:divide-x md:divide-white/12" data-reveal data-delay="2">
+            {stats.map((stat) => (
+              <div key={stat.label} className="border border-white/10 bg-white/[0.035] p-4 md:border-0 md:bg-transparent md:px-7 md:py-2 md:first:pl-0">
                 <div
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#C99A2E] leading-none"
+                  className="text-3xl font-bold leading-none text-[#C99A2E] sm:text-4xl"
                   style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                 >
-                  <span ref={acresRef}>{acresCount.toLocaleString()}</span>+
+                  <span ref={stat.ref}>{stat.value}</span>
+                  {stat.suffix}
                 </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  Acres
+                <div className="mt-2 text-xs font-bold uppercase tracking-wider text-white">
+                  {stat.label}
                 </div>
-                <div className="text-[11px] text-[#D4C9B0]/70 leading-relaxed">
-                  Chemical-free rotational pastures
-                </div>
-              </div>
-
-              {/* Stat 2: Livestock Head */}
-              <div className="space-y-1 pl-4 sm:pl-6">
-                <div
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#C99A2E] leading-none"
-                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
-                >
-                  <span ref={livestockRef}>{livestockCount}</span>+
-                </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  Livestock Head
-                </div>
-                <div className="text-[11px] text-[#D4C9B0]/70 leading-relaxed">
-                  Dorper, Boran &amp; Dairy Crosses
+                <div className="mt-1 text-[11px] leading-relaxed text-[#D4C9B0]/75">
+                  {stat.description}
                 </div>
               </div>
-
-              {/* Stat 3: Partner Families */}
-              <div className="space-y-1 pl-4 sm:pl-6">
-                <div
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#C99A2E] leading-none"
-                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
-                >
-                  <span ref={familiesRef}>{familiesCount}</span>+
-                </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  Partner Families
-                </div>
-                <div className="text-[11px] text-[#D4C9B0]/70 leading-relaxed">
-                  Direct fair-trade empowerment
-                </div>
-              </div>
-
-              {/* Stat 4: Annual Yield */}
-              <div className="space-y-1 pl-4 sm:pl-6">
-                <div
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#C99A2E] leading-none"
-                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
-                >
-                  <span ref={yieldRef}>{yieldCount}</span>+ t
-                </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  Annual Yield
-                </div>
-                <div className="text-[11px] text-[#D4C9B0]/70 leading-relaxed">
-                  Grass-fed beef, mutton &amp; dairy
-                </div>
-              </div>
-            </div>
-
-
+            ))}
           </div>
         </div>
       </section>
