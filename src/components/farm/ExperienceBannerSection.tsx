@@ -8,8 +8,8 @@ export default function ExperienceBannerSection() {
     <section className="relative w-full py-20 sm:py-24 md:py-28 overflow-hidden text-white" style={{ color: "#F5F0E8" }}>
       {/* Background Image: Pastoral Rangelands Herd */}
       <Image
-        src="/images/osotua-rangelands-herd.jpg"
-        alt="Osotua pastoral rangelands in Kajiado"
+        src="/images/WhatsApp Image 2026-08-10 at 11.55.21.jpeg"
+        alt="Boran stud bull on the open Kajiado rangelands at Osotua Farm"
         fill
         sizes="100vw"
         priority

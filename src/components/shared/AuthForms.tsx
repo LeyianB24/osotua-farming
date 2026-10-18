@@ -40,8 +40,8 @@ export function LoginClient() {
       <div className="relative w-full lg:w-1/2 xl:w-[50%] min-h-[460px] lg:min-h-screen flex flex-col justify-between p-8 sm:p-12 lg:p-16 overflow-hidden">
         {/* Background Image */}
         <Image
-          src="/images/login-rangeland.jpg"
-          alt="Osotua Pasture and Rangelands in Kajiado County"
+          src="/images/WhatsApp Image 2026-08-10 at 11.55.28.jpeg"
+          alt="Osotua farm crop rows at golden hour, Kajiado County"
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
@@ -347,8 +347,8 @@ export function RegisterClient() {
       {/* ── LEFT COLUMN: Savanna Visual & Estate Membership ── */}
       <div className="relative w-full lg:w-1/2 xl:w-[48%] min-h-[380px] lg:min-h-screen flex flex-col justify-between p-8 sm:p-12 lg:p-16 overflow-hidden">
         <Image
-          src="/images/login-rangeland.jpg"
-          alt="Osotua Pasture and Rangelands"
+          src="/images/WhatsApp Image 2026-08-10 at 11.55.28.jpeg"
+          alt="Osotua farm crop rows at golden hour, Kajiado County"
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 48vw"

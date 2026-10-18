@@ -20,7 +20,7 @@ const TOUR_TYPES = [
     pricePerPerson: 2500,
     desc: "Detailed genetic selection walkthrough, stud registry examination, and 1-on-1 session with our head livestock specialist.",
     icon: "bi-shield-check",
-    image: "/images/boran-bull.jpg",
+    image: "/images/boran bulls.jpg",
   },
   {
     id: "school",

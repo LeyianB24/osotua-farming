@@ -36,7 +36,7 @@ const SOCIAL_POSTS: SocialPost[] = [
     channel: "instagram",
     handle: "@osotua_ranches_",
     url: "https://www.instagram.com/osotua_ranches_/",
-    image: "/images/boer-goats.jpg",
+    image: "/images/goats.jpg",
     category: "Goat Studs",
     caption: "Pedigree Boer stud bucks showing incredible heat tolerance and robust conformation.",
   },
