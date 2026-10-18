@@ -34,8 +34,8 @@ const GALLERY_IMAGES = [
 export default function RangelandsGallerySection() {
   return (
     <section
-      className="py-16 sm:py-20 md:py-28 border-y border-[#C99A2E]/15"
-      style={{ backgroundColor: "#110B05" }}
+      className="py-16 sm:py-20 md:py-28 border-y border-[#C99A2E]/15 text-white"
+      style={{ backgroundColor: "#110B05", color: "#F5F0E8" }}
     >
       <div className="os-container">
         {/* Section Title */}
@@ -45,6 +45,7 @@ export default function RangelandsGallerySection() {
             style={{
               fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
               fontWeight: 700,
+              color: "#FFFFFF",
             }}
           >
             Experience Our{" "}
@@ -130,7 +131,7 @@ export default function RangelandsGallerySection() {
           <Link
             href="/visit"
             className="inline-flex items-center gap-2 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white no-underline transition-all hover:opacity-85"
-            style={{ backgroundColor: "#6B7A3F", borderRadius: "2px" }}
+            style={{ backgroundColor: "#6B7A3F", borderRadius: "2px", color: "#FFFFFF" }}
           >
             <i className="bi bi-camera-reels text-xs" aria-hidden="true" />
             <span>DIRECT FROM THE RANGELANDS</span>

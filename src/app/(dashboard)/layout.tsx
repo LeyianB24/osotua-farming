@@ -150,7 +150,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
           <div>
             <div className="px-3 mb-2">
-              <span className="text-[9px] font-mono tracking-[0.22em] text-[#6E5D4B] uppercase font-bold">
+              <span className="text-[9px] font-mono tracking-[0.22em] text-[#A89886] uppercase font-bold">
                 MAIN
               </span>
             </div>
@@ -179,7 +179,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
           <div>
             <div className="px-3 mb-2">
-              <span className="text-[9px] font-mono tracking-[0.22em] text-[#6E5D4B] uppercase font-bold">
+              <span className="text-[9px] font-mono tracking-[0.22em] text-[#A89886] uppercase font-bold">
                 ACCOUNT
               </span>
             </div>
@@ -271,7 +271,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Main Section */}
           <div>
             <div className="px-3 mb-2">
-              <span className="text-[9px] font-mono tracking-[0.22em] text-[#6E5D4B] uppercase font-bold">
+              <span className="text-[9px] font-mono tracking-[0.22em] text-[#A89886] uppercase font-bold">
                 MAIN
               </span>
             </div>
@@ -308,7 +308,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Account Section */}
           <div>
             <div className="px-3 mb-2">
-              <span className="text-[9px] font-mono tracking-[0.22em] text-[#6E5D4B] uppercase font-bold">
+              <span className="text-[9px] font-mono tracking-[0.22em] text-[#A89886] uppercase font-bold">
                 ACCOUNT
               </span>
             </div>

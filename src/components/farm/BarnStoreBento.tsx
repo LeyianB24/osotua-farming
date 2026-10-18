@@ -174,9 +174,9 @@ export default function BarnStoreBento() {
         </div>
 
         <div className="relative mt-12 flex flex-col gap-4 border border-[#D4C9B0] bg-[#1C1208] p-5 text-[#F5F0E8] sm:mt-14 sm:flex-row sm:items-center sm:justify-between">
-          <p className="m-0 text-sm leading-6 text-[#756B5B]">
+          <p className="m-0 text-sm leading-6 text-[#D4C9B0]">
             <span className="font-bold text-white">Good food starts with good farming.</span>{" "}
-            <span className="text-[#D4C9B0]">
+            <span>
               Browse the full barn for weekly boxes, fresh cuts, and seasonal harvests.
             </span>
           </p>

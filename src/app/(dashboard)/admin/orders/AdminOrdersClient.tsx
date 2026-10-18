@@ -98,7 +98,7 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: Or
           <button
             onClick={handleExportCSV}
             className="btn-ghost text-xs py-2 px-3 flex items-center gap-1.5"
-            style={{ color: "#1C1208", borderColor: "rgba(196,136,42,0.3)" }}
+            style={{ color: "#F5EFE4", borderColor: "rgba(196,136,42,0.3)" }}
           >
             <i className="bi bi-file-earmark-spreadsheet" /> Export CSV
           </button>

@@ -33,7 +33,7 @@ export default async function AdminCustomersPage() {
             name:   <span className="font-bold text-[#1A1208]">{c.name ?? "Valued Patron"}</span>,
             email:  <span className="text-xs text-[#7A6C5B]">{c.email}</span>,
             phone:  <span className="text-xs font-mono text-[#7A6C5B]">{c.phone ?? "—"}</span>,
-            orders: <span className="font-mono text-xs font-bold text-[#C58F28]">{c._count.orders}</span>,
+            orders: <span className="font-mono text-xs font-bold text-[#BA5932]">{c._count.orders}</span>,
             role:   <Badge label={c.role} variant="muted" />,
             joined: <span className="text-xs font-mono text-[#7A6C5B]">{new Date(c.createdAt).toLocaleDateString()}</span>,
           }))}

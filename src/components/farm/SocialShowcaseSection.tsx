@@ -97,7 +97,7 @@ export default function SocialShowcaseSection() {
               </span>
             </h2>
             <p
-              className="text-base sm:text-lg text-[#8E7E70] leading-relaxed m-0 font-normal"
+              className="text-base sm:text-lg text-[#5C4A2A] leading-relaxed m-0 font-normal"
               style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
             >
               Witness daily herd movements, newborn purebred calves, veterinary field checks, and dawn harvests directly through our official social media channels.
@@ -192,7 +192,7 @@ export default function SocialShowcaseSection() {
                     {post.title}
                   </h4>
                   <p
-                    className="text-xs text-[#8E7E70] leading-relaxed m-0 line-clamp-2 font-normal"
+                    className="text-xs text-[#5C4A2A] leading-relaxed m-0 line-clamp-2 font-normal"
                     style={{ fontFamily: "var(--font-source-sans), sans-serif" }}
                   >
                     {post.caption}

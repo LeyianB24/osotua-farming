@@ -42,7 +42,7 @@ export default function ShopError({
 
           <Link
             href="/barn"
-            className="w-full sm:w-auto btn-outline-dark py-3 px-6 text-xs flex items-center justify-center gap-2"
+            className="w-full sm:w-auto btn-outline py-3 px-6 text-xs flex items-center justify-center gap-2"
           >
             <i className="bi bi-bag text-sm" />
             <span>The Barn</span>

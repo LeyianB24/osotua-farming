@@ -150,13 +150,10 @@ export default function ProductCard({ product }: Props) {
           type="button"
           onClick={handleAdd}
           disabled={!product.inStock}
-          style={{
-            color: added ? "#ffffff" : "#F5F0E8",
-          }}
           className={`flex w-full cursor-pointer items-center justify-center gap-2 px-4 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] transition-all duration-200 ${
             added
-              ? "bg-[#6B7A3F]"
-              : "bg-[#1C1208] hover:bg-[#C99A2E] hover:[color:#1C1208]"
+              ? "bg-[#6B7A3F] text-white"
+              : "bg-[#1C1208] text-[#F5F0E8] hover:bg-[#C99A2E] hover:text-[#1C1208]"
           } disabled:opacity-50`}
         >
           {added ? (

@@ -185,6 +185,7 @@
    03. RESET AND BASE STYLES
    ========================================================================== */
 
+@layer base {
 *,
 *::before,
 *::after {
@@ -413,6 +414,7 @@ pre {
 
   background: var(--mist);
   border: 1px solid var(--parchment);
+}
 }
 
 .t-hero {
@@ -874,6 +876,7 @@ pre {
 .btn-secondary,
 .btn-terracotta,
 .btn-outline,
+.btn-outline-dark,
 .btn-ghost-dark,
 .btn-ghost,
 .btn-on-dark,
@@ -951,6 +954,7 @@ pre {
 /* Dark outline */
 
 .btn-outline,
+.btn-outline-dark,
 .btn-ghost-dark {
   color: var(--soil);
   background: transparent;
@@ -959,6 +963,7 @@ pre {
 
 @media (hover: hover) and (pointer: fine) {
   .btn-outline:hover,
+  .btn-outline-dark:hover,
   .btn-ghost-dark:hover {
     color: var(--cream);
     background: var(--soil);
@@ -1009,6 +1014,7 @@ pre {
 .btn-secondary:focus-visible,
 .btn-terracotta:focus-visible,
 .btn-outline:focus-visible,
+.btn-outline-dark:focus-visible,
 .btn-ghost-dark:focus-visible,
 .btn-ghost:focus-visible,
 .btn-on-dark:focus-visible,
@@ -1025,6 +1031,7 @@ pre {
 .btn-secondary:disabled,
 .btn-terracotta:disabled,
 .btn-outline:disabled,
+.btn-outline-dark:disabled,
 .btn-ghost-dark:disabled,
 .btn-ghost:disabled,
 .btn-on-dark:disabled,
@@ -2609,6 +2616,7 @@ tbody tr:hover {
   .btn-secondary,
   .btn-terracotta,
   .btn-outline,
+  .btn-outline-dark,
   .btn-ghost-dark,
   .btn-ghost,
   .btn-on-dark,

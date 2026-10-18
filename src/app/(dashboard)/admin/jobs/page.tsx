@@ -42,7 +42,7 @@ export default async function AdminJobsPage() {
             dept:   <span className="text-xs text-[#7A6C5B]">{j.department}</span>,
             type:   <span className="text-xs font-mono uppercase text-[#7A6C5B]">{j.type}</span>,
             loc:    <span className="text-xs text-[#7A6C5B]">{j.location}</span>,
-            apps:   <span className="font-mono text-xs font-bold text-[#C58F28]">{j._count.applications}</span>,
+            apps:   <span className="font-mono text-xs font-bold text-[#BA5932]">{j._count.applications}</span>,
             status: <Badge label={j.isOpen ? "Open" : "Closed"} variant={j.isOpen ? "green" : "muted"} />,
           }))}
           empty="No jobs posted yet."
