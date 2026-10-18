@@ -2106,12 +2106,6 @@ input[type="file"]::file-selector-button {
   color: #A89886 !important;
 }
 
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
 /* Navigation keyboard focus */
 
 .os-navbar a:focus-visible,
