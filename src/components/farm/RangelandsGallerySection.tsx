@@ -6,27 +6,27 @@ import Link from "next/link";
 const GALLERY_IMAGES = [
   {
     src: "/images/WhatsApp Image 2026-08-10 at 11.55.28.jpeg",
-    alt: "Osotua farm crop rows and rangelands, Kajiado County",
-    className: "row-span-2", // tall left column spanning both rows
+    alt: "Osotua farm napier grass and crop rows at golden hour, Kajiado County",
+    className: "row-span-2",
   },
   {
-    src: "/images/osotua-rangelands-herd.jpg",
-    alt: "Aerial view of Osotua purebred Boran herd on Kajiado pastures",
+    src: "/images/WhatsApp Image 2026-08-10 at 11.56.42.jpeg",
+    alt: "Osotua cattle grazing lush Kenyan bush rangelands",
     className: "",
   },
   {
-    src: "/images/ripe tomatoes.jpg",
-    alt: "Fresh organic tomatoes from Osotua farm harvest",
+    src: "/images/chicken 1.jpg",
+    alt: "Free-range farm chickens in covered run at Osotua ranch",
     className: "",
   },
   {
-    src: "/images/WhatsApp Image 2026-08-10 at 11.55.27.jpeg",
-    alt: "Napier grass fodder harvest on Osotua farm",
+    src: "/images/Bee Hive 2.jpg",
+    alt: "Osotua apiary bee hives lined across the ranch meadow",
     className: "",
   },
   {
-    src: "/images/WhatsApp Image 2026-08-10 at 11.55.23.jpeg",
-    alt: "Bonsmara stud bull at Osotua ranch pen",
+    src: "/images/WhatsApp Image 2026-08-10 at 11.55.21.jpeg",
+    alt: "Boran stud bull on Kajiado savanna rangelands",
     className: "",
   },
 ];

@@ -19,7 +19,7 @@ const featuredBreeds: BreedItem[] = [
     id: "boran",
     name: "Boran",
     category: "BEEF CATTLE",
-    image: "/images/boran-bull.jpg",
+    image: "/images/WhatsApp Image 2026-08-10 at 11.55.21.jpeg",
     headCount: "12 head",
     origin: "East Africa (Kenya)",
     purpose: "Beef",

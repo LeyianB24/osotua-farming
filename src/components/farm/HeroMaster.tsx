@@ -180,11 +180,11 @@ export default function HeroMaster() {
             >
               <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#0F0904]">
                 <Image
-                  src="/images/osotua-rangelands-herd.jpg"
-                  alt="Osotua ranch herd moving through open rangelands"
+                  src="/images/WhatsApp Image 2026-08-10 at 11.56.42.jpeg"
+                  alt="Osotua cattle herd grazing the lush Kenyan bush rangelands"
                   fill
                   sizes="430px"
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_20%,rgba(28,18,8,0.84)_100%)]" />
                 <div className="absolute bottom-4 left-4 right-4">
