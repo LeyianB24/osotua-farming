@@ -102,13 +102,13 @@ export default function PartnersClient() {
       {/* ── VISUAL PHOTO FEATURE ── */}
       <section className="bg-[#F5F0E8] pb-12 relative z-10">
         <div className="os-container -translate-y-8 sm:-translate-y-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             <div className="relative aspect-[16/10] rounded-[2px] overflow-hidden shadow-md border border-[#D4C9B0] group bg-[#1C1208]">
               <Image
                 src="/images/cabbage fields.jpeg"
                 alt="Partner cabbage harvest"
                 fill
-                sizes="(min-width: 640px) 33vw, 100vw"
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
@@ -119,15 +119,29 @@ export default function PartnersClient() {
 
             <div className="relative aspect-[16/10] rounded-[2px] overflow-hidden shadow-md border border-[#D4C9B0] group bg-[#1C1208]">
               <Image
-                src="/images/maize sprinkled.jpeg"
-                alt="Irrigated fodder crop"
+                src="/images/chicken 1.jpg"
+                alt="Free-range poultry outgrower flock"
                 fill
-                sizes="(min-width: 640px) 33vw, 100vw"
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase tracking-wider">
-                Precision Irrigation Support
+                Poultry &amp; Egg Producers
+              </div>
+            </div>
+
+            <div className="relative aspect-[16/10] rounded-[2px] overflow-hidden shadow-md border border-[#D4C9B0] group bg-[#1C1208]">
+              <Image
+                src="/images/Bee Hive 2.jpg"
+                alt="Ranch apiary hives"
+                fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 text-white text-xs font-mono font-bold uppercase tracking-wider">
+                Apiary &amp; Honey Partners
               </div>
             </div>
 
@@ -136,7 +150,7 @@ export default function PartnersClient() {
                 src="/images/WhatsApp Image 2026-08-10 at 11.56.45.jpeg"
                 alt="Livestock paddock"
                 fill
-                sizes="(min-width: 640px) 33vw, 100vw"
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />

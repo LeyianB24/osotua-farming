@@ -53,6 +53,10 @@ export default function ProductCard({ product }: Props) {
     ? "VEGETABLES"
     : catUpper.includes("FRUIT")
     ? "FRUITS"
+    : catUpper.includes("POULTRY") || catUpper.includes("CHICKEN") || catUpper.includes("EGG")
+    ? "POULTRY & EGGS"
+    : catUpper.includes("APIARY") || catUpper.includes("HONEY")
+    ? "HONEY & APIARY"
     : catUpper.includes("BOX")
     ? "RANCH BOX"
     : catUpper;

@@ -22,7 +22,9 @@ export default function BreedCard({ breed }: Props) {
         ? "PEDIGREE GOAT"
         : speciesName.includes("SHEEP")
           ? "SAVANNA SHEEP"
-          : speciesName;
+          : speciesName.includes("POULTRY") || speciesName.includes("CHICKEN")
+            ? "FREE-RANGE POULTRY"
+            : speciesName;
 
   const isAvailable = breed.inStock > 0;
 
