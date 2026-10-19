@@ -1,6 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useSyncExternalStore,
+  useCallback,
+  useRef,
+} from "react";
 
 export interface CartItem {
   id: string;
@@ -22,6 +29,7 @@ interface ToastMessage {
 
 interface CartContextType {
   cart: CartItem[];
+  isHydrated: boolean;
   addToCart: (item: Omit<CartItem, "quantity">, qty?: number) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, delta: number) => void;
@@ -35,97 +43,140 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const EMPTY_CART: CartItem[] = [];
+let cachedCartString: string | null = null;
+let cachedCartItems: CartItem[] = EMPTY_CART;
+
+function subscribeToCart(callback: () => void) {
+  const handler = () => callback();
+  window.addEventListener("osotua_cart_change", handler);
+  window.addEventListener("storage", handler);
+  return () => {
+    window.removeEventListener("osotua_cart_change", handler);
+    window.removeEventListener("storage", handler);
+  };
+}
+
+function getCartSnapshot(): CartItem[] {
+  if (typeof window === "undefined") return EMPTY_CART;
+  try {
+    const raw = localStorage.getItem("osotua_cart");
+    if (!raw) {
+      cachedCartString = null;
+      cachedCartItems = EMPTY_CART;
+      return EMPTY_CART;
+    }
+    if (raw === cachedCartString) {
+      return cachedCartItems;
+    }
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      cachedCartString = raw;
+      cachedCartItems = parsed;
+      return cachedCartItems;
+    }
+  } catch {
+    // fallback
+  }
+  return EMPTY_CART;
+}
+
+function getServerCartSnapshot(): CartItem[] {
+  return EMPTY_CART;
+}
+
+function subscribeHydration() {
+  return () => {};
+}
+function getClientHydrationSnapshot() {
+  return true;
+}
+function getServerHydrationSnapshot() {
+  return false;
+}
+
+function persistCart(items: CartItem[]) {
+  try {
+    cachedCartItems = items;
+    cachedCartString = JSON.stringify(items);
+    localStorage.setItem("osotua_cart", cachedCartString);
+    window.dispatchEvent(new CustomEvent("osotua_cart_change"));
+  } catch {
+    // ignore quota/disabled errors
+  }
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const toastIdRef = React.useRef(0);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const toastIdRef = useRef(0);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  // Hydrate cart from localStorage on client mount only
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("osotua_cart");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        queueMicrotask(() => {
-          if (Array.isArray(parsed)) {
-            setCart((current) => current.length > 0 ? current : parsed);
-          }
-          setIsHydrated(true);
-        });
-        return;
-      }
-    } catch {
-      // Ignore
-    }
-    queueMicrotask(() => {
-      setIsHydrated(true);
-    });
+  // Instant zero-lag hydration using React's useSyncExternalStore
+  const cart = useSyncExternalStore(subscribeToCart, getCartSnapshot, getServerCartSnapshot);
+  const isHydrated = useSyncExternalStore(subscribeHydration, getClientHydrationSnapshot, getServerHydrationSnapshot);
+
+  const addToast = useCallback(
+    (title: string, message: string, type: "success" | "info" | "warning" = "success") => {
+      toastIdRef.current += 1;
+      const id = `toast-${toastIdRef.current}`;
+      setToasts((prev) => [...prev, { id, title, message, type }]);
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, 4000);
+    },
+    []
+  );
+
+  const removeToast = useCallback((id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  // Save cart to localStorage on change once hydrated
-  useEffect(() => {
-    if (!isHydrated) return;
-    try {
-      localStorage.setItem("osotua_cart", JSON.stringify(cart));
-    } catch {
-      // Ignore
-    }
-  }, [cart, isHydrated]);
-
-  const addToast = (title: string, message: string, type: "success" | "info" | "warning" = "success") => {
-    toastIdRef.current += 1;
-    const id = `toast-${toastIdRef.current}`;
-    setToasts((prev) => [...prev, { id, title, message, type }]);
-    setTimeout(() => {
-      removeToast(id);
-    }, 4000);
-  };
-
-  const removeToast = (id: string) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  };
-
-  const addToCart = (item: Omit<CartItem, "quantity">, qty = 1) => {
-    setCart((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
+  const addToCart = useCallback(
+    (item: Omit<CartItem, "quantity">, qty = 1) => {
+      const current = getCartSnapshot();
+      const existing = current.find((i) => i.id === item.id);
+      let updated: CartItem[];
       if (existing) {
-        return prev.map((i) =>
+        updated = current.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + qty } : i
         );
+      } else {
+        updated = [...current, { ...item, quantity: qty }];
       }
-      return [...prev, { ...item, quantity: qty }];
-    });
-    addToast("Added to Cart", `${qty}× ${item.name} added to your ranch basket.`, "success");
-  };
+      persistCart(updated);
+      addToast("Added to Cart", `${qty}× ${item.name} added to your ranch basket.`, "success");
+    },
+    [addToast]
+  );
 
-  const removeFromCart = (id: string) => {
-    setCart((prev) => {
-      const item = prev.find((i) => i.id === id);
+  const removeFromCart = useCallback(
+    (id: string) => {
+      const current = getCartSnapshot();
+      const item = current.find((i) => i.id === id);
       if (item) {
         addToast("Removed", `${item.name} removed from cart.`, "info");
       }
-      return prev.filter((i) => i.id !== id);
-    });
-  };
+      persistCart(current.filter((i) => i.id !== id));
+    },
+    [addToast]
+  );
 
-  const updateQuantity = (id: string, delta: number) => {
-    setCart((prev) =>
-      prev
-        .map((i) => {
-          if (i.id === id) {
-            const newQty = i.quantity + delta;
-            return newQty > 0 ? { ...i, quantity: newQty } : null;
-          }
-          return i;
-        })
-        .filter(Boolean) as CartItem[]
-    );
-  };
+  const updateQuantity = useCallback((id: string, delta: number) => {
+    const current = getCartSnapshot();
+    const updated = current
+      .map((i) => {
+        if (i.id === id) {
+          const newQty = i.quantity + delta;
+          return newQty > 0 ? { ...i, quantity: newQty } : null;
+        }
+        return i;
+      })
+      .filter(Boolean) as CartItem[];
+    persistCart(updated);
+  }, []);
 
-  const clearCart = () => {
-    setCart([]);
-  };
+  const clearCart = useCallback(() => {
+    persistCart([]);
+  }, []);
 
   const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
   const cartTotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
@@ -134,6 +185,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     <CartContext.Provider
       value={{
         cart,
+        isHydrated,
         addToCart,
         removeFromCart,
         updateQuantity,

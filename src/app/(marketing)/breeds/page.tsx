@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma"
 import BreedsClient from "@/components/farm/BreedsClient"
 import PageHero from "@/components/farm/PageHero"
 import Slideshow from "@/components/shared/Slideshow"
+import ConservationSection from "@/components/farm/ConservationSection"
 import { HERD_FIELD, LIVESTOCK_SLIDESHOW } from "@/lib/images"
 
 export const metadata = {
@@ -79,6 +80,9 @@ export default async function BreedsPage() {
       <div id="breeds-catalog">
         <BreedsClient initialBreeds={breeds} speciesList={species} />
       </div>
+
+      {/* ── CONSERVATION & WILDLIFE STEWARDSHIP ── */}
+      <ConservationSection />
     </div>
   )
 }

@@ -79,6 +79,9 @@ function CheckoutContent() {
     setStep("payment");
   };
 
+  const [confirmedCart, setConfirmedCart] = useState<typeof cart>([]);
+  const [confirmedTotal, setConfirmedTotal] = useState<number>(0);
+
   const handleCompleteOrder = async () => {
     setIsProcessing(true);
     setErrorMsg("");
@@ -110,12 +113,18 @@ function CheckoutContent() {
       });
 
       if (!res.ok) {
-        throw new Error("Order creation failed on server.");
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Order creation failed on server.");
       }
 
       const orderData = await res.json();
-      setOrderRef(orderData.order?.orderNumber || generatedRef);
-      setOrderId(orderData.order?.id || "");
+      const actualOrderId = orderData.id || orderData.order?.id || "";
+      const actualOrderRef = orderData.paymentRef || orderData.orderNumber || generatedRef;
+
+      setOrderRef(actualOrderRef);
+      setOrderId(actualOrderId);
+      setConfirmedCart([...cart]);
+      setConfirmedTotal(grandTotal);
       clearCart();
       setStep("confirmed");
 
@@ -123,35 +132,67 @@ function CheckoutContent() {
       if (paymentMethod === "mpesa") {
         setMpesaPollingStatus("sent");
         try {
+          const targetPhone = mpesaPhone || phone;
           const mpesaRes = await fetch("/api/payments/mpesa", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              phone: mpesaPhone || phone,
-              orderId: orderData.order?.id,
+              phone: targetPhone,
+              orderId: actualOrderId,
             }),
           });
-          if (!mpesaRes.ok) throw new Error("M-Pesa request failed");
+          const mpesaData = await mpesaRes.json();
+          if (!mpesaRes.ok || (mpesaData.ResponseCode && mpesaData.ResponseCode !== "0")) {
+            throw new Error(
+              mpesaData.errorMessage ||
+              mpesaData.CustomerMessage ||
+              mpesaData.ResponseDescription ||
+              mpesaData.error ||
+              "M-Pesa prompt could not be initiated"
+            );
+          }
           setMpesaPollingStatus("waiting_pin");
-          setTimeout(() => {
-            setMpesaPollingStatus("confirmed");
-          }, 6000);
-        } catch {
-          setErrorMsg("The order was created, but the M-Pesa prompt could not be sent. Please contact support with your order reference.");
+
+          // Poll for payment confirmation
+          let pollCount = 0;
+          const pollInterval = setInterval(async () => {
+            pollCount++;
+            if (pollCount > 25) {
+              clearInterval(pollInterval);
+              return;
+            }
+            try {
+              const statusRes = await fetch(`/api/payments/mpesa/status?orderId=${actualOrderId}`);
+              if (statusRes.ok) {
+                const statusData = await statusRes.json();
+                if (statusData.isPaid) {
+                  setMpesaPollingStatus("confirmed");
+                  clearInterval(pollInterval);
+                }
+              }
+            } catch {
+              // Ignore polling network glitches
+            }
+          }, 3000);
+        } catch (mpesaErr: unknown) {
+          console.error("M-Pesa STK dispatch failed:", mpesaErr);
+          const msg = mpesaErr instanceof Error ? mpesaErr.message : "The order was created, but the M-Pesa prompt could not be sent. Please contact support with your order reference.";
+          setErrorMsg(msg);
         }
       } else if (paymentMethod === "card") {
         const stripeRes = await fetch("/api/payments/stripe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ orderId: orderData.order?.id }),
+          body: JSON.stringify({ orderId: actualOrderId }),
         });
         if (!stripeRes.ok) {
           setErrorMsg("The order was created, but Stripe could not start the card payment. Please contact support with your order reference.");
         }
       }
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
-      setErrorMsg("Unable to process your order. Please check your details and try again.");
+      const msg = err instanceof Error ? err.message : "Unable to process your order. Please check your details and try again.";
+      setErrorMsg(msg);
     } finally {
       setIsProcessing(false);
     }
@@ -527,12 +568,14 @@ function CheckoutContent() {
                 >
                   Order Summary
                 </h3>
-                <span className="font-mono text-xs text-[#6B7A3F] font-bold">{cart.length} items</span>
+                <span className="font-mono text-xs text-[#6B7A3F] font-bold">
+                  {step === "confirmed" ? confirmedCart.length : cart.length} items
+                </span>
               </div>
 
               {/* Cart List */}
               <div className="divide-y divide-[#D4C9B0]/60 max-h-72 overflow-y-auto pr-1">
-                {cart.map((item) => (
+                {(step === "confirmed" ? confirmedCart : cart).map((item) => (
                   <div key={item.id} className="py-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="w-10 h-10 rounded-[2px] bg-[#1C1208] border border-[#D4C9B0] relative overflow-hidden shrink-0 flex items-center justify-center text-[#C99A2E]">
@@ -560,7 +603,9 @@ function CheckoutContent() {
               <div className="pt-4 border-t border-[#D4C9B0] space-y-2 text-xs">
                 <div className="flex justify-between text-[#5C4A2A]">
                   <span>Subtotal</span>
-                  <span className="font-mono font-bold text-[#1C1208]">KES {cartTotal.toLocaleString()}</span>
+                  <span className="font-mono font-bold text-[#1C1208]">
+                    KES {(step === "confirmed" ? confirmedTotal : cartTotal).toLocaleString()}
+                  </span>
                 </div>
                 <div className="flex justify-between text-[#5C4A2A]">
                   <span>Refrigerated Delivery</span>
@@ -574,7 +619,7 @@ function CheckoutContent() {
                     Total Amount
                   </span>
                   <span className="font-mono text-xl font-bold text-[#C4602A]">
-                    KES {grandTotal.toLocaleString()}
+                    KES {(step === "confirmed" ? confirmedTotal : grandTotal).toLocaleString()}
                   </span>
                 </div>
               </div>

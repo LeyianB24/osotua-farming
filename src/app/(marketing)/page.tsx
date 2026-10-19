@@ -1,12 +1,27 @@
+import { prisma } from "@/lib/prisma";
 import HeroMaster from "@/components/farm/HeroMaster";
 import RanchAuthoritySection from "@/components/farm/RanchAuthoritySection";
 import WhatWeAreBento from "@/components/farm/WhatWeAreBento";
 import BarnStoreBento from "@/components/farm/BarnStoreBento";
 import PastoralStandardsTimeline from "@/components/farm/PastoralStandardsTimeline";
 import ExperienceBannerSection from "@/components/farm/ExperienceBannerSection";
+import ConservationSection from "@/components/farm/ConservationSection";
 import RangelandsGallerySection from "@/components/farm/RangelandsGallerySection";
 import SocialShowcaseSection from "@/components/farm/SocialShowcaseSection";
 import BrandQuoteSection from "@/components/farm/BrandQuoteSection";
+
+async function getFeaturedBreeds() {
+  try {
+    return await prisma.breed.findMany({
+      where: { featured: true },
+      include: { species: true },
+      orderBy: { pricePerHead: "desc" },
+      take: 6,
+    });
+  } catch {
+    return [];
+  }
+}
 
 export const metadata = {
   title: {
@@ -27,7 +42,9 @@ export const metadata = {
   ],
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredBreeds = await getFeaturedBreeds();
+
   return (
     <div className="w-full overflow-x-hidden bg-[#FAF7F2]">
 
@@ -38,7 +55,7 @@ export default function HomePage() {
       <RanchAuthoritySection />
 
       {/* ── 03. PEDIGREE LIVESTOCK: 3 Cards Matrix (Modeled after Compass Cartage FeaturedServicesMatrix) ── */}
-      <WhatWeAreBento />
+      <WhatWeAreBento initialBreeds={featuredBreeds} />
 
       {/* ── 04. THE FARM BARN & HARVEST PANTRY: 6 Provisions Grid · Add to Basket ── */}
       <BarnStoreBento />
@@ -49,7 +66,10 @@ export default function HomePage() {
       {/* ── 06. EXPERIENCE OSOTUA: Guided Pastoral Tours Banner ── */}
       <ExperienceBannerSection />
 
-      {/* ── 07. EXPERIENCE OUR RANGELANDS: Photographic Gallery Strip ── */}
+      {/* ── 07. CONSERVATION & WILDLIFE: Livestock & Wildlife Living as One ── */}
+      <ConservationSection />
+
+      {/* ── 08. EXPERIENCE OUR RANGELANDS: Photographic Gallery Strip ── */}
       <RangelandsGallerySection />
 
       {/* ── 08. OFFICIAL SOCIAL SHOWCASE: Instagram & TikTok Feed ── */}
