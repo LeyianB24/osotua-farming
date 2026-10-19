@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
+import { imageForCategory } from "@/lib/images"
 
 const categoryIcons: Record<string, string> = {
   "Beef Cuts": "bi-shield-check",
@@ -12,6 +13,8 @@ const categoryIcons: Record<string, string> = {
   "Ranch Box": "bi-box-seam-fill",
   "Goat Meat": "bi-shield-check",
   "Sheep Meat": "bi-shield-check",
+  "Poultry & Eggs": "bi-egg-fill",
+  "Honey & Apiary": "bi-flower2",
 }
 
 export async function generateMetadata({
@@ -50,6 +53,7 @@ export default async function ProductDetailPage({
   if (!product) notFound()
 
   const iconClass = categoryIcons[product.category.name] || "bi-flower1"
+  const imageSrc = product.image ?? imageForCategory(product.category.name)
 
   return (
     <div className="w-full min-h-screen bg-[#F5F0E8] text-[#1C1208] pt-28 pb-24">
@@ -64,10 +68,10 @@ export default async function ProductDetailPage({
 
         <div className="bg-[#FAF7F2] border border-[#D4C9B0] rounded-[2px] p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 shadow-sm">
           {/* Media */}
-          {product.image ? (
+          {imageSrc ? (
             <div className="relative h-80 lg:h-[26rem] bg-[#1C1208] border border-[#D4C9B0] rounded-[2px] overflow-hidden">
               <Image
-                src={product.image}
+                src={imageSrc}
                 alt={product.name}
                 fill
                 sizes="(min-width: 1024px) 480px, 100vw"

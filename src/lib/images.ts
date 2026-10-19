@@ -237,6 +237,26 @@ export const LIVESTOCK_SLIDESHOW: { src: string; label: string }[] = [
   { src: img("Bee Hive 5.jpg"), label: "Apiary Harvest Setup" },
 ]
 
+// ── Dedicated Artisan Pantry Collections ────────────────────
+export const GHEE_HERO = img("Ghee 1.jpg")
+export const TALLOW_HERO = img("Beef Tallow 1.jpg")
+
+export const GHEE_GALLERY: string[] = [
+  img("Ghee 1.jpg"),
+  img("Ghee 2.jpg"),
+  img("Ghee 3.jpg"),
+  img("Ghee 4.jpg"),
+  img("Ghee 5.jpg"),
+]
+
+export const TALLOW_GALLERY: string[] = [
+  img("Beef Tallow 1.jpg"),
+  img("Beef Tallow 2.jpg"),
+  img("Tallow 1.jpg"),
+  img("Tallow 2.jpg"),
+  img("Tallow 3.jpg"),
+]
+
 export function imageForBreed(name: string, species?: string): string | null {
   const key = name.toLowerCase()
   if (BREED_IMAGES[key]) return BREED_IMAGES[key]
@@ -245,5 +265,13 @@ export function imageForBreed(name: string, species?: string): string | null {
 }
 
 export function imageForCategory(name: string): string | null {
-  return CATEGORY_IMAGES[name] ?? null
+  if (!name) return null
+  if (CATEGORY_IMAGES[name]) return CATEGORY_IMAGES[name]
+  const lower = name.toLowerCase()
+  for (const [k, v] of Object.entries(CATEGORY_IMAGES)) {
+    if (k.toLowerCase() === lower) return v
+  }
+  if (lower.includes("ghee")) return CATEGORY_IMAGES["Ghee"]
+  if (lower.includes("tallow")) return CATEGORY_IMAGES["Beef Tallow"]
+  return null
 }

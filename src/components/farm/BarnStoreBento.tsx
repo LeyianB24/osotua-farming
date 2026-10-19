@@ -39,6 +39,26 @@ const pantryProducts: PantryProduct[] = [
     category: { name: "Dairy Products" },
   },
   {
+    id: "artisan-maasai-ghee",
+    slug: "artisan-maasai-ghee",
+    name: "Artisan Maasai Ghee",
+    price: 950,
+    unit: "350g jar",
+    image: "/images/Ghee 1.jpg",
+    inStock: true,
+    category: { name: "Dairy Products" },
+  },
+  {
+    id: "pure-grass-fed-beef-tallow",
+    slug: "pure-grass-fed-beef-tallow",
+    name: "Grass-Fed Beef Tallow",
+    price: 850,
+    unit: "500ml jar",
+    image: "/images/Beef Tallow 1.jpg",
+    inStock: true,
+    category: { name: "Beef Cuts" },
+  },
+  {
     id: "free-range-chicken",
     slug: "free-range-chicken",
     name: "Free-Range Farm Chicken",
@@ -167,7 +187,7 @@ export default function BarnStoreBento() {
           </div>
         </div>
 
-        <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:grid-cols-3 lg:gap-8">
+        <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:grid-cols-4 lg:gap-6">
           {pantryProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

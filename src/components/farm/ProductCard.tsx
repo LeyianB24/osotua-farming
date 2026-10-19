@@ -43,7 +43,12 @@ export default function ProductCard({ product }: Props) {
   };
 
   const catUpper = product.category.name.toUpperCase();
-  const badgeLabel = catUpper.includes("BEEF")
+  const nameUpper = product.name.toUpperCase();
+  const badgeLabel = nameUpper.includes("TALLOW") || catUpper.includes("TALLOW")
+    ? "RANCH TALLOW"
+    : nameUpper.includes("GHEE") || catUpper.includes("GHEE")
+    ? "ARTISAN GHEE"
+    : catUpper.includes("BEEF")
     ? "BEEF CUTS"
     : catUpper.includes("DAIRY") || catUpper.includes("MILK")
     ? "DAIRY PRODUCTS"
