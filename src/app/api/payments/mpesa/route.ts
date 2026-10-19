@@ -47,6 +47,17 @@ export async function POST(req: Request) {
       accountRef: sanitizedAccountRef,
     })
 
+    if (result?.errorCode || (result?.ResponseCode && result.ResponseCode !== "0")) {
+      const errorMessage =
+        result?.errorMessage ||
+        result?.ResponseDescription ||
+        "M-Pesa request was rejected by Safaricom"
+      return NextResponse.json(
+        { error: errorMessage, ...result },
+        { status: 400 }
+      )
+    }
+
     if (result?.CheckoutRequestID) {
       await prisma.order.update({
         where: { id: orderId },

@@ -142,12 +142,12 @@ function CheckoutContent() {
             }),
           });
           const mpesaData = await mpesaRes.json();
-          if (!mpesaRes.ok || (mpesaData.ResponseCode && mpesaData.ResponseCode !== "0")) {
+          if (!mpesaRes.ok || mpesaData.errorCode || (mpesaData.ResponseCode && mpesaData.ResponseCode !== "0")) {
             throw new Error(
               mpesaData.errorMessage ||
+              mpesaData.error ||
               mpesaData.CustomerMessage ||
               mpesaData.ResponseDescription ||
-              mpesaData.error ||
               "M-Pesa prompt could not be initiated"
             );
           }

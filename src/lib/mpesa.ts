@@ -64,11 +64,17 @@ export async function stkPush({
   const timestamp = getMpesaTimestamp()
   const password = Buffer.from(`${shortcode}${passkey}${timestamp}`).toString("base64")
 
-  const appUrl =
+  let baseAppUrl =
     process.env.NEXT_PUBLIC_APP_URL ||
     process.env.NEXTAUTH_URL ||
     "https://osotua-farming.vercel.app"
-  const callbackUrl = `${appUrl}/api/payments/mpesa/callback`
+
+  baseAppUrl = baseAppUrl.replace(/\/+$/, "")
+  if (baseAppUrl.startsWith("http://") || baseAppUrl.includes("localhost") || baseAppUrl.includes("127.0.0.1")) {
+    baseAppUrl = "https://osotua-farming.vercel.app"
+  }
+
+  const callbackUrl = `${baseAppUrl}/api/payments/mpesa/callback`
 
   const formattedPhone = formatMpesaPhone(phone)
 
