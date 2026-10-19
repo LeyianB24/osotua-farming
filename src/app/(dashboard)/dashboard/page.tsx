@@ -27,12 +27,22 @@ export default async function MemberDashboardPage() {
     take: 6,
   }).catch(() => [])
 
+  const rawRole = (session.user as { role?: string })?.role
+  const displayRole =
+    rawRole === "ADMIN"
+      ? "Estate Administrator"
+      : rawRole === "PARTNER_FARMER"
+      ? "Partner Farmer"
+      : rawRole === "INVESTOR"
+      ? "Ranch Investor"
+      : "Ranch Patron"
+
   return (
     <ExecutiveDashboardView
       user={{
-        name: session.user.name || "Kamau Achola",
-        email: session.user.email || "kamau@osotuafarming.co.ke",
-        role: (session.user as { role?: string })?.role || "Ranch Manager",
+        name: session.user.name || "Estate Patron",
+        email: session.user.email || "patron@osotuafarming.co.ke",
+        role: displayRole,
       }}
       orders={orders.map((o) => ({
         id: o.id,
@@ -42,7 +52,7 @@ export default async function MemberDashboardPage() {
         items: o.items.map((i) => ({
           name: i.breed?.name || i.product?.name || "Boran Sirloin Steak",
         })),
-        customerName: session.user?.name || "Aisha M.",
+        customerName: session.user?.name || "Estate Patron",
       }))}
     />
   )

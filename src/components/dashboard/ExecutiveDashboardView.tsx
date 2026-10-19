@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
 
 interface OrderItem {
@@ -145,9 +146,19 @@ export default function ExecutiveDashboardView({
     window.dispatchEvent(new Event("osotua_avatar_updated"))
   }
 
-  // Use "Kamau" to match the exact design screenshot
-  const firstName = "Kamau"
-  const userInitials = "KA"
+  const pathname = usePathname()
+  const isAdmin = pathname?.startsWith("/admin")
+
+  // Use authenticated user's name if available, fallback to design reference
+  const firstName = user?.name ? user.name.split(" ")[0] : "Kamau"
+  const userInitials = user?.name
+    ? user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase()
+    : "KA"
 
   // Merge real orders if present, otherwise default to high-fidelity reference orders
   const displayOrders: OrderItem[] =
@@ -203,10 +214,10 @@ export default function ExecutiveDashboardView({
             className="font-bold text-[#1A1208] tracking-tight whitespace-nowrap"
             style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "28px", lineHeight: "1.2" }}
           >
-            Good morning, {firstName}.
+            {isAdmin ? `Admin HQ — Good morning, ${firstName}.` : `Good morning, ${firstName}.`}
           </h1>
           <p className="text-xs text-[#7A6C5B] mt-1 font-medium">
-            Thursday, 10 September 2026 &bull; Kajiado County
+            {isAdmin ? "Estate Administrator Console • Kajiado County" : "Member Command Center • Osotua Farming"}
           </p>
         </div>
 
@@ -295,8 +306,10 @@ export default function ExecutiveDashboardView({
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="font-bold text-sm text-[#1A1208] truncate">Kamau Achola</div>
-                    <div className="text-[11px] text-[#7A6C5B] font-mono uppercase">Ranch Manager</div>
+                    <div className="font-bold text-sm text-[#1A1208] truncate">{user?.name || "Kamau Achola"}</div>
+                    <div className="text-[11px] text-[#7A6C5B] font-mono uppercase">
+                      {user?.role || (isAdmin ? "Estate Administrator" : "Ranch Patron")}
+                    </div>
                   </div>
                 </div>
 
@@ -627,10 +640,10 @@ export default function ExecutiveDashboardView({
           <div className="pt-6">
             <div className="h-[2px] bg-[#D4A045] w-full mb-6" />
             <Link
-              href="/admin/visits"
+              href={isAdmin ? "/admin/visits" : "/visit"}
               className="font-mono text-xs font-bold tracking-[0.18em] text-[#D4A045] hover:text-[#FAF7F2] transition-colors flex items-center justify-center gap-2 uppercase"
             >
-              <span>VIEW FULL REPORT</span>
+              <span>{isAdmin ? "VIEW FULL REPORT" : "PLAN A RANCH VISIT"}</span>
               <i className="bi bi-arrow-right text-xs" />
             </Link>
           </div>
@@ -643,7 +656,7 @@ export default function ExecutiveDashboardView({
         <div className="flex items-center justify-between mb-5">
           <div>
             <div className="font-mono text-[10px] tracking-[0.18em] uppercase text-[#7A6C5B] font-bold">
-              RECENT ORDERS
+              {isAdmin ? "RECENT ORDERS" : "MY RECENT ORDERS"}
             </div>
             <h2
               className="font-bold text-[#1A1208] mt-0.5"
@@ -653,7 +666,7 @@ export default function ExecutiveDashboardView({
             </h2>
           </div>
           <Link
-            href="/admin/orders"
+            href={isAdmin ? "/admin/orders" : "/dashboard/orders"}
             className="border border-[#DDD4C4] hover:bg-[#F7F3EA] text-[#5C4A2A] font-mono text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-[2px] transition-colors"
           >
             VIEW ALL

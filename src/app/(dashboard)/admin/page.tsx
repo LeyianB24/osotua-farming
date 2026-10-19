@@ -28,8 +28,8 @@ export default async function AdminPage() {
     <ExecutiveDashboardView
       user={{
         name: session?.user?.name || "Kamau Achola",
-        email: session?.user?.email || "kamau@osotuafarming.co.ke",
-        role: "Ranch Manager",
+        email: session?.user?.email || "admin@osotuafarming.co.ke",
+        role: "Estate Administrator",
       }}
       stats={{
         totalLivestock: breeds > 0 ? breeds * 50 : 850,
