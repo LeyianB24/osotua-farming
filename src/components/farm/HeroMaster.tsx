@@ -180,8 +180,8 @@ export default function HeroMaster() {
             >
               <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#0F0904]">
                 <Image
-                  src="/images/WhatsApp Image 2026-08-10 at 11.56.42.jpeg"
-                  alt="Osotua cattle herd grazing the lush Kenyan bush rangelands"
+                  src="/images/WhatsApp Image 2026-08-10 at 11.55.27.jpeg"
+                  alt="Osotua cattle herd on the open Kajiado rangelands at golden hour"
                   fill
                   sizes="430px"
                   className="object-cover object-center"
