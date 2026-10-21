@@ -6,7 +6,6 @@ import Link from "next/link";
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const year = new Date().getFullYear();
 
   async function handleSubscribe(e: React.FormEvent) {
     e.preventDefault();
@@ -306,8 +305,8 @@ export default function Footer() {
 
           {/* Bottom Copyright Bar */}
           <div className="border-t border-white/10 pt-8 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#B5A494]/60">
-            <div>
-              &copy; {year} Osotua Farming. All rights reserved.
+            <div suppressHydrationWarning>
+              &copy; {new Date().getFullYear()} Osotua Farming. All rights reserved.
             </div>
             <div className="flex items-center gap-6 flex-wrap">
               <Link href="/about" className="hover:text-white transition-colors no-underline">
