@@ -208,15 +208,19 @@ export default function Footer() {
               >
                 QUICK LINKS
               </div>
-              <nav className="flex flex-col gap-3" aria-label="Quick links">
+              <nav className="flex flex-col gap-2.5" aria-label="Quick links">
                 {[
-                  { label: "Our Story", href: "/about" },
-                  { label: "The Barn", href: "/barn" },
-                  { label: "Breeding Programme", href: "/breeds" },
-                  { label: "Ranch Visits", href: "/visit" },
+                  { label: "Our Story & Heritage", href: "/about" },
+                  { label: "Ranch Photo Archive", href: "/about#gallery" },
+                  { label: "The Farm Barn Store", href: "/barn" },
+                  { label: "Pedigree Livestock", href: "/breeds" },
+                  { label: "Conservation & Wildlife", href: "/about#conservation" },
+                  { label: "Guided Ranch Visits", href: "/visit" },
                   { label: "Invest with Us", href: "/invest" },
-                  { label: "Blog", href: "/blog" },
-                  { label: "Partners", href: "/partners" },
+                  { label: "Ranch Stories & Blog", href: "/blog" },
+                  { label: "Partner Farmers", href: "/partners" },
+                  { label: "Farm Careers", href: "/careers" },
+                  { label: "Contact Desk", href: "/contact" },
                 ].map((l) => (
                   <Link
                     key={l.label}
@@ -238,15 +242,16 @@ export default function Footer() {
               >
                 LIVESTOCK CATALOGUE
               </div>
-              <nav className="flex flex-col gap-3" aria-label="Livestock catalogue">
+              <nav className="flex flex-col gap-2.5" aria-label="Livestock catalogue">
                 {[
-                  { label: "Boran Beef Cattle", href: "/breeds" },
-                  { label: "Bonsmara Bulls", href: "/breeds" },
-                  { label: "Sahiwal Dairy Cows", href: "/breeds" },
-                  { label: "Boer Goats", href: "/breeds" },
-                  { label: "Galla × Boer Crosses", href: "/breeds" },
-                  { label: "Dorper Sheep", href: "/breeds" },
-                  { label: "Red Maasai × Dorper", href: "/breeds" },
+                  { label: "Boran Beef Cattle", href: "/breeds?species=Beef+Cattle&q=Boran" },
+                  { label: "Bonsmara Bulls", href: "/breeds?species=Beef+Cattle&q=Bonsmara" },
+                  { label: "Sahiwal Dairy Cows", href: "/breeds?species=Dairy+Cattle" },
+                  { label: "Boer Meat Goats", href: "/breeds?species=Goats&q=Boer" },
+                  { label: "Galla Desert Goats", href: "/breeds?species=Goats&q=Galla" },
+                  { label: "Dorper Fat-Tailed Sheep", href: "/breeds?species=Sheep&q=Dorper" },
+                  { label: "Red Maasai Crosses", href: "/breeds?species=Sheep&q=Red+Maasai" },
+                  { label: "Improved Kienyeji Poultry", href: "/breeds?species=Poultry" },
                 ].map((l) => (
                   <Link
                     key={l.label}
@@ -270,11 +275,11 @@ export default function Footer() {
               </div>
               <div className="flex flex-col gap-4 text-[13px] leading-relaxed text-[#B5A494]" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
                 <a
-                  href="tel:+254700000000"
+                  href="tel:+254755758208"
                   className="flex items-center gap-3 text-[#B5A494] hover:text-[#C99A2E] transition-colors no-underline group"
                 >
                   <i className="bi bi-telephone text-sm text-[#C99A2E]" aria-hidden="true" />
-                  <span>+254 700 000 000</span>
+                  <span>+254 755 758 208</span>
                 </a>
 
                 <a
@@ -287,7 +292,7 @@ export default function Footer() {
 
                 <div className="flex items-center gap-3 text-[#B5A494]">
                   <i className="bi bi-clock text-sm text-[#C99A2E]" aria-hidden="true" />
-                  <span>Mon–Sat, 8:00am–5:00pm</span>
+                  <span>Mon–Sat, 7:00am–6:00pm EAT</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-[#B5A494]">
@@ -304,12 +309,21 @@ export default function Footer() {
             <div>
               &copy; {year} Osotua Farming. All rights reserved.
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 flex-wrap">
               <Link href="/about" className="hover:text-white transition-colors no-underline">
                 About Us
               </Link>
+              <Link href="/about#gallery" className="hover:text-white transition-colors no-underline">
+                Photo Gallery
+              </Link>
               <Link href="/barn" className="hover:text-white transition-colors no-underline">
                 The Barn
+              </Link>
+              <Link href="/breeds" className="hover:text-white transition-colors no-underline">
+                Pedigree Breeds
+              </Link>
+              <Link href="/about#conservation" className="hover:text-white transition-colors no-underline">
+                Wildlife Conservation
               </Link>
               <Link href="/contact" className="hover:text-white transition-colors no-underline">
                 Contact

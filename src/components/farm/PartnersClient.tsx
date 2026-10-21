@@ -47,11 +47,18 @@ export default function PartnersClient() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    const data = Object.fromEntries(new FormData(e.currentTarget))
+    const raw = Object.fromEntries(new FormData(e.currentTarget))
+    const payload = {
+      fullName: String(raw.fullName || "").trim(),
+      email: String(raw.email || "").trim(),
+      phone: String(raw.phone || "").trim(),
+      location: String(raw.location || "").trim(),
+      supplyType: String(raw.supplyType || raw.produceType || SUPPLY_OPTIONS[0]).trim(),
+    }
     try {
       const res = await fetch("/api/partners", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" },
       })
       if (!res.ok) {
@@ -263,10 +270,19 @@ export default function PartnersClient() {
                     <p className="text-sm text-[#5C4A2A] max-w-md mx-auto leading-relaxed">
                       Thank you for applying to join the Osotua Outgrower Network. An agronomist from our Kajiado hub will review your farm profile and contact you within 48 hours for a field assessment.
                     </p>
-                    <div className="pt-4">
+                    <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+                      <a
+                        href="https://wa.me/254755758208?text=Hello%20Osotua%2C%20I%20have%20submitted%20my%20partner%20farmer%20application"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-gold text-xs flex items-center gap-2"
+                      >
+                        <i className="bi bi-whatsapp" />
+                        <span>Chat with Outgrower Desk</span>
+                      </a>
                       <button
                         onClick={() => setSubmitted(false)}
-                        className="btn-gold"
+                        className="btn-outline text-xs"
                       >
                         Submit Another Application
                       </button>
@@ -355,7 +371,7 @@ export default function PartnersClient() {
                           Primary Produce / Supply *
                         </label>
                         <select
-                          name="produceType"
+                          name="supplyType"
                           required
                           className="os-input"
                         >

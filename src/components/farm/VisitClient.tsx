@@ -256,10 +256,22 @@ export default function VisitClient() {
                     >
                       Thank you, <strong className="text-[#1C1208]">{fullName}</strong>. Our ranch concierge has received your request for the <strong className="text-[#C4602A]">{activeTour.title}</strong> on <strong className="text-[#1C1208]">{visitDate}</strong>. We will confirm your schedule via WhatsApp/phone shortly.
                     </p>
-                    <div className="pt-4">
+                    <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+                      <a
+                        href={`https://wa.me/254755758208?text=${encodeURIComponent(
+                          `Hello Osotua Ranch Concierge, I have requested a tour reservation: ${activeTour.title} on ${visitDate} for ${groupSize} guests (${fullName}).`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-gold text-xs flex items-center gap-2"
+                        style={{ borderRadius: "2px" }}
+                      >
+                        <i className="bi bi-whatsapp" />
+                        <span>Chat with Ranch Concierge</span>
+                      </a>
                       <button
                         onClick={() => setSubmitted(false)}
-                        className="btn-gold"
+                        className="btn-outline text-xs"
                         style={{ borderRadius: "2px" }}
                       >
                         Book Another Visit

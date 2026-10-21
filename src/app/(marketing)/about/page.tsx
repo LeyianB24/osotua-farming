@@ -1,7 +1,8 @@
-import Image from "next/image"
 import Link from "next/link"
 import PageHero from "@/components/farm/PageHero"
-import { RANCH_WIDE, RANCH_GALLERY } from "@/lib/images"
+import RangelandsGallerySection from "@/components/farm/RangelandsGallerySection"
+import ConservationSection from "@/components/farm/ConservationSection"
+import { RANCH_WIDE } from "@/lib/images"
 
 export const metadata = {
   title: "Our Heritage & Pastoral Mission",
@@ -163,42 +164,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── GALLERY ── */}
-      <section className="py-20 sm:py-24 md:py-32 bg-[#F5F0E8] border-b border-[#D4C9B0]/60">
-        <div className="os-container relative z-10 space-y-16">
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#6B7A3F] bg-[#6B7A3F]/10 border border-[#6B7A3F]/30 rounded-[2px]">
-              <span>RANCH LIFE</span>
-            </div>
-            <h2
-              className="text-3xl sm:text-5xl font-bold text-[#1C1208] m-0"
-              style={{
-                fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif",
-              }}
-            >
-              Life on the <span className="text-[#C99A2E]">Osotua Rangelands</span>
-            </h2>
-          </div>
+      {/* ── CONSERVATION & WILDLIFE SECTION ── */}
+      <ConservationSection />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-            {RANCH_GALLERY.map((src, i) => (
-              <div
-                key={i}
-                className="relative aspect-square rounded-[2px] overflow-hidden border border-[#D4C9B0] shadow-sm group bg-[#1C1208]"
-              >
-                <Image
-                  src={src}
-                  alt={`Ranch life at Osotua ${i + 1}`}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── EXPANDABLE INTERACTIVE RANGELANDS GALLERY ── */}
+      <RangelandsGallerySection />
 
       {/* ── LOCATION CTA ── */}
       <section className="py-20 sm:py-24 md:py-32 text-center bg-[#FAF7F2] border-t border-[#D4C9B0]/40">

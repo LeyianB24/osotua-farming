@@ -687,36 +687,47 @@ export default function ExecutiveDashboardView({
               </tr>
             </thead>
             <tbody className="divide-y divide-[#EFE9DF] text-xs">
-              {filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-[#FAF7F2] transition-colors">
-                  <td className="py-3.5 px-3 font-mono font-bold text-[#7A6C5B]">
-                    {order.code}
-                  </td>
-                  <td className="py-3.5 px-3 font-semibold text-[#1A1208]">
-                    {order.product}
-                  </td>
-                  <td className="py-3.5 px-3 text-[#5C4A2A]">
-                    {order.customer}
-                  </td>
-                  <td className="py-3.5 px-3 font-bold text-[#BA5932]">
-                    {order.kes.toLocaleString()}
-                  </td>
-                  <td className="py-3.5 px-3">
-                    {order.status === "DELIVERED" ? (
-                      <span className="inline-block bg-[#E8EEDC] text-[#486326] border border-[#D2DCBE] font-mono text-[10px] font-bold px-2 py-0.5 rounded-[2px] uppercase">
-                        DELIVERED
-                      </span>
-                    ) : (
-                      <span className="inline-block bg-[#EFE4D2] text-[#855B23] border border-[#DDD0B9] font-mono text-[10px] font-bold px-2 py-0.5 rounded-[2px] uppercase">
-                        PROCESSING
-                      </span>
-                    )}
-                  </td>
-                  <td className="py-3.5 px-3 text-right text-[#7A6C5B] font-mono text-[11px]">
-                    {order.date}
-                  </td>
-                </tr>
-              ))}
+              {filteredOrders.map((order) => {
+                const targetUrl = order.id.startsWith("ord-")
+                  ? (isAdmin ? "/admin/orders" : "/dashboard/orders")
+                  : `/orders/${order.id}`;
+
+                return (
+                  <tr key={order.id} className="hover:bg-[#FAF7F2] transition-colors group">
+                    <td className="py-3.5 px-3 font-mono font-bold text-[#7A6C5B]">
+                      <Link href={targetUrl} className="hover:text-[#BA5932] hover:underline flex items-center gap-1">
+                        <span>{order.code}</span>
+                        <i className="bi bi-box-arrow-up-right text-[10px] opacity-0 group-hover:opacity-75 transition-opacity" />
+                      </Link>
+                    </td>
+                    <td className="py-3.5 px-3 font-semibold text-[#1A1208]">
+                      <Link href={targetUrl} className="hover:underline hover:text-[#BA5932]">
+                        {order.product}
+                      </Link>
+                    </td>
+                    <td className="py-3.5 px-3 text-[#5C4A2A]">
+                      {order.customer}
+                    </td>
+                    <td className="py-3.5 px-3 font-bold text-[#BA5932]">
+                      KES {order.kes.toLocaleString()}
+                    </td>
+                    <td className="py-3.5 px-3">
+                      {order.status === "DELIVERED" ? (
+                        <span className="inline-block bg-[#E8EEDC] text-[#486326] border border-[#D2DCBE] font-mono text-[10px] font-bold px-2 py-0.5 rounded-[2px] uppercase">
+                          DELIVERED
+                        </span>
+                      ) : (
+                        <span className="inline-block bg-[#EFE4D2] text-[#855B23] border border-[#DDD0B9] font-mono text-[10px] font-bold px-2 py-0.5 rounded-[2px] uppercase">
+                          PROCESSING
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-3.5 px-3 text-right text-[#7A6C5B] font-mono text-[11px]">
+                      {order.date}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

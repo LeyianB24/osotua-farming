@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import BreedCard from "./BreedCard";
 import BreedGeneticsModal, { BreedModalData } from "./BreedGeneticsModal";
 
@@ -21,9 +22,13 @@ interface Props {
   speciesList: { id: string; name: string }[];
 }
 
-export default function BreedsClient({ initialBreeds, speciesList }: Props) {
-  const [selectedSpecies, setSelectedSpecies] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+function BreedsCatalogContent({ initialBreeds, speciesList }: Props) {
+  const searchParams = useSearchParams();
+  const urlSpecies = searchParams.get("species") || "all";
+  const urlQuery = searchParams.get("q") || searchParams.get("search") || "";
+
+  const [selectedSpecies, setSelectedSpecies] = useState<string>(urlSpecies);
+  const [searchQuery, setSearchQuery] = useState<string>(urlQuery);
   const [sortBy, setSortBy] = useState<"name" | "price-asc" | "price-desc" | "stock">("name");
   const [inspectingBreed, setInspectingBreed] = useState<BreedModalData | null>(null);
 
@@ -171,6 +176,7 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
               <BreedCard
                 key={breed.id}
                 breed={breed}
+                onInspect={setInspectingBreed}
               />
             ))}
           </div>
@@ -212,5 +218,20 @@ export default function BreedsClient({ initialBreeds, speciesList }: Props) {
         />
       )}
     </section>
+  );
+}
+
+export default function BreedsClient(props: Props) {
+  return (
+    <Suspense
+      fallback={
+        <div className="py-24 text-center text-xs font-mono text-[#8E7E70]">
+          <i className="bi bi-arrow-repeat animate-spin text-2xl text-[#C99A2E] mb-2 block" />
+          Loading pedigree livestock catalog...
+        </div>
+      }
+    >
+      <BreedsCatalogContent {...props} />
+    </Suspense>
   );
 }

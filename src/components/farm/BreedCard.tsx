@@ -7,9 +7,10 @@ import type { BreedModalData } from "./BreedGeneticsModal";
 
 interface Props {
   breed: BreedModalData;
+  onInspect?: (breed: BreedModalData) => void;
 }
 
-export default function BreedCard({ breed }: Props) {
+export default function BreedCard({ breed, onInspect }: Props) {
   const src = breed.image ?? imageForBreed(breed.name, breed.species.name);
 
   const speciesName = breed.species.name.toUpperCase();
@@ -262,39 +263,69 @@ export default function BreedCard({ breed }: Props) {
               </div>
             </div>
 
-            <Link
-              href={breedUrl}
-              className="
-                inline-flex min-h-10 shrink-0
-                items-center justify-center gap-2
-                border border-[#B98B20]
-                bg-transparent
-                px-4 py-2.5
-                text-[9px] font-bold uppercase
-                tracking-[0.13em]
-                text-[#6F5013]
-                no-underline
-                transition-all duration-200
-                hover:bg-[#C99A2E]
-                hover:text-[#1C1208]
-                focus-visible:outline-none
-                focus-visible:ring-2
-                focus-visible:ring-[#C99A2E]
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-[#F7F3EA]
-              "
-            >
-              Enquire
-              <i
+            <div className="flex items-center gap-2">
+              {onInspect && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onInspect(breed);
+                  }}
+                  className="
+                    inline-flex min-h-10 shrink-0
+                    items-center justify-center gap-1.5
+                    border border-[#D4C9B0]
+                    bg-white
+                    px-3 py-2.5
+                    text-[9px] font-bold uppercase
+                    tracking-[0.13em]
+                    text-[#1C1208]
+                    transition-all duration-200
+                    hover:border-[#C99A2E]
+                    hover:text-[#C99A2E]
+                    cursor-pointer
+                  "
+                  title="Quick view breed genetics and lineage"
+                >
+                  <i className="bi bi-eye text-xs" />
+                  <span>Genetics</span>
+                </button>
+              )}
+
+              <Link
+                href={breedUrl}
                 className="
-                  bi bi-arrow-up-right text-xs
-                  transition-transform duration-200
-                  group-hover:translate-x-0.5
-                  group-hover:-translate-y-0.5
+                  inline-flex min-h-10 shrink-0
+                  items-center justify-center gap-2
+                  border border-[#B98B20]
+                  bg-transparent
+                  px-4 py-2.5
+                  text-[9px] font-bold uppercase
+                  tracking-[0.13em]
+                  text-[#6F5013]
+                  no-underline
+                  transition-all duration-200
+                  hover:bg-[#C99A2E]
+                  hover:text-[#1C1208]
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-[#C99A2E]
+                  focus-visible:ring-offset-2
+                  focus-visible:ring-offset-[#F7F3EA]
                 "
-                aria-hidden="true"
-              />
-            </Link>
+              >
+                Enquire
+                <i
+                  className="
+                    bi bi-arrow-up-right text-xs
+                    transition-transform duration-200
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                  "
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

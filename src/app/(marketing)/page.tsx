@@ -6,7 +6,6 @@ import BarnStoreBento from "@/components/farm/BarnStoreBento";
 import PastoralStandardsTimeline from "@/components/farm/PastoralStandardsTimeline";
 import ExperienceBannerSection from "@/components/farm/ExperienceBannerSection";
 import ConservationSection from "@/components/farm/ConservationSection";
-import RangelandsGallerySection from "@/components/farm/RangelandsGallerySection";
 import SocialShowcaseSection from "@/components/farm/SocialShowcaseSection";
 import BrandQuoteSection from "@/components/farm/BrandQuoteSection";
 
@@ -68,9 +67,6 @@ export default async function HomePage() {
 
       {/* ── 07. CONSERVATION & WILDLIFE: Livestock & Wildlife Living as One ── */}
       <ConservationSection />
-
-      {/* ── 08. EXPERIENCE OUR RANGELANDS: Photographic Gallery Strip ── */}
-      <RangelandsGallerySection />
 
       {/* ── 08. OFFICIAL SOCIAL SHOWCASE: Instagram & TikTok Feed ── */}
       <SocialShowcaseSection />

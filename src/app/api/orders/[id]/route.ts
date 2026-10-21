@@ -25,13 +25,16 @@ export async function GET(
 
     if (!order) return notFound("Order not found")
 
-    // Verify user authentication and order ownership or admin role
+    // Verify user permissions: If order is associated with a specific user account,
+    // require that account or an admin. Guest orders can be retrieved by their direct ID.
     const user = await getSessionUser()
-    if (!user) {
-      return unauthorized("Authentication required to view order")
-    }
-    if (order.userId && order.userId !== user.id && !isAdmin(user)) {
-      return forbidden("You do not have permission to view this order")
+    if (order.userId) {
+      if (!user) {
+        return unauthorized("Authentication required to view this account order")
+      }
+      if (order.userId !== user.id && !isAdmin(user)) {
+        return forbidden("You do not have permission to view this order")
+      }
     }
 
     return NextResponse.json(order)
