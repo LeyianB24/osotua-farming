@@ -94,7 +94,7 @@ const pantryProducts: PantryProduct[] = [
     name: "The Osotua Ranch Box",
     price: 4200,
     unit: "weekly box",
-    image: "/images/WhatsApp Image 2026-08-10 at 11.55.25 (1).jpeg",
+    image: "/images/vegetables.jpg",
     inStock: true,
     category: { name: "Ranch Box" },
   },

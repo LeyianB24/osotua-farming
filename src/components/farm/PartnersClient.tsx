@@ -154,8 +154,8 @@ export default function PartnersClient() {
 
             <div className="relative aspect-[16/10] rounded-[2px] overflow-hidden shadow-md border border-[#D4C9B0] group bg-[#1C1208]">
               <Image
-                src="/images/WhatsApp Image 2026-08-10 at 11.56.45.jpeg"
-                alt="Livestock paddock"
+                src="/images/Pedigree Boer.jpg"
+                alt="Pedigree Boer stud goat at Osotua ranch"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-700"

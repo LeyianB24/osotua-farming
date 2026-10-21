@@ -15,6 +15,21 @@ export const HERD_FIELD = img("WhatsApp Image 2026-08-10 at 11.55.21.jpeg")
 
 // Authentic ranch photos — used in slideshows/galleries.
 export const RANCH_GALLERY: string[] = [
+  // ── Authentic new ranch shots ──────────────────────────────
+  img("Kudu.jpg"),
+  img("Kudu 2.jpg"),
+  img("Elland.jpg"),
+  img("Elland 2.jpg"),
+  img("Young bulls.jpg"),
+  img("Bonsamara 1.jpg"),
+  img("Bonsamara 2.jpg"),
+  img("Red Kalahari 1.jpg"),
+  img("Red kalahari 2.jpg"),
+  img("Red kalahari 3.jpg"),
+  img("Pedigree Boer.jpg"),
+  img("Boers.jpg"),
+  img("Calves.jpg"),
+  // ── WhatsApp ranch archive ─────────────────────────────────
   img("WhatsApp Image 2026-08-10 at 11.55.21.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.22.jpeg"),
   img("WhatsApp Image 2026-08-10 at 11.55.23.jpeg"),
@@ -55,8 +70,11 @@ export const RANCH_GALLERY: string[] = [
 // ── Per-breed photos (matched by breed name, case-insensitive) ──
 // Uses descriptive filenames so each breed is unmistakable.
 export const BREED_IMAGES: Record<string, string> = {
+  // ── Cattle ────────────────────────────────────────────────
   boran: img("boran bulls.jpg"),
-  bonsmara: img("bonsamara bull.jpg"),
+  bonsmara: img("Bonsamara 1.jpg"),
+  "bonsmara 1": img("Bonsamara 1.jpg"),
+  "bonsmara 2": img("Bonsamara 2.jpg"),
   brahman: img("brahman cows.jpg"),
   "brahman cow": img("brahman cow and calf.jpg"),
   "brahman herd": img("brahman cows 2.jpg"),
@@ -71,17 +89,30 @@ export const BREED_IMAGES: Record<string, string> = {
   "sahiwal bull": img("sahiwal-bull-500x500.webp"),
   "sahiwal calves": img("sahiwal calves.jpeg"),
   "sahiwal calves 2": img("sahiwal calves 2.jpeg"),
-  boer: img("boer goat.jpg"),
+  "young bulls": img("Young bulls.jpg"),
+  calves: img("Calves.jpg"),
+  // ── Goats ─────────────────────────────────────────────────
+  boer: img("Pedigree Boer.jpg"),
+  "boer stud": img("Pedigree Boer.jpg"),
+  "pedigree boer": img("Pedigree Boer.jpg"),
+  boers: img("Boers.jpg"),
   galla: img("somali-goats.jpg"),
   somali: img("re_goats_waskosims_rock_0.jpg"),
   "somali goat": img("re_goats_waskosims_rock_0.jpg"),
   "boer x galla": img("goats.jpg"),
+  "red kalahari": img("Red Kalahari 1.jpg"),
+  "kalahari red": img("Red Kalahari 1.jpg"),
+  "red kalahari 1": img("Red Kalahari 1.jpg"),
+  "red kalahari 2": img("Red kalahari 2.jpg"),
+  "red kalahari 3": img("Red kalahari 3.jpg"),
+  // ── Sheep ─────────────────────────────────────────────────
   dorper: img("Dorper-sheep-800x534.jpg"),
   "dorper herd": img("dorper-herd-sire.webp"),
   "red maasai": img("Sheep1-1jyf79s.jpg"),
   "red maasai x dorper": img("dorper lambs.jpg"),
   "dorper ram": img("dorper ram.jpg"),
   "dorper ewe": img("beautiful-female-dorper-sheep-on-600nw-2455116755.webp"),
+  // ── Poultry ───────────────────────────────────────────────
   poultry: img("chicken 1.jpg"),
   chicken: img("chicken 1.jpg"),
   chickens: img("chicken 4.jpg"),
@@ -94,6 +125,9 @@ export const BREED_IMAGES: Record<string, string> = {
   rooster: img("chicken 5.jpg"),
   layer: img("chicken 6.jpg"),
   broiler: img("chicken 1.jpg"),
+  // ── Wildlife (for gallery/conservation) ───────────────────
+  kudu: img("Kudu.jpg"),
+  eland: img("Elland.jpg"),
 }
 
 // ── Species fallbacks (by species.name) ─────────────────────
@@ -124,11 +158,12 @@ export const CATEGORY_IMAGES: Record<string, string> = {
   Tallow: img("Tallow 1.jpg"),
   "Beef Tallow": img("Beef Tallow 1.jpg"),
   "Grass-Fed Tallow": img("Tallow 2.jpg"),
-  "Goat Meat": img("boer goat.jpg"),
+  "Goat Meat": img("Pedigree Boer.jpg"),
   "Sheep Meat": img("dorper lambs.jpg"),
   "Lamb Chops": img("lamb chops.jpg"),
   "Lamb Chops 2": img("lamb chops 2.jpg"),
-  Vegetables: img("cabbages.jpeg"),
+  Pork: img("pork.jpg"),
+  Vegetables: img("cabbage fields.jpeg"),
   Fruits: img("pineapples.jpg"),
   "Poultry & Eggs": img("chicken 1.jpg"),
   Poultry: img("chicken 1.jpg"),
@@ -201,10 +236,14 @@ export const PRODUCE_SLIDESHOW: { src: string; label: string }[] = [
 
 // ── Named livestock photos, for breed-page slideshow ──────
 export const LIVESTOCK_SLIDESHOW: { src: string; label: string }[] = [
+  // ── Cattle ────────────────────────────────────────────────
   { src: img("boran bulls.jpg"), label: "Boran Bulls" },
   { src: img("boran cow.jpg"), label: "Boran Cow" },
   { src: img("boran heifers.jpg"), label: "Boran Heifers" },
-  { src: img("bonsamara bull.jpg"), label: "Bonsmara Bull" },
+  { src: img("Bonsamara 1.jpg"), label: "Bonsmara on Pasture" },
+  { src: img("Bonsamara 2.jpg"), label: "Bonsmara Herd" },
+  { src: img("Young bulls.jpg"), label: "Young Foundation Bulls" },
+  { src: img("Calves.jpg"), label: "Calves at Pasture" },
   { src: img("brahman cows.jpg"), label: "Brahman Cows" },
   { src: img("brahman cows 2.jpg"), label: "Brahman Cow Herd" },
   { src: img("brahman cow and calf.jpg"), label: "Brahman Cow & Calf" },
@@ -218,16 +257,22 @@ export const LIVESTOCK_SLIDESHOW: { src: string; label: string }[] = [
   { src: img("Sahiwal-Cow.webp"), label: "Sahiwal Cow" },
   { src: img("sahiwal calves.jpeg"), label: "Sahiwal Calves" },
   { src: img("sahiwal calves 2.jpeg"), label: "Sahiwal Calves at Pasture" },
-  { src: img("boer goat.jpg"), label: "Boer Goat" },
-  { src: img("boer.jpg"), label: "Boer Buck" },
+  // ── Goats ─────────────────────────────────────────────────
+  { src: img("Pedigree Boer.jpg"), label: "Pedigree Boer Stud" },
+  { src: img("Boers.jpg"), label: "Boer Herd" },
+  { src: img("Red Kalahari 1.jpg"), label: "Red Kalahari Goats" },
+  { src: img("Red kalahari 2.jpg"), label: "Kalahari Red Buck" },
+  { src: img("Red kalahari 3.jpg"), label: "Kalahari Red Does" },
   { src: img("somali-goats.jpg"), label: "Galla Goats" },
   { src: img("re_goats_waskosims_rock_0.jpg"), label: "Waskosims Goat Herd" },
   { src: img("goats.jpg"), label: "The Goat Herd" },
+  // ── Sheep ─────────────────────────────────────────────────
   { src: img("Dorper-sheep-800x534.jpg"), label: "Dorper Sheep Flock" },
   { src: img("dorper-herd-sire.webp"), label: "Dorper Herd Sire" },
   { src: img("dorper ram.jpg"), label: "Dorper Ram" },
   { src: img("dorper lambs.jpg"), label: "Dorper Lambs" },
   { src: img("Sheep1-1jyf79s.jpg"), label: "Red Maasai Sheep" },
+  // ── Poultry & Apiary ──────────────────────────────────────
   { src: img("chicken 1.jpg"), label: "Free-Range Poultry Flock" },
   { src: img("Chicken 7.jpg"), label: "Improved Kienyeji Rooster" },
   { src: img("chicken 4.jpg"), label: "Pasture-Raised Chickens" },
@@ -235,6 +280,11 @@ export const LIVESTOCK_SLIDESHOW: { src: string; label: string }[] = [
   { src: img("Bee Hive 3.jpg"), label: "Ranch Meadow Hives" },
   { src: img("Bee Hive 4.jpg"), label: "Meadow Bee Hives" },
   { src: img("Bee Hive 5.jpg"), label: "Apiary Harvest Setup" },
+  // ── Wildlife corridor ─────────────────────────────────────
+  { src: img("Kudu.jpg"), label: "Kudu on Wildlife Corridor" },
+  { src: img("Kudu 2.jpg"), label: "Greater Kudu at Pasture" },
+  { src: img("Elland.jpg"), label: "Eland Co-habitants" },
+  { src: img("Elland 2.jpg"), label: "Eland on Open Savanna" },
 ]
 
 // ── Dedicated Artisan Pantry Collections ────────────────────

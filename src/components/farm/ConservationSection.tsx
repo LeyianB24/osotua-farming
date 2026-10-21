@@ -40,23 +40,23 @@ const STATS = [
 // Authentic ranch photos repurposed for conservation context
 const MOSAIC = [
   {
-    src: "/images/WhatsApp Image 2026-08-10 at 11.55.26 (1).jpeg",
-    alt: "Boran herd grazing open Kajiado savanna at sunrise",
-    label: "Kajiado Rangeland at Dawn",
+    src: "/images/Kudu.jpg",
+    alt: "Greater Kudu browsing undisturbed within the Osotua wildlife corridor, Kajiado",
+    label: "Wildlife Corridor — Greater Kudu",
   },
   {
-    src: "/images/WhatsApp Image 2026-08-10 at 11.55.27.jpeg",
-    alt: "Livestock moving through wildlife corridor on Osotua ranch",
-    label: "Pastoral Corridor Movement",
+    src: "/images/Elland.jpg",
+    alt: "Eland antelope co-habiting Osotua ranch savanna alongside cattle herds",
+    label: "Eland on Open Rangeland",
   },
   {
-    src: "/images/WhatsApp Image 2026-08-10 at 11.55.28.jpeg",
-    alt: "Sahiwal cattle grazing alongside natural bush on open grassland",
-    label: "Sahiwal on Open Rangeland",
+    src: "/images/Young bulls.jpg",
+    alt: "Young Bonsmara and Boran bulls grazing Kajiado savanna rangeland",
+    label: "Indigenous Cattle at Pasture",
   },
   {
     src: "/images/WhatsApp Image 2026-08-10 at 11.56.44 (1).jpeg",
-    alt: "Osotua herd drinking from shared ranch water pan",
+    alt: "Osotua herd drinking from shared ranch water pan alongside wildlife",
     label: "Shared Water Pans",
   },
 ];

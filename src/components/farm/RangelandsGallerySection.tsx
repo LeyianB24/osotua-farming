@@ -12,9 +12,86 @@ interface GalleryPhoto {
   tag: string;
 }
 
+// Per-image metadata for named authentic ranch photos
+const NAMED_PHOTO_META: Record<string, { tag: string; caption: string; alt: string }> = {
+  "Kudu.jpg": {
+    tag: "Wildlife Corridor",
+    caption: "Greater Kudu browsing undisturbed within the Amboseli–Mara wildlife corridor",
+    alt: "Greater Kudu on Osotua ranch wildlife corridor, Kajiado savanna",
+  },
+  "Kudu 2.jpg": {
+    tag: "Wildlife Corridor",
+    caption: "Kudu at the Osotua ranch water pan — shared with livestock in the dry season",
+    alt: "Kudu at ranch water pan, Kajiado County",
+  },
+  "Elland.jpg": {
+    tag: "Wildlife Corridor",
+    caption: "Eland antelope grazing the open Kajiado savanna alongside Osotua livestock",
+    alt: "Eland antelope co-habiting Osotua ranch rangeland",
+  },
+  "Elland 2.jpg": {
+    tag: "Wildlife Corridor",
+    caption: "Eland herd on undisturbed open grassland within the ranch corridor",
+    alt: "Eland herd on open savanna, Osotua Farming wildlife corridor",
+  },
+  "Young bulls.jpg": {
+    tag: "Stud Bulls",
+    caption: "Young foundation bulls at pasture — the next generation of Osotua stud genetics",
+    alt: "Young bulls grazing Kajiado rangeland at Osotua Farming",
+  },
+  "Bonsamara 1.jpg": {
+    tag: "Stud Bulls",
+    caption: "Bonsmara cattle in prime conditioning on Kajiado pasture",
+    alt: "Bonsmara cattle at Osotua ranch, Kajiado County",
+  },
+  "Bonsamara 2.jpg": {
+    tag: "Herds & Flocks",
+    caption: "Bonsmara herd free-ranging across open paddock on the ranch",
+    alt: "Bonsmara herd on rangeland at Osotua Farming",
+  },
+  "Red Kalahari 1.jpg": {
+    tag: "Herds & Flocks",
+    caption: "Red Kalahari goats — prized dual-purpose breed thriving on semi-arid pasture",
+    alt: "Red Kalahari goats at Osotua ranch",
+  },
+  "Red kalahari 2.jpg": {
+    tag: "Herds & Flocks",
+    caption: "Kalahari Red buck showcasing the breed's distinctive russet-red coat",
+    alt: "Kalahari Red buck at Osotua Farming, Kajiado",
+  },
+  "Red kalahari 3.jpg": {
+    tag: "Herds & Flocks",
+    caption: "Kalahari Red does in open pasture — hardy drought-resilient meat goats",
+    alt: "Kalahari Red does at Osotua ranch, semi-arid rangeland",
+  },
+  "Pedigree Boer.jpg": {
+    tag: "Stud Bulls",
+    caption: "Pedigree Boer stud buck — champion South African genetics on Osotua stud book",
+    alt: "Pedigree Boer stud goat at Osotua ranch, Kajiado Kenya",
+  },
+  "Boers.jpg": {
+    tag: "Herds & Flocks",
+    caption: "Boer goat herd at pasture — muscular, fast-growing premium meat goats",
+    alt: "Boer goat herd at Osotua Farming ranch",
+  },
+  "Calves.jpg": {
+    tag: "Rangeland",
+    caption: "Newborn calves at Osotua ranch — the foundation of tomorrow's Kajiado herd",
+    alt: "Calves at Osotua Farming ranch, Kajiado County",
+  },
+};
+
 // Generate descriptive metadata for all authentic ranch photos
 const ALL_PHOTOS: GalleryPhoto[] = RANCH_GALLERY.map((src, index) => {
   const number = index + 1;
+  // Check if this is a named, descriptive photo
+  const filename = src.split("/").pop() ?? "";
+  if (NAMED_PHOTO_META[filename]) {
+    const meta = NAMED_PHOTO_META[filename];
+    return { src, alt: meta.alt, caption: meta.caption, tag: meta.tag };
+  }
+
+  // Fallback: derive metadata from WhatsApp archive filenames
   let tag = "Rangeland";
   let caption = `Pastoral landscape & indigenous cattle on Kajiado savanna (#${number})`;
 
@@ -66,6 +143,14 @@ export default function RangelandsGallerySection() {
     setSelectedIndex(null);
   };
 
+  const handleCollapse = () => {
+    setIsExpanded(false);
+    const galleryEl = document.getElementById("gallery");
+    if (galleryEl) {
+      galleryEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const showNext = useCallback(() => {
     if (selectedIndex === null) return;
     setSelectedIndex((prev) => ((prev! + 1) % filteredPhotos.length));
@@ -75,6 +160,17 @@ export default function RangelandsGallerySection() {
     if (selectedIndex === null) return;
     setSelectedIndex((prev) => ((prev! - 1 + filteredPhotos.length) % filteredPhotos.length));
   }, [selectedIndex, filteredPhotos.length]);
+
+  // Lock body scroll when lightbox modal is open
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+  }, [selectedIndex]);
 
   // Handle keyboard events (ESC, ArrowLeft, ArrowRight)
   useEffect(() => {
@@ -142,35 +238,48 @@ export default function RangelandsGallerySection() {
           </div>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 border-b border-white/10 no-scrollbar">
-          {filters.map((filter) => {
-            const count =
-              filter === "All"
-                ? ALL_PHOTOS.length
-                : ALL_PHOTOS.filter((p) => p.tag === filter).length;
-            const active = activeFilter === filter;
+        {/* Filter Pills & Exit Expanded Toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8 border-b border-white/10 pb-4">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            {filters.map((filter) => {
+              const count =
+                filter === "All"
+                  ? ALL_PHOTOS.length
+                  : ALL_PHOTOS.filter((p) => p.tag === filter).length;
+              const active = activeFilter === filter;
 
-            return (
-              <button
-                key={filter}
-                onClick={() => {
-                  setActiveFilter(filter);
-                  setIsExpanded(false);
-                }}
-                className={`px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                  active
-                    ? "bg-[#C99A2E] text-[#110B05] shadow-xs"
-                    : "bg-white/5 text-[#A8998C] hover:bg-white/10 hover:text-white border border-white/10"
-                }`}
-              >
-                <span>{filter}</span>
-                <span className={`ml-1.5 text-[10px] ${active ? "text-[#110B05]" : "text-[#C99A2E]"}`}>
-                  ({count})
-                </span>
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={filter}
+                  onClick={() => {
+                    setActiveFilter(filter);
+                    setIsExpanded(false);
+                  }}
+                  className={`px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                    active
+                      ? "bg-[#C99A2E] text-[#110B05] shadow-xs"
+                      : "bg-white/5 text-[#A8998C] hover:bg-white/10 hover:text-white border border-white/10"
+                  }`}
+                >
+                  <span>{filter}</span>
+                  <span className={`ml-1.5 text-[10px] ${active ? "text-[#110B05]" : "text-[#C99A2E]"}`}>
+                    ({count})
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {isExpanded && (
+            <button
+              onClick={handleCollapse}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[2px] bg-[#C99A2E]/15 border border-[#C99A2E]/40 text-[#C99A2E] hover:bg-[#C99A2E] hover:text-[#110B05] text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shrink-0 self-start sm:self-auto"
+              title="Exit expanded view and show 12 photos"
+            >
+              <i className="bi bi-x-circle" />
+              <span>Exit Expanded View</span>
+            </button>
+          )}
         </div>
 
         {/* Compact Grid: 2 cols on mobile, 3 on sm, 4 on md, 6 on lg */}
@@ -179,7 +288,7 @@ export default function RangelandsGallerySection() {
             <button
               key={index}
               onClick={() => openLightbox(index)}
-              className="group relative aspect-[4/3] w-full overflow-hidden rounded-[2px] border border-white/10 bg-[#1C1208] focus:outline-none focus:ring-2 focus:ring-[#C99A2E] text-left transition-all duration-300 hover:border-[#C99A2E] hover:shadow-lg"
+              className="group relative aspect-[4/3] w-full overflow-hidden rounded-[2px] border border-white/10 bg-[#1C1208] focus:outline-none focus:ring-2 focus:ring-[#C99A2E] text-left transition-all duration-300 hover:border-[#C99A2E] hover:shadow-lg cursor-pointer"
               aria-label={`Open photo ${index + 1}: ${photo.caption}`}
             >
               <Image
@@ -211,18 +320,34 @@ export default function RangelandsGallerySection() {
 
         {/* Expand / Collapse Toggle Button */}
         {filteredPhotos.length > 12 && (
-          <div className="mt-10 text-center">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <button
-              onClick={() => setIsExpanded((prev) => !prev)}
+              onClick={() => {
+                if (isExpanded) {
+                  handleCollapse();
+                } else {
+                  setIsExpanded(true);
+                }
+              }}
               className="inline-flex items-center gap-2.5 px-6 py-3 text-xs font-mono font-bold uppercase tracking-[0.16em] rounded-[2px] transition-all duration-300 border border-[#C99A2E] text-[#C99A2E] hover:bg-[#C99A2E] hover:text-[#110B05] cursor-pointer"
             >
               <i className={`bi ${isExpanded ? "bi-chevron-up" : "bi-grid-3x3-gap-fill"}`} />
               <span>
                 {isExpanded
-                  ? "Show Less Photos"
+                  ? "Exit Expanded Gallery (Show 12)"
                   : `Expand Full Gallery (${filteredPhotos.length} Photos)`}
               </span>
             </button>
+
+            {isExpanded && (
+              <button
+                onClick={handleCollapse}
+                className="inline-flex items-center gap-2 px-5 py-3 text-xs font-mono font-bold uppercase tracking-[0.16em] rounded-[2px] transition-all duration-300 bg-white/10 hover:bg-white/20 text-white cursor-pointer"
+              >
+                <i className="bi bi-arrow-up" />
+                <span>Return to Top</span>
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -232,29 +357,31 @@ export default function RangelandsGallerySection() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-8 animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-8 animate-fadeIn select-none"
           onClick={closeLightbox}
         >
-          {/* Top Bar: Counter & Close Button */}
+          {/* Top Bar: Counter & Prominent Exit Button */}
           <div
-            className="absolute top-4 inset-x-4 sm:inset-x-8 flex items-center justify-between text-white z-20"
+            className="absolute top-4 inset-x-4 sm:inset-x-8 flex items-center justify-between text-white z-30 pointer-events-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center gap-2 font-mono text-xs text-[#C99A2E] uppercase tracking-widest bg-white/10 px-3 py-1.5 rounded-[2px]">
+            <div className="flex items-center gap-2 font-mono text-xs text-[#C99A2E] uppercase tracking-widest bg-black/60 border border-white/10 px-3.5 py-2 rounded-[2px] backdrop-blur-sm">
               <i className="bi bi-camera" />
               <span>
                 {selectedIndex + 1} / {filteredPhotos.length}
               </span>
               <span className="text-white/40">·</span>
-              <span className="text-white">{filteredPhotos[selectedIndex].tag}</span>
+              <span className="text-white font-semibold">{filteredPhotos[selectedIndex].tag}</span>
             </div>
 
+            {/* Prominent Exit Button */}
             <button
               onClick={closeLightbox}
-              aria-label="Close photo preview"
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xl transition-colors cursor-pointer"
+              aria-label="Exit photo preview"
+              className="flex items-center gap-2 px-4 py-2 rounded-[2px] bg-[#C99A2E] hover:bg-[#e0b043] text-[#110B05] font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-lg cursor-pointer"
             >
-              <i className="bi bi-x-lg" />
+              <i className="bi bi-x-lg text-sm" />
+              <span>Exit [Esc]</span>
             </button>
           </div>
 
@@ -265,17 +392,21 @@ export default function RangelandsGallerySection() {
               showPrev();
             }}
             aria-label="Previous photo"
-            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-2xl transition-all cursor-pointer z-20"
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 border border-white/20 hover:bg-[#C99A2E] hover:text-[#110B05] text-white flex items-center justify-center text-2xl transition-all cursor-pointer z-30 shadow-xl"
           >
             <i className="bi bi-chevron-left" />
           </button>
 
           {/* Main Photo Container */}
           <div
-            className="relative max-w-5xl max-h-[78vh] w-full h-[65vh] sm:h-[75vh] flex flex-col items-center justify-center"
+            className="relative max-w-5xl max-h-[78vh] w-full h-[60vh] sm:h-[72vh] flex flex-col items-center justify-center cursor-default"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full h-full">
+            <div
+              className="relative w-full h-full cursor-pointer"
+              onClick={closeLightbox}
+              title="Click photo or backdrop to exit"
+            >
               <Image
                 src={filteredPhotos[selectedIndex].src}
                 alt={filteredPhotos[selectedIndex].alt}
@@ -286,17 +417,27 @@ export default function RangelandsGallerySection() {
               />
             </div>
 
-            {/* Bottom Caption */}
-            <div className="mt-4 text-center max-w-2xl px-4">
+            {/* Bottom Caption & Secondary Exit Action */}
+            <div className="mt-4 text-center max-w-2xl px-4 flex flex-col items-center">
               <p
                 className="text-sm sm:text-base text-[#F5F0E8] font-medium leading-relaxed"
                 style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
               >
                 {filteredPhotos[selectedIndex].caption}
               </p>
-              <span className="text-[10px] font-mono text-[#8E7E70] uppercase tracking-widest mt-1 block">
-                Osotua Ranches · Kajiado County, Kenya
-              </span>
+              <div className="flex items-center justify-center gap-4 mt-2">
+                <span className="text-[10px] font-mono text-[#8E7E70] uppercase tracking-widest">
+                  Osotua Ranches · Kajiado County, Kenya
+                </span>
+                <span className="text-white/30">&bull;</span>
+                <button
+                  onClick={closeLightbox}
+                  className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#C99A2E] hover:underline cursor-pointer flex items-center gap-1"
+                >
+                  <i className="bi bi-x-circle text-xs" />
+                  <span>Exit Lightbox</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -307,7 +448,7 @@ export default function RangelandsGallerySection() {
               showNext();
             }}
             aria-label="Next photo"
-            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-2xl transition-all cursor-pointer z-20"
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 border border-white/20 hover:bg-[#C99A2E] hover:text-[#110B05] text-white flex items-center justify-center text-2xl transition-all cursor-pointer z-30 shadow-xl"
           >
             <i className="bi bi-chevron-right" />
           </button>

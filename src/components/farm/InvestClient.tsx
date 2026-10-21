@@ -55,7 +55,7 @@ const PILLARS = [
     desc: "Every capital unit is fully backed by audited herd inventory and 3,200+ titled rangeland acres in Kajiado County — physical, verifiable, and transparent.",
     stat: "3,200+",
     statLabel: "Titled Acres",
-    image: "/images/WhatsApp Image 2026-08-10 at 11.56.42.jpeg",
+    image: "/images/Young bulls.jpg",
   },
 ]
 
