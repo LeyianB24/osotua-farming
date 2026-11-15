@@ -127,11 +127,11 @@ export default function BreedCard({ breed, onInspect }: Props) {
         <div
           className="
             absolute left-4 top-4
-            border border-[#F4EFE5]/25
-            bg-[#1C1208]/80
-            px-3 py-2
-            text-[9px] font-semibold uppercase
-            tracking-[0.19em] text-[#F4EFE5]
+            border border-[#F4EFE5]/30
+            bg-[#1C1208]/85
+            px-3 py-1.5
+            text-[11px] font-bold uppercase
+            tracking-[0.16em] text-[#F4EFE5]
             backdrop-blur-sm
           "
         >
@@ -143,10 +143,10 @@ export default function BreedCard({ breed, onInspect }: Props) {
           className="
             absolute right-4 top-4
             flex items-center gap-1.5
-            border border-[#D1A027]/60
+            border border-[#D1A027]/70
             bg-[#D1A027]
-            px-3 py-2
-            text-[9px] font-bold uppercase
+            px-3 py-1.5
+            text-[11px] font-bold uppercase
             tracking-[0.14em] text-[#1C1208]
           "
         >
@@ -159,7 +159,7 @@ export default function BreedCard({ breed, onInspect }: Props) {
 
         {/* Bottom image caption */}
         <div className="absolute inset-x-0 bottom-0 p-5">
-          <p className="text-[9px] font-medium uppercase tracking-[0.22em] text-[#E2BC62]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#E2BC62]">
             OSOTUA BREED COLLECTION
           </p>
 
@@ -175,9 +175,9 @@ export default function BreedCard({ breed, onInspect }: Props) {
             href={breedUrl}
             className="
               inline-block
-              text-[25px] font-medium leading-tight
-              tracking-[-0.035em]
-              text-[#24170D]
+              text-2xl sm:text-[26px] font-bold leading-tight
+              tracking-[-0.03em]
+              text-[#1C1208]
               no-underline
               transition-colors duration-200
               hover:text-[#9C7219]
@@ -196,14 +196,16 @@ export default function BreedCard({ breed, onInspect }: Props) {
           <div className="mt-3 flex items-center gap-2">
             <span
               className={`
-                h-1.5 w-1.5 rounded-full
+                h-2 w-2 rounded-full
                 ${isAvailable ? "bg-[#638A57]" : "bg-[#C99A2E]"}
               `}
               aria-hidden="true"
             />
 
-            <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-[#766958]">
-              {isAvailable ? "Available for enquiry" : "Join the waitlist"}
+            <span className="text-xs font-semibold text-[#5C4A2A]">
+              {isAvailable
+                ? `${breed.inStock} head registered & available`
+                : "Waitlist open · Reserve next batch"}
             </span>
           </div>
         </div>
@@ -217,15 +219,15 @@ export default function BreedCard({ breed, onInspect }: Props) {
             <div
               key={detail.label}
               className={`
-                flex items-start justify-between gap-4 py-3
+                flex items-start justify-between gap-4 py-2.5
                 ${index !== details.length - 1 ? "border-b border-[#E7DECE]" : ""}
               `}
             >
-              <dt className="shrink-0 pt-0.5 text-[9px] font-semibold uppercase tracking-[0.17em] text-[#8C7D69]">
+              <dt className="shrink-0 pt-0.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#7A6C5B]">
                 {detail.label}
               </dt>
 
-              <dd className="max-w-[60%] text-right text-[12px] font-medium leading-relaxed text-[#35271A]">
+              <dd className="max-w-[65%] text-right text-xs sm:text-[13px] font-semibold leading-relaxed text-[#1C1208]">
                 {detail.value}
               </dd>
             </div>
@@ -239,15 +241,15 @@ export default function BreedCard({ breed, onInspect }: Props) {
           {/* Price and action */}
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="min-w-0">
-              <p className="mb-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8C7D69]">
+              <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#7A6C5B]">
                 Investment per head
               </p>
 
               <div className="flex flex-wrap items-baseline gap-x-1.5">
                 <span
                   className="
-                    text-[25px] font-medium leading-none
-                    tracking-[-0.035em] text-[#A67C1E]
+                    text-2xl sm:text-3xl font-bold leading-none
+                    tracking-[-0.03em] text-[#C4602A]
                   "
                   style={{
                     fontFamily:
@@ -257,7 +259,7 @@ export default function BreedCard({ breed, onInspect }: Props) {
                   KES {formattedPrice}
                 </span>
 
-                <span className="text-[10px] text-[#8C7D69]">
+                <span className="text-xs font-mono text-[#7A6C5B]">
                   / head
                 </span>
               </div>
@@ -272,13 +274,13 @@ export default function BreedCard({ breed, onInspect }: Props) {
                     onInspect(breed);
                   }}
                   className="
-                    inline-flex min-h-10 shrink-0
+                    inline-flex min-h-11 shrink-0
                     items-center justify-center gap-1.5
                     border border-[#D4C9B0]
                     bg-white
-                    px-3 py-2.5
-                    text-[9px] font-bold uppercase
-                    tracking-[0.13em]
+                    px-3.5 py-2.5
+                    text-xs font-bold uppercase
+                    tracking-[0.12em]
                     text-[#1C1208]
                     transition-all duration-200
                     hover:border-[#C99A2E]
@@ -292,20 +294,42 @@ export default function BreedCard({ breed, onInspect }: Props) {
                 </button>
               )}
 
+              <a
+                href={`https://wa.me/254755758208?text=${encodeURIComponent(
+                  `Hello Osotua Livestock Desk, I am enquiring about ${breed.name} pedigree livestock.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  inline-flex min-h-11 w-11 shrink-0
+                  items-center justify-center
+                  border border-[#25D366]/50
+                  bg-[#25D366]/10
+                  text-[#128C7E]
+                  transition-all duration-200
+                  hover:bg-[#25D366] hover:text-white
+                "
+                title="Enquire via WhatsApp"
+                aria-label="Enquire via WhatsApp"
+              >
+                <i className="bi bi-whatsapp text-sm" />
+              </a>
+
               <Link
                 href={breedUrl}
                 className="
-                  inline-flex min-h-10 shrink-0
+                  inline-flex min-h-11 shrink-0
                   items-center justify-center gap-2
-                  border border-[#B98B20]
-                  bg-transparent
+                  border border-[#1C1208]
+                  bg-[#1C1208]
                   px-4 py-2.5
-                  text-[9px] font-bold uppercase
-                  tracking-[0.13em]
-                  text-[#6F5013]
+                  text-xs font-bold uppercase
+                  tracking-[0.12em]
+                  text-[#F5F0E8]
                   no-underline
                   transition-all duration-200
                   hover:bg-[#C99A2E]
+                  hover:border-[#C99A2E]
                   hover:text-[#1C1208]
                   focus-visible:outline-none
                   focus-visible:ring-2
@@ -314,7 +338,7 @@ export default function BreedCard({ breed, onInspect }: Props) {
                   focus-visible:ring-offset-[#F7F3EA]
                 "
               >
-                Enquire
+                <span>View Breed</span>
                 <i
                   className="
                     bi bi-arrow-up-right text-xs

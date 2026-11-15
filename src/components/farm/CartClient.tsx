@@ -12,7 +12,7 @@ export default function CartClient() {
   const [promoApplied, setPromoApplied] = useState(false);
   const [promoError, setPromoError] = useState("");
 
-  const deliveryFee = cartTotal > 0 ? 500 : 0;
+  const deliveryFee = 0; // Complimentary rangeland cold transit matching checkout
   const finalTotal = Math.max(0, cartTotal + deliveryFee - discount);
 
   const handleApplyPromo = (e: React.FormEvent) => {
@@ -219,8 +219,8 @@ export default function CartClient() {
 
                   <div className="flex justify-between text-[#5C4A2A]">
                     <span>Cold-Chain Delivery</span>
-                    <span className="font-mono font-bold text-[#1C1208]">
-                      KES {deliveryFee.toLocaleString()}
+                    <span className="font-mono font-bold text-[#6B7A3F]">
+                      Complimentary
                     </span>
                   </div>
 

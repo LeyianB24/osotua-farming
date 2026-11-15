@@ -18,6 +18,19 @@ const navLinks = [
   { label: "Ranch Tours", href: "/visit" },
 ];
 
+const heroPages = [
+  "/",
+  "/breeds",
+  "/barn",
+  "/invest",
+  "/partners",
+  "/about",
+  "/visit",
+  "/contact",
+  "/careers",
+  "/blog",
+];
+
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 function isActivePath(pathname: string, href: string) {
@@ -153,12 +166,15 @@ export default function Navbar({
     };
   }, []);
 
+  const isHeroPage = pathname ? heroPages.includes(pathname) : true;
+  const isSolidNav = !isHeroPage || scrolled;
+
   return (
     <>
       <header
         className={[
           "os-navbar",
-          scrolled ? "os-navbar-scrolled" : "",
+          isSolidNav ? "os-navbar-scrolled" : "",
           open ? "os-navbar-menu-open" : "",
         ].join(" ")}
       >

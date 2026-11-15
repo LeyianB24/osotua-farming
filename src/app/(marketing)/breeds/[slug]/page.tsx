@@ -158,20 +158,51 @@ export default async function BreedDetailPage({
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-3">
                 <Link
                   href={`/checkout?breed=${breed.id}`}
-                  className="btn-gold flex-1 justify-center"
+                  className="btn-gold flex-1 min-w-[200px] justify-center"
                 >
+                  <i className="bi bi-bag-check-fill" />
                   <span>Order Breeding Stock</span>
                   <i className="bi bi-arrow-right" />
                 </Link>
-                <Link
-                  href="/contact"
-                  className="btn-outline"
+
+                <a
+                  href={`https://wa.me/254755758208?text=${encodeURIComponent(
+                    `Hello Osotua Livestock Desk, I am interested in inspecting or ordering ${breed.name} pedigree stock.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-[2px] bg-[#25D366] text-white hover:bg-[#20ba59] font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-sm"
                 >
-                  <span>Enquire</span>
+                  <i className="bi bi-whatsapp text-sm" />
+                  <span>WhatsApp Desk</span>
+                </a>
+
+                <Link
+                  href="/visit"
+                  className="btn-outline flex-1 min-w-[150px] justify-center"
+                >
+                  <i className="bi bi-geo-alt" />
+                  <span>Book Inspection</span>
                 </Link>
+              </div>
+
+              {/* Trust & compliance reassurance */}
+              <div className="mt-8 pt-6 border-t border-[#D4C9B0]/60 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] font-mono text-[#5C4A2A]">
+                <div className="flex items-center gap-2">
+                  <i className="bi bi-patch-check-fill text-[#C99A2E] text-sm shrink-0" />
+                  <span>Kenya Stud Book Registered</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <i className="bi bi-shield-check text-[#6B7A3F] text-sm shrink-0" />
+                  <span>Certified Vet Health Records</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <i className="bi bi-truck text-[#C4602A] text-sm shrink-0" />
+                  <span>Movement Permits Coordinated</span>
+                </div>
               </div>
             </div>
           </div>

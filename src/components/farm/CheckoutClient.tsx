@@ -349,9 +349,12 @@ function CheckoutContent() {
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+254 700 000 000"
+                      placeholder="e.g. 0712 345 678 or +254 700 000 000"
                       className="os-input"
                     />
+                    <span className="text-[11px] font-mono text-[#8E7E70] mt-1 block">
+                      Used for delivery dispatch &amp; M-Pesa STK push prompt.
+                    </span>
                   </div>
 
                   <div>
@@ -568,9 +571,21 @@ function CheckoutContent() {
                 >
                   Order Summary
                 </h3>
-                <span className="font-mono text-xs text-[#6B7A3F] font-bold">
-                  {step === "confirmed" ? confirmedCart.length : cart.length} items
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-[#6B7A3F] font-bold">
+                    {step === "confirmed" ? confirmedCart.length : cart.length} items
+                  </span>
+                  {step !== "confirmed" && (
+                    <Link
+                      href="/cart"
+                      className="text-[11px] font-mono font-bold text-[#C99A2E] hover:underline flex items-center gap-1"
+                      title="Adjust quantities or items"
+                    >
+                      <i className="bi bi-pencil-square" />
+                      <span>Edit Basket</span>
+                    </Link>
+                  )}
+                </div>
               </div>
 
               {/* Cart List */}

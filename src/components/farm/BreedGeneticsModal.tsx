@@ -135,7 +135,15 @@ export default function BreedGeneticsModal({ breed, onClose }: Props) {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+              <Link
+                href={`/checkout?breed=${breed.id}`}
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-[#C99A2E] hover:bg-[#D9AA3E] text-[#1C1208] font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-md no-underline"
+              >
+                <i className="bi bi-bag-check-fill text-sm" />
+                <span>Order Stock</span>
+              </Link>
+
               <a
                 href={`https://wa.me/254755758208?text=Hello%20Osotua%20Farming,%20I%20am%20interested%20in%20reserving%20${encodeURIComponent(breed.name)}%20livestock%20genetics.`}
                 target="_blank"
@@ -148,9 +156,9 @@ export default function BreedGeneticsModal({ breed, onClose }: Props) {
 
               <Link
                 href="/visit"
-                className="flex-1 sm:flex-initial btn-primary py-3 px-6 text-xs tracking-wider justify-center"
+                className="flex-1 sm:flex-initial btn-primary py-3 px-5 text-xs tracking-wider justify-center"
               >
-                <span>Book Inspection</span>
+                <span>Book Visit</span>
               </Link>
             </div>
           </div>
