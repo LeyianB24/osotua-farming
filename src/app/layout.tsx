@@ -14,6 +14,8 @@ import { CartProvider } from "@/components/shared/CartContext";
 import ToastContainer from "@/components/shared/Toast";
 import Providers from "@/components/shared/Providers";
 import ScrollReveal from "@/components/shared/ScrollReveal";
+import FloatingConcierge from "@/components/shared/FloatingConcierge";
+import MobileCartBar from "@/components/shared/MobileCartBar";
 
 /* =========================================================
    OSOTUA FARMING — TYPOGRAPHY
@@ -360,6 +362,8 @@ export default function RootLayout({
             </div>
 
             <ToastContainer />
+            <FloatingConcierge />
+            <MobileCartBar />
           </CartProvider>
         </Providers>
 

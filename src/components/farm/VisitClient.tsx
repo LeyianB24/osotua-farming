@@ -367,6 +367,7 @@ export default function VisitClient() {
                           <input
                             type="date"
                             required
+                            min={new Date().toISOString().split("T")[0]}
                             value={visitDate}
                             onChange={(e) => setVisitDate(e.target.value)}
                             className="w-full bg-white border border-[#D4C9B0] rounded-[2px] p-3 text-sm text-[#1C1208] outline-none focus:border-[#C99A2E]"
