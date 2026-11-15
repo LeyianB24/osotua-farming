@@ -6,7 +6,6 @@ import {
   ArrowUpRight,
   BadgeCheck,
   Beef,
-  CalendarDays,
   Leaf,
   MapPin,
   ShieldCheck,
@@ -87,6 +86,7 @@ export default function HeroMaster() {
 
   return (
     <div className="relative isolate w-full overflow-hidden bg-[#1C1208] text-[#F5F0E8]">
+      {/* ── FULL-BLEED PHOTOGRAPHIC BACKDROP: COVERS TO THE VERY TOP ── */}
       <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden" aria-hidden="true">
         <Image
           src="/images/brahmangreen.jpeg"
@@ -97,14 +97,20 @@ export default function HeroMaster() {
           className="object-cover object-center"
         />
 
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(28,18,8,0.96)_0%,rgba(28,18,8,0.84)_36%,rgba(28,18,8,0.48)_68%,rgba(28,18,8,0.28)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(28,18,8,0.72)_0%,rgba(28,18,8,0.08)_34%,rgba(28,18,8,0.96)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,154,46,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,154,46,0.035)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem]" />
+        {/* 1. Subtle top-down scrim for transparent navbar text contrast while sky & clouds stay brilliant */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,10,5,0.65)_0%,rgba(15,10,5,0.22)_25%,transparent_50%)]" />
+
+        {/* 2. Left-directional scrim ensuring bold typography pops while rangeland stays vivid */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,10,5,0.88)_0%,rgba(15,10,5,0.70)_38%,rgba(15,10,5,0.30)_68%,transparent_100%)]" />
+
+        {/* 3. Soft bottom vignette to transition smoothly behind the floating stats dock */}
+        <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(15,10,5,0.85)_0%,rgba(15,10,5,0.30)_20%,transparent_50%)]" />
       </div>
 
-      <section className="relative flex min-h-[86vh] w-full flex-col justify-end pt-28 pb-12 sm:pt-32 lg:min-h-[92vh] lg:pb-16">
-        <div className="os-container relative z-10 w-full">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-end xl:grid-cols-[minmax(0,1fr)_430px]">
+      <div className="relative flex min-h-screen w-full flex-col justify-between pt-36 sm:pt-40 lg:pt-44">
+        {/* Main Content */}
+        <div className="os-container relative z-10 w-full my-auto pb-8 sm:pb-12">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center xl:grid-cols-[minmax(0,1fr)_430px]">
             <div className="max-w-4xl space-y-7" data-reveal data-delay="1">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="h-px w-10 bg-[#C99A2E]" aria-hidden="true" />
@@ -119,7 +125,7 @@ export default function HeroMaster() {
 
               <div className="space-y-5">
                 <h1
-                  className="m-0 max-w-4xl text-5xl font-bold leading-[1.02] text-[#F5F0E8] sm:text-6xl md:text-7xl lg:text-[82px]"
+                  className="m-0 max-w-4xl text-5xl font-bold leading-[1.02] text-[#F5F0E8] sm:text-6xl md:text-7xl lg:text-[80px]"
                   style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                 >
                   Pristine livestock
@@ -137,21 +143,26 @@ export default function HeroMaster() {
                 </p>
               </div>
 
-              <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-5 pt-2 sm:flex-row sm:items-center">
+                {/* Primary — solid gold button */}
                 <Link
                   href="/barn"
-                  className="group inline-flex min-h-14 items-center justify-center gap-3 bg-[#C99A2E] px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-[#1C1208] shadow-[0_16px_42px_rgba(201,154,46,0.28)] transition-all hover:bg-[#D9AA3E] hover:translate-y-[-1px] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
+                  className="group inline-flex min-h-14 items-center justify-center gap-3 bg-[#C99A2E] px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-[#1C1208] shadow-[0_8px_28px_rgba(201,154,46,0.28)] transition-all duration-200 hover:bg-[#D9AA3E] hover:shadow-[0_14px_40px_rgba(201,154,46,0.42)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
                 >
                   <span>Shop Farm Barn</span>
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
 
+                {/* Secondary — editorial animated underline text link */}
                 <Link
                   href="/visit"
-                  className="inline-flex min-h-14 items-center justify-center gap-3 border border-white/35 bg-black/25 px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8] backdrop-blur-sm transition-all hover:border-[#C99A2E] hover:bg-black/40 hover:text-[#C99A2E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
+                  className="group relative self-start sm:self-auto text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8]/80 transition-colors duration-200 hover:text-[#F5F0E8] focus-visible:outline-none py-1"
                 >
-                  <CalendarDays className="h-4 w-4" />
                   <span>Book a Visit</span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-px left-0 h-px w-0 bg-[#C99A2E] transition-[width] duration-300 ease-out group-hover:w-full"
+                  />
                 </Link>
               </div>
 
@@ -219,31 +230,32 @@ export default function HeroMaster() {
             </aside>
           </div>
         </div>
-      </section>
 
-      <section className="relative z-10 w-full border-t border-white/10 bg-[#1C1208]/82 py-5 backdrop-blur-md sm:py-6">
-        <div className="os-container">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-0 md:divide-x md:divide-white/12" data-reveal data-delay="2">
-            {stats.map((stat) => (
-              <div key={stat.label} className="border border-white/10 bg-white/[0.035] p-4 md:border-0 md:bg-transparent md:px-7 md:py-2 md:first:pl-0">
-                <div
-                  className="text-3xl font-bold leading-none text-[#C99A2E] sm:text-4xl"
-                  style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
-                >
-                  <span ref={stat.ref}>{stat.value}</span>
-                  {stat.suffix}
+        {/* ── FLOATING FROSTED GLASS DOCK (IMAGE A STYLE) ── */}
+        <div className="os-container relative z-10 w-full pb-8 sm:pb-12">
+          <div className="rounded-2xl border border-white/15 bg-[#1C1208]/65 p-4 sm:p-6 shadow-[0_24px_50px_rgba(0,0,0,0.55)] backdrop-blur-xl">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-0 md:divide-x md:divide-white/15" data-reveal data-delay="2">
+              {stats.map((stat) => (
+                <div key={stat.label} className="p-2 sm:p-3 md:px-7 md:first:pl-2">
+                  <div
+                    className="text-2xl font-bold leading-none text-[#C99A2E] sm:text-3xl lg:text-4xl"
+                    style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
+                  >
+                    <span ref={stat.ref}>{stat.value}</span>
+                    {stat.suffix}
+                  </div>
+                  <div className="mt-2 text-xs font-bold uppercase tracking-wider text-white">
+                    {stat.label}
+                  </div>
+                  <div className="mt-1 text-[11px] leading-relaxed text-[#D4C9B0]/75">
+                    {stat.description}
+                  </div>
                 </div>
-                <div className="mt-2 text-xs font-bold uppercase tracking-wider text-white">
-                  {stat.label}
-                </div>
-                <div className="mt-1 text-[11px] leading-relaxed text-[#D4C9B0]/75">
-                  {stat.description}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

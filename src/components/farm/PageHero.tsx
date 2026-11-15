@@ -7,7 +7,6 @@ import {
   ShieldCheck,
   CheckCircle2,
   Star,
-  Phone,
 } from "lucide-react";
 
 export interface PageHeroStat {
@@ -74,7 +73,7 @@ export default function PageHero({
 }: PageHeroProps) {
   return (
     <section className="relative isolate overflow-hidden bg-[#1C1208] text-[#F5F0E8] border-b border-white/10">
-      {/* ── FULL-BLEED PHOTOGRAPHIC BACKDROP & OPTICAL VIGNETTES ── */}
+      {/* ── FULL-BLEED PHOTOGRAPHIC BACKDROP: COVERS TO THE VERY TOP ── */}
       <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden" aria-hidden="true">
         <Image
           src={image.src}
@@ -85,46 +84,19 @@ export default function PageHero({
           className="object-cover object-center"
         />
 
-        {/* 1. Left-heavy overlay — text perfectly legible on left, rich photography bleeds through on right */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(28,18,8,0.97) 0%, rgba(28,18,8,0.88) 35%, rgba(28,18,8,0.55) 60%, rgba(28,18,8,0.20) 100%)",
-          }}
-        />
+        {/* 1. Subtle top-down scrim for transparent navbar text contrast while sky & clouds stay brilliant */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,10,5,0.65)_0%,rgba(15,10,5,0.22)_25%,transparent_50%)]" />
 
-        {/* 2. Bottom vignette — seamless transition to bottom stats bar */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(28,18,8,0.97) 0%, rgba(28,18,8,0.4) 18%, transparent 40%)",
-          }}
-        />
+        {/* 2. Left-directional scrim ensuring bold typography pops while photography on right stays luminous */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,10,5,0.88)_0%,rgba(15,10,5,0.70)_38%,rgba(15,10,5,0.30)_68%,transparent_100%)]" />
 
-        {/* 3. Top vignette — blends behind the fixed navbar */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(28,18,8,0.65) 0%, transparent 30%)",
-          }}
-        />
-
-        {/* 4. Subtle architectural golden drafting grid */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(to_right,rgba(201,154,46,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,154,46,0.035)_1px,transparent_1px)] bg-[size:3rem_3rem]"
-        />
+        {/* 3. Soft bottom vignette to transition smoothly behind the floating stats dock */}
+        <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(15,10,5,0.85)_0%,rgba(15,10,5,0.30)_20%,transparent_50%)]" />
       </div>
 
       {/* ── HERO CONTENT ── */}
-      <div className="relative flex flex-1 flex-col">
-        <div className="os-container w-full pt-32 pb-14 sm:pt-40 sm:pb-16 lg:pt-44 lg:pb-20">
+      <div className="relative flex flex-1 flex-col justify-between pt-36 sm:pt-40 lg:pt-44">
+        <div className="os-container w-full pb-8 sm:pb-12">
           <div className={children ? "grid gap-10 lg:grid-cols-[1.3fr_0.9fr] lg:items-end" : "max-w-2xl lg:max-w-3xl"}>
             <div>
               {/* Eyebrow badge matching Compass Cartage signature style */}
@@ -170,32 +142,40 @@ export default function PageHero({
 
               {/* High-visibility Action CTAs */}
               {!hideCta && (
-                <div className="mt-8 flex flex-wrap items-center gap-4">
+                <div className="mt-8 flex flex-wrap items-center gap-6">
+                  {/* Primary — solid gold button */}
                   <Link
                     href={ctaHref}
-                    className="btn-shimmer group inline-flex items-center gap-2.5 rounded-[2px] bg-[#C99A2E] px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-[#1C1208] shadow-[0_0_24px_rgba(201,154,46,0.35)] transition-all hover:bg-[#D9AA3E] hover:scale-[1.02] hover:shadow-[0_0_32px_rgba(201,154,46,0.5)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
+                    className="group inline-flex items-center gap-3 bg-[#C99A2E] px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-[#1C1208] shadow-[0_8px_28px_rgba(201,154,46,0.30)] transition-all duration-200 hover:bg-[#D9AA3E] hover:shadow-[0_12px_36px_rgba(201,154,46,0.45)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
                   >
                     <span>{ctaText}</span>
-                    <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                    <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
 
+                  {/* Secondary — editorial animated underline text link */}
                   {secondaryCtaExternal ? (
                     <a
                       href={secondaryCtaHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-[2px] border border-white/20 bg-white/5 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8] backdrop-blur-sm transition-all hover:border-[#C99A2E]/60 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
+                      className="group relative text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8]/80 transition-colors duration-200 hover:text-[#F5F0E8] focus-visible:outline-none"
                     >
-                      <Phone size={14} className="text-[#C99A2E]" />
                       <span>{secondaryCtaText}</span>
+                      <span
+                        aria-hidden="true"
+                        className="absolute -bottom-px left-0 h-px w-0 bg-[#C99A2E] transition-[width] duration-300 ease-out group-hover:w-full"
+                      />
                     </a>
                   ) : (
                     <Link
                       href={secondaryCtaHref}
-                      className="inline-flex items-center gap-2 rounded-[2px] border border-white/20 bg-white/5 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8] backdrop-blur-sm transition-all hover:border-[#C99A2E]/60 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99A2E]"
+                      className="group relative text-xs font-bold uppercase tracking-[0.14em] text-[#F5F0E8]/80 transition-colors duration-200 hover:text-[#F5F0E8] focus-visible:outline-none"
                     >
-                      <ArrowRight size={14} className="text-[#C99A2E]" />
                       <span>{secondaryCtaText}</span>
+                      <span
+                        aria-hidden="true"
+                        className="absolute -bottom-px left-0 h-px w-0 bg-[#C99A2E] transition-[width] duration-300 ease-out group-hover:w-full"
+                      />
                     </Link>
                   )}
                 </div>
@@ -211,21 +191,21 @@ export default function PageHero({
           </div>
         </div>
 
-        {/* ── BOTTOM STATS & REASSURANCE BAR ── */}
-        <div className="relative border-t border-white/10 bg-[#1C1208]/75 backdrop-blur-md">
-          <div className="os-container">
-            <div className="flex flex-wrap items-center justify-between gap-4 py-4 sm:py-5">
+        {/* ── FLOATING FROSTED GLASS STATS DOCK (IMAGE A STYLE) ── */}
+        <div className="os-container relative z-10 w-full pb-8 sm:pb-12 pt-4">
+          <div className="rounded-2xl border border-white/15 bg-[#1C1208]/65 p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+            <div className="flex flex-wrap items-center justify-between gap-4">
               {/* Stats with vertical dividers */}
-              <div className="flex items-center divide-x divide-white/15">
+              <div className="flex flex-wrap items-center divide-x divide-white/15">
                 {stats.map((stat) => (
-                  <div key={stat.label} className="px-5 sm:px-6 first:pl-0 last:pr-0">
+                  <div key={stat.label} className="px-4 sm:px-6 first:pl-0 last:pr-0 py-1">
                     <p
                       className="text-xl sm:text-2xl font-bold text-[#C99A2E] leading-none"
                       style={{ fontFamily: "var(--font-playfair), 'Playfair Display', Georgia, serif" }}
                     >
                       {stat.value}
                     </p>
-                    <p className="mt-1 text-xs font-medium text-[#F5F0E8]/60 whitespace-nowrap">
+                    <p className="mt-1 text-xs font-medium text-[#F5F0E8]/70 whitespace-nowrap">
                       {stat.label}
                     </p>
                   </div>
@@ -233,7 +213,7 @@ export default function PageHero({
               </div>
 
               {/* Right: Certified badges */}
-              <div className="hidden sm:flex items-center gap-5 text-xs font-medium text-[#F5F0E8]/70">
+              <div className="hidden sm:flex items-center gap-5 text-xs font-medium text-[#F5F0E8]/75 pr-2">
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck size={14} className="text-[#C99A2E]" />
                   Kenya Stud Book Registered

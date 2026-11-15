@@ -10,7 +10,7 @@ const img = (p: string) => `/images/${p}`
 export const HERO_IMAGE = img("brahmangreen.jpeg")
 export const RANCH_WIDE = img("brahmangreen.jpeg")
 export const RANCH_PANO = img("WhatsApp Image 2026-08-10 at 11.55.26 (1).jpeg")
-export const FIELD_DAY = img("WhatsApp Image 2026-08-10 at 11.56.50.jpeg")
+export const FIELD_DAY = img("WhatsApp Image 2026-08-10 at 11.56.45.jpeg")
 export const HERD_FIELD = img("WhatsApp Image 2026-08-10 at 11.55.21.jpeg")
 
 // Authentic ranch photos — used in slideshows/galleries.
